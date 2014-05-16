@@ -1,0 +1,17 @@
+{
+  "name": "sharpie-puppet_yardoc",
+  "version": "0.0.1",
+  "author": "Charlie Sharpsteen",
+  "summary": "Puppet documentation via YARD",
+  "license": "Apache 2.0",
+  "source": "",
+  "project_page": null,
+  "issues_url": null,
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_range": ">= 1.0.0"
+    }
+  ]
+}
+
