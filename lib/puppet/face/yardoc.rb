@@ -1,5 +1,5 @@
 require 'puppet/face'
-require 'puppetx/yardoc/util'
+require 'puppetx/yardoc/yard/parser'
 
 Puppet::Face.define(:yardoc, '0.0.1') do
 
@@ -18,12 +18,10 @@ Puppet::Face.define(:yardoc, '0.0.1') do
         raise RuntimeError, "The 'rgen' gem must be installed in order to use this face."
       end
 
-      parser = Puppet::Pops::Parser::Parser.new()
-      parse_result = parser.parse_file(manifest)
+      parser = Puppetx::Yardoc::YARD::PuppetParser.new(File.read(manifest), manifest)
+      parser.parse
 
-      commentor = Puppetx::Yardoc::Commentor.new()
-
-      return commentor.get_comments(parse_result)
+      return parser.enumerator
     end
   end
 end

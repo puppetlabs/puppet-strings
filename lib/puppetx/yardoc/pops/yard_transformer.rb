@@ -1,44 +1,44 @@
-require 'puppetx'
+require 'puppetx/yardoc'
+
 require 'puppet/pops'
 
-# TODO: A catch-all module for now. Everything in here should eventually move
-# to a designated home.
-module Puppetx::Yardoc
-  # Loosly based on the TreeDumper classes in Pops::Model.
-  class Puppetx::Yardoc::Commentor
+module Puppetx::Yardoc::Pops
+  # Loosely based on the TreeDumper classes in Pops::Model. The responsibility of
+  # this class is to walk a Pops::Model and output objects that can be consumed
+  # by YARD handlers.
+  class YARDTransformer
     def initialize
-      @docstring_visitor = Puppet::Pops::Visitor.new(self,'docstring')
+      @transform_visitor = Puppet::Pops::Visitor.new(self, 'transform')
     end
 
-    def get_comments(parse_result)
-      @docstring_visitor.visit(parse_result)
+    def transform(o)
+      @transform_visitor.visit(o)
     end
 
     private
 
-    COMMENT_PATTERN = /^\s*#.*\n/
-
-    def comments(o)
-      @docstring_visitor.visit(o)
+    def transform_Factory(o)
+      transform(o.current)
     end
 
-    def docstring_Factory(o)
-      comments(o.current)
-    end
-
-    def docstring_Program(o)
+    def transform_Program(o)
+      # FIXME: Uuuuuughhhhhhhhh.... This should be extracted some other way.
+      # Perhaps using a SourcePosAdapter?
       @source_text = o.source_text.lines.to_a
       @locator = o.locator
 
-      o.definitions.map{|d| comments(d)}
+      o.definitions.map{|d| transform(d)}
     end
 
     # Extract comments from "Definition" objects. That is: nodes definitions,
     # type definitions and class definitions.
-    def docstring_Definition(o)
+    def transform_Definition(o)
       line = @locator.line_for_offset(o.offset)
       comments_before(line)
     end
+
+    # TODO: This stuff should probably be part of a separate class/adapter.
+    COMMENT_PATTERN = /^\s*#.*\n/
 
     def comments_before(line)
       comments = []
