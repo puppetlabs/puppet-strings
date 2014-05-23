@@ -51,7 +51,10 @@ module Puppetx::Yardoc::Pops
 
       source_text.slice(0, line-1).reverse.each do |line|
         if COMMENT_PATTERN.match(line)
-          comments.unshift line
+          # FIXME: The gsub trims comments, but is extremely optimistic: It
+          # assumes only one space separates the comment body from the
+          # comment character.
+          comments.unshift line.gsub(/^\s*#\s/, '')
         else
           # No comment found on this line. We must be done piecing together a
           # comment block.
