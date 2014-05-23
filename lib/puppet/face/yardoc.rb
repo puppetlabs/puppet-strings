@@ -21,7 +21,7 @@ Puppet::Face.define(:yardoc, '0.0.1') do
       parser = Puppetx::Yardoc::YARD::PuppetParser.new(File.read(manifest), manifest)
       parser.parse
 
-      return parser.enumerator
+      return parser.enumerator.map {|s| s.comments}
     end
   end
 end

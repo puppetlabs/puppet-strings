@@ -2,10 +2,15 @@ require 'puppetx/yardoc'
 
 require 'puppet/pops'
 
+require_relative 'yard_statement'
+
 module Puppetx::Yardoc::Pops
   # Loosely based on the TreeDumper classes in Pops::Model. The responsibility of
   # this class is to walk a Pops::Model and output objects that can be consumed
   # by YARD handlers.
+  #
+  # @note Currently, this class only extracts node, host class and type
+  #   definitions.
   class YARDTransformer
     def initialize
       @transform_visitor = Puppet::Pops::Visitor.new(self, 'transform')
@@ -22,41 +27,15 @@ module Puppetx::Yardoc::Pops
     end
 
     def transform_Program(o)
-      # FIXME: Uuuuuughhhhhhhhh.... This should be extracted some other way.
-      # Perhaps using a SourcePosAdapter?
-      @source_text = o.source_text.lines.to_a
-      @locator = o.locator
-
       o.definitions.map{|d| transform(d)}
     end
 
     # Extract comments from "Definition" objects. That is: nodes definitions,
-    # type definitions and class definitions.
+    # type definitions and class definitions. Wrap them into YARDStatement
+    # objects that provide an interface for YARD handlers.
     def transform_Definition(o)
-      line = @locator.line_for_offset(o.offset)
-      comments_before(line)
+      YARDStatement.new(o)
     end
 
-    # TODO: This stuff should probably be part of a separate class/adapter.
-    COMMENT_PATTERN = /^\s*#.*\n/
-
-    def comments_before(line)
-      comments = []
-
-      # FIXME: Horribly inefficient. Multiple copies. Generator pattern would
-      # be much better.
-      @source_text.slice(0, line-1).reverse.each do |line|
-        if COMMENT_PATTERN.match(line)
-          comments.unshift line
-        else
-          # No comment found on this line. We must be done piecing together a
-          # comment block.
-          break
-        end
-      end
-
-      # Stick everything back together.
-      comments.join
-    end
   end
 end
