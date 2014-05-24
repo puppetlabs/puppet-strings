@@ -1,3 +1,8 @@
+# TODO: Decide if supporting 1.8.7 is really worth it.
+if RUBY_VERSION < '1.9'
+  require 'backports/1.9.1/kernel/require_relative'
+end
+
 require_relative 'parser'
 require_relative 'handlers'
 
