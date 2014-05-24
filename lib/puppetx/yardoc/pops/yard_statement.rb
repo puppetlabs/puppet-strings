@@ -1,6 +1,6 @@
-require 'puppetx/yardoc'
-
 require 'puppet/pops'
+
+require_relative '../../yardoc'
 
 module Puppetx::Yardoc::Pops
   # An adapter class that conforms a Pops model instance + adapters to the

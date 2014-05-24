@@ -1,8 +1,8 @@
-require 'puppetx/yardoc'
-
 require 'yard'
 require 'puppet/pops'
-require 'puppetx/yardoc/pops/yard_transformer'
+
+require_relative '../../yardoc'
+require_relative '../pops/yard_transformer'
 
 module Puppetx::Yardoc::YARD
   class PuppetParser < YARD::Parser::Base

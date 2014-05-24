@@ -1,7 +1,6 @@
-require 'puppetx/yardoc'
-
 require 'puppet/pops'
 
+require_relative '../../yardoc'
 require_relative 'yard_statement'
 
 module Puppetx::Yardoc::Pops

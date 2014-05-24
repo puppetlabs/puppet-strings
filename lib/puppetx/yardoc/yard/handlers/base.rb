@@ -1,6 +1,7 @@
-require 'puppetx/yardoc'
 require 'yard'
 require 'puppet/pops'
+
+require_relative '../../../yardoc'
 
 module Puppetx::Yardoc::YARD::Handlers
   class Base < YARD::Handlers::Base
