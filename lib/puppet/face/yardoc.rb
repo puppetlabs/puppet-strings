@@ -17,10 +17,8 @@ Puppet::Face.define(:yardoc, '0.0.1') do
 
       require 'puppetx/yardoc/yard/plugin'
 
-      parser = Puppetx::Yardoc::YARD::PuppetParser.new(File.read(manifest), manifest)
-      parser.parse
-
-      return parser.enumerator.map {|s| s.comments}
+      # Hand off to YARD for further processing.
+      YARD::CLI::Yardoc.run(manifest)
     end
   end
 end
