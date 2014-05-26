@@ -5,7 +5,7 @@ module Puppetx::Yardoc::YARD::Handlers
     handles HostClassDefinition
 
     process do
-      register YARD::CodeObjects::ClassObject.new(:root, statement.pops_obj.name)
+      register HostClassObject.new(:root, statement.pops_obj.name)
     end
   end
 end
