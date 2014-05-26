@@ -13,3 +13,7 @@ tmtags
 ## VIM
 *.swp
 tags
+
+## BUNDLER
+.bundle
+Gemfile.lock
