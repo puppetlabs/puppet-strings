@@ -5,7 +5,15 @@ module Puppetx::Yardoc::YARD::Handlers
     handles HostClassDefinition
 
     process do
-      register HostClassObject.new(:root, statement.pops_obj.name)
+      obj = HostClassObject.new(:root, statement.pops_obj.name)
+
+      statement.pops_obj.tap do |o|
+        if o.parent_class
+          obj.parent_class = P(:root, o.parent_class)
+        end
+      end
+
+      register obj
     end
   end
 end

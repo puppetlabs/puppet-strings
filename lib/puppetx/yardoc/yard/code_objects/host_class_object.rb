@@ -5,6 +5,10 @@ require_relative '../../../yardoc'
 
 module Puppetx::Yardoc::YARD::CodeObjects
   class HostClassObject < YARD::CodeObjects::NamespaceObject
+    # The {HostClassObject} that this class inherits from, if any.
+    # @return [HostClassObject, Proxy, nil]
+    attr_accessor :parent_class
+
     # The `YARD::Codeobjects::Base` class pulls a bunch of shenanigans to
     # insert proxy namespaces. Unfortunately, said shenanigans pick up on the
     # `::` in Puppet names and start to mangle things based on rules for the

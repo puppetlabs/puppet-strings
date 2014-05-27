@@ -1,0 +1,17 @@
+<% n = 1 %>
+<dl class="box">
+  <% if object.parent_class %>
+    <dt class="r<%=n%>">Inherits:</dt>
+    <dd class="r<%=n%>">
+      <span class="inheritName"><%= linkify object.parent_class %></span>
+      <%# TODO: Add inheritance tree. %>
+    </dd>
+    <% n = 2 %>
+  <% end %>
+  <% unless object.root? %>
+    <dt class="r<%=n%> last">Defined in:</dt>
+    <dd class="r<%=n%> last"><%= erb(:defines) %></dd>
+  <% end %>
+</dl>
+<div class="clear"></div>
+
