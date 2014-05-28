@@ -3,8 +3,13 @@
   <% if object.parent_class %>
     <dt class="r<%=n%>">Inherits:</dt>
     <dd class="r<%=n%>">
-      <span class="inheritName"><%= linkify object.parent_class %></span>
-      <%# TODO: Add inheritance tree. %>
+      <span class="inheritName"><%= linkify object.parent_class, object.parent_class.path %></span>
+      <ul class="fullTree">
+        <% object.inheritance_tree.reverse.each_with_index do |obj, i| %>
+          <li class="next"><%= obj == object ? obj.path : linkify(obj, obj.path) %></li>
+        <% end %>
+      </ul>
+      <a href="#" class="inheritanceTree">show all</a>
     </dd>
     <% n = 2 %>
   <% end %>
