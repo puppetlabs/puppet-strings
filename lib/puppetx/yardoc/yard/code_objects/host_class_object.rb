@@ -34,7 +34,9 @@ module Puppetx::Yardoc::YARD::CodeObjects
       obj
     end
 
-    def inheritance_tree
+    # NOTE: `include_mods` is never used as it makes no sense for Puppet, but
+    # this is called by `YARD::Registry` and it will pass a parameter.
+    def inheritance_tree(include_mods = false)
       if parent_class.is_a?(HostClassObject)
         # Cool. We got a host class. Return self + parent inheritance tree.
         [self] + parent_class.inheritance_tree
