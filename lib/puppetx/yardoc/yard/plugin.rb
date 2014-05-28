@@ -3,6 +3,8 @@ if RUBY_VERSION < '1.9'
   require 'backports/1.9.1/kernel/require_relative'
 end
 
+require 'puppet'
+
 require_relative 'monkey_patches'
 require_relative 'parser'
 require_relative 'handlers'
