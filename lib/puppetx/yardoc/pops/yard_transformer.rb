@@ -29,12 +29,21 @@ module Puppetx::Yardoc::Pops
       o.definitions.map{|d| transform(d)}
     end
 
-    # Extract comments from "Definition" objects. That is: nodes definitions,
-    # type definitions and class definitions. Wrap them into YARDStatement
-    # objects that provide an interface for YARD handlers.
-    def transform_Definition(o)
-      YARDStatement.new(o)
+    # Extract comments from type definitions and class definitions. Wrap them
+    # into YARDStatement objects that provide an interface for YARD handlers.
+    def transform_NamedDefinition(o)
+      obj = YARDStatement.new(o)
+      obj.parameters = o.parameters.map do |p|
+        param_tuple = [transform(p)]
+        param_tuple << ( p.value.nil? ? nil : transform(p.value) )
+      end
+
+      obj
     end
 
+    # Catch-all visitor.
+    def transform_Positioned(o)
+      YARDStatement.new(o)
+    end
   end
 end

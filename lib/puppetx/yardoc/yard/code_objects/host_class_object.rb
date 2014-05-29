@@ -9,6 +9,10 @@ module Puppetx::Yardoc::YARD::CodeObjects
     # @return [HostClassObject, Proxy, nil]
     attr_accessor :parent_class
 
+    # A list of parameters attached to this class.
+    # @return [Array<Array(String, String)>]
+    attr_accessor :parameters
+
     # The `YARD::Codeobjects::Base` class pulls a bunch of shenanigans to
     # insert proxy namespaces. Unfortunately, said shenanigans pick up on the
     # `::` in Puppet names and start to mangle things based on rules for the

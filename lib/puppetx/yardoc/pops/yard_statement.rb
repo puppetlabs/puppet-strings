@@ -1,3 +1,4 @@
+require 'ostruct'
 require 'puppet/pops'
 
 require_relative '../../yardoc'
@@ -5,10 +6,17 @@ require_relative '../../yardoc'
 module Puppetx::Yardoc::Pops
   # An adapter class that conforms a Pops model instance + adapters to the
   # interface expected by YARD handlers.
-  class YARDStatement
+  #
+  # FIXME: Inhertiting from OpenStruct is a bit of a hack. It allows attributes
+  # to be declared as needed but in the long run understandibility of the code
+  # would be improved by having a concrete model.
+  class YARDStatement < OpenStruct
     attr_reader :pops_obj, :comments
 
     def initialize(pops_obj)
+      # Initialize OpenStruct
+      super({})
+
       unless pops_obj.is_a? Puppet::Pops::Model::PopsObject
         raise ArgumentError, "A YARDStatement can only be initialized from a PopsObject. Got a: #{pops_obj.class}"
       end
