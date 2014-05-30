@@ -1,7 +1,12 @@
 include T('default/module')
 
 def init
-  sections :header, :box_info, :pre_docstring, T('docstring'), :subclasses
+  sections :header, :box_info, :pre_docstring, T('docstring'), :parameter_details, :subclasses
+end
+
+def parameter_details
+  return if object.parameters.empty?
+  erb(:parameter_details)
 end
 
 def subclasses

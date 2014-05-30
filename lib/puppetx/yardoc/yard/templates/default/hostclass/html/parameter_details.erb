@@ -1,0 +1,18 @@
+<h2>Parameter Summary<small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+<ul class="summary">
+  <% object.parameters.each do |param| %>
+    <li>
+      <a href="#">
+        <span class="summary_signature">
+          -
+          <strong><%= h param[0] %></strong>
+          <% unless param[1].nil? %>
+            <%# TODO: Linkify defaults that resolve to variable declarations in a different scope. %>
+            => <%= h param[1] %>
+          <% end %>
+        </span>
+        <%# TODO: Grab onto @param tags and insert text/type. %>
+      </a>
+    </li>
+  <% end %>
+</ul>
