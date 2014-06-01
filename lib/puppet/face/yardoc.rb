@@ -1,9 +1,13 @@
 require 'puppet/face'
 
 Puppet::Face.define(:yardoc, '0.0.1') do
+  summary "Generate Puppet documentation with YARD."
 
   action(:yardoc) do
     default
+
+    summary "Generate module documentation."
+    arguments "[manifest_file.pp ...]"
 
     when_invoked do |*args|
       unless Puppet.features.yard?
