@@ -9,6 +9,12 @@ module Puppetx::Yardoc::YARD::CodeObjects
     # @return [Array<Array(String, String)>]
     attr_accessor :parameters
 
+    # NOTE: `YARD::Registry#resolve` requires a method with this signature to
+    # be present on all subclasses of `NamespaceObject`.
+    def inheritance_tree(include_mods = false)
+      [self]
+    end
+
     # FIXME: We used to override `self.new` to ensure no YARD proxies were
     # created for namespaces segments that did not map to a host class or
     # defined type. Fighting the system in this way turned out to be
