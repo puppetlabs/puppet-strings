@@ -85,4 +85,28 @@ Puppet::Face.define(:yardoc, '0.0.1') do
       end
     end
   end
+
+  action(:server) do
+    summary "Serve YARD documentation for modules."
+
+    when_invoked do |*args|
+      check_required_features
+      require 'puppetx/yardoc/yard/plugin'
+      opts = args.pop
+
+      # FIXME: This is pretty inefficient as it forcibly re-generates the YARD
+      # indicies each time the server is started. However, it ensures things are
+      # generated properly.
+      module_list = Puppet::Face[:yardoc, :current].modules
+
+      module_tuples = module_list.map do |mod|
+        name = (mod.forge_name || mod.name).gsub('/', '-')
+        yard_index = File.join(mod.path, '.yardoc')
+
+        [name, yard_index]
+      end
+
+      YARD::CLI::Server.run('-m', *module_tuples.flatten)
+    end
+  end
 end
