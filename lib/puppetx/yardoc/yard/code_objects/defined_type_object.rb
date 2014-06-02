@@ -9,29 +9,17 @@ module Puppetx::Yardoc::YARD::CodeObjects
     # @return [Array<Array(String, String)>]
     attr_accessor :parameters
 
-    # The `YARD::Codeobjects::Base` class pulls a bunch of shenanigans to
-    # insert proxy namespaces. Unfortunately, said shenanigans pick up on the
-    # `::` in Puppet names and start to mangle things based on rules for the
-    # Ruby language.
+    # FIXME: We used to override `self.new` to ensure no YARD proxies were
+    # created for namespaces segments that did not map to a host class or
+    # defined type. Fighting the system in this way turned out to be
+    # counter-productive.
     #
-    # Therefore, we must override `new` for great justice.
+    # However, if a proxy is left in, YARD will drop back to namspace-mangling
+    # heuristics that are very specific to Ruby and which produce ugly paths in
+    # the resulting output. Consider walking the namespace tree for each new
+    # class/type and ensuring that a placeholder other than a YARD proxy is
+    # used.
     #
-    # TODO: Ask around on the YARD mailing list to see if there is a way around
-    # this ugliness.
-    #
-    # Alternately, consider ensuring all `proxy` objects resolve to a
-    # placeholder `NamespaceObject` as the name mangling behavior of these is
-    # easier to control.
-    def self.new(namespace, name, *args, &block)
-      # Standard Ruby boilerplate for `new`
-      obj = self.allocate
-      obj.send :initialize, namespace, name, *args
-
-      # The last bit of `YARD::CodeObjects::Base.new`.
-      existing_obj = YARD::Registry.at(obj.path)
-      obj = existing_obj if existing_obj && existing_obj.class == self
-      yield(obj) if block_given?
-      obj
-    end
+    # def self.new(namespace, name, *args, &block)
   end
 end
