@@ -7,3 +7,9 @@ def index
   objects.each {|o| (@objects_by_letter[o.name.to_s[0,1].upcase] ||= []) << o }
   erb(:index)
 end
+
+def menu_lists
+  [
+    {:type => 'puppet_manifest', :title => 'Puppet Manifests', :search_title => "Puppet Manifest List"}
+  ] + super
+end
