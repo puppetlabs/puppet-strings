@@ -22,7 +22,10 @@ module Puppetx::Yardoc::YARD
     end
 
     def enumerator
-      @transformer.transform(@parse_result)
+      statements = @transformer.transform(@parse_result)
+
+      # Ensure an array is returned and prune any nil values.
+      Array(statements).compact
     end
 
   end

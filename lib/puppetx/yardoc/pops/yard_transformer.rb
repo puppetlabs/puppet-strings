@@ -45,5 +45,10 @@ module Puppetx::Yardoc::Pops
     def transform_Positioned(o)
       YARDStatement.new(o)
     end
+
+    # nil in... nil out!
+    def transform_NilClass(o)
+      nil
+    end
   end
 end
