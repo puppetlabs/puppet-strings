@@ -17,6 +17,14 @@ Puppet::Face.define(:yardoc, '0.0.1') do
     end
   end
 
+  # Maps things like the Puppet `--debug` flag to YARD options.
+  def merge_puppet_args!(yard_args)
+    yard_args.unshift '--debug'     if Puppet[:debug]
+    yard_args.unshift '--backtrace' if Puppet[:trace]
+
+    yard_args
+  end
+
   # A list of globs that generates the default list of module files from which
   # documentation can be extracted.
   #
@@ -43,12 +51,13 @@ Puppet::Face.define(:yardoc, '0.0.1') do
 
       # For now, assume the remaining positional args are a list of manifest
       # files to parse.
-      manifest_files = (args.empty? ? MODULE_SOURCEFILES : args)
+      yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
+      merge_puppet_args!(yard_args)
 
       require 'puppetx/yardoc/yard/plugin'
 
       # Hand off to YARD for further processing.
-      YARD::CLI::Yardoc.run(*manifest_files)
+      YARD::CLI::Yardoc.run(*yard_args)
     end
   end
 
@@ -71,12 +80,14 @@ Puppet::Face.define(:yardoc, '0.0.1') do
       # TODO: Can use select! if Ruby 1.8.7 support is dropped.
       module_list = module_list.select {|m| args.include? m.name} unless args.empty?
 
+      # Invoke `yardoc` with -n so that it doesn't generate any HTML output but
+      # does build a `.yardoc` index that other tools can generate output from.
+      yard_args = %w[--no-stats -n] + MODULE_SOURCEFILES
+      merge_puppet_args!(yard_args)
+
       module_list.each do |m|
         Dir.chdir(m.path) do
-          # Invoke `yardoc` with -n so that it doesn't generate any HTML output
-          # but does build a `.yardoc` index that other tools can generate
-          # output from.
-          YARD::CLI::Yardoc.run('--no-stats', '-n', *MODULE_SOURCEFILES)
+          YARD::CLI::Yardoc.run(*yard_args)
 
           # Cear the global Registry so that objects from one module don't
           # bleed into the next.
@@ -106,7 +117,13 @@ Puppet::Face.define(:yardoc, '0.0.1') do
         [name, yard_index]
       end
 
-      YARD::CLI::Server.run('-m', *module_tuples.flatten)
+      # The `-m` flag means a list of name/path pairs will follow. The name is
+      # used as the module name and the path indicates which `.yardoc` index to
+      # generate documentation from.
+      yard_args = %w[-m] + module_tuples.flatten
+      merge_puppet_args!(yard_args)
+
+      YARD::CLI::Server.run(*yard_args)
     end
   end
 end
