@@ -30,7 +30,7 @@ Puppet::Face.define(:yardoc, '0.0.1') do
   #
   # TODO: It would be awesome if we could somehow override/append to the
   # default file list that YARD uses. Consider an upstream PR for this.
-  MODULE_SOURCEFILES = ['manifests/**/*.pp']
+  MODULE_SOURCEFILES = ['manifests/**/*.pp', 'lib/**/*.rb']
 
   action(:yardoc) do
     default
@@ -50,7 +50,7 @@ Puppet::Face.define(:yardoc, '0.0.1') do
       opts = args.pop
 
       # For now, assume the remaining positional args are a list of manifest
-      # files to parse.
+      # and ruby files to parse.
       yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
       merge_puppet_args!(yard_args)
 
