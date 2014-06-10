@@ -74,6 +74,9 @@ Puppet::Face.define(:yardoc, '0.0.1') do
       require 'puppetx/yardoc/yard/plugin'
       opts = args.pop
 
+      # NOTE: The retrun value of the `module` Face seems to have changed in
+      # 3.6.x. This part of the code will blow up if run under an earlier
+      # version of Puppet.
       modules = Puppet::Face[:module, :current].list
       module_list = modules[:modules_by_path].values.flatten
 

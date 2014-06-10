@@ -7,6 +7,12 @@
   "source": "",
   "project_page": null,
   "issues_url": null,
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.6.0"
+    }
+  ],
   "dependencies": [ ]
 }
 

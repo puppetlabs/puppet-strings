@@ -9,6 +9,9 @@ A Puppet Face and plugin built on the [YARD Documentation Tool](http://yardoc.or
 Installation
 ------------
 
+So far, this module has been developed against Puppet 3.6.x.
+It will not work with earlier versions.
+
 Currently, just `git clone` directly into the Puppet `modulepath`.
 Ensure the `yard` and `rgen` gems are installed.
 If running Ruby 1.8.7, ensure the `backports` gem is installed.
