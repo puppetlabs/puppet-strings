@@ -19,3 +19,16 @@ class YARD::CLI::Stats
     output 'Puppet Types', *type_statistics(:definedtype)
   end
 end
+
+class YARD::Logger
+  def show_progress
+    return false if YARD.ruby18? # threading is too ineffective for progress support
+    return false if YARD.windows? # windows has poor ANSI support
+    return false unless io.tty? # no TTY support on IO
+    # Here is the actual monkey patch. A simple fix to an inverted conditional.
+    # Without this Pry is unusable for debugging as the progress bar goes
+    # craaaaaaaazy.
+    return false unless level > INFO # no progress in verbose/debug modes
+    @show_progress
+  end
+end
