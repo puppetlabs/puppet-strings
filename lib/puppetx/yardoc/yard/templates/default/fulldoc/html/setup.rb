@@ -34,7 +34,7 @@ def namespace_list(opts = {})
   children.reject {|c| c.nil? }.sort_by {|child| child.path }.map do |child|
     if namespace_types.include? child.type
       name = child.namespace.is_a?(CodeObjects::Proxy) ? child.path : child.name
-      has_children = run_verifier(child.children).any? {|o| o.is_a?(CodeObjects::NamespaceObject) }
+      has_children = child.respond_to?(:children) && run_verifier(child.children).any? {|o| o.is_a?(CodeObjects::NamespaceObject) }
       out << "<li>"
       out << "<a class='toggle'></a> " if has_children
       out << linkify(child, name)
@@ -43,7 +43,7 @@ def namespace_list(opts = {})
       out << child.namespace.title
       out << "</small>"
       out << "</li>"
-      out << "<ul>#{class_list(child)}</ul>" if has_children
+      out << "<ul>#{namespace_list(:root => child, :namespace_types => namespace_types)}</ul>" if has_children
     end
   end
   out
