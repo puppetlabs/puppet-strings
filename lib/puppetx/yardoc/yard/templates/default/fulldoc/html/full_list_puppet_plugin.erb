@@ -1,3 +1,4 @@
+<% unless P(:root, 'ParserFunctions').is_a?(CodeObjects::Proxy) %>
 <li>
   <a class='toggle'></a>
   <%= link_object(P(:root, 'ParserFunctions'), 'Parser Functions', nil, false) %>
@@ -6,3 +7,4 @@
 <ul>
   <%= namespace_list(:root => P(:root,'ParserFunctions'), :namespace_types => [:puppetnamespace, :method]) %>
 </ul>
+<% end %>
