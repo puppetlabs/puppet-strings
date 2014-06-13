@@ -1,16 +1,18 @@
 # This utility library contains some tools for working with Puppet docstrings.
 require 'puppet/util/docs'
 
-require_relative 'base'
+require_relative '../code_objects'
 
 module Puppetx::Yardoc::YARD::Handlers
   class ParserFunctionHandler < YARD::Handlers::Ruby::Base
+    include Puppetx::Yardoc::YARD::CodeObjects
+
     handles method_call(:newfunction)
 
     process do
       name, options = process_parameters
 
-      obj = MethodObject.new(:root, name)
+      obj = MethodObject.new(function_namespace, name)
 
       register obj
       if options['doc']
@@ -25,6 +27,20 @@ module Puppetx::Yardoc::YARD::Handlers
     end
 
     private
+
+    # Returns a {PuppetNamespaceObject} for holding functions. Creates this
+    # object if necessary.
+    #
+    # @return [PuppetNamespaceObject]
+    def function_namespace
+      # NOTE: This tricky. If there is ever a Ruby class or module with the
+      # name ::ParserFunctions, then there will be a clash. Hopefully the name
+      # is sufficiently uncommon.
+      obj = P(:root, 'ParserFunctions')
+      ::YARD::Registry.register PuppetNamespaceObject.new(:root, 'ParserFunctions') if obj.is_a?(Proxy)
+
+      obj
+    end
 
     # NOTE: The following methods duplicate functionality from
     # Puppet::Util::Reference and Puppet::Parser::Functions.functiondocs

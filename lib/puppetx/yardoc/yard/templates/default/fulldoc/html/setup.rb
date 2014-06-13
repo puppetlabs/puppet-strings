@@ -15,6 +15,18 @@ def generate_puppet_manifest_list
   generate_list_contents
 end
 
+def generate_puppet_plugin_list
+  # NOTE: PuppetNamaspaceObject might eventually be used for more than just a
+  # container for plugins...
+  @items = options.objects.select{|o| [:puppetnamespace].include? o.type} if options.objects
+  @list_title = "Puppet Plugin List"
+  # This is important. It causes some YARD JavaScript bits to hook in and
+  # perform the correct formatting.
+  @list_class = "class"
+  @list_type = "puppet_plugin"
+  generate_list_contents
+end
+
 # A hacked version of class_list that can be instructed to only display certain
 # namespace types. This allows us to separate Puppet bits from Ruby bits.
 def namespace_list(opts = {})
