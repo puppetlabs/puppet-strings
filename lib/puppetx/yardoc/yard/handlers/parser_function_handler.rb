@@ -47,7 +47,7 @@ module Puppetx::Yardoc::YARD::Handlers
         namespace_obj = PuppetNamespaceObject.new(:root, 'ParserFunctions')
         namespace_obj.add_tag YARD::Tags::Tag.new(:api, 'public')
 
-        ::YARD::Registry.register namespace_obj
+        register namespace_obj
       end
 
       obj
