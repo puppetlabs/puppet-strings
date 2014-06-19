@@ -24,6 +24,12 @@ module Puppetx::Yardoc::YARD::Handlers
       return_type = options['type']
       return_type ||= 'statement' # Default for newfunction
       obj.add_tag YARD::Tags::Tag.new(:return, '', return_type)
+
+      # FIXME: This is a hack that allows us to document the Puppet Core which
+      # uses `--no-transitive-tag api` and then only shows things explicitly
+      # tagged with `public` or `private` api. This is kind of insane and
+      # should be fixed upstream.
+      obj.add_tag YARD::Tags::Tag.new(:api, 'public')
     end
 
     private
@@ -37,7 +43,12 @@ module Puppetx::Yardoc::YARD::Handlers
       # name ::ParserFunctions, then there will be a clash. Hopefully the name
       # is sufficiently uncommon.
       obj = P(:root, 'ParserFunctions')
-      ::YARD::Registry.register PuppetNamespaceObject.new(:root, 'ParserFunctions') if obj.is_a?(Proxy)
+      if obj.is_a? Proxy
+        namespace_obj = PuppetNamespaceObject.new(:root, 'ParserFunctions')
+        namespace_obj.add_tag YARD::Tags::Tag.new(:api, 'public')
+
+        ::YARD::Registry.register namespace_obj
+      end
 
       obj
     end
