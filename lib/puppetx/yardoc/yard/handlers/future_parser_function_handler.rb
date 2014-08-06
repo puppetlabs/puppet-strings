@@ -1,6 +1,26 @@
 require_relative '../code_objects'
 
 module Puppetx::Yardoc::YARD::Handlers
+  # Handles `dispatch` calls within a future parser function declaration. For
+  # now, it just treats any docstring as an `@overlaod` tag and attaches the
+  # overload to the parent function.
+  class FutureParserDispatchHandler < YARD::Handlers::Ruby::Base
+    include Puppetx::Yardoc::YARD::CodeObjects
+
+    handles method_call(:dispatch)
+
+    process do
+      return unless owner.is_a?(MethodObject) && owner['future_parser_function']
+      return unless statement.docstring
+
+      docstring = ::YARD::Docstring.new(statement.docstring, nil)
+
+      # FIXME: This does a wholesale copy of all possible tags. But, we're only
+      # interested in the @overload tag.
+      owner.add_tag *docstring.tags
+    end
+  end
+
   class FutureParserFunctionHandler < YARD::Handlers::Ruby::Base
     include Puppetx::Yardoc::YARD::CodeObjects
 
@@ -10,10 +30,14 @@ module Puppetx::Yardoc::YARD::Handlers
       name = process_parameters
 
       obj = MethodObject.new(function_namespace, name)
+      obj['future_parser_function'] = true
 
       register obj
 
       obj.add_tag YARD::Tags::Tag.new(:api, 'public')
+
+      blk = statement.block.children.first
+      parse_block(blk, :owner => obj)
     end
 
     private
@@ -31,6 +55,12 @@ module Puppetx::Yardoc::YARD::Handlers
         namespace_obj = PuppetNamespaceObject.new(:root, 'FutureParserFunctions')
 
         register namespace_obj
+        # FIXME: The docstring has to be cleared. Otherwise, the namespace
+        # object will be registered using the docstring of the
+        # `create_function` call that is currently being processed.
+        #
+        # Figure out how to properly register the namespace without using the
+        # function handler object.
         register_docstring(namespace_obj, '', nil)
         namespace_obj.add_tag YARD::Tags::Tag.new(:api, 'public')
       end
