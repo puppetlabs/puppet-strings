@@ -12,8 +12,8 @@ Puppet::Face.define(:yardoc, '0.0.1') do
       raise RuntimeError, "The 'rgen' gem must be installed in order to use this face."
     end
 
-    if RUBY_VERSION < '1.9' && !Puppet.features.require_relative?
-      raise RuntimeError, "The 'backports' gem must be installed in order to use this face under Ruby 1.8.7."
+    if RUBY_VERSION.match(/^1\.8/)
+      raise RuntimeError, "This face requires Ruby 1.9 or greater."
     end
   end
 
