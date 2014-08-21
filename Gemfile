@@ -8,5 +8,9 @@ group :test do
   gem 'rspec'
   gem 'mocha'
   gem 'puppetlabs_spec_helper'
+end
+
+group :development do
   gem 'pry'
+  gem 'pry-debugger'
 end
