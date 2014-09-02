@@ -13,7 +13,7 @@ RSpec.configure do |config|
     config.mock_with :mocha
 end
 
-# Borrwed from YARD spec helper
+# Borrowed from YARD spec helper
 def parse_file(file, thisfile = __FILE__, log_level = log.level, ext = '.pp')
   Registry.clear
   path = File.join(File.dirname(thisfile), 'examples', file.to_s + ext)
