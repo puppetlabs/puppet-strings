@@ -10,11 +10,6 @@ describe Puppetx::Yardoc::Pops do
     let(:test_statement) {Puppetx::Yardoc::Pops::YARDStatement.new(model)}
 
     describe "when creating a new instance of YARDStatement" do
-      it "should raise an error if the argument is not a PopsObject" do
-        test_arg = 'foo bar'
-        expect{Puppetx::Yardoc::Pops::YARDStatement.new(test_arg)}.to raise_error(ArgumentError)
-      end
-
       it "should extract comments from the source code" do
         expect(test_statement.comments).to match(/^#hello world/)
       end
