@@ -4,14 +4,19 @@ $LOAD_PATH.unshift File.join(dir, 'lib')
 require 'mocha'
 require 'puppet'
 require 'rspec'
-require 'spec/autorun'
 
-Spec::Runner.configure do |config|
+# This is neeeded so we can access a Registry if YARD creates one
+require 'puppetx/yardoc/yard/plugin'
+include YARD
+
+RSpec.configure do |config|
     config.mock_with :mocha
 end
 
-# We need this because the RAL uses 'should' as a method.  This
-# allows us the same behaviour but with a different method name.
-class Object
-    alias :must :should
+# Borrowed from YARD spec helper
+def parse_file(file, thisfile = __FILE__, log_level = log.level, ext = '.pp')
+  Registry.clear
+  path = File.join(File.dirname(thisfile), 'examples', file.to_s + ext)
+  YARD::Parser::SourceParser.parse(path, [], log_level)
 end
+
