@@ -9,7 +9,6 @@ group :test do
   gem 'rspec'
   gem 'mocha'
   gem 'puppetlabs_spec_helper'
-  gem 'nokogiri'
   gem 'rspec-html-matchers'
 end
 
