@@ -4,12 +4,6 @@ require 'puppetx/yardoc/yard/handlers'
 describe Puppetx::Yardoc::YARD::Handlers do
 
   # TODO: Relocate/refactor helper methods
-  def parse_file(file, thisfile = __FILE__, log_level = log.level, ext = '.pp')
-    Registry.clear
-    path = File.join(File.dirname(thisfile), 'examples', file.to_s + ext)
-    YARD::Parser::SourceParser.parse(path, [], log_level)
-  end
-
   def parse(string, parser = :ruby)
     Registry.clear
     YARD::Parser::SourceParser.parse_string(string, parser)
@@ -201,22 +195,49 @@ describe Puppetx::Yardoc::YARD::Handlers do
       expect(the_method).to document_a(:type => :method, :docstring => "")
       expect(the_namespace).to document_a(:type => :puppetnamespace)
     end
-
-    it "should not add anything to the Registry if incorrect ruby code is present" do
-      parse <<-RUBY
-        # The summary
-        This is not ruby code
-      RUBY
-
-      expect(Registry.all).to be_empty
-    end
   end
 
   describe "HostClassDefintion" do
-    before(:each) {parse_file :class, __FILE__, log.level, '.pp'}
-    it "should add a host class object to the Registry" do
-      hostclass = Registry.at("foo::bar")
-      expect(hostclass.type).to be(:hostclass)
+    def the_hostclass()
+       Registry.at("foo::bar")
+    end
+
+    it "should parse single-line documentation strings before a given class" do
+      comment = "Class: foo::bar"
+      puppet_code = <<-PUPPET
+        # #{comment}
+        class foo::bar { }
+      PUPPET
+
+      parse(puppet_code, :puppet)
+
+      expect(the_hostclass).to document_a(:type => :hostclass, :docstring => comment)
+    end
+
+    it "should parse multi-line documentation strings before a given class" do
+      puppet_code = <<-PUPPET
+        # Class: foo::bar
+        #
+        # This class does some stuff
+        class foo::bar { }
+      PUPPET
+
+      parse(puppet_code, :puppet)
+
+      comment = "Class: foo::bar\nThis class does some stuff"
+      expect(the_hostclass).to document_a(:type => :hostclass, :docstring => comment)
+    end
+
+    it "should not parse documentation before a class if it is followed by a new line" do
+      puppet_code = <<-PUPPET
+        # Class: foo::bar
+
+        class foo::bar { }
+      PUPPET
+
+      parse(puppet_code, :puppet)
+
+      expect(the_hostclass).to document_a(:type => :hostclass, :docstring => "")
     end
   end
 end
