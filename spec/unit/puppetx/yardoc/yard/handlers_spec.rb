@@ -147,8 +147,7 @@ describe Puppetx::Yardoc::YARD::Handlers do
     it "should not add anything to the Registry if incorrect ruby code is present" do
       parse <<-RUBY
         # The summary
-        Puppet::Functions.create_function(:the function do
-        end
+        This is not ruby code
       RUBY
 
       expect(Registry.all).to be_empty
@@ -156,21 +155,60 @@ describe Puppetx::Yardoc::YARD::Handlers do
   end
 
   describe "ParserFunctionHanlder" do
-    before(:each) {parse_file :puppet3_function, __FILE__, log.level, '.rb'}
-
-    it "should add a module object to the Registry" do
-      puppet_module = Registry.at("Puppet::Parser::Functions")
-      expect(puppet_module.type).to be(:module)
+    def the_method()
+      Registry.at("ParserFunctions#the_function")
     end
 
-    it "should add a puppet namespace object to the Registry" do
-      namespace = Registry.at("ParserFunctions")
-      expect(namespace.type).to be(:puppetnamespace)
+    def the_namespace()
+      Registry.at("ParserFunctions")
     end
 
-    it "should add a method object to the Registry" do
-      method = Registry.at("ParserFunctions#puppet3_function")
-      expect(method.type).to be(:method)
+    it "should parse single-line documentation strings before a given function" do
+      comment = "The summary"
+      parse <<-RUBY
+        # #{comment}
+        newfunction(:the_function, :type => rvalue) do |args|
+        end
+      RUBY
+
+      expect(the_method).to document_a(:type => :method, :docstring => comment)
+      expect(the_namespace).to document_a(:type => :puppetnamespace)
+    end
+
+    it "should parse multi-line documentation strings before a given function" do
+      parse <<-RUBY
+        # The summary
+        #
+        # The longer description
+        newfunction(:the_function, :type => rvalue) do |args|
+        end
+      RUBY
+
+      comment = "The summary\n\nThe longer description"
+      expect(the_method).to document_a(:type => :method, :docstring => comment)
+      expect(the_namespace).to document_a(:type => :puppetnamespace)
+    end
+
+    it "should not parse documentation before a function if it is followed by two new lines" do
+      parse <<-RUBY
+        # The summary
+
+
+        newfunction(:the_function, :type => rvalue) do |args|
+        end
+      RUBY
+
+      expect(the_method).to document_a(:type => :method, :docstring => "")
+      expect(the_namespace).to document_a(:type => :puppetnamespace)
+    end
+
+    it "should not add anything to the Registry if incorrect ruby code is present" do
+      parse <<-RUBY
+        # The summary
+        This is not ruby code
+      RUBY
+
+      expect(Registry.all).to be_empty
     end
   end
 
