@@ -1,7 +1,7 @@
 require 'puppetx'
 
 # Nothing to see here except forward declarations.
-module Puppetx::Yardoc
+module Puppetx::Strings
   # This submodule contains bits that interface with the YARD plugin system.
   module YARD
   end

@@ -1,8 +1,8 @@
 require 'yard'
 
-require_relative '../../../yardoc'
+require_relative '../../../strings'
 
-module Puppetx::Yardoc::YARD::CodeObjects
+module Puppetx::Strings::YARD::CodeObjects
   class PuppetNamespaceObject < YARD::CodeObjects::NamespaceObject
     # NOTE: `YARD::Registry#resolve` requires a method with this signature to
     # be present on all subclasses of `NamespaceObject`.

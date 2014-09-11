@@ -1,4 +1,4 @@
-Puppet YARDoc
+Puppet Strings
 =============
 
 A Puppet Face and plugin built on the [YARD Documentation Tool](http://yardoc.org/) and Puppet Future Parser.
@@ -23,13 +23,13 @@ Usage
 Documenting a module:
 
     cd /path/to/module
-    puppet yardoc
+    puppet strings
 
 This processes `README` and everything in `manifests/**/*.pp`.
 
 Documenting specific manifests:
 
-    puppet yardoc some_manifest.pp [another_if_you_feel_like_it.pp]
+    puppet strings some_manifest.pp [another_if_you_feel_like_it.pp]
 
 Processing is delegated to the `yardoc` tool so some options listed in `yard help doc` are available.
 However, Puppet Faces do not support passing arbitrary options through a face so these options must be specified in a `.yardopts` file.

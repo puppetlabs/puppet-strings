@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'puppetx/yardoc/yard/handlers/future_parser_function_handler'
+require 'puppetx/strings/yard/handlers/future_parser_function_handler'
 require 'strings_spec/parsing'
 
 describe "FutureParserDispatchHandler" do

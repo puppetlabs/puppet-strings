@@ -6,7 +6,7 @@ require 'puppet'
 require 'rspec'
 
 # This is neeeded so we can access a Registry if YARD creates one
-require 'puppetx/yardoc/yard/plugin'
+require 'puppetx/strings/yard/plugin'
 include YARD
 
 RSpec.configure do |config|

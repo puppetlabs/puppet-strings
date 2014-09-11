@@ -1,11 +1,11 @@
 require_relative '../code_objects'
 
-module Puppetx::Yardoc::YARD::Handlers
+module Puppetx::Strings::YARD::Handlers
   # Handles `dispatch` calls within a future parser function declaration. For
   # now, it just treats any docstring as an `@overlaod` tag and attaches the
   # overload to the parent function.
   class FutureParserDispatchHandler < YARD::Handlers::Ruby::Base
-    include Puppetx::Yardoc::YARD::CodeObjects
+    include Puppetx::Strings::YARD::CodeObjects
 
     handles method_call(:dispatch)
 
@@ -22,7 +22,7 @@ module Puppetx::Yardoc::YARD::Handlers
   end
 
   class FutureParserFunctionHandler < YARD::Handlers::Ruby::Base
-    include Puppetx::Yardoc::YARD::CodeObjects
+    include Puppetx::Strings::YARD::CodeObjects
 
     handles method_call(:create_function)
 

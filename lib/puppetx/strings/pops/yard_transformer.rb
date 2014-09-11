@@ -1,9 +1,9 @@
 require 'puppet/pops'
 
-require_relative '../../yardoc'
+require_relative '../../strings'
 require_relative 'yard_statement'
 
-module Puppetx::Yardoc::Pops
+module Puppetx::Strings::Pops
   # Loosely based on the TreeDumper classes in Pops::Model. The responsibility of
   # this class is to walk a Pops::Model and output objects that can be consumed
   # by YARD handlers.

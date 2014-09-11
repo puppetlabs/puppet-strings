@@ -3,9 +3,9 @@ require 'puppet/util/docs'
 
 require_relative '../code_objects'
 
-module Puppetx::Yardoc::YARD::Handlers
+module Puppetx::Strings::YARD::Handlers
   class ParserFunctionHandler < YARD::Handlers::Ruby::Base
-    include Puppetx::Yardoc::YARD::CodeObjects
+    include Puppetx::Strings::YARD::CodeObjects
 
     handles method_call(:newfunction)
 

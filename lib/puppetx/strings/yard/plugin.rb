@@ -10,10 +10,10 @@ require_relative 'parser'
 require_relative 'handlers'
 
 YARD::Parser::SourceParser.register_parser_type(:puppet,
-  Puppetx::Yardoc::YARD::PuppetParser,
+  Puppetx::Strings::YARD::PuppetParser,
   ['pp'])
 YARD::Handlers::Processor.register_handler_namespace(:puppet,
-  Puppetx::Yardoc::YARD::Handlers)
+  Puppetx::Strings::YARD::Handlers)
 
 # FIXME: Might not be the best idea to have the template code on the Ruby
 # LOAD_PATH as the contents of this directory really aren't library code.

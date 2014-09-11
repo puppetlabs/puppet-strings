@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'puppetx/yardoc/yard/handlers/parser_function_handler'
+require 'puppetx/strings/yard/handlers/parser_function_handler'
 require 'strings_spec/parsing'
 
 describe "ParserFunctionHanlder" do

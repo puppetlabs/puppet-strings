@@ -1,6 +1,6 @@
 require 'puppet/face'
 
-Puppet::Face.define(:yardoc, '0.0.1') do
+Puppet::Face.define(:strings, '0.0.1') do
   summary "Generate Puppet documentation with YARD."
 
   def check_required_features
@@ -54,7 +54,7 @@ Puppet::Face.define(:yardoc, '0.0.1') do
       yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
       merge_puppet_args!(yard_args)
 
-      require 'puppetx/yardoc/yard/plugin'
+      require 'puppetx/strings/yard/plugin'
 
       # Hand off to YARD for further processing.
       YARD::CLI::Yardoc.run(*yard_args)
@@ -71,7 +71,7 @@ Puppet::Face.define(:yardoc, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppetx/yardoc/yard/plugin'
+      require 'puppetx/strings/yard/plugin'
       opts = args.pop
 
       # NOTE: The retrun value of the `module` Face seems to have changed in
@@ -105,13 +105,13 @@ Puppet::Face.define(:yardoc, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppetx/yardoc/yard/plugin'
+      require 'puppetx/strings/yard/plugin'
       opts = args.pop
 
       # FIXME: This is pretty inefficient as it forcibly re-generates the YARD
       # indicies each time the server is started. However, it ensures things are
       # generated properly.
-      module_list = Puppet::Face[:yardoc, :current].modules
+      module_list = Puppet::Face[:strings, :current].modules
 
       module_tuples = module_list.map do |mod|
         name = (mod.forge_name || mod.name).gsub('/', '-')

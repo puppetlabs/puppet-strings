@@ -1,6 +1,6 @@
 require_relative 'base'
 
-module Puppetx::Yardoc::YARD::Handlers
+module Puppetx::Strings::YARD::Handlers
   class DefinedTypeHandler < Base
     handles ResourceTypeDefinition
 

@@ -1,10 +1,10 @@
 require 'yard'
 require 'puppet/pops'
 
-require_relative '../../yardoc'
+require_relative '../../strings'
 require_relative '../pops/yard_transformer'
 
-module Puppetx::Yardoc::YARD
+module Puppetx::Strings::YARD
   class PuppetParser < YARD::Parser::Base
     attr_reader :file, :source
 
@@ -13,7 +13,7 @@ module Puppetx::Yardoc::YARD
       @file = filename
 
       @parser = Puppet::Pops::Parser::Parser.new()
-      @transformer = Puppetx::Yardoc::Pops::YARDTransformer.new()
+      @transformer = Puppetx::Strings::Pops::YARDTransformer.new()
     end
 
     def parse

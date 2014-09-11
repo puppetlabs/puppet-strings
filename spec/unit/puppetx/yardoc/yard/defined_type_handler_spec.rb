@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'puppetx/yardoc/yard/handlers/defined_type_handler'
+require 'puppetx/strings/yard/handlers/defined_type_handler'
 require 'strings_spec/parsing'
 
 

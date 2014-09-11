@@ -1,9 +1,9 @@
 require 'ostruct'
 require 'puppet/pops'
 
-require_relative '../../yardoc'
+require_relative '../../strings'
 
-module Puppetx::Yardoc::Pops
+module Puppetx::Strings::Pops
   # An adapter class that conforms a Pops model instance + adapters to the
   # interface expected by YARD handlers.
   #
