@@ -17,3 +17,6 @@ tags
 ## BUNDLER
 .bundle
 Gemfile.lock
+
+## YARD
+.yardoc
