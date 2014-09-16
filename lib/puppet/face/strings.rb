@@ -54,7 +54,7 @@ Puppet::Face.define(:strings, '0.0.1') do
       yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
       merge_puppet_args!(yard_args)
 
-      require 'puppetx/strings/yard/plugin'
+      require 'puppetx/puppetlabs/strings/yard/plugin'
 
       # Hand off to YARD for further processing.
       YARD::CLI::Yardoc.run(*yard_args)
@@ -71,7 +71,7 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppetx/strings/yard/plugin'
+      require 'puppetx/puppetlabs/strings/yard/plugin'
       opts = args.pop
 
       # NOTE: The retrun value of the `module` Face seems to have changed in
@@ -105,7 +105,7 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppetx/strings/yard/plugin'
+      require 'puppetx/puppetlabs/strings/yard/plugin'
       opts = args.pop
 
       # FIXME: This is pretty inefficient as it forcibly re-generates the YARD

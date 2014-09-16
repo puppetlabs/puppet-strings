@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'puppetx/strings/yard/handlers/host_class_handler'
+require 'puppetx/puppetlabs/strings/yard/handlers/host_class_handler'
 require 'strings_spec/parsing'
 
 describe "HostClassDefintion" do

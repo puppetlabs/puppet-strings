@@ -1,6 +1,6 @@
 require_relative 'defined_type_object'
 
-module Puppetx::Strings::YARD::CodeObjects
+module Puppetx::PuppetLabs::Strings::YARD::CodeObjects
   class HostClassObject < DefinedTypeObject
     # The {HostClassObject} that this class inherits from, if any.
     # @return [HostClassObject, Proxy, nil]

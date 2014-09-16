@@ -1,23 +1,23 @@
 require 'spec_helper'
-require 'puppetx/strings/yard/handlers/parser_function_handler'
+require 'puppetx/puppetlabs/strings/yard/handlers/future_parser_function_handler'
 require 'strings_spec/parsing'
 
-describe "ParserFunctionHanlder" do
+describe "FutureParserDispatchHandler" do
   include StringsSpec::Parsing
 
   def the_method()
-    Registry.at("ParserFunctions#the_function")
+    Registry.at("FutureParserFunctions#the_function")
   end
 
   def the_namespace()
-    Registry.at("ParserFunctions")
+    Registry.at("FutureParserFunctions")
   end
 
   it "should parse single-line documentation strings before a given function" do
     comment = "The summary"
     parse <<-RUBY
         # #{comment}
-        newfunction(:the_function, :type => rvalue) do |args|
+        Puppet::Functions.create_function(:the_function) do
         end
     RUBY
 
@@ -30,7 +30,7 @@ describe "ParserFunctionHanlder" do
         # The summary
         #
         # The longer description
-        newfunction(:the_function, :type => rvalue) do |args|
+        Puppet::Functions.create_function(:the_function) do
         end
     RUBY
 
@@ -42,13 +42,24 @@ describe "ParserFunctionHanlder" do
   it "should not parse documentation before a function if it is followed by two new lines" do
     parse <<-RUBY
         # The summary
+        #
+        # The longer description
 
 
-        newfunction(:the_function, :type => rvalue) do |args|
+        Puppet::Functions.create_function(:the_function) do
         end
     RUBY
 
     expect(the_method).to document_a(:type => :method, :docstring => "")
     expect(the_namespace).to document_a(:type => :puppetnamespace)
+  end
+
+  it "should not add anything to the Registry if incorrect ruby code is present" do
+    parse <<-RUBY
+        # The summary
+        This is not ruby code
+    RUBY
+
+    expect(Registry.all).to be_empty
   end
 end

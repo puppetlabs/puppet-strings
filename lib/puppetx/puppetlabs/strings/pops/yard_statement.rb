@@ -3,7 +3,7 @@ require 'puppet/pops'
 
 require_relative '../../strings'
 
-module Puppetx::Strings::Pops
+module Puppetx::PuppetLabs::Strings::Pops
   # An adapter class that conforms a Pops model instance + adapters to the
   # interface expected by YARD handlers.
   #
