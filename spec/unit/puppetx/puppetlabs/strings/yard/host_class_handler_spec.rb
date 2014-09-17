@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'puppetx/puppetlabs/strings/yard/handlers/host_class_handler'
 require 'strings_spec/parsing'
 
-describe "HostClassDefintion" do
+describe Puppetx::PuppetLabs::Strings::YARD::Handlers::HostClassHandler do
   include StringsSpec::Parsing
 
   def the_hostclass()

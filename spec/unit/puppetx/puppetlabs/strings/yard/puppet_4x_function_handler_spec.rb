@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'puppetx/puppetlabs/strings/yard/handlers/puppet_4x_function_handler'
 require 'strings_spec/parsing'
 
-describe "Pupet4xFunctionHandler" do
+describe Puppetx::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler do
   include StringsSpec::Parsing
 
   def the_method()

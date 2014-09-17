@@ -3,7 +3,7 @@ require 'puppetx/puppetlabs/strings/yard/handlers/defined_type_handler'
 require 'strings_spec/parsing'
 
 
-describe "DefinedTypeHanlder" do
+describe Puppetx::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler do
   include StringsSpec::Parsing
 
   def the_definedtype()
