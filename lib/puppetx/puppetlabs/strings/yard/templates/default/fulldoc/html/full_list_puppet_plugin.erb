@@ -1,21 +1,21 @@
-<% unless P(:root, 'ParserFunctions').is_a?(CodeObjects::Proxy) %>
+<% unless P(:root, 'Puppet3xFunctions').is_a?(CodeObjects::Proxy) %>
 <li>
   <a class='toggle'></a>
-  <%= link_object(P(:root, 'ParserFunctions'), 'Parser Functions', nil, false) %>
-  <small class='search_info'>ParserFunctions</small>
+  <%= link_object(P(:root, 'Puppet3xFunctions'), 'Puppet 3x Functions', nil, false) %>
+  <small class='search_info'>Puppet3xFunctions</small>
 </li>
 <ul>
-  <%= namespace_list(:root => P(:root,'ParserFunctions'), :namespace_types => [:puppetnamespace, :method]) %>
+  <%= namespace_list(:root => P(:root,'Puppet3xFunctions'), :namespace_types => [:puppetnamespace, :method]) %>
 </ul>
 <% end %>
 
-<% unless P(:root, 'FutureParserFunctions').is_a?(CodeObjects::Proxy) %>
+<% unless P(:root, 'Puppet4xFunctions').is_a?(CodeObjects::Proxy) %>
 <li>
   <a class='toggle'></a>
-  <%= link_object(P(:root, 'FutureParserFunctions'), 'Future Parser Functions', nil, false) %>
-  <small class='search_info'>FutureParserFunctions</small>
+  <%= link_object(P(:root, 'Puppet4xFunctions'), 'Puppet 4x Functions', nil, false) %>
+  <small class='search_info'>Puppet4xFunctions</small>
 </li>
 <ul>
-  <%= namespace_list(:root => P(:root,'FutureParserFunctions'), :namespace_types => [:puppetnamespace, :method]) %>
+  <%= namespace_list(:root => P(:root,'Puppet4xFunctions'), :namespace_types => [:puppetnamespace, :method]) %>
 </ul>
 <% end %>

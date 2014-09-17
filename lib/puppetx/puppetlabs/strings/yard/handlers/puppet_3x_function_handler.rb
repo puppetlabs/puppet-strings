@@ -4,7 +4,7 @@ require 'puppet/util/docs'
 require_relative '../code_objects'
 
 module Puppetx::PuppetLabs::Strings::YARD::Handlers
-  class ParserFunctionHandler < YARD::Handlers::Ruby::Base
+  class Puppet3xFunctionHandler < YARD::Handlers::Ruby::Base
     include Puppetx::PuppetLabs::Strings::YARD::CodeObjects
 
     handles method_call(:newfunction)
@@ -40,11 +40,11 @@ module Puppetx::PuppetLabs::Strings::YARD::Handlers
     # @return [PuppetNamespaceObject]
     def function_namespace
       # NOTE: This tricky. If there is ever a Ruby class or module with the
-      # name ::ParserFunctions, then there will be a clash. Hopefully the name
+      # name ::Puppet3xFunctions, then there will be a clash. Hopefully the name
       # is sufficiently uncommon.
-      obj = P(:root, 'ParserFunctions')
+      obj = P(:root, 'Puppet3xFunctions')
       if obj.is_a? Proxy
-        namespace_obj = PuppetNamespaceObject.new(:root, 'ParserFunctions')
+        namespace_obj = PuppetNamespaceObject.new(:root, 'Puppet3xFunctions')
         namespace_obj.add_tag YARD::Tags::Tag.new(:api, 'public')
 
         register namespace_obj

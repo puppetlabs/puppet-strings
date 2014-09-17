@@ -4,13 +4,13 @@ module Puppetx::PuppetLabs::Strings::YARD::Handlers
   # Handles `dispatch` calls within a future parser function declaration. For
   # now, it just treats any docstring as an `@overlaod` tag and attaches the
   # overload to the parent function.
-  class FutureParserDispatchHandler < YARD::Handlers::Ruby::Base
+  class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
     include Puppetx::PuppetLabs::Strings::YARD::CodeObjects
 
     handles method_call(:dispatch)
 
     process do
-      return unless owner.is_a?(MethodObject) && owner['future_parser_function']
+      return unless owner.is_a?(MethodObject) && owner['puppet_4x_function']
       return unless statement.docstring
 
       docstring = ::YARD::Docstring.new(statement.docstring, nil)
@@ -21,7 +21,7 @@ module Puppetx::PuppetLabs::Strings::YARD::Handlers
     end
   end
 
-  class FutureParserFunctionHandler < YARD::Handlers::Ruby::Base
+  class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
     include Puppetx::PuppetLabs::Strings::YARD::CodeObjects
 
     handles method_call(:create_function)
@@ -30,7 +30,7 @@ module Puppetx::PuppetLabs::Strings::YARD::Handlers
       name = process_parameters
 
       obj = MethodObject.new(function_namespace, name)
-      obj['future_parser_function'] = true
+      obj['puppet_4x_function'] = true
 
       register obj
 
@@ -48,11 +48,11 @@ module Puppetx::PuppetLabs::Strings::YARD::Handlers
     # @return [PuppetNamespaceObject]
     def function_namespace
       # NOTE: This tricky. If there is ever a Ruby class or module with the
-      # name ::ParserFunctions, then there will be a clash. Hopefully the name
+      # name ::Puppet4xFunctions, then there will be a clash. Hopefully the name
       # is sufficiently uncommon.
-      obj = P(:root, 'FutureParserFunctions')
+      obj = P(:root, 'Puppet4xFunctions')
       if obj.is_a? Proxy
-        namespace_obj = PuppetNamespaceObject.new(:root, 'FutureParserFunctions')
+        namespace_obj = PuppetNamespaceObject.new(:root, 'Puppet4xFunctions')
 
         register namespace_obj
         # FIXME: The docstring has to be cleared. Otherwise, the namespace

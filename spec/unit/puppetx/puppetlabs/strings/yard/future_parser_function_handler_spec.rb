@@ -1,16 +1,16 @@
 require 'spec_helper'
-require 'puppetx/puppetlabs/strings/yard/handlers/future_parser_function_handler'
+require 'puppetx/puppetlabs/strings/yard/handlers/puppet_4x_function_handler'
 require 'strings_spec/parsing'
 
-describe "FutureParserDispatchHandler" do
+describe "Pupet4xFunctionHandler" do
   include StringsSpec::Parsing
 
   def the_method()
-    Registry.at("FutureParserFunctions#the_function")
+    Registry.at("Puppet4xFunctions#the_function")
   end
 
   def the_namespace()
-    Registry.at("FutureParserFunctions")
+    Registry.at("Puppet4xFunctions")
   end
 
   it "should parse single-line documentation strings before a given function" do
