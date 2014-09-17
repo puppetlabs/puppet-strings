@@ -1,10 +1,10 @@
 {
-  "name": "sharpie-puppet_yardoc",
+  "name": "puppetlabs-strings",
   "version": "0.0.1",
-  "author": "Charlie Sharpsteen",
+  "author": "Puppet Labs",
   "summary": "Puppet documentation via YARD",
   "license": "Apache 2.0",
-  "source": "",
+  "source": "https://github.com/puppetlabs/puppetlabs-strings",
   "project_page": null,
   "issues_url": null,
   "requirements": [
