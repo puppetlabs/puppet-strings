@@ -2,6 +2,7 @@ require 'puppetx/puppetlabs/strings'
 
 module Puppetx::PuppetLabs::Strings::Actions
 
+  # Holds the name of a module and the file path to its YARD index
   ModuleIndex = Struct.new(:name, :index_path)
 
   # A list of globs that generates the default list of module files from which
@@ -11,6 +12,7 @@ module Puppetx::PuppetLabs::Strings::Actions
   # default file list that YARD uses. Consider an upstream PR for this.
   MODULE_SOURCEFILES = ['manifests/**/*.pp', 'lib/**/*.rb']
 
+  # Ensures that the user has the needed features to use puppet strings
   def check_required_features
     unless Puppet.features.yard?
       raise RuntimeError, "The 'yard' gem must be installed in order to use this face."
@@ -33,11 +35,15 @@ module Puppetx::PuppetLabs::Strings::Actions
     yard_args
   end
 
+  # Builds doc indices (.yardoc directories) for modules.
+  # Currently lacks the fine-grained control over where these
+  # indices are created and just dumps them in the module roots.
+  #
+  # @return [Array<Module>] the modules to be documented
+  #
+  # @param [Array<String>] a list of the module source files
   def index_documentation_for_modules(module_names)
-    check_required_features
-    require 'puppetx/puppetlabs/strings/yard/plugin'
-
-    # NOTE: The retrun value of the `module` Face seems to have changed in
+    # NOTE: The return value of the `module` Face seems to have changed in
     # 3.6.x. This part of the code will blow up if run under an earlier
     # version of Puppet.
     modules = Puppet::Face[:module, :current].list
@@ -55,32 +61,45 @@ module Puppetx::PuppetLabs::Strings::Actions
       Dir.chdir(m.path) do
         YARD::CLI::Yardoc.run(*yard_args)
 
-        # Cear the global Registry so that objects from one module don't
+        # Clear the global Registry so that objects from one module don't
         # bleed into the next.
         YARD::Registry.clear
       end
     end
   end
 
+  # Extracts the needed information of the modules we're documenting
+  #
+  # @return [Array<ModuleIndex>] An array of representation of the modules
+  # to produce documentation for. Each ModuleIndex contains the module name
+  # and the path to its YARD index
+  #
+  # @param [Array<String>] a list of the module source files
   def generate_module_tuples(module_list)
     module_list.map do |mod|
       name = (mod.forge_name || mod.name).gsub('/', '-')
       yard_index = File.join(mod.path, '.yardoc')
 
-      #[name, yard_index]
       ModuleIndex.new(name, yard_index)
     end
   end
 
+  # Hands off the needed information to YARD so it may
+  # serve the documentation
+  #
+  # @param [Array<String>] a list of all the arguments to pass to YARD
   def serve_documentation(*yard_args)
     merge_puppet_args!(yard_args)
-    # Hand off to YARD for further processing.
     YARD::CLI::Server.run(*yard_args)
   end
 
+  # Hands off the needed information to YARD so it may
+  # generate the documentation
+  #
+  # @param [Array<String>] a list of all the arguments to pass to YARD
   def generate_documentation(*yard_args)
     merge_puppet_args!(yard_args)
-    # Hand off to YARD for further processing.
     YARD::CLI::Yardoc.run(*yard_args)
   end
 end
+

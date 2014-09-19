@@ -102,3 +102,4 @@ describe Puppet::Face do
     File.read(File.join(dir, modulename, 'doc', file))
   end
 end
+

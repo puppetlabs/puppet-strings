@@ -43,6 +43,7 @@ Puppet::Face.define(:strings, '0.0.1') do
     when_invoked do |*args|
       check_required_features
       require 'puppetx/puppetlabs/strings/yard/plugin'
+
       opts = args.pop
 
       module_names = args
