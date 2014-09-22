@@ -129,4 +129,44 @@ Puppet::Face.define(:strings, '0.0.1') do
       YARD::CLI::Server.run(*yard_args)
     end
   end
+
+  action(:authors) do
+    summary "Shows a list of authors from @author tags in a given list of Puppet manifests"
+    arguments "[module-name ...]"
+
+    when_invoked do |*args|
+      check_required_features
+      require 'puppetx/puppetlabs/strings/yard/plugin'
+      opts = args.pop
+
+      # NOTE: The retrun value of the `module` Face seems to have changed in
+      # 3.6.x. This part of the code will blow up if run under an earlier
+      # version of Puppet.
+      modules = Puppet::Face[:module, :current].list
+      module_list = modules[:modules_by_path].values.flatten
+
+      # TODO: Can use select! if Ruby 1.8.7 support is dropped.
+      module_list = module_list.select {|m| args.include? m.name} unless args.empty?
+
+      # Invoke `yardoc` with -n so that it doesn't generate any HTML output but
+      # does build a `.yardoc` index that other tools can generate output from.
+      yard_args = %w[--no-stats -n -q] + MODULE_SOURCEFILES
+      merge_puppet_args!(yard_args)
+
+      module_list.each do |m|
+        Dir.chdir(m.path) do
+          YARD::CLI::Yardoc.run(*yard_args)
+
+          YARD::Registry.all(:hostclass, :definedtype).map do | e |
+            authors = e.tags.select {|t| t.tag_name = 'author'}.map{|t| t.text }
+            puts authors
+          end
+
+          # Cear the global Registry so that objects from one module don't
+          # bleed into the next.
+          YARD::Registry.clear
+        end
+      end
+    end
+  end
 end
