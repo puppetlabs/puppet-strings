@@ -1,6 +1,6 @@
 require 'puppet/pops'
 
-require_relative 'puppet_namespace_object'
+require 'puppetx/puppetlabs/strings/yard/code_objects/puppet_namespace_object'
 
 module Puppetx::PuppetLabs::Strings::YARD::CodeObjects
   class DefinedTypeObject < PuppetNamespaceObject

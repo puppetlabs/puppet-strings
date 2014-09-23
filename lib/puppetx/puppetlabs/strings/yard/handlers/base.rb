@@ -1,8 +1,8 @@
 require 'yard'
 require 'puppet/pops'
 
-require_relative '../../../strings'
-require_relative '../code_objects'
+require 'puppetx/puppetlabs/strings'
+require 'puppetx/puppetlabs/strings/yard/code_objects'
 
 module Puppetx::PuppetLabs::Strings::YARD::Handlers
   class Base < YARD::Handlers::Base

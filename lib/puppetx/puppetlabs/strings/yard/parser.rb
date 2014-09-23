@@ -1,8 +1,8 @@
 require 'yard'
 require 'puppet/pops'
 
-require_relative '../../strings'
-require_relative '../pops/yard_transformer'
+require 'puppetx/puppetlabs/strings'
+require 'puppetx/puppetlabs/strings//pops/yard_transformer'
 
 module Puppetx::PuppetLabs::Strings::YARD
   class PuppetParser < YARD::Parser::Base

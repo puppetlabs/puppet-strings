@@ -1,4 +1,4 @@
-require_relative 'defined_type_object'
+require 'puppetx/puppetlabs/strings/yard/code_objects/defined_type_object'
 
 module Puppetx::PuppetLabs::Strings::YARD::CodeObjects
   class HostClassObject < DefinedTypeObject

@@ -1,13 +1,7 @@
-# TODO: Decide if supporting 1.8.7 is really worth it.
-if RUBY_VERSION < '1.9'
-  require 'backports/1.9.1/kernel/require_relative'
-end
-
 require 'puppet'
-
-require_relative 'monkey_patches'
-require_relative 'parser'
-require_relative 'handlers'
+require 'puppetx/puppetlabs/strings/yard/monkey_patches'
+require 'puppetx/puppetlabs/strings/yard/parser'
+require 'puppetx/puppetlabs/strings/yard/handlers'
 
 YARD::Parser::SourceParser.register_parser_type(:puppet,
   Puppetx::PuppetLabs::Strings::YARD::PuppetParser,

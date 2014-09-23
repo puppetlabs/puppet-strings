@@ -1,4 +1,4 @@
-require_relative 'base'
+require 'puppetx/puppetlabs/strings/yard/handlers/base'
 
 module Puppetx::PuppetLabs::Strings::YARD::Handlers
   class HostClassHandler < Base

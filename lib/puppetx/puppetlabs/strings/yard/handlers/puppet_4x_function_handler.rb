@@ -1,4 +1,4 @@
-require_relative '../code_objects'
+require 'puppetx/puppetlabs/strings/yard/code_objects'
 
 module Puppetx::PuppetLabs::Strings::YARD::Handlers
   # Handles `dispatch` calls within a future parser function declaration. For

@@ -1,7 +1,7 @@
 require 'ostruct'
 require 'puppet/pops'
 
-require_relative '../../strings'
+require 'puppetx/puppetlabs/strings'
 
 module Puppetx::PuppetLabs::Strings::Pops
   # An adapter class that conforms a Pops model instance + adapters to the

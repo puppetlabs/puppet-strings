@@ -1,7 +1,6 @@
 require 'puppet/pops'
-
-require_relative '../../strings'
-require_relative 'yard_statement'
+require 'puppetx/puppetlabs/strings'
+require 'puppetx/puppetlabs/strings/pops/yard_statement'
 
 module Puppetx::PuppetLabs::Strings::Pops
   # Loosely based on the TreeDumper classes in Pops::Model. The responsibility of

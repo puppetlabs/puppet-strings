@@ -1,7 +1,6 @@
 # This utility library contains some tools for working with Puppet docstrings.
 require 'puppet/util/docs'
-
-require_relative '../code_objects'
+require 'puppetx/puppetlabs/strings/yard/code_objects'
 
 module Puppetx::PuppetLabs::Strings::YARD::Handlers
   class Puppet3xFunctionHandler < YARD::Handlers::Ruby::Base

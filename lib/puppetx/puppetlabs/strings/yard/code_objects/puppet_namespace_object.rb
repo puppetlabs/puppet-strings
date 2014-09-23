@@ -1,6 +1,5 @@
 require 'yard'
-
-require_relative '../../../strings'
+require 'puppetx/puppetlabs/strings'
 
 module Puppetx::PuppetLabs::Strings::YARD::CodeObjects
   class PuppetNamespaceObject < YARD::CodeObjects::NamespaceObject
