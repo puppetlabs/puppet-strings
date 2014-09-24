@@ -1,9 +1,14 @@
 source 'https://rubygems.org'
 
 gem 'yard'
-gem 'puppet', '~> 3.6.2'
 gem 'rgen'
 gem 'redcarpet'
+
+if puppetversion = ENV['PUPPET_VERSION']
+  gem 'puppet', puppetversion
+else
+  gem 'puppet', '~> 3.6.2'
+end
 
 group :test do
   gem 'rspec'
