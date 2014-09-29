@@ -6,6 +6,11 @@ module Puppetx::PuppetLabs
 
     # This submodule contains bits that interface with the YARD plugin system.
     module YARD
+      module Handlers
+      end
+
+      module CodeObjects
+      end
     end
 
     # This submodule contains bits that operate on the Pops module produced by

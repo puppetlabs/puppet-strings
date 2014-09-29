@@ -1,5 +1,4 @@
 require 'puppet/face'
-require 'puppetx/puppetlabs/strings/actions'
 
 Puppet::Face.define(:strings, '0.0.1') do
   summary "Generate Puppet documentation with YARD."
@@ -34,6 +33,7 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
+      require 'puppetx/puppetlabs/strings/actions'
 
       yardoc_actions = Puppetx::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
 
@@ -63,6 +63,7 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
+      require 'puppetx/puppetlabs/strings/actions'
 
       server_actions = Puppetx::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
 
