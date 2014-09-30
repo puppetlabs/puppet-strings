@@ -1,5 +1,4 @@
 require 'puppetx/puppetlabs/strings'
-require 'puppetx/puppetlabs/strings/yard/plugin'
 
 class Puppetx::PuppetLabs::Strings::Actions
 
