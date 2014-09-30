@@ -1,7 +1,7 @@
 require 'puppet'
 require 'puppetx/puppetlabs/strings/yard/monkey_patches'
 require 'puppetx/puppetlabs/strings/yard/parser'
-require 'puppetx/puppetlabs/strings/yard/handlers'
+require 'puppetx/puppetlabs/strings'
 
 YARD::Parser::SourceParser.register_parser_type(:puppet,
   Puppetx::PuppetLabs::Strings::YARD::PuppetParser,

@@ -6,7 +6,7 @@ module StringsSpec
     # Cleans up the Registry and gives YARD some source code
     # to generate documentation for
     def parse(string, parser = :ruby)
-      Registry.clear
+      YARD::Registry.clear
       YARD::Parser::SourceParser.parse_string(string, parser)
     end
 

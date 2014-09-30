@@ -6,7 +6,7 @@ describe Puppetx::PuppetLabs::Strings::YARD::Handlers::HostClassHandler do
   include StringsSpec::Parsing
 
   def the_hostclass()
-    Registry.at("foo::bar")
+    YARD::Registry.at("foo::bar")
   end
 
   it "should parse single-line documentation strings before a given class" do

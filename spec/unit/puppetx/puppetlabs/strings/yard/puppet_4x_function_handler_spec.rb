@@ -6,11 +6,11 @@ describe Puppetx::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
   include StringsSpec::Parsing
 
   def the_method()
-    Registry.at("Puppet4xFunctions#the_function")
+    YARD::Registry.at("Puppet4xFunctions#the_function")
   end
 
   def the_namespace()
-    Registry.at("Puppet4xFunctions")
+    YARD::Registry.at("Puppet4xFunctions")
   end
 
   it "should parse single-line documentation strings before a given function" do
@@ -60,6 +60,6 @@ describe Puppetx::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
         This is not ruby code
     RUBY
 
-    expect(Registry.all).to be_empty
+    expect(YARD::Registry.all).to be_empty
   end
 end

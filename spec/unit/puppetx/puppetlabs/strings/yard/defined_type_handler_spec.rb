@@ -7,7 +7,7 @@ describe Puppetx::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler do
   include StringsSpec::Parsing
 
   def the_definedtype()
-    Registry.at("foo::bar")
+    YARD::Registry.at("foo::bar")
   end
 
   it "should parse single-line documentation strings before a given defined type" do
@@ -56,6 +56,6 @@ describe Puppetx::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler do
 
     parse(puppet_code, :puppet)
 
-    expect(Registry.all).to be_empty
+    expect(YARD::Registry.all).to be_empty
   end
 end

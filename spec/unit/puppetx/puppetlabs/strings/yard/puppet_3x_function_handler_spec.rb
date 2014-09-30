@@ -6,11 +6,11 @@ describe Puppetx::PuppetLabs::Strings::YARD::Handlers::Puppet3xFunctionHandler d
   include StringsSpec::Parsing
 
   def the_method()
-    Registry.at("Puppet3xFunctions#the_function")
+    YARD::Registry.at("Puppet3xFunctions#the_function")
   end
 
   def the_namespace()
-    Registry.at("Puppet3xFunctions")
+    YARD::Registry.at("Puppet3xFunctions")
   end
 
   it "should parse single-line documentation strings before a given function" do
