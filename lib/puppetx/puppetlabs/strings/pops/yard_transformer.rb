@@ -1,7 +1,3 @@
-require 'puppet/pops'
-require 'puppetx/puppetlabs/strings'
-require 'puppetx/puppetlabs/strings/pops/yard_statement'
-
 # Loosely based on the TreeDumper classes in Pops::Model. The responsibility of
 # this class is to walk a Pops::Model and output objects that can be consumed
 # by YARD handlers.

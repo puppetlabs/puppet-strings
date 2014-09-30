@@ -1,5 +1,3 @@
-require 'puppetx/puppetlabs/strings/yard/code_objects'
-
 # Handles `dispatch` calls within a future parser function declaration. For
 # now, it just treats any docstring as an `@overlaod` tag and attaches the
 # overload to the parent function.

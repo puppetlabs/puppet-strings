@@ -1,5 +1,3 @@
-require 'puppetx/puppetlabs/strings/yard/code_objects/defined_type_object'
-
 class Puppetx::PuppetLabs::Strings::YARD::CodeObjects::HostClassObject < Puppetx::PuppetLabs::Strings::YARD::CodeObjects::DefinedTypeObject
   # The {HostClassObject} that this class inherits from, if any.
   # @return [HostClassObject, Proxy, nil]

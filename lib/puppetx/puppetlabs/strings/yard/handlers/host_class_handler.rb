@@ -1,5 +1,3 @@
-require 'puppetx/puppetlabs/strings/yard/handlers/base'
-
 class Puppetx::PuppetLabs::Strings::YARD::Handlers::HostClassHandler < Puppetx::PuppetLabs::Strings::YARD::Handlers::Base
   handles HostClassDefinition
 

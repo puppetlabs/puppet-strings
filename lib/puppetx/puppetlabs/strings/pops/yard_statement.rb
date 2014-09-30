@@ -1,7 +1,4 @@
 require 'ostruct'
-require 'puppet/pops'
-
-require 'puppetx/puppetlabs/strings'
 
 # An adapter class that conforms a Pops model instance + adapters to the
 # interface expected by YARD handlers.

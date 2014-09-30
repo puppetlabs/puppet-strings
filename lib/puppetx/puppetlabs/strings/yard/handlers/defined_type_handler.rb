@@ -1,5 +1,3 @@
-require 'puppetx/puppetlabs/strings/yard/handlers/base'
-
 class Puppetx::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler < Puppetx::PuppetLabs::Strings::YARD::Handlers:: Base
   handles ResourceTypeDefinition
 
