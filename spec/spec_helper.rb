@@ -5,9 +5,7 @@ require 'mocha'
 require 'puppet'
 require 'rspec'
 
-# This is neeeded so we can access a Registry if YARD creates one
-require 'puppetx/puppetlabs/strings/yard/plugin'
-include YARD
+require 'puppetx/puppetlabs/strings'
 
 RSpec.configure do |config|
     config.mock_with :mocha

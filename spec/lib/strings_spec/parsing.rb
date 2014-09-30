@@ -3,11 +3,17 @@ require 'spec_helper'
 module StringsSpec
   module Parsing
 
+    # Cleans up the Registry and gives YARD some source code
+    # to generate documentation for
     def parse(string, parser = :ruby)
-      Registry.clear
+      YARD::Registry.clear
       YARD::Parser::SourceParser.parse_string(string, parser)
     end
 
+    # A custom matcher that allows us to compare aspects of a
+    # Code Objects to the specified values. This gives us a
+    # simplified way to ensure that the Code Object added to the
+    # Registry is what we expect when testing handlers
     RSpec::Matchers.define :document_a do |arguments|
       match do |actual|
         compare_values(actual).empty?

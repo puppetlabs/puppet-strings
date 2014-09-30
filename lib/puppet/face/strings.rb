@@ -3,6 +3,7 @@ require 'puppet/face'
 Puppet::Face.define(:strings, '0.0.1') do
   summary "Generate Puppet documentation with YARD."
 
+  # Ensures that the user has the needed features to use puppet strings
   def check_required_features
     unless Puppet.features.yard?
       raise RuntimeError, "The 'yard' gem must be installed in order to use this face."
@@ -15,14 +16,6 @@ Puppet::Face.define(:strings, '0.0.1') do
     if RUBY_VERSION.match(/^1\.8/)
       raise RuntimeError, "This face requires Ruby 1.9 or greater."
     end
-  end
-
-  # Maps things like the Puppet `--debug` flag to YARD options.
-  def merge_puppet_args!(yard_args)
-    yard_args.unshift '--debug'     if Puppet[:debug]
-    yard_args.unshift '--backtrace' if Puppet[:trace]
-
-    yard_args
   end
 
   # A list of globs that generates the default list of module files from which
@@ -40,6 +33,9 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
+      require 'puppetx/puppetlabs/strings/actions'
+
+      yardoc_actions = Puppetx::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
 
       # The last element of the argument array should be the options hash.
       #
@@ -52,12 +48,8 @@ Puppet::Face.define(:strings, '0.0.1') do
       # For now, assume the remaining positional args are a list of manifest
       # and ruby files to parse.
       yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
-      merge_puppet_args!(yard_args)
 
-      require 'puppetx/puppetlabs/strings/yard/plugin'
-
-      # Hand off to YARD for further processing.
-      YARD::CLI::Yardoc.run(*yard_args)
+      yardoc_actions.generate_documentation(*yard_args)
     end
   end
 
@@ -65,59 +57,29 @@ Puppet::Face.define(:strings, '0.0.1') do
   # (.yardoc directories) for Ruby Gems. Currently lacks the fine-grained
   # control over where these indicies are created and just dumps them in the
   # module roots.
-  action(:modules) do
-    summary "Generate YARD indices for a list of modules."
-    arguments "[module-name ...]"
-
-    when_invoked do |*args|
-      check_required_features
-      require 'puppetx/puppetlabs/strings/yard/plugin'
-      opts = args.pop
-
-      # NOTE: The retrun value of the `module` Face seems to have changed in
-      # 3.6.x. This part of the code will blow up if run under an earlier
-      # version of Puppet.
-      modules = Puppet::Face[:module, :current].list
-      module_list = modules[:modules_by_path].values.flatten
-
-      # TODO: Can use select! if Ruby 1.8.7 support is dropped.
-      module_list = module_list.select {|m| args.include? m.name} unless args.empty?
-
-      # Invoke `yardoc` with -n so that it doesn't generate any HTML output but
-      # does build a `.yardoc` index that other tools can generate output from.
-      yard_args = %w[--no-stats -n] + MODULE_SOURCEFILES
-      merge_puppet_args!(yard_args)
-
-      module_list.each do |m|
-        Dir.chdir(m.path) do
-          YARD::CLI::Yardoc.run(*yard_args)
-
-          # Cear the global Registry so that objects from one module don't
-          # bleed into the next.
-          YARD::Registry.clear
-        end
-      end
-    end
-  end
 
   action(:server) do
     summary "Serve YARD documentation for modules."
 
     when_invoked do |*args|
       check_required_features
-      require 'puppetx/puppetlabs/strings/yard/plugin'
+      require 'puppetx/puppetlabs/strings/actions'
+
+      server_actions = Puppetx::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
+
       opts = args.pop
+
+      module_names = args
 
       # FIXME: This is pretty inefficient as it forcibly re-generates the YARD
       # indicies each time the server is started. However, it ensures things are
       # generated properly.
-      module_list = Puppet::Face[:strings, :current].modules
+      module_list = server_actions.index_documentation_for_modules(module_names, MODULE_SOURCEFILES)
 
-      module_tuples = module_list.map do |mod|
-        name = (mod.forge_name || mod.name).gsub('/', '-')
-        yard_index = File.join(mod.path, '.yardoc')
+      module_tuples = server_actions.generate_module_tuples(module_list)
 
-        [name, yard_index]
+      module_tuples.map! do |mod|
+        [mod[:name], mod[:index_path]]
       end
 
       # The `-m` flag means a list of name/path pairs will follow. The name is
@@ -126,7 +88,8 @@ Puppet::Face.define(:strings, '0.0.1') do
       yard_args = %w[-m -q] + module_tuples.flatten
       merge_puppet_args!(yard_args)
 
-      YARD::CLI::Server.run(*yard_args)
+      server_actions.serve_documentation(*yard_args)
     end
   end
 end
+
