@@ -123,7 +123,7 @@ Puppet::Face.define(:strings, '0.0.1') do
       # The `-m` flag means a list of name/path pairs will follow. The name is
       # used as the module name and the path indicates which `.yardoc` index to
       # generate documentation from.
-      yard_args = %w[-m] + module_tuples.flatten
+      yard_args = %w[-m -q] + module_tuples.flatten
       merge_puppet_args!(yard_args)
 
       YARD::CLI::Server.run(*yard_args)
