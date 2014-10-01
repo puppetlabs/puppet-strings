@@ -86,7 +86,6 @@ Puppet::Face.define(:strings, '0.0.1') do
       # used as the module name and the path indicates which `.yardoc` index to
       # generate documentation from.
       yard_args = %w[-m -q] + module_tuples.flatten
-      merge_puppet_args!(yard_args)
 
       server_actions.serve_documentation(*yard_args)
     end
