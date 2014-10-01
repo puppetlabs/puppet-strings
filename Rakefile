@@ -16,3 +16,9 @@ task :validate do
     sh "erb -P -x -T '-' #{template} | ruby -c"
   end
 end
+
+task :acceptance do
+  sh "puppet module build"
+  sh "puppet module build spec/unit/puppet/examples/test"
+  sh "rspec spec/acceptance/*.rb"
+end

@@ -61,7 +61,7 @@ describe Puppet::Face do
 
           Puppet::Face[:strings, :current].yardoc
 
-          expect(read_html(tmp, 'test', 'test.html')).to have_tag('.docstring .discussion', :text => /This class/)
+          expect(read_html(tmp, 'test', 'Puppet4xFunctions.html')).to have_tag('.docstring .discussion', :text => /This is a function/)
         end
       end
     end
