@@ -9,21 +9,15 @@ the `puppet doc` command once feature parity has been achieved.
 Installation
 ------------
 
-In most cases, the following will need to be installed:
+In order to run strings you need to have the following software installed:
 
-* A supported Ruby version. Ruby 1.9.3 and 2.0.0 are fully supported. Anything older than Ruby 1.9 is not supported.
-* A supported Puppet version. Anything older than Puppet 3.6.x is not supported.
+  * Ruby 1.9.3 or newer
+  * Puppet 3.7 or newer
+  * The yard rubygem
 
 In order to install the strings module, simply `git clone` this repository into
-your `modulepath` (i.e. `/etc/puppet/modules`) and ensure that you have the
-`yard` and `rgen` gems installed.
-
-Alternatively, you can clone the repository elsewhere and run the `puppet strings`
-command directly from the source directory if you install the need gems via
-bundler and the provided Gemfile.
-
-Once this module has been officially released to the Forge, you will also be
-able to install it using the `puppet module install` command.
+your `modulepath` (i.e. `/etc/puppet/modules`). This module is also available
+on the puppet forge and can be installed with `puppet module install puppetlabs-strings`.
 
 Running Puppet Strings
 -----
@@ -36,22 +30,15 @@ gems, you can do the following to document a module:
 
 This processes `README` and everything in `manifests/**/*.pp`.
 
-Documenting specific manifests:
+To document specific manifests:
 
-   $ puppet strings some_manifest.pp [another_if_you_feel_like_it.pp]
-
-If you would like to run strings from the source directory as described above, you'll
-want to install the needed gems and run via bundler:
-
-    $ bundle install --path .bundle/gems
-    $ bundle exec puppet strings
+    $ puppet strings some_manifest.pp [another_if_you_feel_like_it.pp]
 
 Processing is delegated to the `yardoc` tool so some options listed in `yard help doc` are available.
 However, Puppet Faces do not support passing arbitrary options through a face so these options must be specified in a `.yardopts` file.
 
-The strings face does offer two actions. In addition to generating a
-directory full of HTML, you can also serve up documentation for all your
-modules using the `server` action:
+In addition to generating a directory full of HTML, you can also serve up
+documentation for all your modules using the `server` action:
 
     $ puppet strings serever
 
@@ -65,12 +52,11 @@ Developing and Contributing
 We love contributions from the community! If you'd like to contribute to the strings module, 
 check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-strings/blob/master/CONTRIBUTING.md) to get information on the contribution process.
 
-
 Running Specs
 -----
 
-  If you're going to be doing any development with puppet strings, it's essential
-  that you can run the spec tests. You should simply have to do the following:
+If you're going to be doing any development with puppet strings, it's essential
+that you can run the spec tests. You should simply have to do the following:
 
     $ bundle install --path .bundle/gems
     $ bundle exec rake spec
@@ -90,11 +76,6 @@ they become available.
 Bugfixes and ongoing development will occur in minor releases for the current
 major version. Security fixes will be backported to a previous major version on
 a best-effort basis, until the previous major version is no longer maintained.
-
-Long-term support, including security patches and bug fixes, is available for
-commercial customers. Please see the following page for more details:
-
-[Puppet Enterprise Support Lifecycle](http://puppetlabs.com/misc/puppet-enterprise-lifecycle)
 
 Caveats
 -------
