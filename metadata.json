@@ -7,12 +7,13 @@
   "source": "https://github.com/puppetlabs/puppetlabs-strings",
   "project_page": null,
   "issues_url": null,
-  "requirements": [
+  "tags": ["yard", "yardoc", "puppet", "dev", "docs", "documentation"],
+  "operatingsystem_support": [ ],
+  "dependencies": [
     {
       "name": "puppet",
       "version_requirement": ">= 3.6.0"
     }
-  ],
-  "dependencies": [ ]
+  ]
 }
 
