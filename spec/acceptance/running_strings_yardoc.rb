@@ -20,9 +20,7 @@ describe 'Genearting module documation using yardoc action' do
   end
 
   it "should generate documenation for 3x functions" do
-    on master, 'cat /root/doc/Puppet3xFunctions.html' do
-      expect(read_file_on(master, '/root/doc/Puppet3xFunctions.html')).to have_tag('.docstring .discussion', :text => /documentation for `function3x`/)
-    end
+    expect(read_file_on(master, '/root/doc/Puppet3xFunctions.html')).to have_tag('.docstring .discussion', :text => /documentation for `function3x`/)
   end
 
   it "should generate documenation for 4x functions" do

@@ -20,5 +20,5 @@ end
 task :acceptance do
   sh "puppet module build"
   sh "puppet module build spec/unit/puppet/examples/test"
-  sh "rspec spec/acceptance/*.rb"
+  sh "BEAKER_set=#{ENV["platform"]} rspec spec/acceptance/*.rb"
 end
