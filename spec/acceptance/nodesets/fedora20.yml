@@ -1,0 +1,13 @@
+HOSTS:
+  master:
+    roles:
+      - master
+    platform: fedora-20-x86_64
+    hypervisor: vcloud
+    template: Delivery/Quality Assurance/Templates/vCloud/fedora-20-x86_64
+CONFIG:
+  filecount: 12
+  datastore: instance0
+  resourcepool: delivery/Quality Assurance/FOSS/Dynamic
+  folder: Delivery/Quality Assurance/FOSS/Dynamic
+  pooling_api: http://vcloud.delivery.puppetlabs.net/

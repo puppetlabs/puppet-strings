@@ -16,17 +16,17 @@ module StringsSpec
     # Registry is what we expect when testing handlers
     RSpec::Matchers.define :document_a do |arguments|
       match do |actual|
-        compare_values(actual).empty?
+        @mismatches = compare_values(actual, arguments)
+        @mismatches.empty?
       end
 
-      failure_message do |actual|
-        mismatches = compare_values(actual)
-        mismatches.collect do |key, value|
+      failure_message_for_should do
+        @mismatches.collect do |key, value|
           "Expected #{key} to be <#{value[1]}>, but got <#{value[0]}>."
         end.join("\n")
       end
 
-      def compare_values(actual)
+      def compare_values(actual, expected)
         mismatched_arguments = {}
         expected.each do |key, value|
           actual_value = actual.send(key)

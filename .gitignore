@@ -20,3 +20,6 @@ Gemfile.lock
 
 ## YARD
 .yardoc
+
+## MODULE BUILDS
+**/pkg
