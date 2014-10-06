@@ -1,19 +1,20 @@
 {
   "name": "puppetlabs-strings",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Puppet Labs",
   "summary": "Puppet documentation via YARD",
   "license": "Apache 2.0",
   "source": "https://github.com/puppetlabs/puppetlabs-strings",
-  "project_page": null,
-  "issues_url": null,
+  "project_page": "https://tickets.puppetlabs.com/browse/PDOC",
+  "issues_url": "https://tickets.puppetlabs.com/browse/PDOC",
   "tags": ["yard", "yardoc", "puppet", "dev", "docs", "documentation"],
   "operatingsystem_support": [ ],
-  "dependencies": [
+  "requirements": [
     {
       "name": "puppet",
       "version_requirement": ">= 3.6.0"
     }
-  ]
+  ],
+  "dependencies": [ ]
 }
 
