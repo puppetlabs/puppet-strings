@@ -17,7 +17,7 @@ In order to run strings you need to have the following software installed:
 
 In order to install the strings module, simply `git clone` this repository into
 your `modulepath` (i.e. `/etc/puppet/modules`). This module is also available
-on the puppet forge and can be installed with `puppet module install puppetlabs-strings`.
+on the [Puppet Forge](https://forge.puppetlabs.com/puppetlabs/strings) and can be installed with `puppet module install puppetlabs-strings`.
 
 Running Puppet Strings
 -----
