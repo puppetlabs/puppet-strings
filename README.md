@@ -40,7 +40,7 @@ However, Puppet Faces do not support passing arbitrary options through a face so
 In addition to generating a directory full of HTML, you can also serve up
 documentation for all your modules using the `server` action:
 
-    $ puppet strings serever
+    $ puppet strings server
 
 License
 -----
