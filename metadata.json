@@ -7,14 +7,24 @@
   "source": "https://github.com/puppetlabs/puppetlabs-strings",
   "project_page": "https://tickets.puppetlabs.com/browse/PDOC",
   "issues_url": "https://tickets.puppetlabs.com/browse/PDOC",
-  "tags": ["yard", "yardoc", "puppet", "dev", "docs", "documentation"],
-  "operatingsystem_support": [ ],
+  "tags": [
+    "yard",
+    "yardoc",
+    "puppet",
+    "dev",
+    "docs",
+    "documentation"
+  ],
+  "operatingsystem_support": [
+  
+  ],
   "requirements": [
     {
       "name": "puppet",
       "version_requirement": ">= 3.6.0"
     }
   ],
-  "dependencies": [ ]
+  "dependencies": [
+  
+  ]
 }
-
