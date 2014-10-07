@@ -6,7 +6,7 @@
   "license": "Apache 2.0",
   "source": "https://github.com/puppetlabs/puppetlabs-strings",
   "project_page": "https://tickets.puppetlabs.com/browse/PDOC",
-  "issues_url": "https://tickets.puppetlabs.com/browse/PDOC",
+  "issues_url": "https://github.com/puppetlabs/puppetlabs-strings",
   "tags": [
     "yard",
     "yardoc",
