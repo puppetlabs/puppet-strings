@@ -49,7 +49,7 @@ See [LICENSE](https://github.com/puppetlabs/puppetlabs-strings/blob/master/LICEN
 Developing and Contributing
 -----
 
-We love contributions from the community! If you'd like to contribute to the strings module, 
+We love contributions from the community! If you'd like to contribute to the strings module,
 check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-strings/blob/master/CONTRIBUTING.md) to get information on the contribution process.
 
 Running Specs
@@ -64,7 +64,7 @@ that you can run the spec tests. You should simply have to do the following:
 Support
 -----
 Please log tickets and issues at our [JIRA tracker](http://tickets.puppetlabs.com). The
-puppet strings project can be found under [PDOC](https://tickets.puppetlabs.com/browse/PDOC) on JIRA. 
+puppet strings project can be found under [PDOC](https://tickets.puppetlabs.com/browse/PDOC) on JIRA.
 A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users) is
 available for asking questions and getting help from others. In addition there
 is an active #puppet channel on Freenode.
