@@ -21,10 +21,10 @@ group :test do
   gem 'serverspec'
   gem 'beaker'
   gem 'beaker-rspec'
+  gem 'rubocop'
 end
 
 group :development do
   gem 'pry'
   gem 'pry-debugger'
-  gem 'rubocop'
 end
