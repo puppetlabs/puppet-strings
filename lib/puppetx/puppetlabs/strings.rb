@@ -1,6 +1,6 @@
 require 'puppet'
-require 'puppetx'
 require 'puppet/pops'
+require 'puppetx'
 require 'puppet/util/docs'
 require 'yard'
 
