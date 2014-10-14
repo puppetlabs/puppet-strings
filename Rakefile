@@ -22,3 +22,9 @@ task :acceptance do
   sh "puppet module build spec/unit/puppet/examples/test"
   sh "BEAKER_set=#{ENV["platform"]} rspec spec/acceptance/*.rb"
 end
+
+task(:rubocop) do
+  require 'rubocop'
+  cli = RuboCop::CLI.new
+  cli.run(%w(-D -f s))
+end

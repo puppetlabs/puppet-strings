@@ -38,12 +38,14 @@ Puppet::Face.define(:strings, '0.0.1') do
       yardoc_actions = Puppetx::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
 
       # The last element of the argument array should be the options hash.
+      # We don't have any options yet, so for now just pop the hash off and
+      # toss it.
       #
       # NOTE: The Puppet Face will throw 'unrecognized option' errors if any
       # YARD options are passed to it. The best way to approach this problem is
       # by using the `.yardopts` file. YARD will autoload any options placed in
       # that file.
-      opts = args.pop
+      args.pop
 
       # For now, assume the remaining positional args are a list of manifest
       # and ruby files to parse.
@@ -67,7 +69,7 @@ Puppet::Face.define(:strings, '0.0.1') do
 
       server_actions = Puppetx::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
 
-      opts = args.pop
+      args.pop
 
       module_names = args
 

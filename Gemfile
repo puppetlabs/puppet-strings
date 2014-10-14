@@ -5,7 +5,9 @@ gem 'rgen'
 gem 'redcarpet'
 gem 'puppet-strings', '0.1.0', :path => '.'
 
-if puppetversion = ENV['PUPPET_VERSION']
+puppetversion = ENV['PUPPET_VERSION']
+
+if puppetversion
   gem 'puppet', puppetversion
 else
   gem 'puppet', '~> 3.6.2'
@@ -19,6 +21,7 @@ group :test do
   gem 'serverspec'
   gem 'beaker'
   gem 'beaker-rspec'
+  gem 'rubocop'
 end
 
 group :development do
