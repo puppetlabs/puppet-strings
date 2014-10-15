@@ -83,7 +83,7 @@ Caveats
   - At the moment, only top-level Classes and Defined Types are parsed and formatted.
 
   - Documentation blocks must immediately precede the documented code with no whitespace.
-    This is because the comment extractor possesses the elegance and intelligance of a bag of hammers.
+    This is because the comment extractor possesses the elegance and intelligence of a bag of hammers.
 
   - This project is very much a work in progress and may very well have undiscovered bugs and pitfalls.
     If you discover any of these, [please file a ticket](https://tickets.puppetlabs.com/browse/PDOC).
