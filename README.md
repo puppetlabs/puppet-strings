@@ -1,5 +1,6 @@
 Puppet Strings
 =============
+[![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-strings)
 
 A Puppet Face and plugin built on the [YARD Documentation Tool](http://yardoc.org/) and Puppet Future Parser.
 It is uses YARD and the Puppet Parser to generate HTML documentation about
