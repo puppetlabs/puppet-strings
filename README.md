@@ -9,7 +9,6 @@ the `puppet doc` command once feature parity has been achieved.
 
 Installation
 ------------
-
 In order to run strings you need to have the following software installed:
 
   * Ruby 1.9.3 or newer
@@ -22,7 +21,6 @@ on the [Puppet Forge](https://forge.puppetlabs.com/puppetlabs/strings) and can b
 
 Running Puppet Strings
 -----
-
 If you cloned the repository into your `modulepath` and installed the needed
 gems, you can do the following to document a module:
 
@@ -42,6 +40,64 @@ In addition to generating a directory full of HTML, you can also serve up
 documentation for all your modules using the `server` action:
 
     $ puppet strings server
+
+Writing Compatible Documentation
+-----
+Since the strings module is built around YARD, a few different comment formats are compatible.
+YARD can work with RDoc, meaning it is backwards compatible with previously documented modules.
+However, we would ultimately like to move away from RDoc use Markdown instead. You can configure
+which you would like YARD to use by adding a `.yardopts` file to the root of your module directory
+which specifies the desired format:
+
+    --markup markdown
+
+While we have yet to decide exactly how documentation should work in the future, here are some
+very basic examples to get you started using the strings module. These are very much subject
+to change as we continue to work out a style guide.
+
+Here's an example of how you might document a 4x function:
+
+     # When given two numbers, returns the one that is larger.
+     # You could have a several line description here if you wanted,
+     # but I don't have much to say about this function.
+     #
+     # @example using two integers
+     #   $bigger_int = max(int_one, int_two)
+     #
+     # See further documentation somewhere else
+     #
+     # @return [Integer] the larger of the two parameters
+     #
+     # @param num_a [Integer] the first number to be compared
+     # @param num_b [Integer] the second number to be compared
+     Puppet::Functions.create_function(:max) do
+       def max(num_a, num_b)
+         num_a >= num_b ? num_a : num_b
+       end
+     end
+
+And here's an example of how you might document a class:
+
+     # Class: Example
+     #
+     # This class is meant to serve as an example of how one might
+     # want to document a manifest in a way that is compatible.
+     # with the strings module
+     #
+     # @example { "example": }
+     #
+     # @param first_arg The first parameter for this class
+     # @param second_arg The second paramter for this class
+     class example (
+       $first_arg = $example::params::first_arg,
+       $second_arg = $exampe::params::second_arg,
+     ) { }
+
+Here are a few other good resources for getting started with documentation:
+
+  * [Module README Template](https://docs.puppetlabs.com/puppet/latest/reference/modules_documentation.html)
+  * [YARD Getting Started Guide](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
+  * [YARD Tags Overview](http://www.rubydoc.info/gems/yard/file/docs/Tags.md)
 
 License
 -----
