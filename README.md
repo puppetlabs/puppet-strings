@@ -43,11 +43,11 @@ documentation for all your modules using the `server` action:
 
 Writing Compatible Documentation
 -----
-Since the strings module is built around YARD, a few different comment formats are compatible.
+Since the strings module is built around YARD, a few different comment formats can be used.
 YARD can work with RDoc, meaning it is backwards compatible with previously documented modules.
-However, we would ultimately like to move away from RDoc use Markdown instead. You can configure
-which you would like YARD to use by adding a `.yardopts` file to the root of your module directory
-which specifies the desired format:
+Feel free to try out strings with RDoc, but we are planning to move to Markdown as the standard.
+You can configure which you would like YARD to use by adding a `.yardopts` file to the root of
+your module directory which specifies the desired format:
 
     --markup markdown
 
@@ -63,8 +63,6 @@ Here's an example of how you might document a 4x function:
      #
      # @example using two integers
      #   $bigger_int = max(int_one, int_two)
-     #
-     # See further documentation somewhere else
      #
      # @return [Integer] the larger of the two parameters
      #
@@ -84,7 +82,8 @@ And here's an example of how you might document a class:
      # want to document a manifest in a way that is compatible.
      # with the strings module
      #
-     # @example { "example": }
+     # @example when declaring the example class
+     #   include example
      #
      # @param first_arg The first parameter for this class
      # @param second_arg The second paramter for this class
