@@ -3,30 +3,37 @@
   <ul class="param">
     <% @param_details.each do |param| %>
       <li>
-        <span class="name"><%= param[:name] %></span>
-        <% unless param[:module].nil? %>
-          <%# TODO: Linkify defaults that resolve to variable declarations in a different scope. %>
-          <% if param[:types] %>
-            <span class="type">
-              ( <%  param[:types].each do |type| %>
-                <tt>
-                  <%= type %>
-                  <% if param[:types].last != type %>
-                    ,
-                  <% end %>
-                </tt>
-              <% end %>)
-            </span>
-          <% end %>
-          <tt><%= "=> #{param[:module]}" %></tt>
+        <% if !param[:exists?] %>
+          <strike>
         <% end %>
-        <% if param[:desc]%>
-          —
-          <div class="inline">
-            <p><%=  param[:desc] %></p>
-          </div>
-        <% end %>
-      </li>
+         <span class="name"><%= param[:name] %></span>
+         <%# TODO: Linkify defaults that resolve to variable declarations in a different scope. %>
+         <% if param[:types] %>
+           <span class="type">
+             ( <%  param[:types].each do |type| %>
+               <tt>
+                 <% if param[:types].last != type %>
+                   <%= type %>,
+                 <% else %>
+                   <%= type %>
+                 <% end %>
+               </tt>
+             <% end %>)
+           </span>
+         <% end %>
+         <% unless param[:module].nil? %>
+           <tt><%= "=> #{param[:module]}" %></tt>
+         <% end %>
+         <% if param[:desc]%>
+           —
+           <div class="inline">
+             <p><%=  param[:desc] %></p>
+           </div>
+         <% end %>
+       </li>
+      <% if !param[:exists] %>
+        </strike>
+      <% end %>
     <% end %>
   </ul>
 </div>
