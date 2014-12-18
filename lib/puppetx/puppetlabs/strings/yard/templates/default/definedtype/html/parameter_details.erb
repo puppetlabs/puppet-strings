@@ -23,8 +23,8 @@
                 <tt>(TBD)</tt>
               <% end %>
             </span>
-          <% unless param[:module].nil? %>
-            <tt><%= "=> #{param[:module]}" %></tt>
+          <% unless param[:fq_name].nil? %>
+            <tt><%= "=> #{param[:fq_name]}" %></tt>
           <% end %>
           <% if param[:desc]%>
             —

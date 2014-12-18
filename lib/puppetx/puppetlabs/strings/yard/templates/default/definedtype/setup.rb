@@ -37,8 +37,20 @@ def docstring
   erb(:docstring)
 end
 
+# Given the parameter information and YARD param tags, extracts the
+# useful information and returns it as an array of hashes which can
+# be printed and formatted in the paramters_details erb file
+#
+# @param params_hash [Array] parameter details obtained programmatically
+# @param tags_hash [Array] parameter details obtained from comments
+#
+# @return [Hash] The relevant information about each parameter
+# @option opts [String] :name The name of the parameter
+# @option opts [String] :fq_name The fully qualified parameter name
+# @option opts [String] :desc The description provided in the comment
+# @options opts [Array] :types The parameter type(s) specified in the comment
+# @options opts [Boolean] :exists? True only if the parameter actually exists and just not just defined in the comment
 def extract_param_details(params_hash, tags_hash)
-
   parameter_info = []
 
   # Extract the information for parameters that actually exist
@@ -48,7 +60,7 @@ def extract_param_details(params_hash, tags_hash)
     description = param_tag.nil? ? nil : param_tag.text
     param_types = param_tag.nil? ? nil : param_tag.types
 
-    parameter_info.push({:name => param[0], :module => param[1], :desc => description, :types => param_types, :exists? => true})
+    parameter_info.push({:name => param[0], :fq_name => param[1], :desc => description, :types => param_types, :exists? => true})
   end
 
   # Check if there were any comments for parameters that do not exist
@@ -60,7 +72,7 @@ def extract_param_details(params_hash, tags_hash)
       end
     end
     if !param_exists
-      parameter_info.push({:name => tag.name, :module => nil, :desc => tag.text, :types => tag.types, :exists? => false})
+      parameter_info.push({:name => tag.name, :fq_name => nil, :desc => tag.text, :types => tag.types, :exists? => false})
     end
   end
 

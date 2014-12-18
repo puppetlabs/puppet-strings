@@ -76,8 +76,6 @@ Here's an example of how you might document a 4x function:
 
 And here's an example of how you might document a class:
 
-     # Class: Example
-     #
      # This class is meant to serve as an example of how one might
      # want to document a manifest in a way that is compatible.
      # with the strings module
