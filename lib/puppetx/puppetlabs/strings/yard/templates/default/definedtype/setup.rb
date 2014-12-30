@@ -17,6 +17,18 @@ def parameter_details
   erb(:parameter_details)
 end
 
+def header
+  if object.type == :hostclass
+    @header_text = "Puppet Class: #{object.name}"
+  elsif object.type == :definedtype
+    @header_text = "Puppet Defined Type: #{object.name}"
+  else
+    @header_text = "#{object.name}"
+  end
+
+  erb(:header)
+end
+
 def docstring
   examples = Hash.new
   example_tags = object.tags.find_all { |tag| tag.tag_name == "example" }
