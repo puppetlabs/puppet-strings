@@ -61,7 +61,7 @@ end
 # @option opts [String] :fq_name The fully qualified parameter name
 # @option opts [String] :desc The description provided in the comment
 # @options opts [Array] :types The parameter type(s) specified in the comment
-# @options opts [Boolean] :exists? True only if the parameter actually exists and just not just defined in the comment
+# @options opts [Boolean] :exists? True only if the parameter exists in the documented logic and not just in a comment
 def extract_param_details(params_hash, tags_hash)
   parameter_info = []
 
@@ -79,7 +79,7 @@ def extract_param_details(params_hash, tags_hash)
   tags_hash.each do |tag|
     param_exists = false
     parameter_info.each do |parameter|
-      if parameter.has_value?(tag.name)
+      if parameter[:name] == tag.name
         param_exists = true
       end
     end
