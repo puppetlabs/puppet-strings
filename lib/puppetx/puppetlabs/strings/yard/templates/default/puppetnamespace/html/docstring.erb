@@ -1,0 +1,95 @@
+<% @class_details.each do |func| %>
+  <h3 class="signature" id = <%= "#{func[:name]}-instance_method" %>>
+    <strong><%= func[:name] %> </strong>
+  </h3>
+  <div class="docstring">
+    <div class="discussion">
+      <p><%= htmlify(func[:desc]) %></p>
+    </div>
+  </div>
+  <div class="tags">
+    <% if func[:examples] != {}%>
+      <div class="examples">
+        <p class="tag_title">Examples:</p>
+        <% func[:examples].each do |title, text| %>
+          <div class="inline"><p><%= title %></p></div>
+          <pre class="example code"><code><span><%= text %></span></code></pre>
+        <% end %>
+      </div>
+    <% end %>
+    <% if func[:since] %>
+      <p class="tag_title">Since:</p>
+      <ul class="since">
+        <li>
+          <div class="inline">
+            <p><%= func[:since] %></p>
+          </div>
+        </li>
+      </ul>
+    <% end %>
+    <% if func[:return] %>
+      <p class="tag_title">Returns:</p>
+      <ul class="return">
+        <li>
+          <span class ="type">
+            <% if !func[:return][1].nil? %>
+              (<tt>
+                <% func[:return][1].each do |type| %>
+                  <%= type %>
+                  <% if func[:return][1].last != type %>
+                    ,
+                  <% end %>
+                <% end %>
+              </tt>) —
+            <% end %>
+          </span>
+          <% if !func[:return][0].nil? %>
+            <div class="inline">
+              <p><%= func[:return][0] %></p>
+            </div>
+          <% end %>
+        </li>
+      </ul>
+    <% end %>
+    <% if func[:params] != nil %>
+      <p class="tag_title">Parameters:</p>
+      <div class="tags">
+        <ul class="param">
+          <% func[:params].each do |param| %>
+            <li>
+              <% if !param[:exists?] %>
+                <strike>
+              <% end %>
+              <span class="name"><%= param[:name] %></span>
+              <%# TODO: Linkify defaults that resolve to variable declarations in a different scope. %>
+              <span class="type">
+                <% if param[:types] %>
+                  (<%  param[:types].each do |type| %>
+                    <tt>
+                      <% if param[:types].last != type %>
+                        <%= type %>,
+                      <% else %>
+                        <%= type %>
+                      <% end %>
+                    </tt>
+                  <% end %>)
+                <% else %>
+                  <tt>(TBD)</tt>
+                <% end %>
+              </span>
+              <% if param[:desc]%>
+                —
+                <div class="inline">
+                  <p><%=  param[:desc] %></p>
+                </div>
+              <% end %>
+              <% if !param[:exists] %>
+                </strike>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+<% end %>
