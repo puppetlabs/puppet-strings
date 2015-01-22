@@ -1,6 +1,12 @@
+<h2>Function Details</h2>
 <% @class_details.each do |func| %>
   <h3 class="signature" id = <%= "#{func[:name]}-instance_method" %>>
-    <strong><%= func[:name] %> </strong>
+    <strong>
+      <% if func[:return] %>
+        <%= @html_helper.generate_return_types(func[:return][1]) %>
+      <% end %>
+      <%= func[:name] %>
+    </strong>
   </h3>
   <div class="docstring">
     <div class="discussion">
@@ -31,23 +37,7 @@
       <p class="tag_title">Returns:</p>
       <ul class="return">
         <li>
-          <span class ="type">
-            <% if !func[:return][1].nil? %>
-              (<tt>
-                <% func[:return][1].each do |type| %>
-                  <%= type %>
-                  <% if func[:return][1].last != type %>
-                    ,
-                  <% end %>
-                <% end %>
-              </tt>) —
-            <% end %>
-          </span>
-          <% if !func[:return][0].nil? %>
-            <div class="inline">
-              <p><%= func[:return][0] %></p>
-            </div>
-          <% end %>
+          <%= @html_helper.generate_return_types(func[:return][1], func[:return][0]) %>
         </li>
       </ul>
     <% end %>
@@ -55,39 +45,7 @@
       <p class="tag_title">Parameters:</p>
       <div class="tags">
         <ul class="param">
-          <% func[:params].each do |param| %>
-            <li>
-              <% if !param[:exists?] %>
-                <strike>
-              <% end %>
-              <span class="name"><%= param[:name] %></span>
-              <%# TODO: Linkify defaults that resolve to variable declarations in a different scope. %>
-              <span class="type">
-                <% if param[:types] %>
-                  (<%  param[:types].each do |type| %>
-                    <tt>
-                      <% if param[:types].last != type %>
-                        <%= type %>,
-                      <% else %>
-                        <%= type %>
-                      <% end %>
-                    </tt>
-                  <% end %>)
-                <% else %>
-                  <tt>(TBD)</tt>
-                <% end %>
-              </span>
-              <% if param[:desc]%>
-                —
-                <div class="inline">
-                  <p><%=  param[:desc] %></p>
-                </div>
-              <% end %>
-              <% if !param[:exists] %>
-                </strike>
-              <% end %>
-            </li>
-          <% end %>
+          <%= @html_helper.generate_parameters(func[:params]) %>
         </ul>
       </div>
     <% end %>

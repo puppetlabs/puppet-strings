@@ -1,11 +1,15 @@
 include T('default/module')
 
+require File.join(File.dirname(__FILE__),'../html_helper')
+
 def init
   sections :header, :box_info, :pre_docstring, :docstring, :parameter_details
 end
 
 def parameter_details
   return if object.parameters.empty?
+
+  @html_helper = HTMLHelper.new
 
   param_tags = object.tags.find_all{ |tag| tag.tag_name == "param"}
   params = object.parameters
@@ -30,6 +34,8 @@ def header
 end
 
 def docstring
+  @html_helper = HTMLHelper.new
+
   examples = Hash.new
   example_tags = object.tags.find_all { |tag| tag.tag_name == "example" }
   example_tags.each do |example|

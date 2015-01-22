@@ -1,9 +1,11 @@
 include T('default/module')
 
+require File.join(File.dirname(__FILE__),'../html_helper')
+
 def init
   sections :header, :box_info, :pre_docstring, T('docstring'),
     :method_summary, [:item_summary],
-    :method_details_list, :method_details
+    :method_details_list, [T('method_details')]
 
   @methods = object.children
 end
@@ -34,6 +36,7 @@ end
 
 def method_summary
   @method_details = []
+  @html_helper = HTMLHelper.new
 
   @methods.each do |method|
     # If there are multiple sentences in the method description, only
@@ -51,8 +54,9 @@ def method_summary
   erb(:method_summary)
 end
 
-def method_details
+def method_details_list
   @class_details = []
+  @html_helper = HTMLHelper.new
 
   @methods.each do |object|
     examples = Hash.new
@@ -122,3 +126,4 @@ def extract_param_details(params_array, tags_hash)
 
   parameter_info
 end
+

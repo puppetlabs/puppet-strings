@@ -27,23 +27,7 @@
     <p class="tag_title">Return:</p>
     <ul class="return">
       <li>
-        <span class ="type">
-          <% if !@class_details[:return][1].nil? %>
-            (<tt>
-              <% @class_details[:return][1].each do |type| %>
-                <%= type %>
-                <% if @class_details[:return][1].last != type %>
-                  ,
-                <% end %>
-              <% end %>
-            </tt>) —
-          <% end %>
-        </span>
-        <% if !@class_details[:return][0].nil? %>
-          <div class="inline">
-            <p><%= @class_details[:return][0] %></p>
-          </div>
-        <% end %>
+        <%= @html_helper.generate_return_types(@class_details[:return][1], @class_details[:return][0]) %>
       </li>
     </ul>
   <% end %>
