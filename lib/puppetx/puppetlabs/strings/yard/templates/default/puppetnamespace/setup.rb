@@ -1,6 +1,7 @@
 include T('default/module')
 
 require File.join(File.dirname(__FILE__),'../html_helper')
+require File.join(File.dirname(__FILE__),'../template_helper')
 
 def init
   sections :header, :box_info, :pre_docstring, T('docstring'),
@@ -8,6 +9,7 @@ def init
     :method_details_list, [T('method_details')]
 
   @methods = object.children
+  @template_helper = TemplateHelper.new
 end
 
 def header
@@ -59,20 +61,8 @@ def method_details_list
   @html_helper = HTMLHelper.new
 
   @methods.each do |object|
-    examples = Hash.new
-    example_tags = object.tags.find_all { |tag| tag.tag_name == "example" }
-    example_tags.each do |example|
-      examples["#{example.name}"] = example.text
-    end
 
-    return_tag = object.tags.find { |tag| tag.tag_name == "return"}
-    return_text = return_tag.nil? ? nil : return_tag.text
-    return_types = return_tag.nil? ? nil : return_tag.types
-    return_details = (return_text.nil? && return_types.nil?) ? nil : [return_text, return_types]
-
-    since_tag = object.tags.find { |tag| tag.tag_name == "since"}
-    since_text = since_tag.nil? ? nil : since_tag.text
-
+    method_info = @template_helper.extract_tag_data(object)
     param_details = nil
 
     if object['puppet_4x_function']
@@ -85,45 +75,13 @@ def method_details_list
       # Convert the matched string into an array of strings
       params = parameters.nil? ? nil :  parameters[1].split(/\s*,\s*/)
 
-      param_details = extract_param_details(params, param_tags)
+      param_details = @template_helper.extract_param_details(params, param_tags) unless params.nil?
     end
 
-    @class_details.push({:name => object.name, :desc => object.docstring, :examples => examples, :since => since_text, :return => return_details, :params => param_details})
+    method_info[:params] = param_details
+
+    @class_details.push(method_info)
   end
 
-  erb(:docstring)
+  erb(:method_details_list)
 end
-
-def extract_param_details(params_array, tags_hash)
-  if params_array.nil?
-    return
-  end
-
-  parameter_info = []
-
-  # Extract the information for parameters that actually exist
-  params_array.each do |param|
-    param_tag = tags_hash.find { |tag| tag.name == param }
-
-    description = param_tag.nil? ? nil : param_tag.text
-    param_types = param_tag.nil? ? nil : param_tag.types
-
-    parameter_info.push({:name => param, :desc => description, :types => param_types, :exists? => true})
-  end
-
-  # Check if there were any comments for parameters that do not exist
-  tags_hash.each do |tag|
-    param_exists = false
-    parameter_info.each do |parameter|
-      if parameter[:name] == tag.name
-        param_exists = true
-      end
-    end
-    if !param_exists
-      parameter_info.push({:name => tag.name, :desc => tag.text, :types => tag.types, :exists? => false})
-    end
-  end
-
-  parameter_info
-end
-

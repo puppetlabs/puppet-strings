@@ -1,5 +1,8 @@
+# A class containing helper methods to aid the generation of HTML
+# given formatted data
 class HTMLHelper
 
+  # Generates the HTML to format the relevant data about return values
   def generate_return_types(types, desc = nil)
     result = []
 
@@ -12,6 +15,7 @@ class HTMLHelper
     result.join
   end
 
+  # Generates the HTML to format the relevant data about parameters
   def generate_parameters(params)
     result = []
 
