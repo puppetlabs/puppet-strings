@@ -22,6 +22,10 @@ class HTMLHelper
     params.each do |param|
       result << "<li>"
 
+      # Parameters which are documented in the comments but not
+      # present in the code itself are given the strike through
+      # styling in order to show the reader that they do not actually
+      # exist
       if !param[:exists?]
         result << "<strike>"
       end
@@ -31,12 +35,19 @@ class HTMLHelper
 
       if param[:types]
         result << "(" << "<tt>" << param[:types].join(", ") << "</tt>" << ")"
-      else
+      # Don't bother with TBD since 3x functions will never have type info per parameter.
+      # However if the user does want to list a type for some reason that is still supported,
+      # we just don't want to suggest that they need to
+      elsif !param[:puppet_3_func]
         result << "(<tt>TBD</tt>)"
       end
-        result << "</span>"
+
+      result << "</span>"
 
       # This is only relevant for manifests, not puppet functions
+      # This is due to the fact that the scope of a parameter (as illustrated by
+      # by it's fully qualified name) is not relevant for the parameters in puppet
+      # functions, but may be for components of a manifest (i.e. classes)
       unless param[:fq_name].nil?
         result << "<tt> => #{param[:fq_name]}</tt>"
       end

@@ -4,7 +4,7 @@ require File.join(File.dirname(__FILE__),'../html_helper')
 require File.join(File.dirname(__FILE__),'../template_helper')
 
 def init
-  sections :header, :box_info, :pre_docstring, T('docstring'),
+  sections :header, :box_info,
     :method_summary, [:item_summary],
     :method_details_list, [T('method_details')]
 
@@ -13,6 +13,7 @@ def init
 end
 
 def header
+  # The list is expected to only contain one type of function
   if @methods[0]['puppet_4x_function']
     @header_text = "Puppet 4 Functions"
   else
@@ -26,7 +27,7 @@ def box_info
   @source_files = []
 
   @methods.each do |method|
-   # extract the file name and line number for each method
+    # extract the file name and line number for each method
     file_name = method.files[0][0]
     line_number = method.files[0][1]
 
