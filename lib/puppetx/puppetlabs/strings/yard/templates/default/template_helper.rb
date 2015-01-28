@@ -38,7 +38,6 @@ class TemplateHelper
   def extract_param_details(parameters, tags_hash, fq_name = false)
     parameter_info = []
 
-
     # Extract the information for parameters that actually exist
     parameters.each do |param|
 
@@ -74,6 +73,31 @@ class TemplateHelper
       if !param_exists
         parameter_info.push({:name => tag.name, :desc => tag.text, :types => tag.types, :exists? => false})
       end
+    end
+
+    parameter_info
+  end
+
+  # Generates parameter information in situations where the information can only
+  # come from YARD tags in the comments, not from the code itself. For now the only
+  # use for this is 3x functions. In this case exists? will always be true since we
+  # cannot verify if the paramter exists in the code itself. We must trust the user
+  # to provide information in the comments that is accurate.
+  #
+  # @param param_tags [Array] parameter details obtained from comments
+  #
+  # @return [Hash] The relevant information about each parameter
+  # @option opts [String] :name The name of the parameter
+  # @option opts [String] :desc The description provided in the comment
+  # @options opts [Array] :types The parameter type(s) specified in the comment
+  # @options opts [Boolean] :exists? True only if the parameter exists in the documented logic and not just in a comment
+  def comment_only_param_details(param_tags)
+    return if param_tags.empty?
+
+    parameter_info = []
+
+    param_tags.each do |tag|
+      parameter_info.push({:name => tag.name, :desc => tag.text, :types => tag.types, :exists? => true})
     end
 
     parameter_info

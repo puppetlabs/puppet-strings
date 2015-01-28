@@ -64,10 +64,9 @@ def method_details_list
 
     method_info = @template_helper.extract_tag_data(object)
     param_details = nil
+    param_tags = object.tags.find_all{ |tag| tag.tag_name == "param"}
 
     if object['puppet_4x_function']
-      param_tags = object.tags.find_all{ |tag| tag.tag_name == "param"}
-
       # Extract the source code
       source_code = object.source
       # Extract the parameters for the source code
@@ -76,6 +75,8 @@ def method_details_list
       params = parameters.nil? ? nil :  parameters[1].split(/\s*,\s*/)
 
       param_details = @template_helper.extract_param_details(params, param_tags) unless params.nil?
+    else
+      param_details = @template_helper.comment_only_param_details(param_tags)
     end
 
     method_info[:params] = param_details
