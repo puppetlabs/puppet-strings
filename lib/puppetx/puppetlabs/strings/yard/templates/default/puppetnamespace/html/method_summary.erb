@@ -1,0 +1,20 @@
+<h2>Available Functions</h2>
+<ul class="summary">
+  <% @method_details.each do |method| %>
+    <li class = "private">
+      <span class = "summary_signature">
+      <a href =<%= "##{method[:name]}-instance_method"%>>
+          <% if ! method[:return_types].nil? %>
+            <%= @html_helper.generate_return_types(method[:return_types]) %>
+          <% end %>
+        -
+       <strong><%= method[:name] %></strong>
+      </span>
+    </li></a>
+    <span class = "summary_desc">
+      <div class = "inline">
+        <p><%= method[:short_desc] %></p>
+      </div>
+    </span>
+  <% end %>
+</ul>
