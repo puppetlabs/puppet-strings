@@ -6,7 +6,7 @@ require 'ostruct'
 # FIXME: Inhertiting from OpenStruct is a bit of a hack. It allows attributes
 # to be declared as needed but in the long run understandibility of the code
 # would be improved by having a concrete model.
-class Puppetx::PuppetLabs::Strings::Pops::YARDStatement < OpenStruct
+class PuppetX::PuppetLabs::Strings::Pops::YARDStatement < OpenStruct
   attr_reader :pops_obj, :comments
 
   def initialize(pops_obj)

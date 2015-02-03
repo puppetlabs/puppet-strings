@@ -1,4 +1,4 @@
-class Puppetx::PuppetLabs::Strings::YARD::Handlers::HostClassHandler < Puppetx::PuppetLabs::Strings::YARD::Handlers::Base
+class PuppetX::PuppetLabs::Strings::YARD::Handlers::HostClassHandler < PuppetX::PuppetLabs::Strings::YARD::Handlers::Base
   handles HostClassDefinition
 
   process do
