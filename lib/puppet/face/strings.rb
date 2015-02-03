@@ -33,9 +33,9 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppetx/puppetlabs/strings/actions'
+      require 'puppet_x/puppetlabs/strings/actions'
 
-      yardoc_actions = Puppetx::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
+      yardoc_actions = PuppetX::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
 
       # The last element of the argument array should be the options hash.
       # We don't have any options yet, so for now just pop the hash off and
@@ -65,9 +65,9 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppetx/puppetlabs/strings/actions'
+      require 'puppet_x/puppetlabs/strings/actions'
 
-      server_actions = Puppetx::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
+      server_actions = PuppetX::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
 
       args.pop
 

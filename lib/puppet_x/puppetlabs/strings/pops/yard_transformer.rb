@@ -4,7 +4,7 @@
 #
 # @note Currently, this class only extracts node, host class and type
 #   definitions.
-class Puppetx::PuppetLabs::Strings::Pops::YARDTransformer
+class PuppetX::PuppetLabs::Strings::Pops::YARDTransformer
   def initialize
     @transform_visitor = Puppet::Pops::Visitor.new(self, 'transform')
   end
@@ -26,7 +26,7 @@ class Puppetx::PuppetLabs::Strings::Pops::YARDTransformer
   # Extract comments from type definitions and class definitions. Wrap them
   # into YARDStatement objects that provide an interface for YARD handlers.
   def transform_NamedDefinition(o)
-    obj = Puppetx::PuppetLabs::Strings::Pops::YARDStatement.new(o)
+    obj = PuppetX::PuppetLabs::Strings::Pops::YARDStatement.new(o)
     obj.parameters = o.parameters.map do |p|
       param_tuple = [transform(p)]
       param_tuple << ( p.value.nil? ? nil : transform(p.value) )
@@ -37,7 +37,7 @@ class Puppetx::PuppetLabs::Strings::Pops::YARDTransformer
 
   # Catch-all visitor.
   def transform_Positioned(o)
-    Puppetx::PuppetLabs::Strings::Pops::YARDStatement.new(o)
+    PuppetX::PuppetLabs::Strings::Pops::YARDStatement.new(o)
   end
 
   # nil in... nil out!

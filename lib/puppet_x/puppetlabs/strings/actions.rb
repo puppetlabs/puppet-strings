@@ -1,6 +1,6 @@
-require 'puppetx/puppetlabs/strings'
+require 'puppet_x/puppetlabs/strings'
 
-class Puppetx::PuppetLabs::Strings::Actions
+class PuppetX::PuppetLabs::Strings::Actions
 
   # Creates a new instance of the Actions class by determining
   # whether or not debug and backtrace arguments should be sent

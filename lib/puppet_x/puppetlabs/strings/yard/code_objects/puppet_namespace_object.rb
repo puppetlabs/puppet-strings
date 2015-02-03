@@ -1,4 +1,4 @@
-class Puppetx::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject < YARD::CodeObjects::NamespaceObject
+class PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject < YARD::CodeObjects::NamespaceObject
   # NOTE: `YARD::Registry#resolve` requires a method with this signature to
   # be present on all subclasses of `NamespaceObject`.
   def inheritance_tree(include_mods = false)

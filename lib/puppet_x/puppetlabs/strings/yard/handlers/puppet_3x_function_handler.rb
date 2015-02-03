@@ -1,5 +1,5 @@
-class Puppetx::PuppetLabs::Strings::YARD::Handlers::Puppet3xFunctionHandler < YARD::Handlers::Ruby::Base
-  include Puppetx::PuppetLabs::Strings::YARD::CodeObjects
+class PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet3xFunctionHandler < YARD::Handlers::Ruby::Base
+  include PuppetX::PuppetLabs::Strings::YARD::CodeObjects
 
   handles method_call(:newfunction)
 
