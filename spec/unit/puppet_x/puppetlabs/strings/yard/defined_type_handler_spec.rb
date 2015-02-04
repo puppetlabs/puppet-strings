@@ -1,9 +1,9 @@
 require 'spec_helper'
-require 'puppetx/puppetlabs/strings/yard/handlers/defined_type_handler'
+require 'puppet_x/puppetlabs/strings/yard/handlers/defined_type_handler'
 require 'strings_spec/parsing'
 
 
-describe Puppetx::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler do
+describe PuppetX::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler do
   include StringsSpec::Parsing
 
   def the_definedtype()

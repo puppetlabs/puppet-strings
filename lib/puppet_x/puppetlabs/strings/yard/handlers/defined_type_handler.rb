@@ -1,4 +1,4 @@
-class Puppetx::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler < Puppetx::PuppetLabs::Strings::YARD::Handlers:: Base
+class PuppetX::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler < PuppetX::PuppetLabs::Strings::YARD::Handlers:: Base
   handles ResourceTypeDefinition
 
   process do
