@@ -1,8 +1,8 @@
 # Handles `dispatch` calls within a future parser function declaration. For
 # now, it just treats any docstring as an `@overlaod` tag and attaches the
 # overload to the parent function.
-class Puppetx::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
-  include Puppetx::PuppetLabs::Strings::YARD::CodeObjects
+class PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
+  include PuppetX::PuppetLabs::Strings::YARD::CodeObjects
 
   handles method_call(:dispatch)
 
@@ -19,7 +19,7 @@ class Puppetx::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler < YA
 end
 
 class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
-  include Puppetx::PuppetLabs::Strings::YARD::CodeObjects
+  include PuppetX::PuppetLabs::Strings::YARD::CodeObjects
 
   handles method_call(:create_function)
 
