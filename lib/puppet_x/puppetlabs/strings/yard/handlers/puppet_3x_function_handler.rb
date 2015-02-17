@@ -73,11 +73,13 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet3xFunctionHandler < YA
         # and the values on either side of it.
         tuple.jump(:assoc).map{|e| process_element(e)}
       end
+
+      options = Hash[opts]
     else
-      opts = [[]]
+      options = {}
     end
 
-    [name, Hash[opts]]
+    [name, options]
   end
 
   # Sometimes the YARD parser returns Heredoc strings that start with `<-`
