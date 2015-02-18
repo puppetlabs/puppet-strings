@@ -10,11 +10,11 @@ puppetversion = ENV['PUPPET_VERSION']
 if puppetversion
   gem 'puppet', puppetversion
 else
-  gem 'puppet', '~> 3.6.2'
+  gem 'puppet'
 end
 
 group :test do
-  gem 'rspec'
+  gem "rspec", "~> 2.14.0", :require => false
   gem 'mocha'
   gem 'puppetlabs_spec_helper'
   gem 'rspec-html-matchers'

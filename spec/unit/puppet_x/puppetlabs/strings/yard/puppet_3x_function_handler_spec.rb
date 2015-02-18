@@ -51,4 +51,13 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet3xFunctionHandler d
     expect(the_method).to document_a(:type => :method, :docstring => "")
     expect(the_namespace).to document_a(:type => :puppetnamespace)
   end
+
+  it "should process documentation if only one option is passed to newfunction" do
+    parse <<-RUBY
+      newfunction(:the_functiion) do |args|
+      end
+    RUBY
+
+      expect(the_namespace).to document_a(:type => :puppetnamespace)
+  end
 end

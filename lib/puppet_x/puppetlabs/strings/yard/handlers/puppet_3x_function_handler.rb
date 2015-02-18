@@ -66,13 +66,20 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet3xFunctionHandler < YA
 
     name = process_element(name)
 
-    opts = opts.map do |tuple|
-      # Jump down into the S-Expression that represents a hashrocket, `=>`,
-      # and the values on either side of it.
-      tuple.jump(:assoc).map{|e| process_element(e)}
+    # Don't try to process options if we don't have any
+    if !opts.nil?
+      opts = opts.map do |tuple|
+        # Jump down into the S-Expression that represents a hashrocket, `=>`,
+        # and the values on either side of it.
+        tuple.jump(:assoc).map{|e| process_element(e)}
+      end
+
+      options = Hash[opts]
+    else
+      options = {}
     end
 
-    [name, Hash[opts]]
+    [name, options]
   end
 
   # Sometimes the YARD parser returns Heredoc strings that start with `<-`
