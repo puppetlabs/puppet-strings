@@ -58,4 +58,17 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler do
 
     expect(YARD::Registry.all).to be_empty
   end
+
+  it "should generate the correct namespace " do
+    puppet_code =  <<-PUPPET
+        define puppet_enterprise::mcollective::client::certs { }
+    PUPPET
+
+    parse(puppet_code, :puppet)
+    # If the namespace is not correctly generated, we will not be able to find the
+    # object via this name, meaning namespace will be nil
+    namespace = YARD::Registry.at("puppet_enterprise::mcollective::client::certs").namespace.to_s
+
+    expect(namespace).to_not be_nil
+  end
 end
