@@ -16,7 +16,7 @@
     "documentation"
   ],
   "operatingsystem_support": [
-
+  
   ],
   "requirements": [
     {
@@ -25,6 +25,6 @@
     }
   ],
   "dependencies": [
-
+  
   ]
 }
