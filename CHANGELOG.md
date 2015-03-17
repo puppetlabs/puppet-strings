@@ -6,7 +6,7 @@ All related tickets can be found under the [PDOC](https://tickets.puppetlabs.com
 
 ####Features
 - Custom YARD templates for classes and defined types **(PDOC-17)**
-    - Improved HMTL output that is more appropriate for Ruby code (especially for parameters)
+    - Improved HMTL output that is more appropriate for Puppet code (especially for parameters)
     - Support for the explicit list of YARD tags we will be supporting initially (@param, @return, @since, @example)
     - Our own custom YARD templates which can be easily extended and tweaked
 - Custom YARD templates for 3.x and 4.x functions **(PDOC-24)**
