@@ -26,5 +26,9 @@ end
 
 group :development do
   gem 'pry'
-  gem 'pry-debugger'
+  if RUBY_VERSION[0..2] == '1.9'
+    gem 'pry-debugger'
+  elsif RUBY_VERSION[0] == '2'
+    gem 'pry-byebug'
+  end
 end
