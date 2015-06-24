@@ -1,7 +1,8 @@
+require "puppet"
+
 # A class containing helper methods to aid in the extraction of relevant data
 # from comments and YARD tags
 class TemplateHelper
-
   # Extracts data from comments which include the supported YARD tags
   def extract_tag_data(object)
     examples = Hash.new
@@ -35,13 +36,12 @@ class TemplateHelper
   #    :desc    => [String] The description provided in the comment
   #    :types   => [Array] The parameter type(s) specified in the comment
   #    :exists  => [Boolean] True only if the parameter exists in the documented logic and not just in a comment}
-  def extract_param_details(parameters, tags_hash, fq_name = false)
+  def extract_param_details(parameters, tags_hash, locations, fq_name = false)
     parameter_info = []
 
-    # Extract the information for parameters that actually exist
+    # Extract the information for parameters that exist
     # as opposed to parameters that are defined only in the comments
     parameters.each do |param|
-
       if fq_name
         param_name = param[0]
         fully_qualified_name = param[1]
@@ -73,6 +73,13 @@ class TemplateHelper
       end
       if !param_exists
         parameter_info.push({:name => tag.name, :desc => tag.text, :types => tag.types, :exists? => false})
+        if locations.length >= 1 and locations[0].length == 2
+          file_name = locations[0][0]
+          line_number = locations[0][1]
+          $stderr.puts "[warn]: The parameter #{tag.name} is documented, but doesn't exist in your code, in file #{file_name} near line #{line_number}"
+        else
+          $stderr.puts "[warn]: The parameter #{tag.name} is documented, but doesn't exist in your code. Sorry, the file and line number could not be determined."
+        end
       end
     end
 
