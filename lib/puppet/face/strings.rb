@@ -50,6 +50,7 @@ Puppet::Face.define(:strings, '0.0.1') do
       # For now, assume the remaining positional args are a list of manifest
       # and ruby files to parse.
       yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
+      class YARD::Logger; def progress(*args); end; end
 
       yardoc_actions.generate_documentation(*yard_args)
     end

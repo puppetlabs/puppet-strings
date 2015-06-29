@@ -18,7 +18,8 @@ def parameter_details
 
   @param_details = []
 
-  @param_details = @template_helper.extract_param_details(params, param_tags, object.files, true)
+  @param_details = @template_helper.extract_param_details(params, param_tags, true)
+  @template_helper.check_parameters_match_docs object
 
   erb(:parameter_details)
 end

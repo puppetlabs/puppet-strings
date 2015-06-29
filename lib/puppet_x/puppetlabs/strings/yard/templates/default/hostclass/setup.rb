@@ -3,6 +3,9 @@ include T('default/definedtype')
 def init
   super
   sections.push :subclasses
+
+  @template_helper = TemplateHelper.new
+  @template_helper.check_parameters_match_docs object
 end
 
 def subclasses
@@ -18,3 +21,4 @@ def subclasses
   return if @subclasses.nil? || @subclasses.empty?
   erb(:subclasses)
 end
+
