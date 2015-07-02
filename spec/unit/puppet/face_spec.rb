@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'puppet/face/strings'
-require 'rspec-html-matchers'
 require 'tmpdir'
 require 'stringio'
 
@@ -41,7 +40,7 @@ describe Puppet::Face do
 
           Puppet::Face[:strings, :current].yardoc
 
-          expect(read_html(tmp, 'test', 'test.html')).to have_tag('.docstring .discussion', :text => /This class/)
+          expect(read_html(tmp, 'test', 'test.html')).to include("Class: test")
         end
       end
 
@@ -51,7 +50,7 @@ describe Puppet::Face do
 
           Puppet::Face[:strings, :current].yardoc
 
-          expect(read_html(tmp, 'test', 'Puppet3xFunctions.html')).to have_tag('.docstring .discussion', :text => /documentation for `function3x`/)
+          expect(read_html(tmp, 'test', 'Puppet3xFunctions.html')).to include("This is the function documentation for `function3x`")
         end
       end
 
@@ -61,7 +60,7 @@ describe Puppet::Face do
 
           Puppet::Face[:strings, :current].yardoc
 
-          expect(read_html(tmp, 'test', 'Puppet4xFunctions.html')).to have_tag('.docstring .discussion', :text => /This is a function/)
+          expect(read_html(tmp, 'test', 'Puppet4xFunctions.html')).to include("This is a function which is used to test puppet strings")
         end
       end
     end
