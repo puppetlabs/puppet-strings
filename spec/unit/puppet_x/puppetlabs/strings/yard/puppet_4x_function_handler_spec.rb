@@ -54,12 +54,21 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
     expect(the_namespace).to document_a(:type => :puppetnamespace)
   end
 
-  it "should not add anything to the Registry if incorrect ruby code is present" do
-    parse <<-RUBY
-        # The summary
-        This is not ruby code
-    RUBY
-
-    expect(YARD::Registry.all).to be_empty
+  it "should issue a warning if the parameter names do not match the docstring" do
+      expected_output_not_a_param = "[warn]: @param tag has unknown parameter" +
+        " name: not_a_param \n    in file `(stdin)' near line 3"
+      expected_output_also_not_a_param = "[warn]: @param tag has unknown " +
+        "parameter name: also_not_a_param \n    in file `(stdin)' near line 3"
+      expect {
+        parse <<-RUBY
+          # @param not_a_param [Integer] the first number to be compared
+          # @param also_not_a_param [Integer] the second number to be compared
+          Puppet::Functions.create_function(:max) do
+            def max(num_a, num_b)
+              num_a >= num_b ? num_a : num_b
+            end
+          end
+        RUBY
+      }.to output("#{expected_output_not_a_param}\n#{expected_output_also_not_a_param}\n").to_stdout_from_any_process
   end
 end
