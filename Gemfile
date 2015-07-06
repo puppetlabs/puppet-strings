@@ -14,10 +14,9 @@ else
 end
 
 group :test do
-  gem "rspec", "~> 2.14.1", :require => false
+  gem "rspec"
   gem 'mocha'
   gem 'puppetlabs_spec_helper'
-  gem 'rspec-html-matchers'
   gem 'serverspec'
   gem 'beaker'
   gem 'beaker-rspec'
