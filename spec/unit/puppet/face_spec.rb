@@ -31,9 +31,25 @@ describe Puppet::Face do
     end
 
     describe "when generating HTML for documentation" do
+
+      # HACK: In these tests we would like to suppress all output from the yard
+      # logger so we don't clutter up stdout.
+      # However, we do want the yard logger for other tests so we can
+      # assert that the right things are logged. To accomplish this, for
+      # this block of tests we monkeypatch the yard logger to be a generic
+      # stringio instance which does nothing and then we restore the
+      # original afterwards.
+      before(:all) do
+        @tmp = YARD::Logger.instance.io
+        YARD::Logger.instance.io = StringIO.new
+      end
+
+      after(:all) do
+        YARD::Logger.instance.io = @tmp
+      end
+
       it "should properly generate HTML for manifest comments" do
 
-        YARD::Logger.instance.io = StringIO.new
 
         using_module('test') do |tmp|
           Dir.chdir('test')
