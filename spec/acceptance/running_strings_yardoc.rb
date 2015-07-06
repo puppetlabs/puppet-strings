@@ -1,5 +1,4 @@
 require 'spec_helper_acceptance'
-require 'rspec-html-matchers'
 require 'json'
 
 describe 'Genearting module documation using yardoc action' do
@@ -16,14 +15,14 @@ describe 'Genearting module documation using yardoc action' do
   end
 
   it "should generate documentation for manifests" do
-    expect(read_file_on(master, '/root/doc/test.html')).to have_tag('.docstring .discussion', :text => /This class/)
+    expect(read_file_on(master, '/root/doc/test.html')).to include("Class: test")
   end
 
   it "should generate documenation for 3x functions" do
-    expect(read_file_on(master, '/root/doc/Puppet3xFunctions.html')).to have_tag('.docstring .discussion', :text => /documentation for `function3x`/)
+    expect(read_file_on(master, '/root/doc/Puppet3xFunctions.html')).to include("This is the function documentation for `function3x`")
   end
 
   it "should generate documenation for 4x functions" do
-    expect(read_file_on(master, '/root/doc/Puppet4xFunctions.html')).to have_tag('.docstring .discussion', :text => /This is a function/)
+    expect(read_file_on(master, '/root/doc/Puppet4xFunctions.html')).to include("This is a function which is used to test puppet strings")
   end
 end
