@@ -51,6 +51,11 @@ Puppet::Face.define(:strings, '0.0.1') do
       # and ruby files to parse.
       yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
 
+      # This line monkeypatches yard's progress indicator so it doesn't write
+      # all over the terminal. This should definitely not be in real code, but
+      # it's very handy for debugging with pry
+      #class YARD::Logger; def progress(*args); end; end
+
       yardoc_actions.generate_documentation(*yard_args)
     end
   end

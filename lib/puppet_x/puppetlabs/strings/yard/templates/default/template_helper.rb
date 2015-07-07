@@ -1,7 +1,8 @@
+require "puppet"
+
 # A class containing helper methods to aid in the extraction of relevant data
 # from comments and YARD tags
 class TemplateHelper
-
   # Extracts data from comments which include the supported YARD tags
   def extract_tag_data(object)
     examples = Hash.new
@@ -38,10 +39,9 @@ class TemplateHelper
   def extract_param_details(parameters, tags_hash, fq_name = false)
     parameter_info = []
 
-    # Extract the information for parameters that actually exist
+    # Extract the information for parameters that exist
     # as opposed to parameters that are defined only in the comments
     parameters.each do |param|
-
       if fq_name
         param_name = param[0]
         fully_qualified_name = param[1]
@@ -103,5 +103,27 @@ class TemplateHelper
     end
 
     parameter_info
+  end
+
+  # Check that the actual function parameters match what is stated in the docs.
+  # If there is a mismatch, print a warning to stderr.
+  # This is necessary for puppet classes and defined types. This type of
+  # warning will be issued for ruby code by the ruby docstring parser.
+  # @param object the code object to examine for parameters names
+  def check_parameters_match_docs(object)
+    param_tags = object.tags.find_all{ |tag| tag.tag_name == "param"}
+    names = object.parameters.map {|l| l.first.gsub(/\W/, '') }
+    locations = object.files
+    param_tags.each do |tag|
+      if not names.include?(tag.name)
+        if locations.length >= 1 and locations[0].length == 2
+          file_name = locations[0][0]
+          line_number = locations[0][1]
+          $stderr.puts "[warn]: The parameter #{tag.name} is documented, but doesn't exist in your code, in file #{file_name} near line #{line_number}"
+        else
+          $stderr.puts "[warn]: The parameter #{tag.name} is documented, but doesn't exist in your code. Sorry, the file and line number could not be determined."
+        end
+      end
+    end
   end
 end

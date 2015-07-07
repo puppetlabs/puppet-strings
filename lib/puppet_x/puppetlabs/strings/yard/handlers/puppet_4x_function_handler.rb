@@ -26,7 +26,30 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
   process do
     name = process_parameters
 
-    obj = MethodObject.new(function_namespace, name)
+    method_arguments = []
+
+    # To attach the method parameters to the new code object, traverse the
+    # ruby AST until a node is found which defines a list of parameters.
+    # Then, traverse the children of the parameters, storing each identifier
+    # in the list of method arguments.
+    obj = MethodObject.new(function_namespace, name) do |o|
+      statement.traverse do |node|
+        if node.type == :params
+          node.traverse do |params|
+            if params.type == :ident
+              # FIXME: Replace nil with parameter types
+              method_arguments << [params[0], nil]
+            end
+          end
+
+          # Now that the parameters have been found, break out of the traversal
+          break
+        end
+      end
+    end
+
+    obj.parameters = method_arguments
+
     obj['puppet_4x_function'] = true
 
     register obj
@@ -78,7 +101,7 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
   #
   # @return [(String, Hash{String => String})]
   def process_parameters
-    # Passing `false` to prameters excludes the block param from the returned
+    # Passing `false` to parameters excludes the block param from the returned
     # list.
     name, _ = statement.parameters(false).compact
 
