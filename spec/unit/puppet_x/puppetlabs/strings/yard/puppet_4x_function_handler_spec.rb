@@ -71,4 +71,74 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
         RUBY
       }.to output("#{expected_output_not_a_param}\n#{expected_output_also_not_a_param}\n").to_stdout_from_any_process
   end
+
+
+  it "should not issue a warning if the parameter names do  match the docstring" do
+      expect {
+        parse <<-RUBY
+          # @param num_a [Integer] the first number to be compared
+          # @param num_b [Integer] the second number to be compared
+          Puppet::Functions.create_function(:max) do
+            def max(num_a, num_b)
+              num_a >= num_b ? num_a : num_b
+            end
+          end
+        RUBY
+      }.to output("").to_stdout_from_any_process
+  end
+
+
+
+  it "should issue a warning if the parameter names do not match the " +
+        "docstring in dispatch method" do
+      expected_output_not_a_param = "[warn]: @param tag has unknown parameter" +
+        " name: not_a_param \n    in file `(stdin)' near line 3"
+      expected_output_also_not_a_param = "[warn]: @param tag has unknown " +
+        "parameter name: also_not_a_param \n    in file `(stdin)' near line 3"
+      expect {
+        parse <<-RUBY
+          # @param not_a_param Integer the first number to be compared
+          # @param also_not_a_param Integer the second number to be compared
+          Puppet::Functions.create_function(:max) do
+            dispatch max_1 do
+              param 'Integer', :num_a
+              param 'Integer', :num_b
+            end
+
+            dispatch max_2 {
+              param 'String', :num_c
+              param 'String', :num_d
+            }
+
+            def max_1(num_a, num_b)
+              num_a >= num_b ? num_a : num_b
+            end
+
+            def max_2(num_a, num_b)
+              num_a >= num_b ? num_a : num_b
+            end
+          end
+        RUBY
+      }.to output("#{expected_output_not_a_param}\n#{expected_output_also_not_a_param}\n").to_stdout_from_any_process
+  end
+
+  it "should not issue a warning if the parameter names do match the " +
+        "docstring in dispatch method" do
+      expect {
+        parse <<-RUBY
+          # @param num_a Integer the first number to be compared
+          # @param num_b Integer the second number to be compared
+          Puppet::Functions.create_function(:max) do
+            dispatch max_1 do
+              param 'Integer', :num_a
+              param 'Integer', :num_b
+            end
+
+            def max_1(num_a, num_b)
+              num_a >= num_b ? num_a : num_b
+            end
+          end
+        RUBY
+      }.to output("").to_stdout_from_any_process
+  end
 end
