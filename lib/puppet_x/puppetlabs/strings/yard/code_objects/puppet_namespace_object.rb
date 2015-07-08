@@ -5,6 +5,8 @@ class PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject < Y
     [self]
   end
 
+  attr_accessor :type_info
+
   # FIXME: We used to override `self.new` to ensure no YARD proxies were
   # created for namespaces segments that did not map to a host class or
   # defined type. Fighting the system in this way turned out to be

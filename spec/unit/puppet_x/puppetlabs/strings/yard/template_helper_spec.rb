@@ -56,4 +56,70 @@ describe TemplateHelper do
     obj2.docstring.instance_variable_set("@tags", [])
   end
 
+  it "should issue a warning if the parameter types do not match the docstring in dispatch method" do
+    expected_output_not_a_param = "[warn]: @param tag types do not match the" +
+      " code. The arg1 parameter is declared as types [\"Integer\"] in the " +
+      "docstring, but the code specifies the types [\"Optional[String]\"] " +
+      "in file test near line 0\n"
+    object = PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject.new(:root, 'Puppet4xFunctions')
+    object.files = [['test', 0]]
+    object.type_info = [{
+      'arg0' => 'Variant[String,Array[String]]',
+      'arg1' => 'Optional[String]'
+    }]
+    param_details = [{
+      :name => 'arg0',
+      :types => ['Variant[String,Array[String]]']
+    },
+    {
+      :name => 'arg1',
+      :types => ['Integer']
+    }]
+    template_helper = TemplateHelper.new
+    expect {
+      template_helper.check_types_match_docs(object, param_details)
+    }.to output(expected_output_not_a_param).to_stdout_from_any_process
+  end
+
+  it "should not issue a warning if the parameter types do match the docstring in dispatch method" do
+    object = PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject.new(:root, 'Puppet4xFunctions')
+    object.files = [['test', 0]]
+    object.type_info = [{
+      'arg0' => 'Variant[String,Array[String]]',
+      'arg1' => 'Optional[String]'
+    }]
+    param_details = [{
+      :name => 'arg0',
+      :types => ['Variant[String,Array[String]]']
+    },
+    {
+      :name => 'arg1',
+      :types => ['Optional[String]']
+    }]
+    template_helper = TemplateHelper.new
+    expect {
+      template_helper.check_types_match_docs(object, param_details)
+    }.to output("").to_stdout_from_any_process
+  end
+
+  it "should not issue a warning if the types in  the docstring in dispatch method are assignable to parameter types" do
+    object = PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject.new(:root, 'Puppet4xFunctions')
+    object.files = [['test', 0]]
+    object.type_info = [{
+      'arg0' => 'Variant[String,Array[String]]',
+      'arg1' => 'Optional[String]'
+    }]
+    param_details = [{
+      :name => 'arg0',
+      :types => ['Variant[String,Array[String]]']
+    },
+    {
+      :name => 'arg1',
+      :types => ['String']
+    }]
+    template_helper = TemplateHelper.new
+    expect {
+      template_helper.check_types_match_docs(object, param_details)
+    }.to output("").to_stdout_from_any_process
+  end
 end

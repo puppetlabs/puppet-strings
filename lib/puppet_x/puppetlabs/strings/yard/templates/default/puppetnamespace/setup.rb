@@ -76,6 +76,7 @@ def method_details_list
       params = parameters.nil? ? nil :  parameters[1].split(/\s*,\s*/)
 
       param_details = @template_helper.extract_param_details(params, param_tags) unless params.nil?
+      @template_helper.check_types_match_docs object, param_details
     else
       param_details = @template_helper.comment_only_param_details(param_tags)
     end

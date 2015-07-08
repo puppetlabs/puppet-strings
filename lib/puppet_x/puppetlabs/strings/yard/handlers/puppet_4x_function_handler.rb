@@ -52,19 +52,24 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
     obj = MethodObject.new(function_namespace, name) do |o|
     end
 
-    # overload_signatures is a array of arrays of tuples or empty:
+    # The data structure for overload_signatures is an array of hashes. Each
+    # hash represents the arguments a single function dispatch (aka overload)
+    # can take.
     # overload_signatures = [
-    #   [ # First function dispatch arguments
+    #   { # First function dispatch arguments
     #     # argument name, argument type
-    #     ['arg0', 'Variant[String,Array[String]]'
-    #     ['arg1', 'Optional[Type]']
-    #   ],
-    #   [ # Second function dispatch arguments
-    #     ['arg0', 'Variant[String,Array[String]]'
-    #     ['arg1', 'Optional[Type]']
-    #     ['arg2', 'Any']
-    #   ]
+    #     'arg0': 'Variant[String,Array[String]]',
+    #     'arg1': 'Optional[Type]'
+    #   },
+    #   { # Second function dispatch arguments
+    #     'arg0': 'Variant[String,Array[String]]',
+    #     'arg1': 'Optional[Type]',
+    #     'arg2': 'Any'
+    #   }
     # ]
+    # Note that the order for arguments to a function doesn't actually matter
+    # because we allow users flexibility when listing their arguments in the
+    # comments.
     overload_signatures = []
     statement.traverse do |node|
       # Find all of the dispatch methods
@@ -75,16 +80,23 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
         if do_block == command
           next
         end
+        signature = {}
         # Iterate through each of the children of the do block and build
         # tuples of parameter names and parameter type signatures
         do_block.children.first.children.each do |child|
-          overload_signatures <<= [extract_type_from_command(child)]
+          name, type = extract_type_from_command(child)
+          # This can happen if there is a function or something we aren't
+          # expecting.
+          if name != nil and type != nil
+            signature[name] = type
+          end
         end
+        overload_signatures <<= signature
       end
     end
 
-    # If the overload_signatures array is empty because we couldn't find any
-    # dispatch blocks, then there must be one method named the same as the
+    # If the overload_signatures list is empty because we couldn't find any
+    # dispatch blocks, then there must be one function named the same as the
     # name of the function being created.
     if overload_signatures.length == 0
       statement.traverse do |node|
@@ -92,7 +104,7 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
         # function being created.
         if (node.type == :def and node.children.first.type == :ident and
             node.children.first.source == obj.name.to_s)
-          signature = []
+          signature = {}
           # Find its parameters. If they don't exist, fine
           params = node.jump :params
           break if params == node
@@ -100,7 +112,7 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
             if param.type == :ident
               # The parameters of Puppet functions with no defined dispatch are
               # as though they are Any type.
-              signature << [param[0], 'Any']
+              signature[param[0]] =  'Any'
             end
           end
           overload_signatures <<= signature
@@ -114,9 +126,9 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
     # at the docstring.
     obj.type_info = overload_signatures
 
-    # The yard docstring parser expects a array of arrays, not a array of
-    # arrays of arrays.
-    obj.parameters = overload_signatures.flatten(1)
+    # The yard docstring parser expects a list of lists, not a list of lists of
+    # lists.
+    obj.parameters = overload_signatures.map { |sig| sig.to_a }.flatten(1)
 
     obj['puppet_4x_function'] = true
 
