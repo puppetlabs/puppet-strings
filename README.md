@@ -96,6 +96,17 @@ Here are a few other good resources for getting started with documentation:
   * [YARD Getting Started Guide](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
   * [YARD Tags Overview](http://www.rubydoc.info/gems/yard/file/docs/Tags.md)
 
+Rake Tasks
+-----
+
+This module is also available as a Gem and makes two rake tasks (`generate` and `serve`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
+
+    gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppet-strings.git'
+
+To use the rake tasks, `require puppet-strings/rake_tasks` in your `Rakefile`:
+
+    require 'puppet-strings/rake_tasks'
+
 License
 -----
 See [LICENSE](https://github.com/puppetlabs/puppetlabs-strings/blob/master/LICENSE) file.
