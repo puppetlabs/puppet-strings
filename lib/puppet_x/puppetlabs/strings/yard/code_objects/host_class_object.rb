@@ -2,6 +2,8 @@ class PuppetX::PuppetLabs::Strings::YARD::CodeObjects::HostClassObject < PuppetX
   # The {HostClassObject} that this class inherits from, if any.
   # @return [HostClassObject, Proxy, nil]
   attr_accessor :parent_class
+  attr_accessor :type_info
+
 
   # NOTE: `include_mods` is never used as it makes no sense for Puppet, but
   # this is called by `YARD::Registry` and it will pass a parameter.

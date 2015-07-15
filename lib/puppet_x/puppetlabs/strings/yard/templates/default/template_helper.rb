@@ -105,6 +105,63 @@ class TemplateHelper
     parameter_info
   end
 
+  # Check that any types specified in the docstrings match the actual method
+  # types. This is used by puppet 4x functions and defined types.
+  # @param object the code object to examine for parameters names
+  def check_types_match_docs(object, params_hash)
+    # We'll need this to extract type info from the type specified by the
+    # docstring.
+    type_parser = Puppet::Pops::Types::TypeParser.new
+    type_calculator = Puppet::Pops::Types::TypeCalculator.new
+
+    object.type_info.each do |function|
+      function.keys.each do |key|
+        if function[key].class == String
+          begin
+            instantiated = type_parser.parse function[key].gsub(/'/, '').gsub(/"/, "")
+          rescue Puppet::ParseError
+            # Likely the result of a malformed type
+            next
+          end
+        else
+          instantiated = function[key]
+        end
+        params_hash.each do |param|
+          if param[:name] == key and param[:types] != nil
+            param[:types].each do |type|
+              param_instantiated = type_parser.parse type
+              if not type_calculator.assignable? instantiated, param_instantiated
+                actual_types = object.type_info.map do |sig|
+                  sig[key]
+                end
+                # Get the locations where the object can be found. We only care about
+                # the first one.
+                locations = object.files
+                # If the locations aren't in the shape we expect then report that
+                # the file number couldn't be determined.
+                if locations.length >= 1 and locations[0].length == 2
+                  file = locations[0][0]
+                  line = locations[0][1]
+                  warning = "@param tag types do not match the code. The " +
+                    "#{param[:name]} parameter is declared as types #{param[:types]} in " +
+                    "the docstring, but the code specifies the types " +
+                    "#{actual_types.inspect} in file #{file} near line #{line}"
+                else
+                  warning = "@param tag types do not match the code. The " +
+                    "#{param[:name]} parameter is declared as types #{param[:types]} in " +
+                    "the docstring, but the code specifies the types " +
+                    "#{actual_types.inspect} Sorry, the file and line number could" +
+                    "not be determined."
+                end
+                log.warn warning
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
   # Check that the actual function parameters match what is stated in the docs.
   # If there is a mismatch, print a warning to stderr.
   # This is necessary for puppet classes and defined types. This type of

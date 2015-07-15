@@ -129,8 +129,8 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
         "parameter name: also_not_a_param \n    in file `(stdin)' near line 3"
       expect {
         parse <<-RUBY
-          # @param not_a_param Integer the first number to be compared
-          # @param also_not_a_param Integer the second number to be compared
+          # @param not_a_param [Integer] the first number to be compared
+          # @param also_not_a_param [Integer] the second number to be compared
           Puppet::Functions.create_function(:max) do
             dispatch max_1 do
               param 'Integer[1,2]', :num_a
@@ -158,8 +158,8 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
         "docstring in dispatch method" do
       expect {
         parse <<-RUBY
-          # @param num_a Integer the first number to be compared
-          # @param num_b Integer the second number to be compared
+          # @param [Integer] num_a the first number to be compared
+          # @param num_b [Integer] the second number to be compared
           Puppet::Functions.create_function(:max) do
             dispatch max_1 do
               param 'Integer', :num_a
