@@ -16,7 +16,7 @@ class HTMLHelper
   end
 
   # Generates the HTML to format the relevant data about parameters
-  def generate_parameters(params)
+  def generate_parameters(params, object)
     result = []
 
     params.each do |param|
@@ -33,13 +33,34 @@ class HTMLHelper
       result << "<span class=\"name\">#{param[:name]} </span>"
       result << "<span class=\"type\">"
 
+      # If the docstring specifies types, use those
       if param[:types]
         result << "(" << "<tt>" << param[:types].join(", ") << "</tt>" << ")"
-      # Don't bother with TBD since 3x functions will never have type info per parameter.
-      # However if the user does want to list a type for some reason that is still supported,
-      # we just don't want to suggest that they need to
+      # Otherwise, if typing information could be extracted from the object
+      # itself, use that
+      elsif object.type_info
+        # If the parameter name includes the default value, scrub that.
+        if param[:name].match(/([^=]*)=/)
+          param_name = $1
+        else
+          param_name = param[:name]
+        end
+        # Collect all the possible types from the object. If no such type
+        # exists for this parameter name don't do anything.
+        possible_types = object.type_info.map {
+          |sig| sig[param_name] or nil
+        }.compact
+
+        # If no possible types could be determined, put the type down as
+        # Unknown
+        if possible_types == []
+          result << "(" << "<tt>Unknown</tt>" << ")"
+        else
+          result << "(" << "<tt>" << possible_types.join(", ") << "</tt>" << ")"
+        end
+      # Give up. It can probably be anything.
       elsif !param[:puppet_3_func]
-        result << "(<tt>TBD</tt>)"
+        result << "(<tt>Unkown</tt>)"
       end
 
       result << "</span>"
