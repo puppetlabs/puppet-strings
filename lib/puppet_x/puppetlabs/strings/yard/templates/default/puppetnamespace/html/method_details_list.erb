@@ -45,7 +45,7 @@
       <p class="tag_title">Parameters:</p>
       <div class="tags">
         <ul class="param">
-          <%= @html_helper.generate_parameters(func[:params]) %>
+          <%= @html_helper.generate_parameters(func[:params], object.child) %>
         </ul>
       </div>
     <% end %>

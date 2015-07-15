@@ -18,7 +18,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::HostClassHandler < PuppetX::
         begin
           param_type_info[pop_param.name] =  tp.interpret_any(pop_param.type_expr)
         rescue Puppet::ParseError
-          # If the type could not be interpreted, default to type Any
+          # If the type could not be interpreted insert a prominent warning
           param_type_info[pop_param.name] = "TypeError - " +
             "#{pop_param.type_expr} isn't a valid type."
         end
