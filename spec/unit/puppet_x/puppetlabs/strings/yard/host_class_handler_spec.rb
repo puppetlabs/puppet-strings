@@ -31,7 +31,7 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::HostClassHandler do
 
     parse(puppet_code, :puppet)
 
-    comment = "Class: foo::bar\nThis class does some stuff"
+    comment = "Class: foo::bar\n\nThis class does some stuff"
     expect(the_hostclass).to document_a(:type => :hostclass, :docstring => comment)
   end
 

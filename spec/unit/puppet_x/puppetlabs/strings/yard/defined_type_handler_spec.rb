@@ -32,7 +32,7 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler do
 
     parse(puppet_code, :puppet)
 
-    comment = "Definition: foo::bar\nThis class does some stuff"
+    comment = "Definition: foo::bar\n\nThis class does some stuff"
     expect(the_definedtype).to document_a(:type => :definedtype, :docstring => comment)
   end
 
