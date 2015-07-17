@@ -13,14 +13,13 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::HostClassHandler < PuppetX::
     statement.pops_obj.parameters.each do |pop_param|
       # If the parameter's type expression is nil, default to Any
       if pop_param.type_expr == nil
-        param_type_info[pop_param.name] = Puppet::Pops::Types::TypeFactory.any() 
+        param_type_info[pop_param.name] = Puppet::Pops::Types::TypeFactory.any()
       else
         begin
           param_type_info[pop_param.name] =  tp.interpret_any(pop_param.type_expr)
-        rescue Puppet::ParseError
+        rescue Puppet::ParseError => e
           # If the type could not be interpreted insert a prominent warning
-          param_type_info[pop_param.name] = "TypeError - " +
-            "#{pop_param.type_expr} isn't a valid type."
+          param_type_info[pop_param.name] = "Type Error: #{e.message}"
         end
       end
     end
