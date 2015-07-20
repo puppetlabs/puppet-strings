@@ -12,7 +12,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::HostClassHandler < PuppetX::
     param_type_info = {}
     statement.pops_obj.parameters.each do |pop_param|
       # If the parameter's type expression is nil, default to Any
-      if pop_param.type_expr == nil
+      if not pop_param.respond_to? :type_expr or pop_param.type_expr == nil
         param_type_info[pop_param.name] = Puppet::Pops::Types::TypeFactory.any()
       else
         begin
