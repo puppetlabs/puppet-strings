@@ -58,7 +58,14 @@ class PuppetX::PuppetLabs::Strings::Pops::YARDStatement < OpenStruct
         # FIXME: The gsub trims comments, but is extremely optimistic: It
         # assumes only one space separates the comment body from the
         # comment character.
-        comments.unshift line.gsub(/^\s*#\s/, '')
+        # NOTE: We cannot just trim any amount of whitespace as indentation
+        # is sometimes significant in markdown. We would need a real parser.
+
+        # Comments which begin with some whitespace, a hash and then some
+        # tabs and spaces should be scrubbed. Comments which just have a
+        # solitary hash then a newline should keep that newline since newlines
+        # are significant in markdown.
+        comments.unshift line.gsub(/^\s*#[\t ]/, '').gsub(/^\s*#\n/, "\n")
       else
         # No comment found on this line. We must be done piecing together a
         # comment block.
