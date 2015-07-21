@@ -24,7 +24,7 @@ class PuppetX::PuppetLabs::Strings::YARD::PuppetParser < YARD::Parser::Base
     statements = @transformer.transform(@parse_result)
 
     # Ensure an array is returned and prune any nil values.
-    Array(statements).compact
+    Array(statements).compact.reverse
   end
 
 end
