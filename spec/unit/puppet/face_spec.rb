@@ -79,6 +79,36 @@ describe Puppet::Face do
           expect(read_html(tmp, 'test', 'Puppet4xFunctions.html')).to include("This is a function which is used to test puppet strings")
         end
       end
+
+      it "should create correct files for nested classes" do
+         using_module('test') do |tmp|
+            Dir.chdir('test')
+
+            Puppet::Face[:strings, :current].yardoc
+
+            expect(read_html(tmp,
+              'test', 'outer.html')).to include("Puppet Class: outer")
+            expect(read_html(tmp, 'test',
+              'outer/middle.html')).to include("Puppet Class: middle")
+            expect(read_html(tmp, 'test',
+              'outer/middle/inner.html')).to include("Puppet Class: inner")
+         end
+      end
+
+      it "should create proper namespace for nested classes" do
+         using_module('test') do |tmp|
+            Dir.chdir('test')
+
+            Puppet::Face[:strings, :current].yardoc
+
+            expect(read_html(tmp,
+              'test', 'outer.html')).to include("Hostclass: outer")
+            expect(read_html(tmp, 'test',
+              'outer/middle.html')).to include("Hostclass: outer::middle")
+            expect(read_html(tmp, 'test',
+              'outer/middle/inner.html')).to include("Hostclass: outer::middle::inner")
+         end
+      end
     end
   end
 
