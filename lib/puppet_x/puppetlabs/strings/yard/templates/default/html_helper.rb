@@ -60,7 +60,7 @@ class HTMLHelper
         end
       # Give up. It can probably be anything.
       elsif !param[:puppet_3_func]
-        result << "(<tt>Unkown</tt>)"
+        result << "(<tt>Unknown</tt>)"
       end
 
       result << "</span>"
