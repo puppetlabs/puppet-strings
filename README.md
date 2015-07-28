@@ -32,14 +32,24 @@ In order to run strings you need to have the following software installed:
   * Puppet 3.7 or newer
   * The yard rubygem
 
-Install the yard rubygem with the gem command:
+Installing the Yard Gem
+-----------------------
 
+**Installing the Yard Gem with Puppet**
+The easiest way to install the Yard gem is with Puppet itself.
+
+For Puppet 4.x:
 ```
-$ gem install yard
+$ puppet resource package yard provider=puppet_gem
 ```
 
-You may need to prefix this command with `bundle exec` or `sudo` depending on
-your ruby environment.
+For Puppet 3.x:
+```
+$ puppet resource package yard provider=gem
+```
+
+Installing Strings Itself
+-------------------------
 
 Strings can be installed from the [Puppet Forge][forge strings] or from source.
 
