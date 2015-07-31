@@ -1,10 +1,13 @@
+require File.join(File.dirname(__FILE__),'./heredoc_helper')
+
 class PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet3xFunctionHandler < YARD::Handlers::Ruby::Base
   include PuppetX::PuppetLabs::Strings::YARD::CodeObjects
 
   handles method_call(:newfunction)
 
   process do
-    name, options = process_parameters
+    @heredoc_helper = HereDocHelper.new
+    name, options = @heredoc_helper.process_parameters statement
 
     obj = MethodObject.new(function_namespace, name)
 
@@ -47,78 +50,4 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet3xFunctionHandler < YA
     obj
   end
 
-  # NOTE: The following methods duplicate functionality from
-  # Puppet::Util::Reference and Puppet::Parser::Functions.functiondocs
-  #
-  # However, implementing this natively in YARD is a good test for the
-  # feasibility of extracting custom Ruby documentation. In the end, the
-  # existing approach taken by Puppet::Util::Reference may be the best due to
-  # the heavy use of metaprogramming in Types and Providers.
-
-  # Extracts the Puppet function name and options hash from the parsed
-  # definition.
-  #
-  # @return [(String, Hash{String => String})]
-  def process_parameters
-    # Passing `false` to prameters excludes the block param from the returned
-    # list.
-    name, opts = statement.parameters(false).compact
-
-    name = process_element(name)
-
-    # Don't try to process options if we don't have any
-    if !opts.nil?
-      opts = opts.map do |tuple|
-        # Jump down into the S-Expression that represents a hashrocket, `=>`,
-        # and the values on either side of it.
-        tuple.jump(:assoc).map{|e| process_element(e)}
-      end
-
-      options = Hash[opts]
-    else
-      options = {}
-    end
-
-    [name, options]
-  end
-
-  # Sometimes the YARD parser returns Heredoc strings that start with `<-`
-  # instead of `<<-`.
-  HEREDOC_START = /^<?<-/
-
-    # Turns an entry in the method parameter list into a string.
-    #
-    # @param ele [YARD::Parser::Ruby::AstNode]
-    # @return [String]
-    def process_element(ele)
-      ele = ele.jump(:ident, :string_content)
-
-      case ele.type
-      when :ident
-        ele.source
-      when :string_content
-        source = ele.source
-        if HEREDOC_START.match(source)
-          process_heredoc(source)
-        else
-          source
-        end
-      end
-    end
-
-  # Cleans up and formats Heredoc contents parsed by YARD.
-  #
-  # @param source [String]
-  # @return [String]
-  def process_heredoc(source)
-    source = source.lines.to_a
-
-    # YARD adds a line of source context on either side of the Heredoc
-    # contents.
-    source.shift
-    source.pop
-
-    # This utility method normalizes indentation and trims whitespace.
-    Puppet::Util::Docs.scrub(source.join)
-  end
 end

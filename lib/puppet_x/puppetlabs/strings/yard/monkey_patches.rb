@@ -6,7 +6,7 @@ require 'yard'
 
 class YARD::CLI::Yardoc
   def all_objects
-    YARD::Registry.all(:root, :module, :class, :puppetnamespace, :hostclass, :definedtype)
+    YARD::Registry.all(:root, :module, :class, :provider, :puppetnamespace, :hostclass, :definedtype)
   end
 end
 

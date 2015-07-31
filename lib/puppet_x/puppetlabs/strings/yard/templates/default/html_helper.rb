@@ -59,7 +59,7 @@ class HTMLHelper
           result << "(" << "<tt>" << possible_types.join(", ") << "</tt>" << ")"
         end
       # Give up. It can probably be anything.
-      elsif !param[:puppet_3_func]
+      elsif not (param[:puppet_3_func] or param[:provider])
         result << "(<tt>Unknown</tt>)"
       end
 
