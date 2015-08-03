@@ -8,6 +8,12 @@ def init
 
   @template_helper = TemplateHelper.new
   @html_helper = HTMLHelper.new
+  @template_helper.check_parameters_match_docs object
+  params = object.parameters.map { |param| param.first }
+  param_tags = object.tags.find_all{ |tag| tag.tag_name == "param"}
+  param_details = @template_helper.extract_param_details(params, param_tags) unless params.nil?
+  @template_helper.check_types_match_docs object, param_details
+
 end
 
 def parameter_details
@@ -19,7 +25,6 @@ def parameter_details
   @param_details = []
 
   @param_details = @template_helper.extract_param_details(params, param_tags, true)
-  @template_helper.check_parameters_match_docs object
 
   erb(:parameter_details)
 end
