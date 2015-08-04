@@ -57,6 +57,12 @@ Puppet::Face.define(:strings, '0.0.1') do
       #class YARD::Logger; def progress(*args); end; end
 
       yardoc_actions.generate_documentation(*yard_args)
+
+      # Puppet prints the return value of the action. The return value of this
+      # action is that of the yardoc_actions invocation, which is the boolean
+      # "true". This clutters the statistics yard prints, so instead return the
+      # empty string. Note an extra newline will also be printed.
+      ""
     end
   end
 
