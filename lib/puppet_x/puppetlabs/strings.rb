@@ -21,6 +21,10 @@ module PuppetX::PuppetLabs
       require 'puppet_x/puppetlabs/strings/yard/monkey_patches'
       require 'puppet_x/puppetlabs/strings/yard/parser'
 
+      module Tags
+        require 'puppet_x/puppetlabs/strings/yard/tags/directives'
+      end
+
       # This submodule contains code objects which are used to represent relevant
       # aspects of puppet code in YARD's Registry
       module CodeObjects

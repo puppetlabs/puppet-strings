@@ -1,4 +1,5 @@
 require 'puppet/face'
+require 'puppet_x/puppetlabs/strings/yard/tags/directives'
 
 Puppet::Face.define(:strings, '0.0.1') do
   summary "Generate Puppet documentation with YARD."
@@ -55,6 +56,9 @@ Puppet::Face.define(:strings, '0.0.1') do
       # all over the terminal. This should definitely not be in real code, but
       # it's very handy for debugging with pry
       #class YARD::Logger; def progress(*args); end; end
+      YARD::Tags::Library.define_directive("puppet.provider.param",
+        :with_types_and_name,
+        PuppetX::PuppetLabs::Strings::YARD::Tags::PuppetProviderParameterDirective)
 
       yardoc_actions.generate_documentation(*yard_args)
 

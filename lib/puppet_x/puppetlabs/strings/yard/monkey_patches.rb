@@ -18,6 +18,10 @@ class YARD::CLI::Stats
   def stats_for_definedtypes
     output 'Puppet Types', *type_statistics(:definedtype)
   end
+
+  def stats_for_providers
+    output 'Puppet Providers', *type_statistics(:provider)
+  end
 end
 
 class YARD::Logger

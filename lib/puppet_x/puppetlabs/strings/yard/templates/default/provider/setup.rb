@@ -11,11 +11,8 @@ def init
 end
 
 def parameter_details
-
   params = object.parameter_details.map { |h| h[:name] }
-
-  @param_details = []
-  @param_details = object.parameter_details
+  @param_details = object.parameter_details.each { |h| h[:desc] = htmlify(h[:desc]) }
   @template_helper.check_parameters_match_docs object
 
   erb(:parameter_details)
