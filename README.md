@@ -158,6 +158,39 @@ And here's an example of how you might document a class:
      ) { }
 ```
 
+Puppet providers often rely on different types of metaprogramming to create
+parameters and methods. Since Strings does not execute the code which is being
+documented you must provide hints on how to document your code. To document a
+parameter which is automatically created you must use the special directive
+`@!puppet.provider.param` Which may take types, the parameter name, and a
+description.
+
+Strings will automatically extract the `@doc` provider docstring and any `desc`
+parameter docstrings.
+
+```ruby
+# @!puppet.provider.param my_parameter This parameter needs to be explicitly
+# documented
+Puppet::Type.newtype(:minifile) do
+
+  @doc = "Manages files, including their content, ownership, and permissions.
+    The provider can manage symbolic links."
+
+  # This function does some metaprogramming on the new type.
+  mk_resource_methods
+
+  newparam(:path) do
+    desc <<-'EOT'
+      The path to the file to manage.  Must be fully qualified.
+    EOT
+    # ... do stuff here
+  end
+  # ...
+end
+
+
+```
+
 Here are a few other good resources for getting started with documentation:
 
   * [Module README Template](https://docs.puppetlabs.com/puppet/latest/reference/modules_documentation.html)
