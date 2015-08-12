@@ -2,11 +2,11 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::HostClassHandler < PuppetX::
   handles HostClassDefinition
 
   process do
-    obj = HostClassObject.new(:root, statement.pops_obj.name) do |o|
-      o.parameters = statement.parameters.map do |a|
-        param_tuple = [a[0].pops_obj.name]
-        param_tuple << ( a[1].nil? ? nil : a[1].source )
-      end
+    obj = HostClassObject.new(:root, statement.pops_obj.name)
+
+    obj.parameters = statement.parameters.map do |a|
+      param_tuple = [a[0].pops_obj.name]
+      param_tuple << ( a[1].nil? ? nil : a[1].source )
     end
     tp = Puppet::Pops::Types::TypeParser.new
     param_type_info = {}
