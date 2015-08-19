@@ -3,13 +3,6 @@ include T('default/definedtype')
 def init
   super
   sections.push :subclasses
-
-  @template_helper = TemplateHelper.new
-  @template_helper.check_parameters_match_docs object
-  params = object.parameters.map { |param| param.first }
-  param_tags = object.tags.find_all{ |tag| tag.tag_name == "param"}
-  param_details = @template_helper.extract_param_details(params, param_tags) unless params.nil?
-  @template_helper.check_types_match_docs object, param_details
 end
 
 def subclasses
