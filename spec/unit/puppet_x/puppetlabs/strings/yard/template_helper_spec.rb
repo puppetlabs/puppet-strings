@@ -57,7 +57,7 @@ describe TemplateHelper do
   end
 
   it "should issue a warning if the parameter types do not match the docstring in dispatch method" do
-    expected_output_not_a_param = "[warn]: @param tag types do not match the" +
+    expected_output_not_a_param = "@param tag types do not match the" +
       " code. The arg1 parameter is declared as types [\"Integer\"] in the " +
       "docstring, but the code specifies the types [\"Optional[String]\"] " +
       "in file test near line 0\n"
@@ -78,7 +78,7 @@ describe TemplateHelper do
     template_helper = TemplateHelper.new
     expect {
       template_helper.check_types_match_docs(object, param_details)
-    }.to output(expected_output_not_a_param).to_stdout_from_any_process
+    }.to output(expected_output_not_a_param).to_stderr_from_any_process
   end
 
   it "should not issue a warning if the parameter types do match the docstring in dispatch method" do
@@ -99,7 +99,7 @@ describe TemplateHelper do
     template_helper = TemplateHelper.new
     expect {
       template_helper.check_types_match_docs(object, param_details)
-    }.to output("").to_stdout_from_any_process
+    }.to output("").to_stderr_from_any_process
   end
 
   it "should not issue a warning if the types in  the docstring in dispatch method are assignable to parameter types" do
@@ -120,6 +120,6 @@ describe TemplateHelper do
     template_helper = TemplateHelper.new
     expect {
       template_helper.check_types_match_docs(object, param_details)
-    }.to output("").to_stdout_from_any_process
+    }.to output("").to_stderr_from_any_process
   end
 end

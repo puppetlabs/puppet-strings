@@ -153,7 +153,7 @@ class TemplateHelper
                     "#{actual_types.inspect} Sorry, the file and line number could" +
                     "not be determined."
                 end
-                log.warn warning
+                $stderr.puts warning
               end
             end
           end
