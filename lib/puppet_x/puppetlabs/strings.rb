@@ -31,6 +31,7 @@ module PuppetX::PuppetLabs
         require 'puppet_x/puppetlabs/strings/yard/code_objects/puppet_namespace_object'
         require 'puppet_x/puppetlabs/strings/yard/code_objects/defined_type_object'
         require 'puppet_x/puppetlabs/strings/yard/code_objects/host_class_object'
+        require 'puppet_x/puppetlabs/strings/yard/code_objects/type_object'
         require 'puppet_x/puppetlabs/strings/yard/code_objects/provider_object'
       end
 
@@ -43,6 +44,7 @@ module PuppetX::PuppetLabs
         require 'puppet_x/puppetlabs/strings/yard/handlers/host_class_handler'
         require 'puppet_x/puppetlabs/strings/yard/handlers/puppet_3x_function_handler'
         require 'puppet_x/puppetlabs/strings/yard/handlers/puppet_4x_function_handler'
+        require 'puppet_x/puppetlabs/strings/yard/handlers/type_handler'
         require 'puppet_x/puppetlabs/strings/yard/handlers/provider_handler'
       end
 

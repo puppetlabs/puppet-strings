@@ -56,9 +56,9 @@ Puppet::Face.define(:strings, '0.0.1') do
       # all over the terminal. This should definitely not be in real code, but
       # it's very handy for debugging with pry
       #class YARD::Logger; def progress(*args); end; end
-      YARD::Tags::Library.define_directive("puppet.provider.param",
+      YARD::Tags::Library.define_directive("puppet.type.param",
         :with_types_and_name,
-        PuppetX::PuppetLabs::Strings::YARD::Tags::PuppetProviderParameterDirective)
+        PuppetX::PuppetLabs::Strings::YARD::Tags::PuppetTypeParameterDirective)
 
       yardoc_actions.generate_documentation(*yard_args)
 

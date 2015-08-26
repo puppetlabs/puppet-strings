@@ -74,7 +74,9 @@ Classes:         0 (    0 undocumented)
 Constants:       0 (    0 undocumented)
 Methods:         0 (    0 undocumented)
 Puppet Classes:     1 (    0 undocumented)
+Puppet Defined Types:     0 (    0 undocumented)
 Puppet Types:     0 (    0 undocumented)
+Puppet Providers:     0 (    0 undocumented)
  100.00% documented
     output
     expected_stderr = "@param tag types do not match the code. The ident parameter is declared as types [\"Float\"] in the docstring, but the code specifies the types [Puppet::Pops::Types::PStringType] in file manifests/init.pp near line 2\n"

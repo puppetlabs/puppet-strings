@@ -4,18 +4,30 @@ require File.join(File.dirname(__FILE__),'../html_helper')
 require File.join(File.dirname(__FILE__),'../template_helper')
 
 def init
-  sections :header, :box_info, :pre_docstring, :docstring, :parameter_details
+  sections :header, :box_info, :pre_docstring, :docstring, :command_details, :confine_details, :default_details, :feature_details
 
   @template_helper = TemplateHelper.new
   @html_helper = HTMLHelper.new
 end
 
-def parameter_details
-  params = object.parameter_details.map { |h| h[:name] }
-  @param_details = object.parameter_details.each { |h| h[:desc] = htmlify(h[:desc]) }
-  @template_helper.check_parameters_match_docs object
+def command_details
+  @command_details = object.commands
+  erb(:command_details)
+end
 
-  erb(:parameter_details)
+def confine_details
+  @confine_details = object.confines
+  erb(:confine_details)
+end
+
+def default_details
+  @default_details = object.defaults
+  erb(:default_details)
+end
+
+def feature_details
+  @feature_details = object.features
+  erb(:feature_details)
 end
 
 def header
