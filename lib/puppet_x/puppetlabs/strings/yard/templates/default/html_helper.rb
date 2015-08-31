@@ -74,7 +74,7 @@ class HTMLHelper
       end
 
       if param[:desc]
-        result << "- <div class=\"inline\"><p> #{param[:desc]} </p></div>"
+        result << " - <div class=\"inline\"><p> #{param[:desc]} </p></div>"
       end
 
       if !param[:exists?]
