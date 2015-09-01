@@ -173,4 +173,17 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
         RUBY
       }.to output("").to_stdout_from_any_process
   end
+
+  it "should parse unusually named functions" do
+    # This should not raise a ParseErrorWithIssue exceptoin
+    parse <<-RUBY
+      Puppet::Functions.create_function :'max' do
+        def max(num_a, num_b)
+          num_a >= num_b ? num_a : num_b
+        end
+      end
+    RUBY
+  end
+
+
 end
