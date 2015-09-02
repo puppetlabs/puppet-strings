@@ -25,12 +25,10 @@ def parameter_details
   @param_details = (object.parameter_details + object.property_details).each {
     |h| h[:desc] = htmlify(Puppet::Util::Docs::scrub(h[:desc])) if h[:desc]
   }.sort { |a, b| a[:name] <=> b[:name] }
-  if ensurable = @param_details.index { |h| h[:name] == 'ensure' }
-    @param_details = @param_details.unshift(@param_details.delete_at(ensurable))
-  end
-  if namevar = @param_details.index { |h| h[:namevar] }
-    @param_details = @param_details.unshift(@param_details.delete_at(namevar))
-  end
+  # Float ensurable and namevars to the top of the list
+  @param_details = @param_details.partition{|a| a[:name] == 'ensure'}.flatten
+  @param_details = @param_details.partition{|a| a[:namevar]}.flatten
+
   @feature_details = object.features
   @template_helper.check_parameters_match_docs object
 

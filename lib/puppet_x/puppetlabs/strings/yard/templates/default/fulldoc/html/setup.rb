@@ -41,8 +41,6 @@ def generate_puppet_provider_list
   generate_list_contents
 end
 
-
-
 # A hacked version of class_list that can be instructed to only display certain
 # namespace types. This allows us to separate Puppet bits from Ruby bits.
 def namespace_list(opts = {})

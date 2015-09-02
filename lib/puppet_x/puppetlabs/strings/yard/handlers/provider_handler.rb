@@ -18,11 +18,11 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetProviderHandler < YARD
     # You think this is ugly? It's better than the alternative.
     return unless statement.children.length > 2
     first = statement.children.first.first
-    return unless (first.source == 'Puppet::Type') or
-      (first.type == :var_ref and
-      first.source == 'Type') and
+    return unless (first.source == 'Puppet::Type') ||
+      (first.type == :var_ref &&
+      first.source == 'Type') &&
       statement[2].source == 'provide'
-    i = statement.index { |s| YARD::Parser::Ruby::AstNode === s and s.type == :ident and s.source == 'provide' }
+    i = statement.index { |s| YARD::Parser::Ruby::AstNode === s && s.type == :ident && s.source == 'provide' }
     provider_name = statement[i+1].jump(:ident).source
     type_name = statement.jump(:symbol).first.source
 
@@ -35,19 +35,19 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetProviderHandler < YARD
     defaults = {}
     do_block = statement.jump(:do_block)
     do_block.traverse do |node|
-      if is_a_func_call_named? 'desc', node
+      if is_a_func_call_named?('desc', node)
         content = node.jump(:tstring_content)
         # if we found the string content extract its source
         if content != node
           # The docstring is either the source stripped of heredoc
           # annotations or the raw source.
-          if @heredoc_helper.is_heredoc? content.source
+          if @heredoc_helper.is_heredoc?(content.source)
             docstring = @heredoc_helper.process_heredoc content.source
           else
             docstring = content.source
           end
         end
-      elsif is_a_func_call_named? 'confine', node
+      elsif is_a_func_call_named?('confine', node)
         node.traverse do |s|
           if s.type == :assoc
             k = s.first.jump(:ident).source
@@ -55,20 +55,20 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetProviderHandler < YARD
             confines[k] = v
           end
         end
-      elsif is_a_func_call_named? 'has_feature', node
+      elsif is_a_func_call_named?('has_feature', node)
         list = node.jump :list
-        if list != nil and list != node
+        if list != nil && list != node
           features += list.map { |s| s.source if YARD::Parser::Ruby::AstNode === s }.compact
         end
-      elsif is_a_func_call_named? 'commands', node
+      elsif is_a_func_call_named?('commands', node)
         assoc = node.jump(:assoc)
-        if assoc  and assoc != node
+        if assoc && assoc != node
           ident = assoc.jump(:ident)
-          if ident and ident != assoc
+          if ident && ident != assoc
             commands << ident.source
           end
         end
-      elsif is_a_func_call_named? 'defaultfor', node
+      elsif is_a_func_call_named?('defaultfor', node)
         node.traverse do |s|
           if s.type == :assoc
             k = s.first.jump(:ident).source
@@ -88,7 +88,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetProviderHandler < YARD
     register obj
   end
 
-  def is_a_func_call_named? name, node
-    (node.type == :fcall or node.type == :command or node.type == :vcall) and node.children.first.source == name
+  def is_a_func_call_named?(name, node)
+    (node.type == :fcall || node.type == :command || node.type == :vcall) && node.children.first.source == name
   end
 end

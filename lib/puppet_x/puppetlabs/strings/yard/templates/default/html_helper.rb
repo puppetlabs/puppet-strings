@@ -87,13 +87,13 @@ class HTMLHelper
         result << "(<tt>Unknown</tt>)"
       end
       if param[:puppet_type] and param[:parameter]
-        result << "<b> Parameter </b>"
+        result << "(Parameter) "
       elsif param[:puppet_type] and param[:property]
-        result << "<b> Property </b>"
+        result << "(Property) "
       end
 
       if param[:namevar]
-        result << "<b> Namevar </b>"
+        result << "(Namevar) "
       end
       if param[:default]
         result << " Default value: <tt>" << param[:default] << "</tt> "
@@ -112,8 +112,13 @@ class HTMLHelper
       if param[:desc]
         result << " - <div class=\"inline\"><p> #{param[:desc]} </p></div>"
       end
+
+      if !param[:exists?]
+        result << "</strike>"
+      end
+
       if param[:allowed_values] and param[:allowed_values] != []
-        result << "<h4> Allowed Values: </h4>"
+        result << "<b> Allowed Values: </b>"
         result << "<ul>"
         param[:allowed_values].each do |value_thing|
           result << "<li>"
@@ -124,11 +129,6 @@ class HTMLHelper
           result << "</li>"
         end
         result << "</ul>"
-      end
-
-
-      if !param[:exists?]
-        result << "</strike>"
       end
 
       result << "</li>"
