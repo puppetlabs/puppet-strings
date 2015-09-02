@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
+gemspec
+
 gem 'yard'
 gem 'rgen'
 gem 'redcarpet'
-gem 'puppet-strings', '0.1.0', :path => '.'
 
 puppetversion = ENV['PUPPET_VERSION']
 
