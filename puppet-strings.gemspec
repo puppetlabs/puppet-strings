@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
     s.send("#{section}=", puppet_metadata[section])
   end
 
+  s.email = 'info@puppetlabs.com'
   s.homepage = puppet_metadata['project_page']
   s.description = s.summary
   s.files = Dir['lib/**/*'].reject { |f| f if File.directory?(f) }
