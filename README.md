@@ -124,7 +124,7 @@ style guide.
 ### Functions
 Here's an example of how you might document a 4x function:
 
-```
+```ruby
      # When given two numbers, returns the one that is larger.
      # You could have a several line description here if you wanted,
      # but I don't have much to say about this function.
@@ -147,7 +147,7 @@ Here's an example of how you might document a 4x function:
 
 Here's an example of how you might document a class:
 
-```
+```puppet
      # This class is meant to serve as an example of how one might
      # want to document a manifest in a way that is compatible.
      # with the strings module
@@ -209,11 +209,15 @@ Rake Tasks
 
 This module is also available as a Gem and makes two rake tasks (`generate` and `serve`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
 
-    gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppet-strings.git'
+```ruby
+    gem 'puppetlabs-strings', :git => 'https://github.com/puppetlabs/puppet-strings.git'
+```
 
 To use the rake tasks, `require puppet-strings/rake_tasks` in your `Rakefile`:
 
+```ruby
     require 'puppet-strings/rake_tasks'
+```
 
 Developing and Contributing
 -----

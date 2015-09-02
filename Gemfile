@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'yard'
 gem 'rgen'
 gem 'redcarpet'
 
