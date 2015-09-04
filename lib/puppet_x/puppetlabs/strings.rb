@@ -29,6 +29,7 @@ module PuppetX::PuppetLabs
       # aspects of puppet code in YARD's Registry
       module CodeObjects
         require 'puppet_x/puppetlabs/strings/yard/code_objects/puppet_namespace_object'
+        require 'puppet_x/puppetlabs/strings/yard/code_objects/method_object'
         require 'puppet_x/puppetlabs/strings/yard/code_objects/defined_type_object'
         require 'puppet_x/puppetlabs/strings/yard/code_objects/host_class_object'
         require 'puppet_x/puppetlabs/strings/yard/code_objects/type_object'

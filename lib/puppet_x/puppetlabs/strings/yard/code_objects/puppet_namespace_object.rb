@@ -1,11 +1,24 @@
 class PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject < YARD::CodeObjects::NamespaceObject
+
+  attr_accessor :type_info
   # NOTE: `YARD::Registry#resolve` requires a method with this signature to
   # be present on all subclasses of `NamespaceObject`.
   def inheritance_tree(include_mods = false)
     [self]
   end
 
-  attr_accessor :type_info
+  def to_s
+    name.to_s
+  end
+
+  def to_json(*a)
+    {
+      "name"             => @name,
+      "file"             => file,
+      "line"             => line,
+      "docstring"        => @docstring,
+    }.to_json(*a)
+  end
 
   # FIXME: We used to override `self.new` to ensure no YARD proxies were
   # created for namespaces segments that did not map to a host class or

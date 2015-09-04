@@ -10,6 +10,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet3xFunctionHandler < YA
     name, options = @heredoc_helper.process_parameters statement
 
     obj = MethodObject.new(function_namespace, name)
+    obj[:puppet_3x_function] = true
 
     register obj
     if options['doc']
