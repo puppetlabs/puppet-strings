@@ -1,4 +1,5 @@
 require 'yard'
+require File.join(File.dirname(__FILE__), './json_registry_store')
 
 # TODO: As far as I can tell, monkeypatching is the officially recommended way
 # to extend these tools to cover custom usecases. Follow up on the YARD mailing
@@ -47,5 +48,21 @@ class YARD::Logger
     f = File.new '.yardwarns', 'a'
     f.write warning
     f.close()
+  end
+end
+
+
+# 15:04:42       radens | lsegal: where would you tell yard to use your custom RegistryStore?
+# 15:09:54      @lsegal | https://github.com/lsegal/yard/blob/master/lib/yard/registry.rb#L428-L435
+# 15:09:54      @lsegal | you would set that attr on Registry
+# 15:09:54      @lsegal | it might be worth expanding that API to swap out the store class used
+# 15:10:49      @lsegal | specifically
+#                       | https://github.com/lsegal/yard/blob/master/lib/yard/registry.rb#L190 and
+#                       | replace RegistryStore there with a storage_class attr
+module YARD::Registry
+  class << self
+  def clear
+    self.thread_local_store = YARD::JsonRegistryStore.new
+  end
   end
 end
