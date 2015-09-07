@@ -187,6 +187,7 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
 
     name = process_element(name)
 
+
     name
   end
 
@@ -199,12 +200,12 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
     # @param ele [YARD::Parser::Ruby::AstNode]
     # @return [String]
     def process_element(ele)
-      ele = ele.jump(:ident, :string_content)
+      ele = ele.jump(:ident, :string_content, :tstring_content)
 
       case ele.type
       when :ident
         ele.source
-      when :string_content
+      when :string_content, :tstring_content
         source = ele.source
         if HEREDOC_START.match(source)
           process_heredoc(source)
