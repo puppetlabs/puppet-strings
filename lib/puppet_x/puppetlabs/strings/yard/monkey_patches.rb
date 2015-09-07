@@ -31,4 +31,13 @@ class YARD::Logger
     return false unless level > INFO # no progress in verbose/debug modes
     @show_progress
   end
+
+  # Redirect Yard command line warnings to a log file called .yardwarns
+  # Yard warnings may be irrelevant, spurious, or may not conform with our
+  # styling and UX design. They are also printed on stdout by default.
+  def warn warning
+    f = File.new '.yardwarns', 'a'
+    f.write warning
+    f.close()
+  end
 end

@@ -1,5 +1,7 @@
 require 'spec_helper'
+require 'lib/strings_spec/module_helper'
 require 'puppet_x/puppetlabs/strings/yard/handlers/puppet_4x_function_handler'
+require 'puppet/face/strings'
 require 'strings_spec/parsing'
 
 describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler do
@@ -55,123 +57,82 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
   end
 
   it "should issue a warning if the parameter names do not match the docstring" do
-      expected_output_not_a_param = "[warn]: @param tag has unknown parameter" +
-        " name: not_a_param \n    in file `(stdin)' near line 3"
-      expected_output_also_not_a_param = "[warn]: @param tag has unknown " +
-        "parameter name: also_not_a_param \n    in file `(stdin)' near line 3"
+      expected_output_not_a_param = "[warn]: The parameter not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
+      expected_output_also_not_a_param = "[warn]: The parameter also_not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
       expect {
-        parse <<-RUBY
-          # @param not_a_param [Integer] the first number to be compared
-          # @param also_not_a_param [Integer] the second number to be compared
-          Puppet::Functions.create_function(:max) do
-            def max(num_a, num_b)
-              num_a >= num_b ? num_a : num_b
-            end
+        expect {
+          PuppetModuleHelper.using_module(File.dirname(__FILE__),'test-param-names-differ') do |tmp|
+            Dir.chdir('test-param-names-differ')
+            Puppet::Face[:strings, :current].yardoc
           end
-        RUBY
-      }.to output("#{expected_output_not_a_param}\n#{expected_output_also_not_a_param}\n").to_stdout_from_any_process
+        }.to output(/documented/).to_stdout_from_any_process
+      }.to output("#{expected_output_not_a_param}\n#{expected_output_also_not_a_param}\n").to_stderr_from_any_process
   end
 
   it "should not issue a warning when the parameter names match the docstring" do
+      expected = ""
       expect {
-        parse <<-RUBY
-          # @param num_a [Integer] the first number to be compared
-          # @param num_b [Integer] the second number to be compared
-          Puppet::Functions.create_function(:max) do
-            def max(num_a, num_b)
-              num_a >= num_b ? num_a : num_b
-            end
+        expect {
+          PuppetModuleHelper.using_module(File.dirname(__FILE__),'test-param-names-match') do |tmp|
+            Dir.chdir('test-param-names-match')
+            Puppet::Face[:strings, :current].yardoc
           end
-        RUBY
-      }.to output("").to_stdout_from_any_process
-  end
+        }.to output(/documented/).to_stdout_from_any_process
+      }.to output(expected).to_stderr_from_any_process
 
+  end
   it "should not issue a warning when there are parametarized types and parameter names are the same" do
+      expected = ""
       expect {
-        parse <<-RUBY
-          # @param num_a Integer[1,2] the first number to be compared
-          # @param num_b Integer[1,2] the second number to be compared
-          Puppet::Functions.create_function(:max) do
-            def max(num_a, num_b)
-              num_a >= num_b ? num_a : num_b
-            end
+        expect {
+          PuppetModuleHelper.using_module(File.dirname(__FILE__),'test-param-names-match-with-types') do |tmp|
+            Dir.chdir('test-param-names-match-with-types')
+            Puppet::Face[:strings, :current].yardoc
           end
-        RUBY
-      }.to output("").to_stdout_from_any_process
+        }.to output(/documented/).to_stdout_from_any_process
+      }.to output(expected).to_stderr_from_any_process
   end
 
   it "should issue a warning when there are parametarized types and parameter names differ" do
       expected_output_not_num_a = "[warn]: @param tag has unknown parameter" +
         " name: not_num_a \n    in file `(stdin)' near line 3"
+      expected_output_not_a_param = "[warn]: The parameter not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
+      expected_output_also_not_a_param = "[warn]: The parameter also_not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
       expect {
-        parse <<-RUBY
-          # @param not_num_a Integer[1,2] the first number to be compared
-          # @param num_b Integer[1,2] the second number to be compared
-          Puppet::Functions.create_function(:max) do
-            dispatch max_1 do
-              param 'Integer[1,2]', :num_a
-              param 'Integer[1,2]', :num_b
-            end
-
-            def max_1(num_a, num_b)
-              num_a >= num_b ? num_a : num_b
-            end
+        expect {
+          PuppetModuleHelper.using_module(File.dirname(__FILE__),'test-param-names-differ-with-types') do |tmp|
+            Dir.chdir('test-param-names-differ-with-types')
+            Puppet::Face[:strings, :current].yardoc
           end
-        RUBY
-      }.to output("#{expected_output_not_num_a}\n").to_stdout_from_any_process
+        }.to output(/documented/).to_stdout_from_any_process
+      }.to output("#{expected_output_not_a_param}\n#{expected_output_also_not_a_param}\n").to_stderr_from_any_process
   end
 
 
   it "should issue a warning if the parameter names do not match the docstring in dispatch method" do
-      expected_output_not_a_param = "[warn]: @param tag has unknown parameter" +
-        " name: not_a_param \n    in file `(stdin)' near line 3"
-      expected_output_also_not_a_param = "[warn]: @param tag has unknown " +
-        "parameter name: also_not_a_param \n    in file `(stdin)' near line 3"
+      expected_output_not_a_param = "[warn]: The parameter not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
+      expected_output_also_not_a_param = "[warn]: The parameter also_not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
       expect {
-        parse <<-RUBY
-          # @param not_a_param [Integer] the first number to be compared
-          # @param also_not_a_param [Integer] the second number to be compared
-          Puppet::Functions.create_function(:max) do
-            dispatch max_1 do
-              param 'Integer[1,2]', :num_a
-              param 'Integer', :num_b
-            end
-
-            dispatch max_2 {
-              param 'String', :num_c
-              param 'String[1,2]', :num_d
-            }
-
-            def max_1(num_a, num_b)
-              num_a >= num_b ? num_a : num_b
-            end
-
-            def max_2(num_a, num_b)
-              num_a >= num_b ? num_a : num_b
-            end
+        expect {
+          PuppetModuleHelper.using_module(File.dirname(__FILE__),'test-param-names-differ-with-dispatch') do |tmp|
+            Dir.chdir('test-param-names-differ-with-dispatch')
+            Puppet::Face[:strings, :current].yardoc
           end
-        RUBY
-      }.to output("#{expected_output_not_a_param}\n#{expected_output_also_not_a_param}\n").to_stdout_from_any_process
+        }.to output(/documented/).to_stdout_from_any_process
+      }.to output("#{expected_output_not_a_param}\n#{expected_output_also_not_a_param}\n").to_stderr_from_any_process
   end
 
   it "should not issue a warning if the parameter names do match the " +
         "docstring in dispatch method" do
+      expected = ""
       expect {
-        parse <<-RUBY
-          # @param [Integer] num_a the first number to be compared
-          # @param num_b [Integer] the second number to be compared
-          Puppet::Functions.create_function(:max) do
-            dispatch max_1 do
-              param 'Integer', :num_a
-              param 'Integer', :num_b
-            end
-
-            def max_1(num_a, num_b)
-              num_a >= num_b ? num_a : num_b
-            end
+        expect {
+          PuppetModuleHelper.using_module(File.dirname(__FILE__),'test-param-names-match-with-dispatch') do |tmp|
+            Dir.chdir('test-param-names-match-with-dispatch')
+            Puppet::Face[:strings, :current].yardoc
           end
-        RUBY
-      }.to output("").to_stdout_from_any_process
+        }.to output(/documented/).to_stdout_from_any_process
+      }.to output(expected).to_stderr_from_any_process
   end
 
   it "should parse unusually named functions" do
