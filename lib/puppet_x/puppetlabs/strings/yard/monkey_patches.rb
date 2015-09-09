@@ -6,7 +6,7 @@ require 'yard'
 
 class YARD::CLI::Yardoc
   def all_objects
-    YARD::Registry.all(:root, :module, :class, :puppetnamespace, :hostclass, :definedtype)
+    YARD::Registry.all(:root, :module, :class, :type, :provider, :puppetnamespace, :hostclass, :definedtype)
   end
 end
 
@@ -16,7 +16,15 @@ class YARD::CLI::Stats
   end
 
   def stats_for_definedtypes
-    output 'Puppet Types', *type_statistics(:definedtype)
+    output 'Puppet Defined Types', *type_statistics(:definedtype)
+  end
+
+  def stats_for_puppet_types
+    output 'Puppet Types', *type_statistics(:type)
+  end
+
+  def stats_for_puppet_provider
+    output 'Puppet Providers', *type_statistics(:provider)
   end
 end
 

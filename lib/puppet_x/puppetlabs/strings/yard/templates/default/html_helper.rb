@@ -15,6 +15,30 @@ class HTMLHelper
     result.join
   end
 
+  def generate_features features, object
+    result = []
+
+    if features
+      features.each do |feat|
+        result << "<li>"
+        result << "<span class=\"name\">#{feat[:name]} </span>"
+        if feat[:desc]
+          result << "- <br/><div class=\"inline\"><p> #{feat[:desc]} </p></div>"
+        end
+        if feat[:methods]
+          result << "<h3> Methods </h3>"
+          result << "<ul>"
+          feat[:methods].each do |method|
+            result << "<li> <tt>" << method << "</tt> </li>"
+          end
+          result << "</ul>"
+        end
+        result << "</li>"
+      end
+    end
+    result.join
+  end
+
   # Generates the HTML to format the relevant data about parameters
   def generate_parameters(params, object)
     result = []
@@ -59,8 +83,20 @@ class HTMLHelper
           result << "(" << "<tt>" << possible_types.join(", ") << "</tt>" << ")"
         end
       # Give up. It can probably be anything.
-      elsif !param[:puppet_3_func]
+      elsif not (param[:puppet_3_func] or param[:puppet_type])
         result << "(<tt>Unknown</tt>)"
+      end
+      if param[:puppet_type] and param[:parameter]
+        result << "(Parameter) "
+      elsif param[:puppet_type] and param[:property]
+        result << "(Property) "
+      end
+
+      if param[:namevar]
+        result << "(Namevar) "
+      end
+      if param[:default]
+        result << " Default value: <tt>" << param[:default] << "</tt> "
       end
 
       result << "</span>"
@@ -79,6 +115,20 @@ class HTMLHelper
 
       if !param[:exists?]
         result << "</strike>"
+      end
+
+      if param[:allowed_values] and param[:allowed_values] != []
+        result << "<b> Allowed Values: </b>"
+        result << "<ul>"
+        param[:allowed_values].each do |value_thing|
+          result << "<li>"
+          result << "<tt>" << value_thing.first << "</tt>"
+          if value_thing[1]
+            result <<  " only available if " << "<tt>" << value_thing[1] << "</tt>"
+          end
+          result << "</li>"
+        end
+        result << "</ul>"
       end
 
       result << "</li>"

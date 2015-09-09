@@ -1,0 +1,34 @@
+<div class="docstring">
+  <div class="discussion">
+    <p><%= htmlify(Puppet::Util::Docs::scrub(@class_details[:desc])) %></p>
+  </div>
+</div>
+<div class="tags">
+  <% if @class_details[:examples] != {}%>
+    <div class="examples">
+    <p class="tag_title">Examples:</p>
+    <% @class_details[:examples].each do |title, text| %>
+      <div class="inline"><p><%= title %></p></div>
+      <pre class="example code"><code><span><%= text %></span></code></pre>
+    <% end %>
+    </div>
+  <% end %>
+  <% if @class_details[:since] %>
+    <p class="tag_title">Since:</p>
+    <ul class="since">
+      <li>
+        <div class="inline">
+          <p><%= @class_details[:since] %></p>
+        </div>
+      </li>
+    </ul>
+  <% end %>
+  <% if @class_details[:return] %>
+    <p class="tag_title">Return:</p>
+    <ul class="return">
+      <li>
+        <%= @html_helper.generate_return_types(@class_details[:return][1], @class_details[:return][0]) %>
+      </li>
+    </ul>
+  <% end %>
+</div>

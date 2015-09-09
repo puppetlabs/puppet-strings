@@ -1,0 +1,10 @@
+<h2>Available Providers</h2>
+<% if @providers != [] %>
+<div class="tags">
+  <ul class="command">
+    <% @providers.each do |provider| %>
+      <li><a href="<%= provider.name.to_s %>.html"><tt><%= provider.name.to_s %></tt></a></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
