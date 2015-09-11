@@ -137,21 +137,21 @@ class TemplateHelper
                 # Get the locations where the object can be found. We only care about
                 # the first one.
                 locations = object.files
+                warning = <<-EOS
+[warn]: @param tag types do not match the code. The #{param[:name]}
+    parameter is declared as types #{param[:types]} in the docstring,
+    but the code specifies the types #{actual_types.inspect}
+ EOS
+
                 # If the locations aren't in the shape we expect then report that
                 # the file number couldn't be determined.
                 if locations.length >= 1 and locations[0].length == 2
                   file = locations[0][0]
                   line = locations[0][1]
-                  warning = "@param tag types do not match the code. The " +
-                    "#{param[:name]} parameter is declared as types #{param[:types]} in " +
-                    "the docstring, but the code specifies the types " +
-                    "#{actual_types.inspect} in file #{file} near line #{line}"
+                  warning += "    in the file #{file} near line #{line}."
                 else
-                  warning = "@param tag types do not match the code. The " +
-                    "#{param[:name]} parameter is declared as types #{param[:types]} in " +
-                    "the docstring, but the code specifies the types " +
-                    "#{actual_types.inspect} Sorry, the file and line number could" +
-                    "not be determined."
+                  warning += "    Sorry, the file and line number could " +
+                             "not be determined."
                 end
                 $stderr.puts warning
               end
@@ -176,9 +176,15 @@ class TemplateHelper
         if locations.length >= 1 and locations[0].length == 2
           file_name = locations[0][0]
           line_number = locations[0][1]
-          $stderr.puts "[warn]: The parameter #{tag.name} is documented, but doesn't exist in your code, in file #{file_name} near line #{line_number}"
+          $stderr.puts <<-EOS
+[warn]: The parameter #{tag.name} is documented, but doesn't exist in
+    your code, in file #{file_name} near line #{line_number}.
+EOS
         else
-          $stderr.puts "[warn]: The parameter #{tag.name} is documented, but doesn't exist in your code. Sorry, the file and line number could not be determined."
+          $stderr.puts <<-EOS
+[warn]: The parameter #{tag.name} is documented, but doesn't exist in
+    your code. Sorry, the file and line number could not be determined.
+EOS
         end
       end
     end
