@@ -57,8 +57,8 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
   end
 
   it "should issue a warning if the parameter names do not match the docstring" do
-      expected_output_not_a_param = "[warn]: The parameter not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
-      expected_output_also_not_a_param = "[warn]: The parameter also_not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
+      expected_output_not_a_param = "[warn]: The parameter not_a_param is documented, but doesn't exist in\n    your code, in file lib/test.rb near line 3."
+      expected_output_also_not_a_param = "[warn]: The parameter also_not_a_param is documented, but doesn't exist in\n    your code, in file lib/test.rb near line 3."
       expect {
         expect {
           PuppetModuleHelper.using_module(File.dirname(__FILE__),'test-param-names-differ') do |tmp|
@@ -95,9 +95,9 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
 
   it "should issue a warning when there are parametarized types and parameter names differ" do
       expected_output_not_num_a = "[warn]: @param tag has unknown parameter" +
-        " name: not_num_a \n    in file `(stdin)' near line 3"
-      expected_output_not_a_param = "[warn]: The parameter not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
-      expected_output_also_not_a_param = "[warn]: The parameter also_not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
+        " name: not_num_a \n    in file `(stdin)' near line 3."
+      expected_output_not_a_param = "[warn]: The parameter not_a_param is documented, but doesn't exist in\n    your code, in file lib/test.rb near line 3."
+      expected_output_also_not_a_param = "[warn]: The parameter also_not_a_param is documented, but doesn't exist in\n    your code, in file lib/test.rb near line 3."
       expect {
         expect {
           PuppetModuleHelper.using_module(File.dirname(__FILE__),'test-param-names-differ-with-types') do |tmp|
@@ -110,8 +110,8 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::Puppet4xFunctionHandler d
 
 
   it "should issue a warning if the parameter names do not match the docstring in dispatch method" do
-      expected_output_not_a_param = "[warn]: The parameter not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
-      expected_output_also_not_a_param = "[warn]: The parameter also_not_a_param is documented, but doesn't exist in your code, in file lib/test.rb near line 3"
+      expected_output_not_a_param = "[warn]: The parameter not_a_param is documented, but doesn't exist in\n    your code, in file lib/test.rb near line 3."
+      expected_output_also_not_a_param = "[warn]: The parameter also_not_a_param is documented, but doesn't exist in\n    your code, in file lib/test.rb near line 3."
       expect {
         expect {
           PuppetModuleHelper.using_module(File.dirname(__FILE__),'test-param-names-differ-with-dispatch') do |tmp|

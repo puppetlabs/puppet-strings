@@ -31,7 +31,7 @@ describe TemplateHelper do
     obj1 = PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject.new(:root, 'Puppet3xFunctions')
     obj1.add_tag tag1
     obj1.parameters = [['b_parameter']]
-    expect { th.check_parameters_match_docs obj1 }.to output("[warn]: The parameter aa_parameter is documented, but doesn't exist in your code. Sorry, the file and line number could not be determined.\n").to_stderr_from_any_process
+    expect { th.check_parameters_match_docs obj1 }.to output("[warn]: The parameter aa_parameter is documented, but doesn't exist in\n    your code. Sorry, the file and line number could not be determined.\n").to_stderr_from_any_process
 
     # The docstring is still alive between tests. Clear the tags registered with
     # it so the tags won't persist between tests.
@@ -49,7 +49,7 @@ describe TemplateHelper do
     obj2.files = [['some_file.pp', 42]]
     obj2.add_tag tag2
     obj2.parameters = [['b_parameter']]
-    expect { th.check_parameters_match_docs obj2 }.to output("[warn]: The parameter aaa_parameter is documented, but doesn't exist in your code, in file some_file.pp near line 42\n").to_stderr_from_any_process
+    expect { th.check_parameters_match_docs obj2 }.to output("[warn]: The parameter aaa_parameter is documented, but doesn't exist in\n    your code, in file some_file.pp near line 42.\n").to_stderr_from_any_process
 
     # The docstring is still alive between tests. Clear the tags registered with
     # it so the tags won't persist between tests.
@@ -57,10 +57,10 @@ describe TemplateHelper do
   end
 
   it "should issue a warning if the parameter types do not match the docstring in dispatch method" do
-    expected_output_not_a_param = "@param tag types do not match the" +
-      " code. The arg1 parameter is declared as types [\"Integer\"] in the " +
-      "docstring, but the code specifies the types [\"Optional[String]\"] " +
-      "in file test near line 0\n"
+    expected_output_not_a_param = "[warn]: @param tag types do not match the" +
+      " code. The arg1\n    parameter is declared as types [\"Integer\"] in the " +
+      "docstring,\n    but the code specifies the types [\"Optional[String]\"]" +
+      "\n    in the file test near line 0.\n"
     object = PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject.new(:root, 'Puppet4xFunctions')
     object.files = [['test', 0]]
     object.type_info = [{
