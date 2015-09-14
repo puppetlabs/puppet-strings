@@ -36,6 +36,8 @@ Installing the Yard Gem
 -----------------------
 
 **Installing the Yard Gem with Puppet**
+
+
 The easiest way to install the Yard gem is with Puppet itself.
 
 For Puppet 4.x:
