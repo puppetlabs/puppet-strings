@@ -138,9 +138,12 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetTypeHandler < YARD::Ha
     obj.property_details = property_details
     obj.features = features
 
-    register_docstring(obj, docstring, nil)
-
     register obj
+    # Register docstring after the object. If the object already has a
+    # docstring, or more likely has parameters documented with the type
+    # directive and an empty docstring, we want to override it with the
+    # docstring we found, assuming we found one.
+    register_docstring(obj, docstring, nil) if docstring
   end
 
 
