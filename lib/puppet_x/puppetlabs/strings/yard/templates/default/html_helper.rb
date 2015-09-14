@@ -118,7 +118,7 @@ class HTMLHelper
       end
 
       if param[:allowed_values] and param[:allowed_values] != []
-        result << "<b> Allowed Values: </b>"
+        result << "\n<b> Allowed Values: </b>"
         result << "<ul>"
         param[:allowed_values].each do |value_thing|
           result << "<li>"
