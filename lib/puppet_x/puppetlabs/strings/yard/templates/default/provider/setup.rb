@@ -10,6 +10,12 @@ def init
   @html_helper = HTMLHelper.new
 end
 
+def header
+  @header_text = object.header_name
+
+  erb(:header)
+end
+
 def command_details
   @command_details = object.commands
   erb(:command_details)

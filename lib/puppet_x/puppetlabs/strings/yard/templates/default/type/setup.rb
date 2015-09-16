@@ -10,6 +10,12 @@ def init
   @html_helper = HTMLHelper.new
 end
 
+def header
+  @header_text = object.header_name
+
+  erb(:header)
+end
+
 def provider_details
   type_name = object.name.to_s
   @providers = YARD::Registry.all(:provider).select { |t| t.type_name == type_name }
