@@ -8,7 +8,6 @@ def init
     item.name == object.name and item.namespace === PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject
   end
   if parents.length == 0
-require 'pry'; binding.pry
     @template_helper = TemplateHelper.new
     @template_helper.check_parameters_match_docs object
   end
