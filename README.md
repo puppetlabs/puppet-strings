@@ -172,7 +172,7 @@ and methods automatically. In those cases Strings will not be able to document
 them automatically (Strings doesn't execute the code that would generate those
 parameters), so you will need to provide hints on how to document your code. To
 document a parameter which is automatically created you must use the special
-directive `@!puppet.provider.param` which may take types, the parameter name,
+directive `@!puppet.type.param` which may take types, the parameter name,
 and a description.
 
 ```ruby
