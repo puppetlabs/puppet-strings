@@ -128,7 +128,7 @@ class HTMLHelper
           end
           result << "</li>"
         end
-        result << "</ul>"
+        result << "</ul>\n"
       end
 
       result << "</li>"
