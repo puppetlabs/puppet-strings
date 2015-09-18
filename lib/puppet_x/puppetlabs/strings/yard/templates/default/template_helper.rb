@@ -118,7 +118,7 @@ class TemplateHelper
       function.keys.each do |key|
         if function[key].class == String
           begin
-            instantiated = type_parser.parse function[key].gsub(/'/, '').gsub(/"/, "")
+            instantiated = type_parser.parse function[key]
           rescue Puppet::ParseError
             # Likely the result of a malformed type
             next
@@ -132,15 +132,15 @@ class TemplateHelper
               param_instantiated = type_parser.parse type
               if not type_calculator.assignable? instantiated, param_instantiated
                 actual_types = object.type_info.map do |sig|
-                  sig[key]
-                end
+                  sig[key].to_s if sig[key]
+                end.compact
                 # Get the locations where the object can be found. We only care about
                 # the first one.
                 locations = object.files
                 warning = <<-EOS
 [warn]: @param tag types do not match the code. The #{param[:name]}
     parameter is declared as types #{param[:types]} in the docstring,
-    but the code specifies the types #{actual_types.inspect}
+    but the code specifies the types #{actual_types}
  EOS
 
                 # If the locations aren't in the shape we expect then report that
