@@ -3,7 +3,9 @@ require 'json'
 puppet_metadata = JSON.load File.open(File.expand_path(File.join(__FILE__, '..', 'metadata.json'))).read
 
 Gem::Specification.new do |s|
-  %w(name author version license summary).each do |section|
+  s.name = 'puppet-strings'
+
+  %w(author version license summary).each do |section|
     s.send("#{section}=", puppet_metadata[section])
   end
 
