@@ -59,7 +59,13 @@ def namespace_list(opts = {})
   end
   children.reject {|c| c.nil? }.sort_by {|child| child.path }.map do |child|
     if namespace_types.include? child.type
-      name = child.namespace.is_a?(CodeObjects::Proxy) ? child.path : child.name
+      if child.namespace.is_a?(CodeObjects::Proxy)
+        name = child.path
+      elsif child.is_a?(PuppetX::PuppetLabs::Strings::YARD::CodeObjects::TypeObject) || child.is_a?(PuppetX::PuppetLabs::Strings::YARD::CodeObjects::ProviderObject)
+        name = child.header_name
+      else
+        name = child.name
+      end
       has_children = child.respond_to?(:children) && run_verifier(child.children).any? {|o| o.is_a?(CodeObjects::NamespaceObject) }
       out << "<li>"
       out << "<a class='toggle'></a> " if has_children

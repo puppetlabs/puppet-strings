@@ -26,7 +26,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetProviderHandler < YARD
     provider_name = statement[i+1].jump(:ident).source
     type_name = statement.jump(:symbol).first.source
 
-    obj = ProviderObject.new(:root, provider_name)
+    obj = ProviderObject.new(:root, "#{provider_name}_provider")
 
     docstring = nil
     features = []
@@ -83,6 +83,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetProviderHandler < YARD
     obj.confines = confines
     obj.defaults = defaults
     obj.type_name = type_name
+    obj.header_name = provider_name
 
     register_docstring(obj, docstring, nil)
     register obj

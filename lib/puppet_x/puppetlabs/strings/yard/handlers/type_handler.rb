@@ -78,7 +78,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetTypeHandler < YARD::Ha
     parameter_details = []
     property_details = []
     features = []
-    obj = TypeObject.new(:root, name) do |o|
+    obj = TypeObject.new(:root, "#{name}_type") do |o|
       # FIXME: This block gets yielded twice for whatever reason
       parameter_details = []
       property_details = []
@@ -137,6 +137,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetTypeHandler < YARD::Ha
     obj.parameter_details = parameter_details
     obj.property_details = property_details
     obj.features = features
+    obj.header_name = name
 
     register obj
     # Register docstring after the object. If the object already has a

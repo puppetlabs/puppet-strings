@@ -7,7 +7,7 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetTypeHandler do
   include StringsSpec::Parsing
 
   def the_type()
-    YARD::Registry.at("file")
+    YARD::Registry.at("file_type")
   end
 
   it "should have the proper docstring" do
