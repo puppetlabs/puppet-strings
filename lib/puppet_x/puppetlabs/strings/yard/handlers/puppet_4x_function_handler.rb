@@ -30,8 +30,9 @@ class Puppet4xFunctionHandler < YARD::Handlers::Ruby::Base
     return [] if command.children.length < 2 or command.children[1].children.length < 2
     type_specifier = command.children[1]
     # the parameter signature is the first child of the specifier and an
-    # identifier. Convert it to a string.
-    param_signature = type_specifier.children[0].source
+    # identifier. Jump to the content inside the quotes and convert it to a
+    # string.
+    param_signature = type_specifier.children[0].jump(:tstring_content).source
     # The parameter name is the second child of the specifier and a symbol.
     # convert it to a string.
     param_name_ident = type_specifier.jump :ident

@@ -79,7 +79,7 @@ Puppet Types:     0 (    0 undocumented)
 Puppet Providers:     0 (    0 undocumented)
  100.00% documented
     output
-    expected_stderr = "[warn]: @param tag types do not match the code. The ident\n    parameter is declared as types [\"Float\"] in the docstring,\n    but the code specifies the types [Puppet::Pops::Types::PStringType]\n    in the file manifests/init.pp near line 2.\n"
+    expected_stderr = "[warn]: @param tag types do not match the code. The ident\n    parameter is declared as types [\"Float\"] in the docstring,\n    but the code specifies the types [\"String\"]\n    in the file manifests/init.pp near line 2.\n"
 
     expect {
       expect {
