@@ -1,22 +1,29 @@
+##2015-09-22 - Release 0.3.1
+
+##Summary
+
+This is a minor bug fix release. 
+
+All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with the fix version of [0.3.1](https://tickets.puppetlabs.com/issues/?filter=15530).
+
+###Bugfixes
+
+- Prevent strings from printing unnecessary quotes in error messages **(PDOC-57)**
+- Issue correct type check warnings for defined types **(PDOC-56)**
+- Allow providers, types, and defines to have the same name **(PDOC-54)**
+
 ##2015-09-21 - Release 0.3.0
 
 ##Summary
 
 This release includes support for Puppet Types and Providers, as well as
-type checking Puppet 4x functions and defined types. As part of generating html
-documentation, strings now emits JSON representing the information it parsed
-for use by other tools possibly including the Puppet Forge.
+type checking Puppet 4x functions and defined types.
 
 All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with
-the fix version of [0.3.0][0.3.0 search].
-
-
-[0.3.0 search]: https://tickets.puppetlabs.com/browse/PDOC-45?jql=project%20%3D%20PDOC%20AND%20fixVersion%20%3D%20%22PDOC%200.3.0%22
-
+the fix version of [0.3.0](https://tickets.puppetlabs.com/issues/?filter=15529).
 
 ####Features
 
-- Emit JSON structured data **(PDOC-23)** **(PDOC-22)**
 - Support for Puppet Types and Providers **(PDOC-35)**
 - Type check Puppet 4x functions and defined types where possible and warn the user when types don't match.
   - Type check defined types **(PDOC-21)**
@@ -34,6 +41,7 @@ the fix version of [0.3.0][0.3.0 search].
 ####Bugfixes
 
 - Fix markdown list processing **(PDOC-30)**
+- Fix namespacing for nested classes and defined types **(PDOC-20)**
 
 
 ##2015-03-17 - Release 0.2.0
@@ -49,6 +57,7 @@ All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with t
     - Improved HMTL output that is more appropriate for Puppet code (especially for parameters)
     - Support for the explicit list of YARD tags we will be supporting initially (@param, @return, @since, @example)
     - Our own custom YARD templates which can be easily extended and tweaked
+
 - Custom YARD templates for 3.x and 4.x functions **(PDOC-24)**
     - Improved HMTL output that is more appropriate for listing several functions on one webpage in addition to being more consistent with the HTML produced for classes and defined types.
     - Support for the explicit list of YARD tags we will be supporting initially (@param, @return, @since, @example)
