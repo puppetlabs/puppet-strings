@@ -77,8 +77,8 @@ Running Puppet Strings
 Once strings has been installed you can document a puppet module:
 
 ```
-    $ cd /path/to/module
-    $ puppet strings
+$ cd /path/to/module
+$ puppet strings
 ```
 
 This processes `README` and all puppet and ruby files under `manifests/`
@@ -87,7 +87,7 @@ and `lib/`.
 To document specific files:
 
 ```
-    $ puppet strings some_manifest.pp [another_if_you_feel_like_it.rb]
+$ puppet strings some_manifest.pp [another_if_you_feel_like_it.rb]
 ```
 
 Processing is delegated to the `yardoc` tool so some options listed in `yard
@@ -99,7 +99,7 @@ In addition to generating a directory full of HTML, you can also serve up
 documentation for all your modules using the `server` action:
 
 ```
-    $ puppet strings server
+$ puppet strings server
 ```
 
 Writing Compatible Documentation
@@ -113,7 +113,7 @@ would like YARD to use by adding a `.yardopts` file to the root of your module
 directory which specifies the desired format:
 
 ```
-    --markup markdown
+--markup markdown
 ```
 
 While we have yet to decide exactly how documentation should work in the
@@ -124,43 +124,43 @@ style guide.
 ### Functions
 Here's an example of how you might document a 4x function:
 
-```
-     # When given two numbers, returns the one that is larger.
-     # You could have a several line description here if you wanted,
-     # but I don't have much to say about this function.
-     #
-     # @example using two integers
-     #   $bigger_int = max(int_one, int_two)
-     #
-     # @return [Integer] the larger of the two parameters
-     #
-     # @param num_a [Integer] the first number to be compared
-     # @param num_b [Integer] the second number to be compared
-     Puppet::Functions.create_function(:max) do
-       def max(num_a, num_b)
-         num_a >= num_b ? num_a : num_b
-       end
-     end
+```ruby
+# When given two numbers, returns the one that is larger.
+# You could have a several line description here if you wanted,
+# but I don't have much to say about this function.
+#
+# @example using two integers
+#   $bigger_int = max(int_one, int_two)
+#
+# @return [Integer] the larger of the two parameters
+#
+# @param num_a [Integer] the first number to be compared
+# @param num_b [Integer] the second number to be compared
+Puppet::Functions.create_function(:max) do
+  def max(num_a, num_b)
+    num_a >= num_b ? num_a : num_b
+  end
+end
 ```
 
 ### Classes / Defined Types
 
 Here's an example of how you might document a class:
 
-```
-     # This class is meant to serve as an example of how one might
-     # want to document a manifest in a way that is compatible.
-     # with the strings module
-     #
-     # @example when declaring the example class
-     #   include example
-     #
-     # @param first_arg The first parameter for this class
-     # @param second_arg The second paramter for this class
-     class example (
-       $first_arg = $example::params::first_arg,
-       $second_arg = $exampe::params::second_arg,
-     ) { }
+```puppet
+# This class is meant to serve as an example of how one might
+# want to document a manifest in a way that is compatible.
+# with the strings module
+#
+# @example when declaring the example class
+#   include example
+#
+# @param first_arg The first parameter for this class
+# @param second_arg The second paramter for this class
+class example (
+  $first_arg  = $example::params::first_arg,
+  $second_arg = $exampe::params::second_arg,
+) { }
 ```
 
 ### Types and Providers
@@ -204,6 +204,20 @@ Here are a few other good resources for getting started with documentation:
   * [YARD Getting Started Guide](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
   * [YARD Tags Overview](http://www.rubydoc.info/gems/yard/file/docs/Tags.md)
 
+Rake Tasks
+-----
+
+This module is also available as a Gem and makes two rake tasks (`generate` and `serve`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
+
+```ruby
+gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppet-strings.git'
+```
+
+To use the rake tasks, `require puppet-strings/rake_tasks` in your `Rakefile`:
+
+```ruby
+require 'puppet-strings/rake_tasks'
+```
 
 Developing and Contributing
 -----

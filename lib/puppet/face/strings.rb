@@ -19,13 +19,6 @@ Puppet::Face.define(:strings, '0.0.1') do
     end
   end
 
-  # A list of globs that generates the default list of module files from which
-  # documentation can be extracted.
-  #
-  # TODO: It would be awesome if we could somehow override/append to the
-  # default file list that YARD uses. Consider an upstream PR for this.
-  MODULE_SOURCEFILES = ['manifests/**/*.pp', 'lib/**/*.rb']
-
   action(:yardoc) do
     default
 
@@ -34,33 +27,9 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppet_x/puppetlabs/strings/actions'
+      require 'puppet_x/puppetlabs/strings/util'
 
-      yardoc_actions = PuppetX::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
-
-      # The last element of the argument array should be the options hash.
-      # We don't have any options yet, so for now just pop the hash off and
-      # toss it.
-      #
-      # NOTE: The Puppet Face will throw 'unrecognized option' errors if any
-      # YARD options are passed to it. The best way to approach this problem is
-      # by using the `.yardopts` file. YARD will autoload any options placed in
-      # that file.
-      args.pop
-
-      # For now, assume the remaining positional args are a list of manifest
-      # and ruby files to parse.
-      yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
-
-      # This line monkeypatches yard's progress indicator so it doesn't write
-      # all over the terminal. This should definitely not be in real code, but
-      # it's very handy for debugging with pry
-      #class YARD::Logger; def progress(*args); end; end
-      YARD::Tags::Library.define_directive("puppet.type.param",
-        :with_types_and_name,
-        PuppetX::PuppetLabs::Strings::YARD::Tags::PuppetTypeParameterDirective)
-
-      yardoc_actions.generate_documentation(*yard_args)
+      PuppetX::PuppetLabs::Strings::Util.generate(args)
 
       # Puppet prints the return value of the action. The return value of this
       # action is that of the yardoc_actions invocation, which is the boolean
@@ -80,32 +49,9 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppet_x/puppetlabs/strings/actions'
+      require 'puppet_x/puppetlabs/strings/util'
 
-      server_actions = PuppetX::PuppetLabs::Strings::Actions.new(Puppet[:debug], Puppet[:trace])
-
-      args.pop
-
-      module_names = args
-
-      # FIXME: This is pretty inefficient as it forcibly re-generates the YARD
-      # indicies each time the server is started. However, it ensures things are
-      # generated properly.
-      module_list = server_actions.index_documentation_for_modules(module_names, MODULE_SOURCEFILES)
-
-      module_tuples = server_actions.generate_module_tuples(module_list)
-
-      module_tuples.map! do |mod|
-        [mod[:name], mod[:index_path]]
-      end
-
-      # The `-m` flag means a list of name/path pairs will follow. The name is
-      # used as the module name and the path indicates which `.yardoc` index to
-      # generate documentation from.
-      yard_args = %w[-m -q] + module_tuples.flatten
-
-      server_actions.serve_documentation(*yard_args)
+      PuppetX::PuppetLabs::Strings::Util.serve(args)
     end
   end
 end
-
