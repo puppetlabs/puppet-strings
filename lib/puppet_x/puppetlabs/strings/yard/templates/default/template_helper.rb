@@ -1,8 +1,10 @@
 require "puppet"
+require File.join(File.dirname(__FILE__),'html_helper')
 
 # A class containing helper methods to aid in the extraction of relevant data
 # from comments and YARD tags
 class TemplateHelper
+  include YARD::Templates::Helpers::HtmlHelper
   # Extracts data from comments which include the supported YARD tags
   def extract_tag_data(object)
     examples = Hash.new
@@ -36,7 +38,7 @@ class TemplateHelper
   #    :desc    => [String] The description provided in the comment
   #    :types   => [Array] The parameter type(s) specified in the comment
   #    :exists  => [Boolean] True only if the parameter exists in the documented logic and not just in a comment}
-  def extract_param_details(parameters, tags_hash, fq_name = false)
+  def extract_param_details(parameters, tags_hash, markup, fq_name = false)
     parameter_info = []
 
     # Extract the information for parameters that exist
@@ -51,7 +53,7 @@ class TemplateHelper
 
       param_tag = tags_hash.find { |tag| tag.name == param_name }
 
-      description = param_tag.nil? ? nil : param_tag.text
+      description = param_tag.nil? ? nil : htmlify(param_tag.text, markup)
       param_types = param_tag.nil? ? nil : param_tag.types
 
       param_details = {:name => param_name, :desc => description, :types => param_types, :exists? => true}
@@ -72,7 +74,8 @@ class TemplateHelper
         end
       end
       if !param_exists
-        parameter_info.push({:name => tag.name, :desc => tag.text, :types => tag.types, :exists? => false})
+        desc = tag.text ? htmlify(tag.text, markup) : tag.text
+        parameter_info.push({:name => tag.name, :desc => desc, :types => tag.types, :exists? => false})
       end
     end
 
@@ -99,7 +102,8 @@ class TemplateHelper
     parameter_info = []
 
     param_tags.each do |tag|
-      parameter_info.push({:name => tag.name, :desc => tag.text, :types => tag.types, :exists? => true, :puppet_3_func => true})
+      desc = tag.text ? htmlify(tag.text, markup) : tag.text
+      parameter_info.push({:name => tag.name, :desc => desc, :types => tag.types, :exists? => true, :puppet_3_func => true})
     end
 
     parameter_info
