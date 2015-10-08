@@ -3,22 +3,6 @@ class PuppetX::PuppetLabs::Strings::YARD::CodeObjects::HostClassObject < PuppetX
   # @return [HostClassObject, Proxy, nil]
   attr_accessor :parent_class
 
-#  def to_json(*a)
-#    {
-#      "name"             => @name,
-#      "file"             => file,
-#      "line"             => line,
-#      "docstring"        => Puppet::Util::Docs.scrub(@docstring),
-#      "parameters"       => Hash[@parameters],
-#      "signatures"       => @type_info.map do |key, value|
-#          {
-#            "name" => key,
-#            "type" => value,
-#          }
-#      end,
-#    }.to_json(*a)
-#  end
-
   # NOTE: `include_mods` is never used as it makes no sense for Puppet, but
   # this is called by `YARD::Registry` and it will pass a parameter.
   def inheritance_tree(include_mods = false)

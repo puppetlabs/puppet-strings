@@ -25,6 +25,9 @@ class PuppetX::PuppetLabs::Strings::YARD::CodeObjects::DefinedTypeObject < Puppe
           }
         end
       end,
+      "examples"              => self.tags.map do |tag|
+          tag.text if tag.tag_name == 'example'
+      end.compact,
     }.to_json(*a)
   end
 end

@@ -20,6 +20,7 @@ module YARD
     # @param obj [Hash] A hash representing the registry or part of the
     # registry.
     def serialize_output_schema(obj)
+
         schema = {
           :puppet_functions => [],
           :puppet_providers => [],
@@ -61,16 +62,22 @@ module YARD
       def initialize o
         super
         @options = {
-          :basepath => 'doc',
+          :basepath => '.',
           :extension => 'json',
         }
         @extension = 'json'
-        @basepath = 'doc'
+        @basepath = '.'
       end
       def serialize(data)
-        path = File.join(basepath, "registry_dump.#{extension}")
-        log.debug "Serializing json to #{path}"
-        File.open!(path, "wb") {|f| f.write data }
+
+        if YARD::Config.options[:emit_json]
+          path = File.join(basepath, YARD::Config.options[:emit_json])
+          log.debug "Serializing json to #{path}"
+          File.open!(path, "wb") {|f| f.write data }
+        end
+        if YARD::Config.options[:emit_json_stdout]
+          puts data
+        end
       end
     end
   end

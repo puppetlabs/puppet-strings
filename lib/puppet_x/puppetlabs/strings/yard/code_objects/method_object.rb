@@ -13,12 +13,15 @@ class YARD::CodeObjects::MethodObject
   def to_json(*a)
     if self[:puppet_4x_function]
       {
-        "name"                => @name,
-        "file"                => file,
-        "line"                => line,
-        "puppet_version"      => 4,
-        "docstring"           => Puppet::Util::Docs.scrub(@docstring),
-        "documented_params"   => @parameters.map do |tuple|
+        "name"                  => @name,
+        "file"                  => file,
+        "line"                  => line,
+        "function_api_version"  => 4,
+        "docstring"             => Puppet::Util::Docs.scrub(@docstring),
+        "examples"              => self.tags.map do |tag|
+            tag.text if tag.tag_name == 'example'
+          end.compact,
+        "documented_params"     => @parameters.map do |tuple|
           {
             "name" => tuple[0],
             "type" => tuple[1],
@@ -35,17 +38,20 @@ class YARD::CodeObjects::MethodObject
       }.to_json(*a)
     elsif self[:puppet_3x_function]
       {
-        "name"                => @name,
-        "file"                => file,
-        "line"                => line,
-        "puppet_version"      => 3,
-        "docstring"           => Puppet::Util::Docs.scrub(@docstring),
-        "documented_params"   => @parameters.map do |tuple|
+        "name"                  => @name,
+        "file"                  => file,
+        "line"                  => line,
+        "function_api_version"  => 3,
+        "docstring"             => Puppet::Util::Docs.scrub(@docstring),
+        "documented_params"     => @parameters.map do |tuple|
           {
             "name" => tuple[0],
             "type" => tuple[1],
           }
         end,
+        "examples"              => self.tags.map do |tag|
+            tag.text if tag.tag_name == 'example'
+          end.compact,
       }.to_json(*a)
     else
       super

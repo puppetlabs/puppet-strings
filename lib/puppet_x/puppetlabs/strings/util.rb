@@ -14,7 +14,8 @@ module PuppetX::PuppetLabs::Strings::Util
     # YARD options are passed to it. The best way to approach this problem is
     # by using the `.yardopts` file. YARD will autoload any options placed in
     # that file.
-    args.pop
+    options = args.pop
+    YARD::Config.options = YARD::Config.options.merge(options)
 
     # For now, assume the remaining positional args are a list of manifest
     # and ruby files to parse.

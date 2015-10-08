@@ -18,6 +18,9 @@ class PuppetX::PuppetLabs::Strings::YARD::CodeObjects::TypeObject < PuppetX::Pup
           "name"           => obj[:name],
         }
       end,
+      "examples"              => self.tags.map do |tag|
+          tag.text if tag.tag_name == 'example'
+      end.compact,
       "properties"         => @property_details.map do |obj|
         {
           "allowed_values" => obj[:allowed_values] ? obj[:allowed_values].flatten : [],

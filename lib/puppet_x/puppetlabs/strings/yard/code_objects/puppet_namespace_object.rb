@@ -17,6 +17,9 @@ class PuppetX::PuppetLabs::Strings::YARD::CodeObjects::PuppetNamespaceObject < Y
       "file"             => file,
       "line"             => line,
       "docstring"        => @docstring,
+      "examples"              => self.tags.map do |tag|
+          tag.text if tag.tag_name == 'example'
+      end.compact,
     }.to_json(*a)
   end
 
