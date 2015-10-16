@@ -21,6 +21,11 @@ module PuppetX::PuppetLabs::Strings::Util
     # and ruby files to parse.
     yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
 
+    # If json is going to be emitted to stdout, suppress statistics.
+    if options[:emit_json_stdout]
+      yard_args.push('--no-stats')
+    end
+
     # This line monkeypatches yard's progress indicator so it doesn't write
     # all over the terminal. This should definitely not be in real code, but
     # it's very handy for debugging with pry

@@ -71,7 +71,7 @@ module YARD
       def serialize(data)
 
         if YARD::Config.options[:emit_json]
-          path = File.join(basepath, YARD::Config.options[:emit_json])
+          path = YARD::Config.options[:emit_json]
           log.debug "Serializing json to #{path}"
           File.open!(path, "wb") {|f| f.write data }
         end
