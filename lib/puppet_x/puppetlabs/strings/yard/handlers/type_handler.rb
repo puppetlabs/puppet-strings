@@ -78,60 +78,68 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetTypeHandler < YARD::Ha
     parameter_details = []
     property_details = []
     features = []
-    obj = TypeObject.new(:root, "#{name}_type") do |o|
-      # FIXME: This block gets yielded twice for whatever reason
-      parameter_details = []
-      property_details = []
-      o.parameters = []
-      # Find the do block following the Type.
-      do_block = statement.jump(:do_block)
-      # traverse the do block's children searching for function calls whose
-      # identifier is newparam (we're calling the newparam function)
-      do_block.traverse do |node|
-        if is_param? node
-          # The first member of the parameter tuple is the parameter name.
-          # Find the second identifier node under the fcall tree. The first one
-          # is 'newparam', the second one is the function name.
-          # Get its source.
-          # The second parameter is nil because we cannot infer types for these
-          # functions. In fact, that's a silly thing to ask because ruby
-          # types were deprecated with puppet 4 at the same time the type
-          # system was created.
+    obj = TypeObject.new(:root, name)
+    obj.parameters = []
 
-          # Because of a ripper bug a symbol identifier is sometimes incorrectly parsed as a keyword.
-          # That is, the symbol `:true` will be represented as s(:symbol s(:kw, true...
-          param_name = node.children[1].jump(:ident)
-          if param_name == node.children[1]
-            param_name = node.children[1].jump(:kw)
-          end
-          param_name = param_name.source
-          o.parameters << [param_name, nil]
-          parameter_details << {:name => param_name,
-            :desc => fetch_description(node), :exists? => true,
-            :puppet_type => true,
-            :default => fetch_default(node),
-            :namevar => is_namevar?(node, param_name, name),
-            :parameter => true,
-            :allowed_values => get_parameter_allowed_values(node),
-          }
-        elsif is_prop? node
-          # Because of a ripper bug a symbol identifier is sometimes incorrectly parsed as a keyword.
-          # That is, the symbol `:true` will be represented as s(:symbol s(:kw, true...
-          prop_name = node.children[1].jump(:ident)
-          if prop_name == node.children[1]
-            prop_name = node.children[1].jump(:kw)
-          end
-          prop_name = prop_name.source
-          property_details << {:name => prop_name,
-            :desc => fetch_description(node), :exists? => true,
-            :default => fetch_default(node),
-            :puppet_type => true,
-            :property => true,
-            :allowed_values => get_property_allowed_values(node),
-            }
-        elsif is_feature? node
-          features << get_feature(node)
+    # Find the do block following the Type.
+    do_block = statement.jump(:do_block)
+    # traverse the do block's children searching for function calls whose
+    # identifier is newparam (we're calling the newparam function)
+    do_block.traverse do |node|
+      if is_param? node
+        # The first member of the parameter tuple is the parameter name.
+        # Find the second identifier node under the fcall tree. The first one
+        # is 'newparam', the second one is the function name.
+        # Get its source.
+        # The second parameter is nil because we cannot infer types for these
+        # functions. In fact, that's a silly thing to ask because ruby
+        # types were deprecated with puppet 4 at the same time the type
+        # system was created.
+
+        # Because of a ripper bug a symbol identifier is sometimes incorrectly parsed as a keyword.
+        # That is, the symbol `:true` will be represented as s(:symbol s(:kw, true...
+        param_name = node.children[1].jump(:ident)
+        if param_name == node.children[1]
+          param_name = node.children[1].jump(:kw)
         end
+        param_name = param_name.source
+        obj.parameters << [param_name, nil]
+        parameter_details << {:name => param_name,
+          :desc => fetch_description(node), :exists? => true,
+          :puppet_type => true,
+          :default => fetch_default(node),
+          :namevar => is_namevar?(node, param_name, name),
+          :parameter => true,
+          :allowed_values => get_parameter_allowed_values(node),
+        }
+      elsif is_prop? node
+        # Because of a ripper bug a symbol identifier is sometimes incorrectly parsed as a keyword.
+        # That is, the symbol `:true` will be represented as s(:symbol s(:kw, true...
+        prop_name = node.children[1].jump(:ident)
+        if prop_name == node.children[1]
+          prop_name = node.children[1].jump(:kw)
+        end
+        prop_name = prop_name.source
+        property_details << {:name => prop_name,
+          :desc => fetch_description(node), :exists? => true,
+          :default => fetch_default(node),
+          :puppet_type => true,
+          :property => true,
+          :allowed_values => get_property_allowed_values(node),
+        }
+      elsif is_feature? node
+        features << get_feature(node)
+      elsif is_a_func_call_named? 'ensurable', node
+        # Someone could call the ensurable method and create an ensure 
+        # property. If that happens, they it will be documented twice. Serves
+        # them right.
+        property_details << {:name => 'ensure',
+          :desc => '', :exists? => true,
+          :default => nil,
+          :puppet_type => true,
+          :property => true,
+          :allowed_values => [],
+        }
       end
     end
     obj.parameter_details = parameter_details

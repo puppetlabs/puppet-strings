@@ -22,6 +22,13 @@ Puppet::Face.define(:strings, '0.0.1') do
   action(:yardoc) do
     default
 
+    option "--emit-json-stdout" do
+      summary "Print json representation of the documentation to stdout"
+    end
+    option "--emit-json FILE" do
+      summary "Write json representation of the documentation to FILE"
+    end
+
     summary "Generate YARD documentation from files."
     arguments "[manifest_file.pp ...]"
 

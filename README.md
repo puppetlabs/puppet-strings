@@ -90,6 +90,20 @@ To document specific files:
 $ puppet strings some_manifest.pp [another_if_you_feel_like_it.rb]
 ```
 
+Strings can also emit the generated documentation as JSON:
+
+```
+$ puppet strings some_manifest.pp --emit-json documentation.json
+```
+
+It can also print the JSON to stdout:
+
+```
+$ puppet strings some_manifest.pp --emit-json-stdout
+```
+
+The schema for the JSON which Strings emits is [well documented](json_dom.md).
+
 Processing is delegated to the `yardoc` tool so some options listed in `yard
 help doc` are available.  However, Puppet Faces do not support passing
 arbitrary options through a face so these options must be specified in a
