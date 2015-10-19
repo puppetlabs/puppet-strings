@@ -102,7 +102,7 @@ It can also print the JSON to stdout:
 $ puppet strings some_manifest.pp --emit-json-stdout
 ```
 
-The schema for the JSON which Strings emits is [well documented](json_dom.md).
+The schema for the JSON which Strings emits is [well documented](https://github.com/puppetlabs/puppetlabs-strings/blob/master/json_dom.md).
 
 Processing is delegated to the `yardoc` tool so some options listed in `yard
 help doc` are available.  However, Puppet Faces do not support passing
@@ -265,9 +265,6 @@ a best-effort basis, until the previous major version is no longer maintained.
 
 Caveats
 -------
-
-  - At the moment, only top-level Classes and Defined Types are parsed and
-    formatted.
 
   - Documentation blocks must immediately precede the documented code with no
     whitespace.  This is because the comment extractor possesses the elegance
