@@ -3,7 +3,7 @@
   "version": "0.3.1",
   "author": "Puppet Labs",
   "summary": "Puppet documentation via YARD",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "https://github.com/puppetlabs/puppetlabs-strings",
   "project_page": "https://github.com/puppetlabs/puppetlabs-strings",
   "issues_url": "https://tickets.puppetlabs.com/browse/PDOC",
