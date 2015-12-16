@@ -221,10 +221,10 @@ Here are a few other good resources for getting started with documentation:
 Rake Tasks
 -----
 
-This module is also available as a Gem and makes two rake tasks (`generate` and `serve`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
+This module is also available as a Gem and makes two rake tasks (`strings:generate` and `strings:serve`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
 
 ```ruby
-gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppet-strings.git'
+gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppetlabs-strings.git'
 ```
 
 To use the rake tasks, `require puppet-strings/rake_tasks` in your `Rakefile`:
