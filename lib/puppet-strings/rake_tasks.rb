@@ -6,7 +6,9 @@ require 'puppet_x/puppetlabs/strings/util'
 namespace :strings do
   desc 'Generate Puppet documentation with YARD.'
   task :generate do
-    PuppetX::PuppetLabs::Strings::Util.generate
+    PuppetX::PuppetLabs::Strings::Util.generate([
+      {emit_json: 'strings.json'}
+    ])
   end
 
   desc 'Serve YARD documentation for modules.'
