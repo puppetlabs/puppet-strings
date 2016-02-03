@@ -15,14 +15,14 @@ module PuppetX::PuppetLabs::Strings::Util
     # by using the `.yardopts` file. YARD will autoload any options placed in
     # that file.
     options = args.pop
-    YARD::Config.options = YARD::Config.options.merge(options)
+    YARD::Config.options = YARD::Config.options.merge(options) if options
 
     # For now, assume the remaining positional args are a list of manifest
     # and ruby files to parse.
     yard_args = (args.empty? ? MODULE_SOURCEFILES : args)
 
     # If json is going to be emitted to stdout, suppress statistics.
-    if options[:emit_json_stdout]
+    if options && options[:emit_json_stdout]
       yard_args.push('--no-stats')
     end
 
