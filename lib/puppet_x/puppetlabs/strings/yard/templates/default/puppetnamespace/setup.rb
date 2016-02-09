@@ -75,7 +75,7 @@ def method_details_list
       # Convert the matched string into an array of strings
       params = parameters.nil? ? nil :  parameters[1].split(/\s*,\s*/)
 
-      param_details = @template_helper.extract_param_details(params, param_tags) unless params.nil?
+      param_details = @template_helper.extract_param_details(params, param_tags, options.markup) unless params.nil?
       @template_helper.check_types_match_docs object, param_details
       @template_helper.check_parameters_match_docs object
     else
