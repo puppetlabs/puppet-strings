@@ -5,6 +5,9 @@ Strings has two flags used to emit json.
 * `--emit-json $FILE` Saves json to a file.
 * `--emit-json-stdout` Prints json on stdout.
 
+Right now json must be generated on a per file basis, so a file must be specified.
+See the [README](https://github.com/puppetlabs/puppetlabs-strings/blob/master/README.md) for specific examples of how to do this.
+
 Top Level Structure
 -------------------
 
@@ -30,8 +33,8 @@ Here is an example of the top level structure:
 }
 ```
 
-Defined Types
--------------
+Defined Types and Puppet Classes
+--------------------------------
 
 Each defined type or puppet class object has the following properties and values:
 
