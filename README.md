@@ -1,3 +1,6 @@
+**PLEASE NOTE that the puppetlabs-strings module is being deprecated in favor of a gem. 0.4.0 will be the last release of
+the puppet module and the first release of the Ruby gem. Please see the installation instructions below.**
+
 Puppet Strings
 =============
 [![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-strings)
@@ -52,6 +55,22 @@ $ puppet resource package yard provider=gem
 
 Installing Strings Itself
 -------------------------
+Strings can be installed using the [puppet-strings Ruby gem](https://rubygems.org/gems/puppet-strings). To ensure it
+is installed in right place, it is best to install it using Puppet.
+
+For Puppet 4.x:
+```
+$ puppet resource package puppet-strings provider=puppet_gem
+```
+
+For Puppet 3.x:
+```
+$ puppet resource package puppet-strings provider=gem
+```
+
+Versions of less than or equal to 0.4.0 may be installed as a puppet module, but **this method of distribution is
+deprecated and the module hosted on the Puppet Forge will no longer be updated after the 0.4.0 release.** The methods
+for installing the module are:
 
 Strings can be installed from the [Puppet Forge][forge strings] or from source.
 
