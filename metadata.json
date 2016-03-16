@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-strings",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "author": "Puppet Labs",
   "summary": "Puppet documentation via YARD",
   "license": "Apache-2.0",
