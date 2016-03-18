@@ -1,3 +1,5 @@
+blah blah blah ignore me
+
 Puppet Strings
 =============
 [![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-strings)
