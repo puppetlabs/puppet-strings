@@ -16,7 +16,13 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::HostClassHandler < PuppetX::
         param_type_info[pop_param.name] = Puppet::Pops::Types::TypeFactory.any()
       else
         begin
-          param_type_info[pop_param.name] =  tp.interpret_any(pop_param.type_expr)
+          # This is a bit of a hack because we were using a method that was previously
+          # API private. See PDOC-75 for more details
+          if Puppet::Pops::Types::TypeParser.instance_method(:interpret_any).arity == 2
+            param_type_info[pop_param.name] = tp.interpret_any(pop_param.type_expr, nil)
+          else
+            param_type_info[pop_param.name] = tp.interpret_any(pop_param.type_exp)
+          end
         rescue Puppet::ParseError => e
           # If the type could not be interpreted insert a prominent warning
           param_type_info[pop_param.name] = "Type Error: #{e.message}"
