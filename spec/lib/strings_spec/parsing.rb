@@ -20,7 +20,7 @@ module StringsSpec
         @mismatches.empty?
       end
 
-      failure_message_for_should do
+      failure_message do |actual|
         @mismatches.collect do |key, value|
           "Expected #{key} to be <#{value[1]}>, but got <#{value[0]}>."
         end.join("\n")
