@@ -242,6 +242,9 @@ Rake Tasks
 
 This module is also available as a Gem and makes two rake tasks (`strings:generate` and `strings:serve`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
 
+In addition to generating the usual 'doc' directory of HTML documentation, the `strings:generate` rake task will also
+drop a strings.json file containing a JSON representation of the module into the directory the rake task was run from.
+
 ```ruby
 gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppetlabs-strings.git'
 ```
