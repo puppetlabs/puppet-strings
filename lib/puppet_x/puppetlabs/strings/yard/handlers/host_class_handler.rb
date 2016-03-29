@@ -21,7 +21,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::HostClassHandler < PuppetX::
           if Puppet::Pops::Types::TypeParser.instance_method(:interpret_any).arity == 2
             param_type_info[pop_param.name] = tp.interpret_any(pop_param.type_expr, nil)
           else
-            param_type_info[pop_param.name] = tp.interpret_any(pop_param.type_exp)
+            param_type_info[pop_param.name] = tp.interpret_any(pop_param.type_expr)
           end
         rescue Puppet::ParseError => e
           # If the type could not be interpreted insert a prominent warning
