@@ -21,7 +21,14 @@ namespace :strings do
 
     desc "Checkout the gh-pages branch for doc generation."
     task :checkout do
-      unless Dir.exist?('doc')
+      if Dir.exist?('doc')
+        fail "The 'doc' directory (#{File.expand_path('doc')}) is not a Git repository! Remove it and run the Rake task again." unless Dir.exist?('doc/.git')
+        Dir.chdir('doc') do
+          system 'git checkout gh-pages'
+          system 'git reset --hard origin/gh-pages'
+          system 'git pull origin gh-pages'
+        end
+      else
         Dir.mkdir('doc')
         Dir.chdir('doc') do
           system 'git init'
