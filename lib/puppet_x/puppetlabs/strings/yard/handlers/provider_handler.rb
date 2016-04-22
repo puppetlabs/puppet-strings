@@ -25,6 +25,7 @@ class PuppetX::PuppetLabs::Strings::YARD::Handlers::PuppetProviderHandler < YARD
     i = statement.index { |s| YARD::Parser::Ruby::AstNode === s && s.type == :ident && s.source == 'provide' }
     provider_name = statement[i+1].jump(:ident).source
     type_name = statement.jump(:symbol).first.source
+    provider_name = "#{type_name}:#{provider_name}"
 
     obj = ProviderObject.new(:root, "#{provider_name}_provider")
 
