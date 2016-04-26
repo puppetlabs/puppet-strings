@@ -14,7 +14,7 @@ else
 end
 
 group :test do
-  gem "rspec"
+  gem "rspec", "~> 3.1"
   gem 'mocha'
   gem 'puppetlabs_spec_helper'
   gem 'serverspec'
