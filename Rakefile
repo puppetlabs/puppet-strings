@@ -18,7 +18,7 @@ task :validate do
 end
 
 task :acceptance do
-  sh "puppet module build"
+  sh "gem build puppet-strings.gemspec"
   sh "puppet module build spec/unit/puppet/examples/test"
   sh "BEAKER_set=#{ENV["platform"]} rspec spec/acceptance/*.rb"
 end

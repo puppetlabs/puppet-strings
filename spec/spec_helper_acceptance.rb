@@ -14,8 +14,8 @@ RSpec.configure do |c|
   c.before :suite do
 
   hosts.each do |host|
-      scp_to(host, Dir.glob('pkg/puppetlabs-strings*.gz').first, 'strings.tar.gz')
-      on host, puppet('module', 'install', 'strings.tar.gz')
+      scp_to(host, Dir.glob('puppet-strings*.gem').first, 'puppet-strings.gem')
+      on host, 'gem install puppet-strings.gem'
 
       scp_to(host, Dir.glob('spec/unit/puppet/examples/test/pkg/username-test*.gz').first, 'test.tar.gz')
       on host, puppet('module', 'install', 'test.tar.gz')
