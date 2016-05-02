@@ -11,7 +11,7 @@ A Puppet Face and plugin built on the [YARD Documentation Tool](http://yardoc.or
 | *Issues*       | [Puppet Labs' JIRA Tracker][JIRA]                           |
 | *License*      | [Apache 2.0][LICENSE]                                       |
 | *Change log*   | [CHANGELOG.md][changelog]                                   |
-| *Contributing* | [CONTRIBUTING.md][changelog] and [COMMITTERS.md][committers]|
+| *Contributing* | [CONTRIBUTING.md][contributing] and [COMMITTERS.md][committers]|
 
 [repo]: https://github.com/puppetlabs/puppetlabs-strings
 [JIRA]: https://tickets.puppetlabs.com/browse/PDOC
@@ -82,13 +82,13 @@ $ puppet strings some_manifest.pp [another_if_you_feel_like_it.rb]
 Strings can also emit the generated documentation as JSON:
 
 ```
-$ puppet strings some_manifest.pp --emit-json documentation.json
+$ puppet strings yardoc some_manifest.pp --emit-json documentation.json
 ```
 
 It can also print the JSON to stdout:
 
 ```
-$ puppet strings some_manifest.pp --emit-json-stdout
+$ puppet strings yardoc some_manifest.pp --emit-json-stdout
 ```
 
 The schema for the JSON which Strings emits is [well documented](https://github.com/puppetlabs/puppetlabs-strings/blob/master/json_dom.md).
