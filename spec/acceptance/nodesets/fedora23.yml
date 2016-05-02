@@ -2,9 +2,9 @@ HOSTS:
   master:
     roles:
       - master
-    platform: fedora-20-x86_64
+    platform: fedora-23-x86_64
     hypervisor: vcloud
-    template: Delivery/Quality Assurance/Templates/vCloud/fedora-20-x86_64
+    template: Delivery/Quality Assurance/Templates/vCloud/fedora-23-x86_64
 CONFIG:
   filecount: 12
   datastore: instance0
