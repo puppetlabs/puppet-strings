@@ -205,6 +205,20 @@ To use the rake tasks, `require puppet-strings/rake_tasks` in your `Rakefile`:
 require 'puppet-strings/rake_tasks'
 ```
 
+The task `strings:generate` which is provided by including `puppet-strings/rake_tasks` will scan the manifests and lib directory from your single module. If you need to document a complete, or part of a, puppet tree, you can use the `PuppetStrings::RakeTasks::Generate` task. This rake task will by default overwrite strings:generate unless you specify a custom name. See the example below on how you can use it and which options it supports.
+
+```ruby
+require 'puppet-strings/rake_tasks/generate'
+
+PuppetStrings::RakeTasks::Generate.new(:documentation) do |task|
+  task.paths = ['site/roles','site/profiles','modules/internal']
+  task.excludes = ['/vendor/','/example/']
+  task.options = {} # disables the strings.json output
+  # module_resourcefiles are the patterns of included files. Below is the default.
+  # task.module_resourcefiles = ['manifests/**/*.pp', 'lib/**/*.rb']
+end
+```
+
 Developing and Contributing
 -----
 
