@@ -24,6 +24,7 @@ end
 group :acceptance do
   gem 'beaker'
   gem 'beaker-rspec'
+  gem 'beaker-hostgenerator'
 end
 
 group :development do
