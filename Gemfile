@@ -4,6 +4,7 @@ gemspec
 
 gem 'rgen'
 gem 'redcarpet'
+gem "yard", "~> 0.8.7"
 
 puppetversion = ENV['PUPPET_VERSION']
 
