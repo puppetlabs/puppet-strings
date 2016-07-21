@@ -54,6 +54,9 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::HostClassHandler do
         class puppet_enterprise::mcollective::client::certs { }
     PUPPET
 
+    YARD::CodeObjects.send(:remove_const, :CONSTANTSTART)
+    YARD::CodeObjects::CONSTANTSTART = /^[a-zA-Z]/
+
     parse(puppet_code, :puppet)
     # If the namespace is not correctly generated, we will not be able to find the
     # object via this name, meaning namespace will be nil
@@ -72,6 +75,7 @@ Files:           1
 Modules:         0 (    0 undocumented)
 Classes:         0 (    0 undocumented)
 Constants:       0 (    0 undocumented)
+Attributes:      0 (    0 undocumented)
 Methods:         0 (    0 undocumented)
 Puppet Classes:     1 (    0 undocumented)
 Puppet Defined Types:     0 (    0 undocumented)
