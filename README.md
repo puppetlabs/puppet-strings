@@ -191,13 +191,13 @@ Here are a few other good resources for getting started with documentation:
 Rake Tasks
 -----
 
-This module is also available as a Gem and makes three rake tasks (`strings:generate`, `strings:serve`, and `strings:gh_pages`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
-
-In addition to generating the usual 'doc' directory of HTML documentation, the `strings:generate` rake task will also drop a strings.json file containing a JSON representation of the module into the directory the rake task was run from.
+This module is also available as a Gem and makes three rake tasks (`strings:generate`, `strings:serve`, and `strings:gh_pages:update`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
 
 ```ruby
 gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppetlabs-strings.git'
 ```
+
+In addition to generating the usual 'doc' directory of HTML documentation, the `strings:generate` rake task will also drop a strings.json file containing a JSON representation of the module into the directory the rake task was run from.
 
 To use the rake tasks, `require puppet-strings/rake_tasks` in your `Rakefile`:
 
@@ -219,7 +219,7 @@ PuppetStrings::RakeTasks::Generate.new(:documentation) do |task|
 end
 ```
 
-The `strings:gh_pages` task will generate your Strings documentation to be made available via [GitHub Pages](https://pages.github.com/). It will:
+The `strings:gh_pages:update` task will generate your Strings documentation to be made available via [GitHub Pages](https://pages.github.com/). It will:
 
   1. Create a `doc` directory in the root of your project
   2. Check out the `gh-pages` branch of the current repository in the `doc` directory (it will create a branch if one does not already exist)
