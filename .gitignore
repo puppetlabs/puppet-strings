@@ -12,7 +12,7 @@ tmtags
 
 ## VIM
 *.swp
-tags
+/tags
 
 ## BUNDLER
 .bundle
@@ -24,3 +24,12 @@ Gemfile.lock
 
 ## MODULE BUILDS
 **/pkg
+
+## RubyMine 
+/.idea/
+
+## rvm/rbenv
+/.ruby-version
+
+## YARD output
+/doc/
