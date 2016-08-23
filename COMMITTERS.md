@@ -53,9 +53,9 @@ merged.
 **security** - Where critical security fixes are merged.  These change sets
 will then be merged into release branches independently from one another. (i.e.
 no merging up).  Please do not submit pull requests against the security branch
-and instead report all security related issues to security@puppetlabs.com as
+and instead report all security related issues to security@puppet.com as
 per our security policy published at
-[https://puppetlabs.com/security/](https://puppetlabs.com/security/).
+[https://puppet.com/security/](https://puppet.com/security/).
 
 Committer Guide
 ====
@@ -84,8 +84,8 @@ applied to earlier minor releases of a major release, but the patches should
 first be merged into the `security` branch.  Security patches should be merged
 by Puppet Labs staff members.  Pull requests should not be submitted with the
 security branch as the base branch.  Please send all security related
-information or patches to security@puppetlabs.com as per our [Security
-Policy](https://puppetlabs.com/security/).
+information or patches to security@puppet.com as per our [Security
+Policy](https://puppet.com/security/).
 
 The CI systems are configured to run against `master`.  Over time, this branch 
 will refer to different versions, but its name will remain fixed to avoid having 
@@ -118,7 +118,7 @@ This section aims to provide guidelines for being a good commit citizen by
 paying attention to our automated build tools.
 
  * Don’t push on a broken build.  (A broken build is defined as a failing job
-   in the [Puppet FOSS](https://jenkins.puppetlabs.com/view/Puppet%20FOSS/)
+   in [Puppet Strings](https://jenkins.puppetlabs.com/job/platform_puppet-strings_unit-ruby_master/)
    page.)
  * Watch the build until your changes have gone through green
  * Update the ticket status and target version.  The target version field in
@@ -143,7 +143,7 @@ First, the committer pulls down the branch using the `hub` gem.  This tool
 automates the process of adding the remote repository and creating a local
 branch to track the remote branch.
 
-    $ hub checkout https://github.com/puppetlabs/puppetlabs-strings/pull/123
+    $ hub checkout https://github.com/puppetlabs/puppet-strings/pull/123
     Branch jeffmccune-pdoc-34_fix_foo_error set up to track remote branch pdoc-34-fix_foo_error from jeffmccune.
     Switched to a new branch 'jeffmccune-pdoc-34_fix_foo_error'
 
@@ -178,7 +178,7 @@ Please note, the checklist should be complete at this point. It's helpful to mak
 sure your local branches are up to date to avoid one of the branches failing to fast
 forward while the other succeeds.
 
-    $ git push puppetlabs master:master
+    $ git push origin master:master
 
 That's it!  The committer then updates the pull request, updates the issue in
 our issue tracker, and keeps an eye on the [build

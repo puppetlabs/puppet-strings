@@ -1,19 +1,19 @@
 require 'rake'
 require 'rake/tasklib'
 require 'puppet/face'
-require 'puppet_x/puppetlabs/strings/util'
+require 'puppet_x/puppet/strings/util'
 
 namespace :strings do
   desc 'Generate Puppet documentation with YARD.'
   task :generate do
-    PuppetX::PuppetLabs::Strings::Util.generate([
+    PuppetX::Puppet::Strings::Util.generate([
       {emit_json: 'strings.json'}
     ])
   end
 
   desc 'Serve YARD documentation for modules.'
   task :serve do
-    PuppetX::PuppetLabs::Strings::Util.serve
+    PuppetX::Puppet::Strings::Util.serve
   end
 
   namespace :gh_pages do

@@ -5,7 +5,7 @@ require 'mocha'
 require 'puppet'
 require 'rspec'
 
-require 'puppet_x/puppetlabs/strings'
+require 'puppet_x/puppet/strings'
 
 RSpec.configure do |config|
     config.mock_with :mocha

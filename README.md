@@ -1,6 +1,6 @@
 Puppet Strings
 =============
-[![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-strings) [![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
+[![Build Status](https://travis-ci.org/puppetlabs/puppet-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppet-strings) [![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
 
 A Puppet Face and plugin built on the [YARD Documentation Tool](http://yardoc.org/) and the Puppet 4 Parser. It is uses YARD and the Puppet Parser to generate HTML documentation about Puppet code and Puppet extensions written in Ruby. It will eventually replace the `puppet doc` command once feature parity has been achieved.
 
@@ -13,12 +13,12 @@ A Puppet Face and plugin built on the [YARD Documentation Tool](http://yardoc.or
 | *Change log*   | [CHANGELOG.md][changelog]                                   |
 | *Contributing* | [CONTRIBUTING.md][contributing] and [COMMITTERS.md][committers]|
 
-[repo]: https://github.com/puppetlabs/puppetlabs-strings
+[repo]: https://github.com/puppetlabs/puppet-strings
 [JIRA]: https://tickets.puppetlabs.com/browse/PDOC
-[LICENSE]: https://github.com/puppetlabs/puppetlabs-strings/blob/master/LICENSE
-[changelog]: https://github.com/puppetlabs/puppetlabs-strings/blob/master/CHANGELOG.md
-[contributing]: https://github.com/puppetlabs/puppetlabs-strings/blob/master/CONTRIBUTING.md
-[committers]: https://github.com/puppetlabs/puppetlabs-strings/blob/master/COMMITTERS.md
+[LICENSE]: https://github.com/puppetlabs/puppet-strings/blob/master/LICENSE
+[changelog]: https://github.com/puppetlabs/puppet-strings/blob/master/CHANGELOG.md
+[contributing]: https://github.com/puppetlabs/puppet-strings/blob/master/CONTRIBUTING.md
+[committers]: https://github.com/puppetlabs/puppet-strings/blob/master/COMMITTERS.md
 
 Installation
 ------------
@@ -46,8 +46,6 @@ $ puppet resource package yard provider=gem
 
 Installing Strings Itself
 -------------------------
-**PLEASE NOTE** that Strings was previously distributed via the puppetlabs-strings module. This is no longer the preferred method of installation as the module will not longer receive updates. So even though there is still a module on the Puppet Forge, please use the RubyGem.
-
 Strings can be installed using the [puppet-strings RubyGem](https://rubygems.org/gems/puppet-strings). To ensure it is installed in right place, it is best to install it using Puppet.
 
 For Puppet 4.x:
@@ -91,7 +89,7 @@ It can also print the JSON to stdout:
 $ puppet strings yardoc some_manifest.pp --emit-json-stdout
 ```
 
-The schema for the JSON which Strings emits is [well documented](https://github.com/puppetlabs/puppetlabs-strings/blob/master/json_dom.md).
+The schema for the JSON which Strings emits is [well documented](https://github.com/puppetlabs/puppet-strings/blob/master/json_dom.md).
 
 Processing is delegated to the `yardoc` tool so some options listed in `yard help doc` are available.  However, Puppet Faces do not support passing arbitrary options through a face so these options must be specified in a `.yardopts` file.
 
@@ -184,7 +182,7 @@ end
 
 Here are a few other good resources for getting started with documentation:
 
-  * [Module README Template](https://docs.puppetlabs.com/puppet/latest/reference/modules_documentation.html)
+  * [Module README Template](https://docs.puppet.com/puppet/latest/reference/modules_documentation.html)
   * [YARD Getting Started Guide](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
   * [YARD Tags Overview](http://www.rubydoc.info/gems/yard/file/docs/Tags.md)
 
@@ -196,7 +194,7 @@ This module is also available as a Gem and makes three rake tasks (`strings:gene
 In addition to generating the usual 'doc' directory of HTML documentation, the `strings:generate` rake task will also drop a strings.json file containing a JSON representation of the module into the directory the rake task was run from.
 
 ```ruby
-gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppetlabs-strings.git'
+gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppet-strings.git'
 ```
 
 To use the rake tasks, `require puppet-strings/rake_tasks` in your `Rakefile`:
@@ -231,7 +229,7 @@ This task aims to keep the `gh-pages` branch up to date with the current code an
 Developing and Contributing
 -----
 
-We love contributions from the community! If you'd like to contribute to the strings module, check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-strings/blob/master/CONTRIBUTING.md) to get information on the contribution process.
+We love contributions from the community! If you'd like to contribute to the strings module, check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppet-strings/blob/master/CONTRIBUTING.md) to get information on the contribution process.
 
 Running Specs
 -----

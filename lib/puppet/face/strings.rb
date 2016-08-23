@@ -1,5 +1,5 @@
 require 'puppet/face'
-require 'puppet_x/puppetlabs/strings/yard/tags/directives'
+require 'puppet_x/puppet/strings/yard/tags/directives'
 
 Puppet::Face.define(:strings, '0.0.1') do
   summary "Generate Puppet documentation with YARD."
@@ -34,9 +34,9 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppet_x/puppetlabs/strings/util'
+      require 'puppet_x/puppet/strings/util'
 
-      PuppetX::PuppetLabs::Strings::Util.generate(args)
+      PuppetX::Puppet::Strings::Util.generate(args)
 
       # Puppet prints the return value of the action. The return value of this
       # action is that of the yardoc_actions invocation, which is the boolean
@@ -56,9 +56,9 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     when_invoked do |*args|
       check_required_features
-      require 'puppet_x/puppetlabs/strings/util'
+      require 'puppet_x/puppet/strings/util'
 
-      PuppetX::PuppetLabs::Strings::Util.serve(args)
+      PuppetX::Puppet::Strings::Util.serve(args)
     end
   end
 end

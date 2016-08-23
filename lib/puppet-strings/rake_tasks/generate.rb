@@ -1,6 +1,6 @@
 require 'rake'
 require 'rake/tasklib'
-require 'puppet_x/puppetlabs/strings/util'
+require 'puppet_x/puppet/strings/util'
 
 module PuppetStrings
   module RakeTasks
@@ -8,7 +8,7 @@ module PuppetStrings
     #
     # @attr [String] name the name of the rake task.
     # @attr [Array<String>] module_resourcefiles globs used to specify which files to document.
-    #   Defaults to {PuppetX::PuppetLabs::Strings::Util::MODULE_SOURCEFILES}
+    #   Defaults to {PuppetX::Puppet::Strings::Util::MODULE_SOURCEFILES}
     # @attr [Array<String>] excludes a list of paths or patterns of files and directories to ignore.
     # @attr [Array<String>, nil] paths list of paths to generate documentation for.
     #   If this value is nil, uses the default paths for puppet strings.
@@ -26,7 +26,7 @@ module PuppetStrings
       # mimic the current default behaviour.
       def initialize(*args, &task_block)
         @name = args.shift || 'strings:generate'
-        @module_sourcefiles = PuppetX::PuppetLabs::Strings::Util::MODULE_SOURCEFILES
+        @module_sourcefiles = PuppetX::Puppet::Strings::Util::MODULE_SOURCEFILES
         @paths = nil
         @options = {emit_json: 'strings.json'}
         @excludes = []
@@ -52,7 +52,7 @@ module PuppetStrings
       private
 
       # Converts all attributes and options to an arguments array that can be passed
-      # through to {PuppetX::PuppetLabs::Strings::Util #generate}.
+      # through to {PuppetX::Puppet::Strings::Util #generate}.
       #
       # If paths is not nil, we expand them with the module_sourcefiles patterns.
       def generate_task_args
@@ -78,10 +78,10 @@ module PuppetStrings
         prefix_paths.map {|path| patterns.map {|p| "#{path}/**/#{p}" } }.flatten
       end
 
-      # call {PuppetX::PuppetLabs::Strings::Util #generate}
+      # call {PuppetX::Puppet::Strings::Util #generate}
       # @param [Array<String, Hash>] args Arguments. Last element should be a Hash.
       def execute_task(args)
-        PuppetX::PuppetLabs::Strings::Util.generate(args)
+        PuppetX::Puppet::Strings::Util.generate(args)
       end
     end
   end
