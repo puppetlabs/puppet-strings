@@ -19,7 +19,7 @@ group :test do
   gem 'mocha'
   gem 'puppetlabs_spec_helper'
   gem 'serverspec'
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.41.0'
 end
 
 group :acceptance do
