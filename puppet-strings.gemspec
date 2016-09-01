@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n") - Dir['.*', '*.gemspec']
 
   s.add_runtime_dependency 'puppet', '>= 3.7.0'
-  s.add_runtime_dependency 'yard', '~> 0.8'
+  s.add_runtime_dependency 'yard', '~> 0.8.7'
 end
