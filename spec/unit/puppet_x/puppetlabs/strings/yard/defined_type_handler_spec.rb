@@ -64,6 +64,9 @@ describe PuppetX::PuppetLabs::Strings::YARD::Handlers::DefinedTypeHandler do
         define puppet_enterprise::mcollective::client::certs { }
     PUPPET
 
+    YARD::CodeObjects.send(:remove_const, :CONSTANTSTART)
+    YARD::CodeObjects::CONSTANTSTART = /^[a-zA-Z]/
+
     parse(puppet_code, :puppet)
     # If the namespace is not correctly generated, we will not be able to find the
     # object via this name, meaning namespace will be nil
