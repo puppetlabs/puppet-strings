@@ -68,30 +68,36 @@ $ cd /path/to/module
 $ puppet strings
 ```
 
-This processes `README` and all puppet and ruby files under `manifests/`
-and `lib/`.
+This processes `README` and all Puppet and Ruby source files under the `./manifests/`, `./functions/`, and `./lib/`
+directories by default.
 
 To document specific files:
 
 ```
-$ puppet strings some_manifest.pp [another_if_you_feel_like_it.rb]
+$ puppet strings first.pp second.pp ...
+```
+
+To document specific directories:
+
+```
+$ puppet strings 'modules/foo/lib/**/*.rb' 'modules/foo/manifests/**/*.pp' 'modules/foo/functions/**/*.pp' ...
 ```
 
 Strings can also emit the generated documentation as JSON:
 
 ```
-$ puppet strings yardoc some_manifest.pp --emit-json documentation.json
+$ puppet strings generate manifest.pp --emit-json documentation.json
 ```
 
 It can also print the JSON to stdout:
 
 ```
-$ puppet strings yardoc some_manifest.pp --emit-json-stdout
+$ puppet strings generate manifest.pp --emit-json-stdout
 ```
 
-The schema for the JSON which Strings emits is [well documented](https://github.com/puppetlabs/puppet-strings/blob/master/json_dom.md).
+The schema for the JSON which Strings emits is [documented here](https://github.com/puppetlabs/puppet-strings/blob/master/json_dom.md).
 
-Processing is delegated to the `yardoc` tool so some options listed in `yard help doc` are available.  However, Puppet Faces do not support passing arbitrary options through a face so these options must be specified in a `.yardopts` file.
+Processing is delegated to the `yard` tool so some options listed in `yard help doc` are available.  However, Puppet Faces do not support passing arbitrary options through a face so these options must be specified in a `.yardopts` file.
 
 In addition to generating a directory full of HTML, you can also serve up documentation for all your modules using the `server` action:
 
@@ -155,7 +161,7 @@ class example (
 ### Types and Providers
 Strings will automatically extract the `@doc` provider docstring and any `desc` parameter/property docstrings.
 
-Sometimes however, Puppet types use metaprogramming to create parameters and methods automatically. In those cases Strings will not be able to document them automatically (Strings doesn't execute the code that would generate those parameters), so you will need to provide hints on how to document your code. To document a parameter which is automatically created you must use the special directive `@!puppet.type.param` which may take types, the parameter name, and a description.
+Sometimes however, Puppet types use metaprogramming to create parameters and methods automatically. In those cases Strings will not be able to document them automatically (Strings doesn't execute the code that would generate those parameters), so you will need to provide hints on how to document your code. To document a parameter which is automatically created you must use the special directive `@!puppet.type.param` or `@!puppet.type.property` which may take types, the parameter or property name, and a description.
 
 ```ruby
 # @!puppet.type.param my_parameter This parameter needs to be explicitly
