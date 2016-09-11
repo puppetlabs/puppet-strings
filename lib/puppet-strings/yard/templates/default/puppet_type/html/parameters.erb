@@ -1,0 +1,35 @@
+<% if @parameters && !@parameters.empty? %>
+<div class="tags">
+  <p class="tag_title"><%= @tag_title %></p>
+  <ul>
+    <% @parameters.each do |parameter| %>
+    <li>
+      <span class="name"><%= parameter.name + (parameter.isnamevar ? ' (namevar)' : '') %></span>
+      <% if parameter.default %>
+      <span class="default"> (defaults to: <em><%= parameter.default %></em>)</span>
+      <% end %>
+      <% unless parameter.docstring.empty? %>
+      <div class="docstring">
+        <div class="discussion">
+          <%= htmlify(parameter.docstring) %>
+        </div>
+      </div>
+      <% end %>
+      <% unless parameter.values.empty? %>
+      <div>
+        Supported values:
+        <ul>
+          <% parameter.values.each do |value| %>
+          <li>
+            <% other = parameter.aliases[value] %>
+            <%= value %><% if other %> (alias for: <em><%= other %></em>)<% end %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

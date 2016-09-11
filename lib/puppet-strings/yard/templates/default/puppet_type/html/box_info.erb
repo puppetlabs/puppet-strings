@@ -1,0 +1,20 @@
+<div class="box_info">
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>
+      <%= object.file %><% if object.files.size > 1 %><span class="defines">,<br />
+      <%= object.files[1..-1].map {|f| f.first }.join(",<br /> ") %></div>
+      <% end %>
+    </dd>
+  </dl>
+  <% if @providers && !@providers.empty? %>
+  <dl>
+    <dt>Providers:</dt>
+    <dd>
+      <% @providers.each do |provider| %>
+        <%= linkify(provider, provider.name.to_s) %><br/>
+      <% end %>
+    </dd>
+  </dl>
+  <% end %>
+</div>

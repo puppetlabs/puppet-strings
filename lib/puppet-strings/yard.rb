@@ -18,6 +18,15 @@ module PuppetStrings::Yard
 
     # Register our handlers
     YARD::Handlers::Processor.register_handler_namespace(:puppet, PuppetStrings::Yard::Handlers::Puppet)
+    YARD::Handlers::Processor.register_handler_namespace(:puppet_ruby, PuppetStrings::Yard::Handlers::Ruby)
+
+    # Register the tag directives
+    PuppetStrings::Yard::Tags::ParameterDirective.register!
+    PuppetStrings::Yard::Tags::PropertyDirective.register!
+
+    # Ignore documentation on Puppet DSL calls
+    # This prevents the YARD DSL parser from emitting warnings for Puppet's Ruby DSL
+    YARD::Handlers::Ruby::DSLHandlerMethods::IGNORE_METHODS['newtype'] = true
   end
 end
 
@@ -31,6 +40,7 @@ class YARD::CLI::Yardoc
       :class,
       :puppet_class,
       :puppet_defined_type,
+      :puppet_type,
     )
   end
 end
@@ -45,6 +55,10 @@ class YARD::CLI::Stats
 
   def stats_for_puppet_defined_types
     output 'Puppet Defined Types', *type_statistics_all(:puppet_defined_type)
+  end
+
+  def stats_for_puppet_types
+    output 'Puppet Types', *type_statistics_all(:puppet_type)
   end
 
   def output(name, data, undoc = nil)

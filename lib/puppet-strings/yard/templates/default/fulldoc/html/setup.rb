@@ -16,6 +16,15 @@ def generate_puppet_defined_type_list
   generate_list_contents
 end
 
+# Generates the searchable Puppet resource type list.
+# @return [void]
+def generate_puppet_type_list
+  @items = Registry.all(:puppet_type).sort_by {|t| t.name.to_s }
+  @list_title = 'Resource Type List'
+  @list_type = 'puppet_type'
+  generate_list_contents
+end
+
 # Generates the searchable Ruby method list.
 # @return [void]
 def generate_method_list
