@@ -12,6 +12,9 @@ module PuppetStrings::Yard
   def self.setup!
     # Register the template path
     YARD::Templates::Engine.register_template_path(File.join(File.dirname(__FILE__), 'yard', 'templates'))
+
+    # Register the Puppet parser
+    YARD::Parser::SourceParser.register_parser_type(:puppet, PuppetStrings::Yard::Parsers::Puppet::Parser, ['pp'])
   end
 end
 
