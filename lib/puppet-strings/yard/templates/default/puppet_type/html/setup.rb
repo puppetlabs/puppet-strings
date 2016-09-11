@@ -7,7 +7,7 @@ end
 # Renders the box_info section.
 # @return [String] Returns the rendered section.
 def box_info
-  @providers = []
+  @providers = PuppetStrings::Yard::CodeObjects::Providers.instance(object.name).children
   erb(:box_info)
 end
 

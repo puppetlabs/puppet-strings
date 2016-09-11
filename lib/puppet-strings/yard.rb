@@ -41,6 +41,7 @@ class YARD::CLI::Yardoc
       :puppet_class,
       :puppet_defined_type,
       :puppet_type,
+      :puppet_provider,
     )
   end
 end
@@ -59,6 +60,10 @@ class YARD::CLI::Stats
 
   def stats_for_puppet_types
     output 'Puppet Types', *type_statistics_all(:puppet_type)
+  end
+
+  def stats_for_puppet_providers
+    output 'Puppet Providers', *type_statistics_all(:puppet_provider)
   end
 
   def output(name, data, undoc = nil)

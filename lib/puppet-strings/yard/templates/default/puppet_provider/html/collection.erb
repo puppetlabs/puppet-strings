@@ -1,0 +1,10 @@
+<% if @collection && !@collection.empty? %>
+<div class="tags">
+  <p class="tag_title"><%= @title %></p>
+  <ul>
+  <% @collection.each do |key, value| %>
+    <li><tt><%= key %> &mdash; <%= value %></tt></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>

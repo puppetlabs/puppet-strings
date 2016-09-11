@@ -19,6 +19,8 @@
       <%= linkify obj, obj.name %>
       <% if (obj.type == :module || obj.type == :class) && !obj.namespace.root? %>
               <small>(<%= obj.namespace.path %>)</small>
+      <% elsif obj.type == :puppet_provider %>
+              <small>(Resource type: <%= obj.type_name %>)</small>
       <% end %>
             </li>
     <% end %>

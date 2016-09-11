@@ -3,6 +3,7 @@ module PuppetStrings::Yard::Handlers
   # The module for custom Ruby YARD handlers.
   module Ruby
     require 'puppet-strings/yard/handlers/ruby/type_handler'
+    require 'puppet-strings/yard/handlers/ruby/provider_handler'
   end
 
   # The module for custom Puppet YARD handlers.

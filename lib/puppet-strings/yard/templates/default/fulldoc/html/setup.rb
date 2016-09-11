@@ -25,6 +25,15 @@ def generate_puppet_type_list
   generate_list_contents
 end
 
+# Generates the searchable Puppet provider list.
+# @return [void]
+def generate_puppet_provider_list
+  @items = Registry.all(:puppet_provider).sort_by {|p| p.name.to_s }
+  @list_title = 'Provider List'
+  @list_type = 'puppet_provider'
+  generate_list_contents
+end
+
 # Generates the searchable Ruby method list.
 # @return [void]
 def generate_method_list

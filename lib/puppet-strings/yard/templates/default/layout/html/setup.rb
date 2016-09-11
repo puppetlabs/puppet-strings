@@ -4,7 +4,7 @@ def init
   case object
   when '_index.html'
     @page_title = options.title
-    sections :layout, [:index, [:listing, [:classes, :defined_types, :types, :files, :objects]]]
+    sections :layout, [:index, [:listing, [:classes, :defined_types, :types, :providers, :files, :objects]]]
   else
     super
   end
@@ -38,6 +38,10 @@ def layout
     @nav_url = url_for_list('puppet_type')
     @page_title = "Resource Type: #{object.name}"
     @path = object.path
+  when PuppetStrings::Yard::CodeObjects::Provider
+    @nav_url = url_for_list('puppet_provider')
+    @page_title = "Provider: #{object.name}"
+    @path = object.path
   else
     @path = object.path
   end
@@ -63,6 +67,11 @@ def create_menu_lists
       type: 'puppet_type',
       title: 'Resource Types',
       search_title: 'Resource Types'
+    },
+    {
+      type: 'puppet_provider',
+      title: 'Providers',
+      search_title: 'Providers'
     },
     {
       type: 'class',
@@ -126,6 +135,14 @@ end
 def types
   @title = 'Resource Type Listing A-Z'
   @objects_by_letter = objects_by_letter(:puppet_type)
+  erb(:objects)
+end
+
+# Renders the providers section.
+# @return [String] Returns the rendered section.
+def providers
+  @title = 'Puppet Provider Listing A-Z'
+  @objects_by_letter = objects_by_letter(:puppet_provider)
   erb(:objects)
 end
 
