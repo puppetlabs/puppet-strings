@@ -18,6 +18,9 @@ module PuppetStrings
   # @option options [Array<String>] :yard_args The arguments to pass to yard.
   # @return [void]
   def self.generate(search_patterns = DEFAULT_SEARCH_PATTERNS, options = {})
+    require 'puppet-strings/yard'
+    PuppetStrings::Yard.setup!
+
     # Format the arguments to YARD
     args = ['doc']
     args << '--debug'     if options[:debug]
@@ -51,6 +54,9 @@ module PuppetStrings
   # Runs the YARD documentation server.
   # @param [Array<String>] args The arguments to YARD.
   def self.run_server(*args)
+    require 'puppet-strings/yard'
+    PuppetStrings::Yard.setup!
+
     YARD::CLI::Server.run(*args)
   end
 end
