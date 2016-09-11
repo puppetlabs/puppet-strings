@@ -50,6 +50,19 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
       @values << new unless @values.include? new
       @aliases[new] = old
     end
+
+    # Converts the parameter to a hash representation.
+    # @return [Hash] Returns a hash representation of the parameter.
+    def to_hash
+      hash = {}
+      hash[:name] = name
+      hash[:description] = docstring unless docstring.empty?
+      hash[:values] = values unless values.empty?
+      hash[:aliases] = aliases unless aliases.empty?
+      hash[:isnamevar] = true if isnamevar
+      hash[:default] = default if default
+      hash
+    end
   end
 
   # Represents a resource type property (same attributes as a parameter).
@@ -66,6 +79,15 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     def initialize(name, docstring)
       @name = name
       @docstring = docstring
+    end
+
+    # Converts the feature to a hash representation.
+    # @return [Hash] Returns a hash representation of the feature.
+    def to_hash
+      hash = {}
+      hash[:name] = name
+      hash[:description] = docstring unless docstring.empty?
+      hash
     end
   end
 
@@ -106,5 +128,19 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
   def add_feature(feature)
     @features ||= []
     @features << feature
+  end
+
+  # Converts the code object to a hash representation.
+  # @return [Hash] Returns a hash representation of the code object.
+  def to_hash
+    hash = {}
+    hash[:name] = name
+    hash[:file] = file
+    hash[:line] = line
+    hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring)
+    hash[:properties] = properties.map { |p| p.to_hash } if properties && !properties.empty?
+    hash[:parameters] = parameters.map { |p| p.to_hash } if parameters && !parameters.empty?
+    hash[:features] = features.map { |f| f.to_hash } if features && !features.empty?
+    hash
   end
 end

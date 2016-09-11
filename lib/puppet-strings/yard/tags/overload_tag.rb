@@ -91,4 +91,19 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   def type
     object.type
   end
+
+  # Converts the overload tag to a hash representation.
+  # @return [Hash] Returns a hash representation of the overload.
+  def to_hash
+    hash = {}
+    hash[:tag_name] = tag_name
+    hash[:text] = text if text
+    hash[:signature] = signature
+    hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring) if !docstring.empty?
+    defaults = Hash[*parameters.select{ |p| !p[1].nil? }.flatten]
+    hash[:defaults] = defaults unless defaults.empty?
+    hash[:types] = types if types
+    hash[:name] = name if name
+    hash
+  end
 end

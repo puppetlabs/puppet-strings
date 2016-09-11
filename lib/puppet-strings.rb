@@ -47,7 +47,8 @@ module PuppetStrings
 
     # If outputting JSON, render the output
     if render_as_json
-      # TODO: implement
+      require 'puppet-strings/json'
+      PuppetStrings::Json.render(json_file)
     end
   end
 

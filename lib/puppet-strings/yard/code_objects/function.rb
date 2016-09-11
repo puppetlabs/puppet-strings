@@ -57,9 +57,10 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
     end
   end
 
-  # Gets the Puppet signature of the function.
+  # Gets the Puppet signature of the function (single overload only).
   # @return [String] Returns the Puppet signature of the function.
   def signature
+    return '' if self.has_tag? :overload
     tags = self.tags(:param)
     args = @parameters.map do |parameter|
       name, default = parameter
@@ -71,5 +72,22 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
       "#{type}#{prefix}$#{name}#{default}"
     end.join(', ')
     @name.to_s + '(' + args + ')'
+  end
+
+  # Converts the code object to a hash representation.
+  # @return [Hash] Returns a hash representation of the code object.
+  def to_hash
+    hash = {}
+    hash[:name] = name
+    hash[:file] = file
+    hash[:line] = line
+    hash[:type] = @function_type.to_s
+    signature = self.signature
+    hash[:signature] = signature unless signature.empty?
+    hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring)
+    defaults = Hash[*parameters.select{ |p| !p[1].nil? }.flatten]
+    hash[:defaults] = defaults unless defaults.empty?
+    hash[:source] = source unless source && source.empty?
+    hash
   end
 end

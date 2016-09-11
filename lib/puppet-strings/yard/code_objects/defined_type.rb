@@ -41,4 +41,18 @@ class PuppetStrings::Yard::CodeObjects::DefinedType < PuppetStrings::Yard::CodeO
   def source
     @statement.source
   end
+
+  # Converts the code object to a hash representation.
+  # @return [Hash] Returns a hash representation of the code object.
+  def to_hash
+    hash = {}
+    hash[:name] = name
+    hash[:file] = file
+    hash[:line] = line
+    hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring)
+    defaults = Hash[*parameters.select{ |p| !p[1].nil? }.flatten]
+    hash[:defaults] = defaults unless defaults.empty?
+    hash[:source] = source unless source && source.empty?
+    hash
+  end
 end

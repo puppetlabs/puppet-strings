@@ -74,4 +74,20 @@ class PuppetStrings::Yard::CodeObjects::Provider < PuppetStrings::Yard::CodeObje
     @commands ||= {}
     @commands[key] = value
   end
+
+  # Converts the code object to a hash representation.
+  # @return [Hash] Returns a hash representation of the code object.
+  def to_hash
+    hash = {}
+    hash[:name] = name
+    hash[:type_name] = type_name
+    hash[:file] = file
+    hash[:line] = line
+    hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring)
+    hash[:confines] = confines if confines && !confines.empty?
+    hash[:features] = features if features && !features.empty?
+    hash[:defaults] = defaults if defaults && !defaults.empty?
+    hash[:commands] = commands if commands && !commands.empty?
+    hash
+  end
 end
