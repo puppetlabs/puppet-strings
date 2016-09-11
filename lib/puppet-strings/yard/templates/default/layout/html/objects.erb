@@ -21,6 +21,8 @@
               <small>(<%= obj.namespace.path %>)</small>
       <% elsif obj.type == :puppet_provider %>
               <small>(Resource type: <%= obj.type_name %>)</small>
+      <% elsif obj.type == :puppet_function %>
+              <small>(<%= obj.function_type %>)</small>
       <% end %>
             </li>
     <% end %>

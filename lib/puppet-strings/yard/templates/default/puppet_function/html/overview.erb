@@ -1,0 +1,18 @@
+<h2>Overview</h2>
+<div class="method_details first">
+  <% unless object.has_tag? :overload %>
+  <div class="tags overload overload_item">
+    <span class="overload">
+      <span class="overload_item">
+        <span class="signature first" style="margin-left: 0px;"><%= "<strong>#{h(object.signature)}</strong> &#x21d2; #{signature_types(object, false)}" %></span>
+      </span>
+    </span>
+  </div>
+  <% end %>
+  <div class="docstring">
+    <div class="discussion">
+      <%= htmlify(object.docstring) %>
+    </div>
+  </div>
+  <%= yieldall %>
+</div>

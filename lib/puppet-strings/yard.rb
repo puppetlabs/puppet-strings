@@ -26,6 +26,7 @@ module PuppetStrings::Yard
 
     # Ignore documentation on Puppet DSL calls
     # This prevents the YARD DSL parser from emitting warnings for Puppet's Ruby DSL
+    YARD::Handlers::Ruby::DSLHandlerMethods::IGNORE_METHODS['create_function'] = true
     YARD::Handlers::Ruby::DSLHandlerMethods::IGNORE_METHODS['newtype'] = true
   end
 end
@@ -42,6 +43,7 @@ class YARD::CLI::Yardoc
       :puppet_defined_type,
       :puppet_type,
       :puppet_provider,
+      :puppet_function,
     )
   end
 end
@@ -64,6 +66,10 @@ class YARD::CLI::Stats
 
   def stats_for_puppet_providers
     output 'Puppet Providers', *type_statistics_all(:puppet_provider)
+  end
+
+  def stats_for_puppet_functions
+    output 'Puppet Functions', *type_statistics_all(:puppet_function)
   end
 
   def output(name, data, undoc = nil)

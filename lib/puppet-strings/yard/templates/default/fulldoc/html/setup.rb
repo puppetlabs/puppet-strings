@@ -34,6 +34,15 @@ def generate_puppet_provider_list
   generate_list_contents
 end
 
+# Generates the searchable Puppet function list.
+# @return [void]
+def generate_puppet_function_list
+  @items = Registry.all(:puppet_function).sort_by {|f| f.name.to_s }
+  @list_title = 'Puppet Function List'
+  @list_type = 'puppet_function'
+  generate_list_contents
+end
+
 # Generates the searchable Ruby method list.
 # @return [void]
 def generate_method_list
