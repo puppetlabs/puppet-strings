@@ -15,6 +15,9 @@ module PuppetStrings::Yard
 
     # Register the Puppet parser
     YARD::Parser::SourceParser.register_parser_type(:puppet, PuppetStrings::Yard::Parsers::Puppet::Parser, ['pp'])
+
+    # Register our handlers
+    YARD::Handlers::Processor.register_handler_namespace(:puppet, PuppetStrings::Yard::Handlers::Puppet)
   end
 end
 
@@ -25,7 +28,8 @@ class YARD::CLI::Yardoc
     YARD::Registry.all(
       :root,
       :module,
-      :class
+      :class,
+      :puppet_class,
     )
   end
 end
@@ -34,6 +38,10 @@ end
 # This is the recommended way to add custom stats.
 # @private
 class YARD::CLI::Stats
+  def stats_for_puppet_classes
+    output 'Puppet Classes', *type_statistics_all(:puppet_class)
+  end
+
   def output(name, data, undoc = nil)
     # Monkey patch output to accommodate our larger header widths
     @total += data if data.is_a?(Integer) && undoc

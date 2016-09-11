@@ -1,0 +1,26 @@
+<div class="box_info">
+  <% if object.statement.parent_class %>
+  <dl>
+    <dt>Inherits:</dt>
+    <dd><%= linkify(Registry["puppet_classes::#{object.statement.parent_class}"], object.statement.parent_class.dup) %></dd>
+  </dl>
+  <% end %>
+  <% if @subclasses && !@subclasses.empty? %>
+  <dl>
+    <dt>Inherited by:</dt>
+    <dd>
+      <% @subclasses.each do |subclass| %>
+      <%= linkify(subclass, subclass.name.to_s) %><br/>
+      <% end %>
+    </dd>
+  </dl>
+  <% end %>
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>
+      <%= object.file %><% if object.files.size > 1 %><span class="defines">,<br />
+      <%= object.files[1..-1].map {|f| f.first }.join(",<br /> ") %></div>
+      <% end %>
+    </dd>
+  </dl>
+</div>
