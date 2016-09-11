@@ -3,6 +3,6 @@
 def param
   tag(:param) if
     object.type == :method ||
-    object.type == :puppet_class
+    object.type == :puppet_class ||
+    object.type == :puppet_defined_type
 end
-

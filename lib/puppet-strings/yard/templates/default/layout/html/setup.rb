@@ -4,7 +4,7 @@ def init
   case object
   when '_index.html'
     @page_title = options.title
-    sections :layout, [:index, [:listing, [:classes, :files, :objects]]]
+    sections :layout, [:index, [:listing, [:classes, :defined_types, :files, :objects]]]
   else
     super
   end
@@ -30,6 +30,10 @@ def layout
     @nav_url = url_for_list('puppet_class')
     @page_title = "Puppet Class: #{object.name}"
     @path = object.path
+  when PuppetStrings::Yard::CodeObjects::DefinedType
+    @nav_url = url_for_list('puppet_defined_type')
+    @page_title = "Defined Type: #{object.name}"
+    @path = object.path
   else
     @path = object.path
   end
@@ -45,6 +49,11 @@ def create_menu_lists
       type: 'puppet_class',
       title: 'Puppet Classes',
       search_title: 'Puppet Classes'
+    },
+    {
+      type: 'puppet_defined_type',
+      title: 'Defined Types',
+      search_title: 'Defined Types',
     },
     {
       type: 'class',
@@ -92,6 +101,14 @@ end
 def classes
   @title = 'Puppet Class Listing A-Z'
   @objects_by_letter = objects_by_letter(:puppet_class)
+  erb(:objects)
+end
+
+# Renders the defined types section.
+# @return [String] Returns the rendered section.
+def defined_types
+  @title = 'Defined Type Listing A-Z'
+  @objects_by_letter = objects_by_letter(:puppet_defined_type)
   erb(:objects)
 end
 
