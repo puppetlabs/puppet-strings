@@ -1,9 +1,8 @@
 Puppet Strings
-=============
+==============
 [![Build Status](https://travis-ci.org/puppetlabs/puppet-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppet-strings) [![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
 
 A Puppet Face and plugin built on the [YARD Documentation Tool](http://yardoc.org/) and the Puppet 4 Parser. It is uses YARD and the Puppet Parser to generate HTML documentation about Puppet code and Puppet extensions written in Ruby. It will eventually replace the `puppet doc` command once feature parity has been achieved.
-
 
 |                |                                                             |
 | -------------- |------------------------------------------------------------ |
@@ -193,44 +192,51 @@ Here are a few other good resources for getting started with documentation:
   * [YARD Tags Overview](http://www.rubydoc.info/gems/yard/file/docs/Tags.md)
 
 Rake Tasks
------
+----------
 
-This module is also available as a Gem and makes three rake tasks (`strings:generate`, `strings:serve`, and `strings:gh_pages`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
+Puppet Strings comes with two rake tasks: `strings:generate` and `strings:gh_pages:update` available in `puppet-strings/tasks`.
 
-In addition to generating the usual 'doc' directory of HTML documentation, the `strings:generate` rake task will also drop a strings.json file containing a JSON representation of the module into the directory the rake task was run from.
+Add the following to your Gemfile to use `puppet-strings`:
 
 ```ruby
 gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppet-strings.git'
 ```
 
-To use the rake tasks, `require puppet-strings/rake_tasks` in your `Rakefile`:
+In your `Rakefile`, add the following to use the `puppet-strings` tasks:
 
 ```ruby
-require 'puppet-strings/rake_tasks'
+require 'puppet-strings/tasks'
 ```
 
-The task `strings:generate` which is provided by including `puppet-strings/rake_tasks` will scan the manifests and lib directory from your single module. If you need to document a complete, or part of a, puppet tree, you can use the `PuppetStrings::RakeTasks::Generate` task. This rake task will by default overwrite strings:generate unless you specify a custom name. See the example below on how you can use it and which options it supports.
+The `strings:generate` task can be used to generate documentation:
 
-```ruby
-require 'puppet-strings/rake_tasks/generate'
-
-PuppetStrings::RakeTasks::Generate.new(:documentation) do |task|
-  task.paths = ['site/roles','site/profiles','modules/internal']
-  task.excludes = ['/vendor/','/example/']
-  task.options = {} # disables the strings.json output
-  # module_resourcefiles are the patterns of included files. Below is the default.
-  # task.module_resourcefiles = ['manifests/**/*.pp', 'lib/**/*.rb']
-end
+```
+$ rake strings:generate
 ```
 
-The `strings:gh_pages` task will generate your Strings documentation to be made available via [GitHub Pages](https://pages.github.com/). It will:
+The task accepts the following parameters:
 
-  1. Create a `doc` directory in the root of your project
-  2. Check out the `gh-pages` branch of the current repository in the `doc` directory (it will create a branch if one does not already exist)
-  3. Generate strings documentation using the `strings:generate` task
-  4. Commit the changes and push them to the `gh-pages` branch **with the `-f` flag**
+* `patterns`: the search patterns to use for finding files to document (defaults to `manifests/**/*.pp functions/**/*.pp types/**/*.pp lib/**/*.rb`).
+* `debug`: enables debug output when set to `true`.
+* `backtrace`: enables backtraces for errors when set to `true`.
+* `markup`: the markup language to use (defaults to `markdown`).
+* `yard_args`: additional arguments to pass to YARD.
 
-This task aims to keep the `gh-pages` branch up to date with the current code and uses the `-f` flag when pushing to the `gh-pages` branch. Please keep this in mind as it **will be destructive** if not used properly.
+An example of passing arguments to the `strings:generate` Rake task:
+
+```
+$ rake strings:generate\['**/*.pp **/*.rb, true, true, markdown, --readme README.md']
+```
+
+The `strings:gh_pages:update` task will generate your Puppet Strings documentation to be made available via [GitHub Pages](https://pages.github.com/). It will:
+
+1. Create a `doc` directory in the root of your project
+2. Check out the `gh-pages` branch of the current repository in the `doc` directory (it will create a branch if one does not already exist)
+3. Generate strings documentation using the `strings:generate` task
+4. Commit the changes and push them to the `gh-pages` branch **with the `--force` flag**
+
+This task aims to keep the `gh-pages` branch up to date with the current code and uses the `-f` flag when pushing to the `gh-pages` branch.
+***Please note this operation will be destructive if not used properly.***
 
 Developing and Contributing
 -----
