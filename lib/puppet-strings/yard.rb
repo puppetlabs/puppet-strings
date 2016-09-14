@@ -43,7 +43,7 @@ class YARD::CLI::Yardoc
       :puppet_defined_type,
       :puppet_type,
       :puppet_provider,
-      :puppet_function,
+      :puppet_function
     )
   end
 end
@@ -76,11 +76,12 @@ class YARD::CLI::Stats
     # Monkey patch output to accommodate our larger header widths
     @total += data if data.is_a?(Integer) && undoc
     @undocumented += undoc if undoc.is_a?(Integer)
-    if undoc
-      data = ('%5s (% 5d undocumented)' % [data, undoc])
-    else
-      data = '%5s' % data
-    end
+    data =
+      if undoc
+        ('%5s (% 5d undocumented)' % [data, undoc])
+      else
+        '%5s' % data
+      end
     log.puts('%-21s %s' % [name + ':', data])
   end
 

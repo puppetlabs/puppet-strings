@@ -6,7 +6,6 @@ unless ENV['RS_PROVISION'] == 'no'
 end
 
 RSpec.configure do |c|
-
   # Readable test descriptions
   c.formatter = :documentation
 

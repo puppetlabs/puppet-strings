@@ -57,9 +57,10 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
         return nil
       elsif child.is_a?(YARD::Parser::Ruby::MethodCallNode)
         # Look for a call to a dispatch method with a block
-        next unless child.method_name &&
-            (child.method_name.source == 'desc' || child.method_name.source == 'doc=') &&
-            child.parameters(false).count == 1
+        next unless
+          child.method_name &&
+          (child.method_name.source == 'desc' || child.method_name.source == 'doc=') &&
+          child.parameters(false).count == 1
 
         docstring = node_as_string(child.parameters[0])
         log.error "Failed to parse docstring for Puppet provider '#{object.name}' (resource type '#{object.type_name}') near #{child.file}:#{child.line}." and return nil unless docstring

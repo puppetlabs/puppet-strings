@@ -2,17 +2,16 @@ require 'json'
 
 # The module for JSON related functionality.
 module PuppetStrings::Json
-
   # Renders the current YARD registry as JSON to the given file (or STDOUT if nil).
   # @param [String] file The path to the output file to render the registry to. If nil, output will be to STDOUT.
   # @return [void]
   def self.render(file = nil)
     document = {
-      puppet_classes: YARD::Registry.all(:puppet_class).sort_by! { |c| c.name }.map! { |c| c.to_hash },
-      defined_types: YARD::Registry.all(:puppet_defined_type).sort_by! { |dt| dt.name }.map! { |dt| dt.to_hash },
-      resource_types: YARD::Registry.all(:puppet_type).sort_by! { |t| t.name }.map! { |t| t.to_hash },
-      providers: YARD::Registry.all(:puppet_provider).sort_by! { |p| p.name }.map! { |p| p.to_hash },
-      puppet_functions: YARD::Registry.all(:puppet_function).sort_by! { |f| f.name }.map! { |f| f.to_hash },
+      puppet_classes: YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash),
+      defined_types: YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash),
+      resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash),
+      providers: YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash),
+      puppet_functions: YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash),
       # TODO: Need Ruby documentation?
     }
 
