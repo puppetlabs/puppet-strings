@@ -23,13 +23,11 @@ class PuppetStrings::Yard::Handlers::Puppet::Base < YARD::Handlers::Base
     # Assign the types for the parameter
     statement.parameters.each do |parameter|
       tag = tags.find { |t| t.name == parameter.name }
-
       unless tag
         log.warn "Missing @param tag for parameter '#{parameter.name}' near #{statement.file}:#{statement.line}." unless object.docstring.empty?
 
         # Add a tag with an empty docstring
         object.add_tag YARD::Tags::Tag.new(:param, '', [parameter.type || 'Any'], parameter.name)
-        object.parameters << [parameter.name, parameter.value]
         next
       end
 

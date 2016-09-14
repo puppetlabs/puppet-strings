@@ -1,0 +1,348 @@
+{
+  "puppet_classes": [
+    {
+      "name": "klass",
+      "file": "(stdin)",
+      "line": 5,
+      "inherits": "foo::bar",
+      "docstring": {
+        "text": "A simple class.",
+        "tags": [
+          {
+            "tag_name": "param",
+            "text": "First param.",
+            "types": [
+              "Integer"
+            ],
+            "name": "param1"
+          },
+          {
+            "tag_name": "param",
+            "text": "Second param.",
+            "types": [
+              "Any"
+            ],
+            "name": "param2"
+          },
+          {
+            "tag_name": "param",
+            "text": "Third param.",
+            "types": [
+              "String"
+            ],
+            "name": "param3"
+          }
+        ]
+      },
+      "defaults": {
+        "param3": "hi"
+      },
+      "source": "class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {\n}"
+    }
+  ],
+  "defined_types": [
+    {
+      "name": "dt",
+      "file": "(stdin)",
+      "line": 12,
+      "docstring": {
+        "text": "A simple defined type.",
+        "tags": [
+          {
+            "tag_name": "param",
+            "text": "First param.",
+            "types": [
+              "Integer"
+            ],
+            "name": "param1"
+          },
+          {
+            "tag_name": "param",
+            "text": "Second param.",
+            "types": [
+              "Any"
+            ],
+            "name": "param2"
+          },
+          {
+            "tag_name": "param",
+            "text": "Third param.",
+            "types": [
+              "String"
+            ],
+            "name": "param3"
+          }
+        ]
+      },
+      "defaults": {
+        "param3": "hi"
+      },
+      "source": "define dt(Integer $param1, $param2, String $param3 = hi) {\n}"
+    }
+  ],
+  "resource_types": [
+    {
+      "name": "database",
+      "file": "(stdin)",
+      "line": 43,
+      "docstring": {
+        "text": "An example database server resource type."
+      },
+      "properties": [
+        {
+          "name": "ensure",
+          "description": "What state the database should be in.",
+          "values": [
+            "present",
+            "absent",
+            "up",
+            "down"
+          ],
+          "aliases": {
+            "up": "present",
+            "down": "absent"
+          },
+          "default": "up"
+        },
+        {
+          "name": "file",
+          "description": "The database file to use."
+        },
+        {
+          "name": "log_level",
+          "description": "The log level to use.",
+          "values": [
+            "debug",
+            "warn",
+            "error"
+          ],
+          "default": "warn"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "address",
+          "description": "The database server name.",
+          "isnamevar": true
+        },
+        {
+          "name": "encryption_key",
+          "description": "The encryption key to use."
+        },
+        {
+          "name": "encrypt",
+          "description": "Whether or not to encrypt the database.",
+          "values": [
+            "true",
+            "false",
+            "yes",
+            "no"
+          ],
+          "default": "false"
+        }
+      ],
+      "features": [
+        {
+          "name": "encryption",
+          "description": "The provider supports encryption."
+        }
+      ]
+    }
+  ],
+  "providers": [
+    {
+      "name": "linux",
+      "type_name": "database",
+      "file": "(stdin)",
+      "line": 33,
+      "docstring": {
+        "text": "An example provider on Linux."
+      },
+      "confines": {
+        "kernel": "Linux",
+        "osfamily": "RedHat"
+      },
+      "features": [
+        "implements_some_feature",
+        "some_other_feature"
+      ],
+      "defaults": {
+        "kernel": "Linux"
+      },
+      "commands": {
+        "foo": "/usr/bin/foo"
+      }
+    }
+  ],
+  "puppet_functions": [
+    {
+      "name": "func",
+      "file": "(stdin)",
+      "line": 20,
+      "type": "puppet",
+      "signature": "func(Integer $param1, Any $param2, String $param3 = hi)",
+      "docstring": {
+        "text": "A simple function.",
+        "tags": [
+          {
+            "tag_name": "param",
+            "text": "First param.",
+            "types": [
+              "Integer"
+            ],
+            "name": "param1"
+          },
+          {
+            "tag_name": "param",
+            "text": "Second param.",
+            "types": [
+              "Any"
+            ],
+            "name": "param2"
+          },
+          {
+            "tag_name": "param",
+            "text": "Third param.",
+            "types": [
+              "String"
+            ],
+            "name": "param3"
+          },
+          {
+            "tag_name": "return",
+            "text": "Returns nothing.",
+            "types": [
+              "Undef"
+            ]
+          }
+        ]
+      },
+      "defaults": {
+        "param3": "hi"
+      },
+      "source": "function func(Integer $param1, $param2, String $param3 = hi) {\n}"
+    },
+    {
+      "name": "func3x",
+      "file": "(stdin)",
+      "line": 1,
+      "type": "ruby3x",
+      "signature": "func3x(String $first, Any $second)",
+      "docstring": {
+        "text": "An example 3.x function.",
+        "tags": [
+          {
+            "tag_name": "param",
+            "text": "The first parameter.",
+            "types": [
+              "String"
+            ],
+            "name": "first"
+          },
+          {
+            "tag_name": "param",
+            "text": "The second parameter.",
+            "types": [
+              "Any"
+            ],
+            "name": "second"
+          },
+          {
+            "tag_name": "return",
+            "text": "Returns nothing.",
+            "types": [
+              "Undef"
+            ]
+          }
+        ]
+      },
+      "source": "Puppet::Parser::Functions.newfunction(:func3x, doc: <<-DOC\nAn example 3.x function.\n@param [String] first The first parameter.\n@param second The second parameter.\n@return [Undef] Returns nothing.\nDOC\n) do |*args|\nend"
+    },
+    {
+      "name": "func4x",
+      "file": "(stdin)",
+      "line": 11,
+      "type": "ruby4x",
+      "docstring": {
+        "text": "An example 4.x function.",
+        "tags": [
+          {
+            "tag_name": "overload",
+            "signature": "func4x(Integer $param1, Any $param2, Optional[Array[String]] $param3)",
+            "docstring": {
+              "text": "The first overload.",
+              "tags": [
+                {
+                  "tag_name": "param",
+                  "text": "The first parameter.",
+                  "types": [
+                    "Integer"
+                  ],
+                  "name": "param1"
+                },
+                {
+                  "tag_name": "param",
+                  "text": "The second parameter.",
+                  "types": [
+                    "Any"
+                  ],
+                  "name": "param2"
+                },
+                {
+                  "tag_name": "param",
+                  "text": "The third parameter.",
+                  "types": [
+                    "Optional[Array[String]]"
+                  ],
+                  "name": "param3"
+                },
+                {
+                  "tag_name": "return",
+                  "text": "Returns nothing.",
+                  "types": [
+                    "Undef"
+                  ]
+                }
+              ]
+            },
+            "name": "func4x"
+          },
+          {
+            "tag_name": "overload",
+            "signature": "func4x(Boolean $param, Callable &$block)",
+            "docstring": {
+              "text": "The second overload.",
+              "tags": [
+                {
+                  "tag_name": "param",
+                  "text": "The first parameter.",
+                  "types": [
+                    "Boolean"
+                  ],
+                  "name": "param"
+                },
+                {
+                  "tag_name": "param",
+                  "text": "The block parameter.",
+                  "types": [
+                    "Callable"
+                  ],
+                  "name": "&block"
+                },
+                {
+                  "tag_name": "return",
+                  "text": "Returns a string.",
+                  "types": [
+                    "String"
+                  ]
+                }
+              ]
+            },
+            "name": "func4x"
+          }
+        ]
+      },
+      "source": "Puppet::Functions.create_function(:func4x) do\n  # The first overload.\n  # @param param1 The first parameter.\n  # @param param2 The second parameter.\n  # @param param3 The third parameter.\n  # @return [Undef] Returns nothing.\n  dispatch :foo do\n    param          'Integer',       :param1\n    param          'Any',           :param2\n    optional_param 'Array[String]', :param3\n  end\n\n  # The second overload.\n  # @param param The first parameter.\n  # @param block The block parameter.\n  # @return [String] Returns a string.\n  dispatch :other do\n    param 'Boolean', :param\n    block_param\n  end\nend"
+    }
+  ]
+}
