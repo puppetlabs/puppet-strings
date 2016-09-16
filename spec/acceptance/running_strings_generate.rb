@@ -19,7 +19,7 @@ describe 'Generating module documentation using generate action' do
   end
 
   it 'should generate documentation for 3x functions' do
-    expect(read_file_on(master, '/root/doc/puppet_functions_ruby3x/function3x.html')).to include('This is the function documentation for function3x')
+    expect(read_file_on(master, '/root/doc/puppet_functions_ruby3x/function3x.html')).to include('This is the function documentation for <code>function3x</code>')
   end
 
   it 'should generate documentation for 4x functions' do
