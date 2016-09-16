@@ -1,0 +1,14 @@
+<div class="box_info">
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>
+      <%= object.file %><% if object.files.size > 1 %><span class="defines">,<br />
+      <%= object.files[1..-1].map {|f| f.first }.join(",<br /> ") %></div>
+      <% end %>
+    </dd>
+  </dl>
+  <dl>
+    <dt>Function type:</dt>
+    <dd><%= object.function_type %></dd>
+  </dl>
+</div>

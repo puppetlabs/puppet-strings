@@ -2,7 +2,7 @@ AllCops:
   Exclude:
     # Ignore HTML related things
     - '**/*.erb'
-    - 'lib/puppetx/puppetlabs/strings/yard/templates/**/*'
+    - 'lib/puppet-strings/yard/templates/**/*'
 
 Lint/ConditionPosition:
   Enabled: true

@@ -1,0 +1,13 @@
+<% if object.features && !object.features.empty? %>
+<div class="tags">
+  <p class="tag_title">Features</p>
+  <ul>
+    <% object.features.each do |feature| %>
+    <li>
+      <span class="name"><%= feature.name %></span>
+      <% unless feature.docstring.empty? %> &mdash; <%= htmlify_line(feature.docstring) %><% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

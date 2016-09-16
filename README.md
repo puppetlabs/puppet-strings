@@ -1,38 +1,41 @@
 Puppet Strings
-=============
-[![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-strings) [![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
+==============
+[![Build Status](https://travis-ci.org/puppetlabs/puppet-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppet-strings) [![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
 
-A Puppet Face and plugin built on the [YARD Documentation Tool](http://yardoc.org/) and the Puppet 4 Parser. It is uses YARD and the Puppet Parser to generate HTML documentation about Puppet code and Puppet extensions written in Ruby. It will eventually replace the `puppet doc` command once feature parity has been achieved.
+A Puppet command built on [YARD](http://yardoc.org/).
 
+Puppet Strings generates HTML documentation for Puppet extensions written in Puppet and Ruby.
 
-|                |                                                             |
-| -------------- |------------------------------------------------------------ |
-| *Code*         | [GitHub][repo]                                              |
-| *Issues*       | [Puppet Labs' JIRA Tracker][JIRA]                           |
-| *License*      | [Apache 2.0][LICENSE]                                       |
-| *Change log*   | [CHANGELOG.md][changelog]                                   |
-| *Contributing* | [CONTRIBUTING.md][contributing] and [COMMITTERS.md][committers]|
+This tool will eventually place the existing `puppet doc` command once feature parity has been achieved.
+ 
+|                |                                                                 |
+| -------------- |---------------------------------------------------------------- |
+| *Code*         | [GitHub][repo]                                                  |
+| *Issues*       | [Puppet JIRA Tracker][JIRA]                                     |
+| *License*      | [Apache 2.0][LICENSE]                                           |
+| *Change log*   | [CHANGELOG.md][changelog]                                       |
+| *Contributing* | [CONTRIBUTING.md][contributing] and [COMMITTERS.md][committers] |
 
-[repo]: https://github.com/puppetlabs/puppetlabs-strings
+[repo]: https://github.com/puppetlabs/puppet-strings
 [JIRA]: https://tickets.puppetlabs.com/browse/PDOC
-[LICENSE]: https://github.com/puppetlabs/puppetlabs-strings/blob/master/LICENSE
-[changelog]: https://github.com/puppetlabs/puppetlabs-strings/blob/master/CHANGELOG.md
-[contributing]: https://github.com/puppetlabs/puppetlabs-strings/blob/master/CONTRIBUTING.md
-[committers]: https://github.com/puppetlabs/puppetlabs-strings/blob/master/COMMITTERS.md
+[LICENSE]: https://github.com/puppetlabs/puppet-strings/blob/master/LICENSE
+[changelog]: https://github.com/puppetlabs/puppet-strings/blob/master/CHANGELOG.md
+[contributing]: https://github.com/puppetlabs/puppet-strings/blob/master/CONTRIBUTING.md
+[committers]: https://github.com/puppetlabs/puppet-strings/blob/master/COMMITTERS.md
 
-Installation
+Requirements
 ------------
+
 In order to run strings you need to have the following software installed:
 
   * Ruby 1.9.3 or newer
   * Puppet 3.7 or newer
-  * The YARD RubyGem
+  * The `yard` Ruby gem
 
 Installing the YARD Gem
 -----------------------
-**Installing the YARD Gem with Puppet**
 
-The easiest way to install the YARD gem is with Puppet itself.
+The easiest way to install the `yard` gem is with Puppet itself:
 
 For Puppet 4.x:
 ```
@@ -44,11 +47,12 @@ For Puppet 3.x:
 $ puppet resource package yard provider=gem
 ```
 
-Installing Strings Itself
+Installing Puppet Strings
 -------------------------
-**PLEASE NOTE** that Strings was previously distributed via the puppetlabs-strings module. This is no longer the preferred method of installation as the module will not longer receive updates. So even though there is still a module on the Puppet Forge, please use the RubyGem.
 
-Strings can be installed using the [puppet-strings RubyGem](https://rubygems.org/gems/puppet-strings). To ensure it is installed in right place, it is best to install it using Puppet.
+Strings can be installed using the [puppet-strings](https://rubygems.org/gems/puppet-strings) gem.
+
+To ensure it is installed in right place, it is best to install it using Puppet:
 
 For Puppet 4.x:
 ```
@@ -70,30 +74,34 @@ $ cd /path/to/module
 $ puppet strings
 ```
 
-This processes `README` and all puppet and ruby files under `manifests/`
-and `lib/`.
+This processes `README` and all Puppet and Ruby source files under the `./manifests/`, `./functions/`, and `./lib/`
+directories by default and creates HTML documentation under the `./doc/` directory.
 
 To document specific files:
 
 ```
-$ puppet strings some_manifest.pp [another_if_you_feel_like_it.rb]
+$ puppet strings generate first.pp second.pp ...
 ```
 
-Strings can also emit the generated documentation as JSON:
+To document specific directories:
 
 ```
-$ puppet strings yardoc some_manifest.pp --emit-json documentation.json
+$ puppet strings 'modules/foo/lib/**/*.rb' 'modules/foo/manifests/**/*.pp' 'modules/foo/functions/**/*.pp' ...
+```
+
+Strings can emit JSON documenting the Puppet extensions:
+
+```
+$ puppet strings generate --emit-json documentation.json
 ```
 
 It can also print the JSON to stdout:
 
 ```
-$ puppet strings yardoc some_manifest.pp --emit-json-stdout
+$ puppet strings generate --emit-json-stdout
 ```
 
-The schema for the JSON which Strings emits is [well documented](https://github.com/puppetlabs/puppetlabs-strings/blob/master/json_dom.md).
-
-Processing is delegated to the `yardoc` tool so some options listed in `yard help doc` are available.  However, Puppet Faces do not support passing arbitrary options through a face so these options must be specified in a `.yardopts` file.
+The schema for the JSON output is [documented here](https://github.com/puppetlabs/puppet-strings/blob/master/JSON.md).
 
 In addition to generating a directory full of HTML, you can also serve up documentation for all your modules using the `server` action:
 
@@ -101,157 +109,290 @@ In addition to generating a directory full of HTML, you can also serve up docume
 $ puppet strings server
 ```
 
-Writing Compatible Documentation
---------------------------------
+YARD Options
+------------
 
-Since the strings module is built around YARD, a few different comment formats can be used.  YARD can work with RDoc, meaning it is backwards compatible with previously documented modules.  Feel free to try out strings with RDoc, but we are planning to move to Markdown as the standard.  You can configure which you would like YARD to use by adding a `.yardopts` file to the root of your module directory which specifies the desired format:
+YARD options (see `yard help doc`) are supported in a `.yardopts` file in the same directory where `puppet strings` is run.
 
-```
---markup markdown
-```
+Puppet Strings automatically sets the `markup` option to `markdown`, allowing your documentation strings to be in Markdown format.
 
-While we have yet to decide exactly how documentation should work in the future, here are some very basic examples to get you started using the strings module. These are very much subject to change as we continue to work out a style guide.
+Documenting Puppet Extensions
+-----------------------------
 
-### Functions
-Here's an example of how you might document a 4x function:
+### Puppet Classes / Defined Types
 
-```ruby
-# When given two numbers, returns the one that is larger.
-# You could have a several line description here if you wanted,
-# but I don't have much to say about this function.
-#
-# @example using two integers
-#   $bigger_int = max(int_one, int_two)
-#
-# @return [Integer] the larger of the two parameters
-#
-# @param num_a [Integer] the first number to be compared
-# @param num_b [Integer] the second number to be compared
-Puppet::Functions.create_function(:max) do
-  def max(num_a, num_b)
-    num_a >= num_b ? num_a : num_b
-  end
-end
-```
-
-### Classes / Defined Types
-
-Here's an example of how you might document a class:
+To document Puppet classes and defined types, use a YARD docstring before the class or defined type definition:
 
 ```puppet
-# This class is meant to serve as an example of how one might
-# want to document a manifest in a way that is compatible.
-# with the strings module
+# An example class.
 #
-# @example when declaring the example class
+# This is an example of how to document a Puppet class
+#
+# @example Declaring the class
 #   include example
 #
-# @param first_arg The first parameter for this class
-# @param second_arg The second paramter for this class
-class example (
-  $first_arg  = $example::params::first_arg,
-  $second_arg = $exampe::params::second_arg,
-) { }
+# @param first The first parameter for this class
+# @param second The second paramter for this class
+class example_class(
+  String $first  = $example::params::first_arg,
+  Integer $second = $example::params::second_arg,
+) inherits example::params {
+  # ...
+}
+
+# An example defined type.
+#
+# This is an example of how to document a defined type.
+# @param ports The array of port numbers to use.
+define example_type(
+   Array[Integer] $ports = []
+) {
+  # ...
+}
 ```
 
-### Types and Providers
-Strings will automatically extract the `@doc` provider docstring and any `desc` parameter/property docstrings.
+***Note: unlike Ruby, Puppet is a typed language; Puppet Strings will automatically use the parameter type information to 
+document the parameters.  A warning will be emitted if you document parameter types.***
 
-Sometimes however, Puppet types use metaprogramming to create parameters and methods automatically. In those cases Strings will not be able to document them automatically (Strings doesn't execute the code that would generate those parameters), so you will need to provide hints on how to document your code. To document a parameter which is automatically created you must use the special directive `@!puppet.type.param` which may take types, the parameter name, and a description.
+### Resource Types
+
+To document custom resource types and their parameters/properties, use the `desc` method or assign a value to the `doc` attribute:
 
 ```ruby
-# @!puppet.type.param my_parameter This parameter needs to be explicitly
-# documented as it is generated by mk_resource_methods
-Puppet::Type.newtype(:minifile) do
-
-  @doc = "Manages files, including their content, ownership, and permissions.
-    The provider can manage symbolic links."
-
-  # This function does some metaprogramming on the new type.
-  mk_resource_methods
-
-  newparam(:path) do
-    desc <<-'EOT'
-      The path to the file to manage.  Must be fully qualified.
-    EOT
-    # ... do stuff here
+Puppet::Type.newtype(:example) do
+  desc <<-DESC
+An example resource type.
+@example Using the type.
+  example { foo:
+    param => 'hi'
+  }
+DESC
+  
+  newparam(:param) do
+    desc 'An example parameter.'
+    # ...
   end
+  
+  newproperty(:prop) do
+    desc 'An example property.'
+    #...
+  end
+   
+  # ...  
+end
+```
+
+Puppet Strings documents this way to preserve backwards compatibility with `puppet doc` and existing resource types.
+
+***Note: Puppet Strings does not evaluate your Ruby code, so only certain static expressions are supported.***
+
+To document parameters and properties that are dynamically created, use the `#@!puppet.type.param` and `#@!puppet.type.property`
+directives before the `newtype` call:
+
+```ruby
+# @!puppet.type.param [value1, value2, value3] my_param Documentation for a dynamic parameter.
+# @!puppet.type.property [foo, bar, baz] my_prop Documentation for a dynamic property.
+Puppet::Type.newtype(:example) do
+  #...
+end
+```
+
+### Providers
+
+To document providers, use the `desc` method or assign a value to the `doc` attribute:
+
+```ruby
+Puppet::Type.type(:example).provide :platform do
+  desc 'An example provider.'
+  
   # ...
 end
-
-
 ```
+
+Puppet Strings documents this way to preserve backwards compatibility with `puppet doc` and existing resource types.
+
+***Note: Puppet Strings does not evaluate your Ruby code, so only certain static expressions are supported.***
+
+### Functions
+
+Puppet Strings supports three different ways of defining a function in Puppet: with the Puppet 3.x API, Puppet 4.X API,
+and in the Puppet language itself.
+
+## Puppet 3.x API
+
+To document a function in the Puppet 3.x API, use the `doc` option to `newfunction`:
+
+```ruby
+Puppet::Parser::Functions.newfunction(:example, doc: <<-DOC
+Documentation for an example 3.x function.
+@param [String] param1 The first parameter.
+@param [Integer] param2 The second parameter.
+@return [Undef]
+@example Calling the function.
+  example('hi', 10)
+DOC
+) do |*args|
+  #...
+end
+```
+
+***Note: if parameter types are omitted, a default of the `Any` Puppet type will be used.***
+
+## Puppet 4.x API
+
+To document a function in the Puppet 4.x API, use a YARD docstring before the `create_function` call and any `dispatch`
+calls:
+
+```ruby
+# An example 4.x function.
+Puppet::Functions.create_function(:example) do
+  # @param first The first parameter.
+  # @param second The second parameter.
+  # @return [String] Returns a string.
+  # @example Calling the function
+  #   example('hi', 10)
+  dispatch :example do
+    param 'String', :first
+    param 'Integer', :second
+  end
+  
+  # ...
+end
+```
+
+***Note: Puppet Strings will automatically use the parameter type information from the `dispatch` block to document 
+the parameters. Only document your parameter types when the Puppet 4.x function contains no `dispatch` calls.***
+
+If the Puppet 4.x function contains multiple `dispatch` calls, Puppet Strings will automatically create `overload` tags
+to describe the function's overloads:
+
+```ruby
+# An example 4.x function.
+Puppet::Functions.create_function(:example) do
+  # Overload by string.
+  # @param first The first parameter.
+  # @return [String] Returns a string.
+  # @example Calling the function
+  #   example('hi')
+  dispatch :example_string do
+    param 'String', :first
+  end
+  
+  # Overload by integer.
+  # @param first The first parameter.
+  # @return [Integer] Returns an integer.
+  # @example Calling the function
+  #   example(10)
+  dispatch :example_integer do
+    param 'Integer', :first
+  end
+  
+  # ...
+```
+
+The resulting HTML for this example function will document both `example(String $first)` and `example(Integer $first)`. 
+
+## Puppet Language
+
+To document Puppet functions written in the Puppet language, use a YARD docstring before the function definition:
+
+```puppet
+# An example function written in Pupppet.
+# @param name The name to say hello to.
+# @return [String] Returns a string.
+# @example Calling the function
+#   example('world')
+function example(String $name) {
+  "hello $name"
+}
+```
+
+***Note: Puppet Strings will automatically use the parameter type information from the function's parameters to document 
+the parameters.***
+
+Additional Resources
+--------------------
 
 Here are a few other good resources for getting started with documentation:
 
-  * [Module README Template](https://docs.puppetlabs.com/puppet/latest/reference/modules_documentation.html)
+  * [Module README Template](https://docs.puppet.com/puppet/latest/reference/modules_documentation.html)
   * [YARD Getting Started Guide](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
   * [YARD Tags Overview](http://www.rubydoc.info/gems/yard/file/docs/Tags.md)
 
 Rake Tasks
------
+----------
 
-This module is also available as a Gem and makes three rake tasks (`strings:generate`, `strings:serve`, and `strings:gh_pages`) available in `puppet-strings/rake_tasks`. To add this to your module's CI workflow, be sure to add this module to your `Gemfile`:
+Puppet Strings comes with two rake tasks: `strings:generate` and `strings:gh_pages:update` available in `puppet-strings/tasks`.
 
-In addition to generating the usual 'doc' directory of HTML documentation, the `strings:generate` rake task will also drop a strings.json file containing a JSON representation of the module into the directory the rake task was run from.
-
-```ruby
-gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppetlabs-strings.git'
-```
-
-To use the rake tasks, `require puppet-strings/rake_tasks` in your `Rakefile`:
+Add the following to your Gemfile to use `puppet-strings`:
 
 ```ruby
-require 'puppet-strings/rake_tasks'
+gem 'puppet-strings', :git => 'https://github.com/puppetlabs/puppet-strings.git'
 ```
 
-The task `strings:generate` which is provided by including `puppet-strings/rake_tasks` will scan the manifests and lib directory from your single module. If you need to document a complete, or part of a, puppet tree, you can use the `PuppetStrings::RakeTasks::Generate` task. This rake task will by default overwrite strings:generate unless you specify a custom name. See the example below on how you can use it and which options it supports.
+In your `Rakefile`, add the following to use the `puppet-strings` tasks:
 
 ```ruby
-require 'puppet-strings/rake_tasks/generate'
-
-PuppetStrings::RakeTasks::Generate.new(:documentation) do |task|
-  task.paths = ['site/roles','site/profiles','modules/internal']
-  task.excludes = ['/vendor/','/example/']
-  task.options = {} # disables the strings.json output
-  # module_resourcefiles are the patterns of included files. Below is the default.
-  # task.module_resourcefiles = ['manifests/**/*.pp', 'lib/**/*.rb']
-end
+require 'puppet-strings/tasks'
 ```
 
-The `strings:gh_pages` task will generate your Strings documentation to be made available via [GitHub Pages](https://pages.github.com/). It will:
+The `strings:generate` task can be used to generate documentation:
 
-  1. Create a `doc` directory in the root of your project
-  2. Check out the `gh-pages` branch of the current repository in the `doc` directory (it will create a branch if one does not already exist)
-  3. Generate strings documentation using the `strings:generate` task
-  4. Commit the changes and push them to the `gh-pages` branch **with the `-f` flag**
+```
+$ rake strings:generate
+```
 
-This task aims to keep the `gh-pages` branch up to date with the current code and uses the `-f` flag when pushing to the `gh-pages` branch. Please keep this in mind as it **will be destructive** if not used properly.
+The task accepts the following parameters:
+
+* `patterns`: the search patterns to use for finding files to document (defaults to `manifests/**/*.pp functions/**/*.pp types/**/*.pp lib/**/*.rb`).
+* `debug`: enables debug output when set to `true`.
+* `backtrace`: enables backtraces for errors when set to `true`.
+* `markup`: the markup language to use (defaults to `markdown`).
+* `yard_args`: additional arguments to pass to YARD.
+
+An example of passing arguments to the `strings:generate` Rake task:
+
+```
+$ rake strings:generate\['**/*.pp **/*.rb, true, true, markdown, --readme README.md']
+```
+
+The `strings:gh_pages:update` task will generate your Puppet Strings documentation to be made available via [GitHub Pages](https://pages.github.com/). It will:
+
+1. Create a `doc` directory in the root of your project
+2. Check out the `gh-pages` branch of the current repository in the `doc` directory (it will create a branch if one does not already exist)
+3. Generate strings documentation using the `strings:generate` task
+4. Commit the changes and push them to the `gh-pages` branch **with the `--force` flag**
+
+This task aims to keep the `gh-pages` branch up to date with the current code and uses the `-f` flag when pushing to the `gh-pages` branch.
+***Please note this operation will be destructive if not used properly.***
 
 Developing and Contributing
------
+---------------------------
 
-We love contributions from the community! If you'd like to contribute to the strings module, check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppetlabs-strings/blob/master/CONTRIBUTING.md) to get information on the contribution process.
+We love contributions from the community!
+
+If you'd like to contribute to the strings module, check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppet-strings/blob/master/CONTRIBUTING.md) to get information on the contribution process.
 
 Running Specs
------
+-------------
 
-If you're going to be doing any development with puppet strings, it's essential that you can run the spec tests. You should simply have to do the following:
+If you plan on developing features or fixing bugs in Puppet Strings, it is essential that you run specs before opening a pull request.
+
+To run specs, simply execute the `spec` rake task:
 
     $ bundle install --path .bundle/gems
     $ bundle exec rake spec
 
 Support
------
-Please log tickets and issues at our [JIRA tracker][JIRA]. A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users) is available for asking questions and getting help from others. In addition there is an active #puppet channel on Freenode.
-
-We use semantic version numbers for our releases, and recommend that users stay as up-to-date as possible by upgrading to patch releases and minor releases as they become available.
-
-Bugfixes and ongoing development will occur in minor releases for the current major version. Security fixes will be backported to a previous major version on a best-effort basis, until the previous major version is no longer maintained.
-
-Caveats
 -------
 
-  - Documentation blocks must immediately precede the documented code with no whitespace.  This is because the comment extractor possesses the elegance and intelligence of a bag of hammers.
+Please log tickets and issues at our [JIRA tracker][JIRA]. A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users)
+is available for asking questions and getting help from others.
 
-  - This project is very much a work in progress and may very well have undiscovered bugs and pitfalls. If you discover any of these, [please file a ticket](https://tickets.puppetlabs.com/browse/PDOC).
+There is also an active #puppet channel on the Freenode IRC network.
+
+We use semantic version numbers for our releases, and recommend that users stay as up-to-date as possible by upgrading to
+patch releases and minor releases as they become available.
+
+Bug fixes and ongoing development will occur in minor releases for the current major version.
+Security fixes will be ported to a previous major version on a best-effort basis, until the previous major version is no longer maintained.

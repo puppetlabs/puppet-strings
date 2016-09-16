@@ -1,0 +1,35 @@
+<% unless @objects_by_letter.empty? %>
+<h2><%= @title %></h2>
+
+  <% i = 0 %>
+<table>
+  <tr>
+    <td valign='top' width="33%">
+  <% @objects_by_letter.sort_by {|l,o| l.to_s }.each do |letter, objects| %>
+    <% if (i += 1) % 8 == 0 %>
+    </td>
+    <td valign='top' width="33%">
+      <% i = 0 %>
+    <% end %>
+      <ul id="alpha_<%= letter %>" class="alpha">
+        <li class="letter"><%= letter %></li>
+          <ul>
+    <% objects.each do |obj| %>
+            <li>
+      <%= linkify obj, obj.name %>
+      <% if (obj.type == :module || obj.type == :class) && !obj.namespace.root? %>
+              <small>(<%= obj.namespace.path %>)</small>
+      <% elsif obj.type == :puppet_provider %>
+              <small>(Resource type: <%= obj.type_name %>)</small>
+      <% elsif obj.type == :puppet_function %>
+              <small>(<%= obj.function_type %>)</small>
+      <% end %>
+            </li>
+    <% end %>
+      </ul>
+    </ul>
+  <% end %>
+    </td>
+  </tr>
+</table>
+<% end %>

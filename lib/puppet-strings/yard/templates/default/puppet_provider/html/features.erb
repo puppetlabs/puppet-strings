@@ -1,0 +1,12 @@
+<% if object.features && !object.features.empty? %>
+<div class="tags">
+  <p class="tag_title">Features</p>
+  <ul>
+    <% object.features.each do |feature| %>
+    <li>
+      <span class="name"><%= feature %></span>
+    </li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

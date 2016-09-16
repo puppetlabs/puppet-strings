@@ -9,8 +9,8 @@ All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with t
 ###Features
 - Support for JSON output **(PDOC-23)**
   - Strings now has the ability to produce a JSON representation of a given puppet module
-  - The details of the JSON schema can be found [here](https://github.com/puppetlabs/puppetlabs-strings/blob/master/json_dom.md)
-  - For details on how to generate JSON, see the [README](https://github.com/puppetlabs/puppetlabs-strings/blob/master/README.md#running-puppet-strings)
+  - The details of the JSON schema can be found [here](https://github.com/puppetlabs/puppet-strings/blob/master/json_dom.md)
+  - For details on how to generate JSON, see the [README](https://github.com/puppetlabs/puppet-strings/blob/master/README.md#running-puppet-strings)
 - Migrate to ruby gems as a distribution method **(PDOC-28)**
   - This is the last release of strings that will be available as a puppet module
   - The 0.4.0 release will be released concurrently as a ruby gem

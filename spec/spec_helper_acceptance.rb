@@ -6,18 +6,16 @@ unless ENV['RS_PROVISION'] == 'no'
 end
 
 RSpec.configure do |c|
-
   # Readable test descriptions
   c.formatter = :documentation
 
   # Configure all nodes in nodeset
   c.before :suite do
-
-  hosts.each do |host|
+    hosts.each do |host|
       scp_to(host, Dir.glob('puppet-strings*.gem').first, 'puppet-strings.gem')
       on host, 'gem install puppet-strings.gem'
 
-      scp_to(host, Dir.glob('spec/unit/puppet/examples/test/pkg/username-test*.gz').first, 'test.tar.gz')
+      scp_to(host, Dir.glob('acceptance/fixtures/modules/test/pkg/username-test*.gz').first, 'test.tar.gz')
       on host, puppet('module', 'install', 'test.tar.gz')
 
       on host, 'gem install yard'
