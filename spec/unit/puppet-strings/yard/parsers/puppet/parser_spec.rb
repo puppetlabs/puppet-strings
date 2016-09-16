@@ -133,7 +133,7 @@ SOURCE
     end
   end
 
-  describe 'parsing puppet functions' do
+  describe 'parsing puppet functions', if: TEST_PUPPET_FUNCTIONS do
     let(:source) { <<SOURCE
 notice hello
 # A simple foo function.

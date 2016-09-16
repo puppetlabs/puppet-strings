@@ -176,53 +176,6 @@
   ],
   "puppet_functions": [
     {
-      "name": "func",
-      "file": "(stdin)",
-      "line": 6,
-      "type": "puppet",
-      "signature": "func(Integer $param1, Any $param2, String $param3 = hi)",
-      "docstring": {
-        "text": "A simple function.",
-        "tags": [
-          {
-            "tag_name": "param",
-            "text": "First param.",
-            "types": [
-              "Integer"
-            ],
-            "name": "param1"
-          },
-          {
-            "tag_name": "param",
-            "text": "Second param.",
-            "types": [
-              "Any"
-            ],
-            "name": "param2"
-          },
-          {
-            "tag_name": "param",
-            "text": "Third param.",
-            "types": [
-              "String"
-            ],
-            "name": "param3"
-          },
-          {
-            "tag_name": "return",
-            "text": "Returns nothing.",
-            "types": [
-              "Undef"
-            ]
-          }
-        ]
-      },
-      "defaults": {
-        "param3": "hi"
-      },
-      "source": "function func(Integer $param1, $param2, String $param3 = hi) {\n}"
-    },
-    {
       "name": "func3x",
       "file": "(stdin)",
       "line": 1,
