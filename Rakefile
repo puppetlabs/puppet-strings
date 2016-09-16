@@ -24,12 +24,13 @@ task :acceptance do
   target = ENV['platform']
   if ! target
     STDERR.puts 'TEST_TARGET environment variable is not set'
-    STDERR.puts 'setting to default value of "centos7-64ma."'
-    target = 'centos7-64ma.'
+    STDERR.puts 'setting to default value of "centos7-64ma".'
+    target = 'centos7-64ma'
+    ENV['platform'] = target
   end
 
   cli = BeakerHostGenerator::CLI.new([target])
-  nodeset_dir = 'acceptance/nodesets'
+  nodeset_dir = 'spec/acceptance/nodesets'
   nodeset = "#{nodeset_dir}/#{target}.yml"
   FileUtils.mkdir_p(nodeset_dir)
   File.open(nodeset, 'w') do |fh|
@@ -37,8 +38,8 @@ task :acceptance do
   end
   puts nodeset
   sh 'gem build puppet-strings.gemspec'
-  sh 'puppet module build acceptance/fixtures/modules/test'
-  sh "BEAKER_set=#{ENV['platform']} rspec acceptance/*.rb"
+  sh 'puppet module build spec/fixtures/acceptance/modules/test'
+  sh "BEAKER_set=#{ENV['platform']} rspec spec/acceptance/*.rb"
 end
 
 task(:rubocop) do
