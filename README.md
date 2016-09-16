@@ -86,7 +86,7 @@ $ puppet strings generate first.pp second.pp ...
 To document specific directories:
 
 ```
-$ puppet strings 'modules/foo/lib/**/*.rb' 'modules/foo/manifests/**/*.pp' 'modules/foo/functions/**/*.pp' ...
+$ puppet strings generate 'modules/foo/lib/**/*.rb' 'modules/foo/manifests/**/*.pp' 'modules/foo/functions/**/*.pp' ...
 ```
 
 Strings can emit JSON documenting the Puppet extensions:
@@ -151,8 +151,8 @@ define example_type(
 }
 ```
 
-***Note: unlike Ruby, Puppet is a typed language; Puppet Strings will automatically use the parameter type information to 
-document the parameters.  A warning will be emitted if you document parameter types.***
+***Note: unlike Ruby, Puppet 4.x is a typed language; Puppet Strings will automatically use the parameter type information to 
+document the parameter types.  A warning will be emitted if you document a parameter's type for a parameter that has a Puppet type specifier.***
 
 ### Resource Types
 
@@ -218,7 +218,7 @@ Puppet Strings documents this way to preserve backwards compatibility with `pupp
 Puppet Strings supports three different ways of defining a function in Puppet: with the Puppet 3.x API, Puppet 4.X API,
 and in the Puppet language itself.
 
-## Puppet 3.x API
+#### Puppet 3.x Functions
 
 To document a function in the Puppet 3.x API, use the `doc` option to `newfunction`:
 
@@ -238,7 +238,7 @@ end
 
 ***Note: if parameter types are omitted, a default of the `Any` Puppet type will be used.***
 
-## Puppet 4.x API
+#### Puppet 4.x Functions
 
 To document a function in the Puppet 4.x API, use a YARD docstring before the `create_function` call and any `dispatch`
 calls:
@@ -261,7 +261,7 @@ end
 ```
 
 ***Note: Puppet Strings will automatically use the parameter type information from the `dispatch` block to document 
-the parameters. Only document your parameter types when the Puppet 4.x function contains no `dispatch` calls.***
+the parameter types. Only document your parameter types when the Puppet 4.x function contains no `dispatch` calls.***
 
 If the Puppet 4.x function contains multiple `dispatch` calls, Puppet Strings will automatically create `overload` tags
 to describe the function's overloads:
@@ -292,7 +292,7 @@ Puppet::Functions.create_function(:example) do
 
 The resulting HTML for this example function will document both `example(String $first)` and `example(Integer $first)`. 
 
-## Puppet Language
+#### Puppet Language Functions
 
 To document Puppet functions written in the Puppet language, use a YARD docstring before the function definition:
 
@@ -307,8 +307,8 @@ function example(String $name) {
 }
 ```
 
-***Note: Puppet Strings will automatically use the parameter type information from the function's parameters to document 
-the parameters.***
+***Note: Puppet Strings will automatically use the parameter type information from the function's parameter list to document 
+the parameter types.***
 
 Additional Resources
 --------------------
@@ -353,7 +353,7 @@ The task accepts the following parameters:
 An example of passing arguments to the `strings:generate` Rake task:
 
 ```
-$ rake strings:generate\['**/*.pp **/*.rb, true, true, markdown, --readme README.md']
+$ rake strings:generate\['**/*{.pp\,.rb}, true, true, markdown, --readme README.md']
 ```
 
 The `strings:gh_pages:update` task will generate your Puppet Strings documentation to be made available via [GitHub Pages](https://pages.github.com/). It will:
