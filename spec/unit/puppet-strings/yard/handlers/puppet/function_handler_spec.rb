@@ -1,7 +1,8 @@
 require 'spec_helper'
 require 'puppet-strings/yard'
 
-describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler do
+# Limit this spec to Puppet 4.1+ (when functions in Puppet were implemented)
+describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET_FUNCTIONS do
   subject {
     YARD::Parser::SourceParser.parse_string(source, :puppet)
     YARD::Registry.all(:puppet_function)

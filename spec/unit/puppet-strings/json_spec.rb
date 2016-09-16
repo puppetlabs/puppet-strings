@@ -19,7 +19,10 @@ class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
 # @param param3 Third param.
 define dt(Integer $param1, $param2, String $param3 = hi) {
 }
+SOURCE
 
+    # Only include Puppet functions for 4.1+
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_FUNCTIONS
 # A simple function.
 # @param param1 First param.
 # @param param2 Second param.
@@ -112,7 +115,8 @@ end
 SOURCE
   end
 
-  let(:baseline_path) { File.join(File.dirname(__FILE__), '../../fixtures/unit/json/output.json') }
+  let(:filename) { TEST_PUPPET_FUNCTIONS ? 'output.json' : 'output_without_puppet_function.json' }
+  let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/json/#{filename}") }
   let(:baseline) { File.read(baseline_path) }
 
   describe 'rendering JSON to a file' do
