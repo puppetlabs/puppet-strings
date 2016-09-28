@@ -32,6 +32,8 @@ In order to run strings you need to have the following software installed:
   * Puppet 3.7 or newer
   * The `yard` Ruby gem
 
+Note that a few extra steps are necessary to install puppet-strings with Puppet Enterprise 3.8.
+
 Installing the YARD Gem
 -----------------------
 
@@ -45,6 +47,17 @@ $ puppet resource package yard provider=puppet_gem
 For Puppet 3.x:
 ```
 $ puppet resource package yard provider=gem
+```
+
+For Puppet Enterprise 3.8:
+```
+GEM_HOME=/opt/puppet/lib/ruby/gems/1.9.1 puppet resource package yard provider=gem
+```
+
+Installing the redcarpet Gem (Puppet Enterprise 3.8 only)
+-------------------------
+```
+GEM_HOME=/opt/puppet/lib/ruby/gems/1.9.1 puppet resource package redcarpet provider=gem
 ```
 
 Installing Puppet Strings
@@ -62,6 +75,11 @@ $ puppet resource package puppet-strings provider=puppet_gem
 For Puppet 3.x:
 ```
 $ puppet resource package puppet-strings provider=gem
+```
+
+For Puppet Enterprise 3.8:
+```
+GEM_HOME=/opt/puppet/lib/ruby/gems/1.9.1 puppet resource package puppet-strings provider=gem
 ```
 
 Running Puppet Strings
