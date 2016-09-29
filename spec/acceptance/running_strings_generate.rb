@@ -18,6 +18,19 @@ describe 'Generating module documentation using generate action' do
     expect(read_file_on(master, '/root/doc/puppet_classes/test.html')).to include('Class: test')
   end
 
+  it 'should generate documentation for puppet functions' do
+    puppet_version = on(master, facter('puppetversion')).stdout.chomp.to_i
+
+    if puppet_version >= 4
+      html_output = read_file_on(master, '/root/doc/puppet_functions_puppet/test_3A_3Aadd.html')
+      expect(html_output).to include('Adds two integers together.')
+      expect(html_output).to include('<pre class="example code"><code>test::add(1, 2) =&gt; 3</code></pre>')
+      expect(html_output).to include('<p>The first integer to add.</p>')
+      expect(html_output).to include('<p>The second integer to add.</p>')
+      expect(html_output).to include('<p>Returns the sum of x and y.</p>')
+    end
+  end
+
   it 'should generate documentation for 3x functions' do
     expect(read_file_on(master, '/root/doc/puppet_functions_ruby3x/function3x.html')).to include('This is the function documentation for <code>function3x</code>')
   end
