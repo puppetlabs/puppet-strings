@@ -38,4 +38,21 @@ describe 'Generating module documentation using generate action' do
   it 'should generate documentation for 4x functions' do
     expect(read_file_on(master, '/root/doc/puppet_functions_ruby4x/function4x.html')).to include('This is a function which is used to test puppet strings')
   end
+
+  it 'should generate documentation for custom types' do
+    html_output = read_file_on(master, '/root/doc/puppet_types/database.html')
+    expect(html_output).to include('<p>An example server resource type.</p>')
+    expect(html_output).to include('<p>The database file to use.</p>')
+    expect(html_output).to include('<p>Documentation for a dynamic property.</p>')
+    expect(html_output).to include('<p>The database server name.</p>')
+    expect(html_output).to include('<p>Documentation for a dynamic parameter.</p>')
+    expect(html_output).to include('<p>The provider supports encryption.</p>')
+  end
+
+  it 'should generate documentation for custom providers' do
+    html_output = read_file_on(master, '/root/doc/puppet_providers_database/linux.html')
+    expect(html_output).to include('The database provider on Linux')
+    expect(html_output).to include('<tt>osfamily &mdash; linux</tt>')
+    expect(html_output).to include('<tt>database &mdash; /usr/bin/database</tt>')
+  end
 end
