@@ -1,6 +1,8 @@
 require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 
+$LOAD_PATH << File.expand_path(File.join(File.dirname(__FILE__), 'acceptance/lib'))
+
 unless ENV['RS_PROVISION'] == 'no'
   install_puppet
 end

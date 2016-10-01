@@ -1,16 +1,12 @@
 require 'spec_helper_acceptance'
+require 'util'
 require 'json'
 
+include PuppetStrings::Acceptance::Util
+
 describe 'Generating module documentation using generate action' do
-  def read_file_on(host, filename)
-    on(host, "cat #{filename}").stdout
-  end
-
   before :all do
-    modules = JSON.parse(on(master, puppet('module', 'list', '--render-as', 'json')).stdout)
-    test_module_info = modules['modules_by_path'].values.flatten.find { |mod_info| mod_info =~ /Module test/ }
-    test_module_path = test_module_info.match(/\(([^)]*)\)/)[1]
-
+    test_module_path = get_test_module_path(master, /Module test/)
     on master, puppet('strings', 'generate', "#{test_module_path}/**/*.{rb,pp}")
   end
 
