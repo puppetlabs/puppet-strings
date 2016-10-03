@@ -27,6 +27,34 @@ SOURCE
     end
   end
 
+  describe 'parsing a provider with an invalid docstring assignment' do
+    let(:source) { <<-SOURCE
+Puppet::Type.type(:custom).provide :linux do
+  @doc = 123
+end
+SOURCE
+    }
+
+    it 'should log an error' do
+      expect { subject }.to output(/Failed to parse docstring/).to_stdout_from_any_process
+    end
+  end
+
+  describe 'parsing a provider with a valid docstring assignment' do
+    let(:source) { <<-SOURCE
+Puppet::Type.type(:custom).provide :linux do
+  @doc = 'An example provider on Linux.'
+end
+SOURCE
+    }
+
+    it 'should correctly detect the docstring' do
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object.docstring).to eq('An example provider on Linux.')
+    end
+  end
+
   describe 'parsing a provider definition' do
     let(:source) { <<-SOURCE
 Puppet::Type.type(:custom).provide :linux do
