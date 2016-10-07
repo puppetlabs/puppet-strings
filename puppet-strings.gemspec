@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 'puppet-strings'
   s.author = 'Puppet Inc.'
-  s.version = '0.4.0'
+  s.version = '0.99.0'
   s.license = 'Apache-2.0'
   s.summary = 'Puppet documentation via YARD'
   s.email = 'info@puppet.com'
