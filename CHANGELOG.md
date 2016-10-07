@@ -4,6 +4,8 @@
 
 This release includes a complete rewrite of strings, fixing many bugs from previous versions and generally improving the user experience. This release is intended to be the last stop before the strings major version 1.0 is released, and nearly all of the functionality of the major release is included.
 
+All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with the fix version of [0.99.0](https://tickets.puppetlabs.com/issues/?filter=22705).
+
 ###Features
 - Complete overhaul, including code cleanup, bug fixes and new functionality **(PDOC-63)**
   - Documentation has been split into sections based on type: puppet 3x API functions, puppet 4x API functions, ruby classes, puppet language functions, types, and providers
