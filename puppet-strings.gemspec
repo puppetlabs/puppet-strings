@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.email = 'info@puppet.com'
   s.homepage = 'https://github.com/puppetlabs/puppet-strings'
   s.description = s.summary
+  s.required_ruby_version = '>= 1.9.3'
 
   s.extra_rdoc_files = [
     'CHANGELOG.md',
