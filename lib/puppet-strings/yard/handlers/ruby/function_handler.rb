@@ -23,12 +23,15 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
 
   process do
     # Only accept calls to Puppet::Functions (4.x) or Puppet::Parser::Functions (3.x)
+    # When `newfunction` is separated from the Puppet::Parser::Functions module name by a
+    # newline, YARD ignores the namespace and uses `newfunction` as the source of the
+    # first statement.
     return unless statement.count > 1
     module_name = statement[0].source
-    return unless module_name == 'Puppet::Functions' || module_name == 'Puppet::Parser::Functions'
+    return unless module_name == 'Puppet::Functions' || module_name == 'Puppet::Parser::Functions' || module_name == 'newfunction'
 
     # Create and register the function object
-    is_3x = module_name == 'Puppet::Parser::Functions'
+    is_3x = module_name == 'Puppet::Parser::Functions' || module_name == 'newfunction'
     object = PuppetStrings::Yard::CodeObjects::Function.new(
       get_name,
       is_3x ? PuppetStrings::Yard::CodeObjects::Function::RUBY_3X : PuppetStrings::Yard::CodeObjects::Function::RUBY_4X

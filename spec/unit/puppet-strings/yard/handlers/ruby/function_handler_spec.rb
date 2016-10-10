@@ -70,6 +70,50 @@ SOURCE
       end
     end
 
+    describe 'parsing a function with a doc parameter which has a newline between the namespace and the newfunction call' do
+      let(:source) { <<-SOURCE
+module Puppet::Parser::Functions
+  newfunction(:foo, doc: <<-DOC
+An example 3.x function.
+@param [String] first The first parameter.
+@param second The second parameter.
+@return [Undef] Returns nothing.
+DOC
+) do |*args|
+  end
+end
+SOURCE
+      }
+
+      it 'should register a function object' do
+        expect(subject.size).to eq(1)
+        object = subject.first
+        expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
+        expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::Functions.instance(PuppetStrings::Yard::CodeObjects::Function::RUBY_3X))
+        expect(object.name).to eq(:foo)
+        expect(object.signature).to eq('foo(String $first, Any $second)')
+        expect(object.parameters).to eq([['first', nil], ['second', nil]])
+        expect(object.docstring).to eq('An example 3.x function.')
+        expect(object.docstring.tags.size).to eq(4)
+        tags = object.docstring.tags(:param)
+        expect(tags.size).to eq(2)
+        expect(tags[0].name).to eq('first')
+        expect(tags[0].text).to eq('The first parameter.')
+        expect(tags[0].types).to eq(['String'])
+        expect(tags[1].name).to eq('second')
+        expect(tags[1].text).to eq('The second parameter.')
+        expect(tags[1].types).to eq(['Any'])
+        tags = object.docstring.tags(:return)
+        expect(tags.size).to eq(1)
+        expect(tags[0].name).to be_nil
+        expect(tags[0].text).to eq('Returns nothing.')
+        expect(tags[0].types).to eq(['Undef'])
+        tags = object.docstring.tags(:api)
+        expect(tags.size).to eq(1)
+        expect(tags[0].text).to eq('public')
+      end
+    end
+
     describe 'parsing a function with a missing @return tag' do
       let(:source) { <<-SOURCE
 Puppet::Parser::Functions.newfunction(:foo, doc: <<-DOC) do |*args|
