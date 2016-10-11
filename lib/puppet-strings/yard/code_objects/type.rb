@@ -78,7 +78,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     # @param [String] docstring The docstring of the feature.
     def initialize(name, docstring)
       @name = name
-      @docstring = docstring
+      @docstring = Puppet::Util::Docs.scrub(docstring).gsub("\n", ' ')
     end
 
     # Converts the feature to a hash representation.
