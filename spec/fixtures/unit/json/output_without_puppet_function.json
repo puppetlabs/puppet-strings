@@ -166,9 +166,24 @@
         "implements_some_feature",
         "some_other_feature"
       ],
-      "defaults": {
-        "kernel": "Linux"
-      },
+      "defaults": [
+        [
+          [
+            "kernel",
+            "Linux"
+          ]
+        ],
+        [
+          [
+            "osfamily",
+            "RedHat"
+          ],
+          [
+            "operatingsystemmajrelease",
+            "7"
+          ]
+        ]
+      ],
       "commands": {
         "foo": "/usr/bin/foo"
       }

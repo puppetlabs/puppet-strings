@@ -2,8 +2,15 @@
 <div class="tags">
   <p class="tag_title"><%= @title %></p>
   <ul>
-  <% @collection.each do |key, value| %>
-    <li><tt><%= key %> &mdash; <%= value %></tt></li>
+
+  <% if @collection.is_a?(Hash) %>
+    <% @collection.each do |key, value| %>
+      <li><tt><%= key %> &mdash; <%= value %></tt></li>
+    <% end %>
+  <% elsif @collection.is_a?(Array) %>
+    <% @collection.each do |kvps| %>
+      <li><tt><%=  kvps.map{|k,v| "#{k} &mdash; #{v}"}.join(', ') %></tt></li>
+    <% end %>
   <% end %>
   </ul>
 </div>

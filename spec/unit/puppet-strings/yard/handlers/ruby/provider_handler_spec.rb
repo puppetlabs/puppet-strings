@@ -61,7 +61,8 @@ Puppet::Type.type(:custom).provide :linux do
   desc 'An example provider on Linux.'
   confine kernel: 'Linux'
   confine osfamily: 'RedHat'
-  defaultfor kernel: 'Linux'
+  defaultfor :kernel => 'Linux'
+  defaultfor :osfamily => 'RedHat', :operatingsystemmajrelease => '7'
   has_feature :implements_some_feature
   has_feature :some_other_feature
   commands foo: /usr/bin/foo
@@ -82,7 +83,7 @@ SOURCE
       expect(tags.size).to eq(1)
       expect(tags[0].text).to eq('public')
       expect(object.confines).to eq({ 'kernel' => 'Linux', 'osfamily' => 'RedHat'})
-      expect(object.defaults).to eq({ 'kernel' => 'Linux'})
+      expect(object.defaults).to eq([[["kernel", "Linux"]], [["osfamily", "RedHat"], ["operatingsystemmajrelease", "7"]]])
       expect(object.features).to eq(['implements_some_feature', 'some_other_feature'])
       expect(object.commands).to eq({'foo' => '/usr/bin/foo'})
     end

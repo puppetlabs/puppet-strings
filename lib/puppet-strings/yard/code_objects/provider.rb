@@ -56,13 +56,12 @@ class PuppetStrings::Yard::CodeObjects::Provider < PuppetStrings::Yard::CodeObje
   end
 
   # Adds a default to the provider.
-  # @param [String] key The default's key.
-  # @param [String] value The default's value.
+  # @param [Array] constraints List of related key-pair values for the default.
   # @return [void]
-  def add_default(key, value)
-    return unless key && value
-    @defaults ||= {}
-    @defaults[key] = value
+  def add_default(constraints)
+    return unless constraints
+    @defaults ||= []
+    @defaults << constraints
   end
 
   # Adds a command to the provider.

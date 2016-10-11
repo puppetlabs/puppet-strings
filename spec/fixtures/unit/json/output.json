@@ -84,7 +84,7 @@
     {
       "name": "database",
       "file": "(stdin)",
-      "line": 43,
+      "line": 44,
       "docstring": {
         "text": "An example database server resource type."
       },
@@ -166,9 +166,24 @@
         "implements_some_feature",
         "some_other_feature"
       ],
-      "defaults": {
-        "kernel": "Linux"
-      },
+      "defaults": [
+        [
+          [
+            "kernel",
+            "Linux"
+          ]
+        ],
+        [
+          [
+            "osfamily",
+            "RedHat"
+          ],
+          [
+            "operatingsystemmajrelease",
+            "7"
+          ]
+        ]
+      ],
       "commands": {
         "foo": "/usr/bin/foo"
       }
