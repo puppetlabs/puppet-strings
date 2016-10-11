@@ -3,7 +3,7 @@ Puppet Strings JSON Data
 
 Puppet Strings has two flags to the `generate` action that can be used to emit JSON data:
 
-* `--emit-json <file>`: Emits the JSON data to the given file. 
+* `--emit-json <file>`: Emits the JSON data to the given file.
 * `--emit-json-stdout`: Emits the JSON data to STDOUT.
 
 Document Schema
@@ -100,13 +100,13 @@ Each entry in the `providers` list is an object with the following attributes:
 | Attribute Key | Description                                          |
 | ------------- | ---------------------------------------------------- |
 | name          | The name of the provider.                            |
-| type_name     | The name of the resource type of the provider.       | 
+| type_name     | The name of the resource type of the provider.       |
 | file          | The file defining the provider.                      |
 | line          | The line where the provider is defined.              |
 | docstring     | The *DocString* object for the provider (see below). |
 | confines      | The string map of confines for the provider.         |
 | features      | The list of features implemented by the provider.    |
-| defaults      | The string map of "default for" for the provider.    |
+| defaults      | The list of lists of "default for" for the provider. |
 | commands      | The string map of commands for the provider.         |
 
 Puppet Functions
@@ -327,9 +327,24 @@ An example JSON document describing a Puppet class, defined type, resource type,
         "implements_some_feature",
         "some_other_feature"
       ],
-      "defaults": {
-        "kernel": "Linux"
-      },
+      "defaults": [
+        [
+          [
+            "kernel",
+            "Linux"
+          ]
+        ],
+        [
+          [
+            "osfamily",
+            "RedHat",
+          ],
+          [
+            "operatingsystemmajrelease",
+            "7"
+          ]
+        ]
+      ],
       "commands": {
         "foo": "/usr/bin/foo"
       }
@@ -508,4 +523,3 @@ An example JSON document describing a Puppet class, defined type, resource type,
   ]
 }
 ```
-

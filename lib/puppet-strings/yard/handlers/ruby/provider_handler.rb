@@ -96,9 +96,14 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
       elsif method_name == 'defaultfor'
         # Add a default to the object
         next unless parameters.count >= 1
-        parameters[0].each do |kvp|
-          next unless kvp.count == 2
-          object.add_default(node_as_string(kvp[0]) || kvp[0].source, node_as_string(kvp[1]) || kvp[1].source)
+        # Some defaultfor statements contain multiple constraints.
+        parameters.each do |kvps|
+          next unless kvps.count >= 1
+          defaultfor = []
+          kvps.each do |kvp|
+            defaultfor << [node_as_string(kvp[0]) || kvp[0].source, node_as_string(kvp[1]) || kvp[1].source]
+          end
+          object.add_default(defaultfor)
         end
       elsif method_name == 'commands'
         # Add the commands to the object
