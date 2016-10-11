@@ -62,6 +62,11 @@ SOURCE
 Puppet::Type.newtype(:database) do
   desc 'An example database server resource type.'
   feature :encryption, 'The provider supports encryption.', methods: [:encrypt]
+
+  feature :magic,
+    'The feature docstring should have
+    whitespace and newlines stripped out.'
+
   ensurable do
     desc 'What state the database should be in.'
     defaultvalues
@@ -167,9 +172,11 @@ SOURCE
       expect(object.parameters[4].isnamevar).to eq(false)
       expect(object.parameters[4].default).to eq('never')
       expect(object.parameters[4].values).to eq(%w(daily monthly never))
-      expect(object.features.size).to eq(1)
+      expect(object.features.size).to eq(2)
       expect(object.features[0].name).to eq('encryption')
       expect(object.features[0].docstring).to eq('The provider supports encryption.')
+      expect(object.features[1].name).to eq('magic')
+      expect(object.features[1].docstring).to eq('The feature docstring should have whitespace and newlines stripped out.')
     end
   end
 
