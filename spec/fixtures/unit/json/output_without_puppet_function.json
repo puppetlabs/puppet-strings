@@ -84,7 +84,7 @@
     {
       "name": "database",
       "file": "(stdin)",
-      "line": 43,
+      "line": 44,
       "docstring": {
         "text": "An example database server resource type."
       },
