@@ -7,7 +7,7 @@ A Puppet command built on [YARD](http://yardoc.org/).
 Puppet Strings generates HTML documentation for Puppet extensions written in Puppet and Ruby.
 
 This tool will eventually place the existing `puppet doc` command once feature parity has been achieved.
- 
+
 |                |                                                                 |
 | -------------- |---------------------------------------------------------------- |
 | *Code*         | [GitHub][repo]                                                  |
@@ -169,7 +169,7 @@ define example_type(
 }
 ```
 
-***Note: unlike Ruby, Puppet 4.x is a typed language; Puppet Strings will automatically use the parameter type information to 
+***Note: unlike Ruby, Puppet 4.x is a typed language; Puppet Strings will automatically use the parameter type information to
 document the parameter types.  A warning will be emitted if you document a parameter's type for a parameter that has a Puppet type specifier.***
 
 ### Resource Types
@@ -185,17 +185,17 @@ An example resource type.
     param => 'hi'
   }
 DESC
-  
+
   newparam(:param) do
     desc 'An example parameter.'
     # ...
   end
-  
+
   newproperty(:prop) do
     desc 'An example property.'
     #...
   end
-   
+
   # ...  
 end
 ```
@@ -222,7 +222,7 @@ To document providers, use the `desc` method or assign a value to the `doc` attr
 ```ruby
 Puppet::Type.type(:example).provide :platform do
   desc 'An example provider.'
-  
+
   # ...
 end
 ```
@@ -273,12 +273,12 @@ Puppet::Functions.create_function(:example) do
     param 'String', :first
     param 'Integer', :second
   end
-  
+
   # ...
 end
 ```
 
-***Note: Puppet Strings will automatically use the parameter type information from the `dispatch` block to document 
+***Note: Puppet Strings will automatically use the parameter type information from the `dispatch` block to document
 the parameter types. Only document your parameter types when the Puppet 4.x function contains no `dispatch` calls.***
 
 If the Puppet 4.x function contains multiple `dispatch` calls, Puppet Strings will automatically create `overload` tags
@@ -295,7 +295,7 @@ Puppet::Functions.create_function(:example) do
   dispatch :example_string do
     param 'String', :first
   end
-  
+
   # Overload by integer.
   # @param first The first parameter.
   # @return [Integer] Returns an integer.
@@ -304,11 +304,11 @@ Puppet::Functions.create_function(:example) do
   dispatch :example_integer do
     param 'Integer', :first
   end
-  
+
   # ...
 ```
 
-The resulting HTML for this example function will document both `example(String $first)` and `example(Integer $first)`. 
+The resulting HTML for this example function will document both `example(String $first)` and `example(Integer $first)`.
 
 #### Puppet Language Functions
 
@@ -325,8 +325,31 @@ function example(String $name) {
 }
 ```
 
-***Note: Puppet Strings will automatically use the parameter type information from the function's parameter list to document 
+***Note: Puppet Strings will automatically use the parameter type information from the function's parameter list to document
 the parameter types.***
+
+Further examples
+----------------
+
+#### Using The `@example` Tag
+
+The `@example` YARD tag can be used to add usage examples to any Ruby or Puppet language code.
+
+```puppet
+# @example String describing what this example demonstrates.
+#   $content = example('world')
+#   if $content == 'world' {
+#     include world
+#   }
+function example(string $name) {
+  "hello $name"
+}
+```
+
+The string following the `@example` tag is an optional title which is displayed prominently above the code block.
+
+The example body must begin on a newline underneath the tag, and each line of the example itself must be indented by
+at least one space. Further indentation is preserved as preformatted text in the generated documentation.
 
 Additional Resources
 --------------------
