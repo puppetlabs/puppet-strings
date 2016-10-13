@@ -24,6 +24,15 @@ namespace :strings do
       end
     end
 
+    desc 'Add Jekyll _config.yml file to allow publishing of _index.html.'
+    task :configure do
+      unless File.exist?(File.join('doc', '_config.yml'))
+        Dir.chdir('doc') do
+          File.open('_config.yml', 'w+') {|f| f.write("include: _index.html") }
+        end
+      end
+    end
+
     desc 'Push new docs to GitHub.'
     task :push do
       Dir.chdir('doc') do
@@ -37,6 +46,7 @@ namespace :strings do
     task :update => [
       :checkout,
       :'strings:generate',
+      :configure,
       :push,
     ]
   end
