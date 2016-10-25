@@ -351,6 +351,20 @@ The string following the `@example` tag is an optional title which is displayed 
 The example body must begin on a newline underneath the tag, and each line of the example itself must be indented by
 at least one space. Further indentation is preserved as preformatted text in the generated documentation.
 
+#### Multi-Line Tag Descriptions
+
+Similar to multi-line examples, tag descriptions can be spread across multiple lines as long as subsequent lines
+are each uniformly indented by at least one space.
+
+```puppet
+# @param name The name which the function will use to say hello. Note that this
+#   description is extra long, so we've broken it up onto newlines for the sake
+#   of readability.
+function example(string $name) {
+  "hello $name"
+}
+```
+
 Additional Resources
 --------------------
 
