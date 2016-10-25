@@ -6,12 +6,10 @@ gem 'rgen'
 gem 'redcarpet'
 gem 'yard', '~> 0.9.5'
 
-puppetversion = ENV['PUPPET_VERSION']
-
-if puppetversion
-  gem 'puppet', puppetversion
+if ENV['PUPPET_GEM_VERSION']
+  gem 'puppet', ENV['PUPPET_GEM_VERSION'], :require => false
 else
-  gem 'puppet'
+  gem 'puppet', :require => false
 end
 
 group :test do
@@ -19,7 +17,6 @@ group :test do
   gem 'mocha'
   gem 'puppetlabs_spec_helper'
   gem 'serverspec'
-  gem 'rubocop', '~> 0.41.0'
 end
 
 group :acceptance do
@@ -36,3 +33,7 @@ group :development do
     gem 'pry-byebug'
   end
 end
+
+gem 'json',      '<= 1.8'   if RUBY_VERSION < '2.0.0'
+gem 'json_pure', '<= 2.0.1' if RUBY_VERSION < '2.0.0'
+gem 'rubocop'               if RUBY_VERSION >= '2.0.0'
