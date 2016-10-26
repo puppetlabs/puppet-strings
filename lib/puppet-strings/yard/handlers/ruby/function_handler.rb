@@ -1,6 +1,6 @@
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
-require 'puppet/util/docs'
+require 'puppet-strings/yard/util'
 
 # Implements the handler for Puppet functions written in Ruby.
 class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard::Handlers::Ruby::Base
@@ -338,7 +338,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         docstring = node_as_string(kvp[1])
 
         log.error "Failed to parse docstring for 3.x Puppet function '#{name}' near #{statement.file}:#{statement.line}." and return nil unless docstring
-        return Puppet::Util::Docs.scrub(docstring)
+        return PuppetStrings::Yard::Util.scrub_string(docstring)
       end
     end
 

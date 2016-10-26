@@ -1,6 +1,6 @@
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
-require 'puppet/util'
+require 'puppet-strings/yard/util'
 
 # Implements the handler for Puppet resource types written in Ruby.
 class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Handlers::Ruby::Base
@@ -49,7 +49,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
         next unless ivar != child && ivar.source == '@doc'
         docstring = node_as_string(child[1])
         log.error "Failed to parse docstring for #{kind} near #{child.file}:#{child.line}." and return nil unless docstring
-        return Puppet::Util::Docs.scrub(docstring)
+        return PuppetStrings::Yard::Util.scrub_string(docstring)
       elsif child.is_a?(YARD::Parser::Ruby::MethodCallNode)
         # Look for a call to a dispatch method with a block
         next unless child.method_name &&
@@ -58,7 +58,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
 
         docstring = node_as_string(child.parameters[0])
         log.error "Failed to parse docstring for #{kind} near #{child.file}:#{child.line}." and return nil unless docstring
-        return Puppet::Util::Docs.scrub(docstring)
+        return PuppetStrings::Yard::Util.scrub_string(docstring)
       end
     end
     log.warn "Missing a description for #{kind} at #{node.file}:#{node.line}."

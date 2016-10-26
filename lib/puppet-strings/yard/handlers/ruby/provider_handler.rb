@@ -1,6 +1,6 @@
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
-require 'puppet/util/docs'
+require 'puppet-strings/yard/util'
 
 # Implements the handler for Puppet providers written in Ruby.
 class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard::Handlers::Ruby::Base
@@ -53,7 +53,7 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
         next unless ivar != child && ivar.source == '@doc'
         docstring = node_as_string(child[1])
         log.error "Failed to parse docstring for Puppet provider '#{object.name}' (resource type '#{object.type_name}') near #{child.file}:#{child.line}." and return nil unless docstring
-        register_docstring(object, Puppet::Util::Docs.scrub(docstring), nil)
+        register_docstring(object, PuppetStrings::Yard::Util.scrub_string(docstring), nil)
         return nil
       elsif child.is_a?(YARD::Parser::Ruby::MethodCallNode)
         # Look for a call to a dispatch method with a block
@@ -64,7 +64,7 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
 
         docstring = node_as_string(child.parameters[0])
         log.error "Failed to parse docstring for Puppet provider '#{object.name}' (resource type '#{object.type_name}') near #{child.file}:#{child.line}." and return nil unless docstring
-        register_docstring(object, Puppet::Util::Docs.scrub(docstring), nil)
+        register_docstring(object, PuppetStrings::Yard::Util.scrub_string(docstring), nil)
         return nil
       end
     end
