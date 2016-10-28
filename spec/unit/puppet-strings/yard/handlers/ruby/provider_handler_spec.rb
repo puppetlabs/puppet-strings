@@ -55,6 +55,23 @@ SOURCE
     end
   end
 
+  describe 'parsing a provider with a docstring which uses ruby `%Q` notation' do
+    let(:source) { <<-'SOURCE'
+Puppet::Type.type(:custom).provide :linux do
+  test = 'hello world!'
+  desc %Q{This is a multi-line
+  doc in %Q with #{test}}
+end
+SOURCE
+    }
+
+    it 'should strip the `%Q{}` and render the interpolation expression literally' do
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object.docstring).to eq("This is a multi-line\ndoc in %Q with \#{test}")
+    end
+  end
+
   describe 'parsing a provider definition' do
     let(:source) { <<-SOURCE
 Puppet::Type.type(:custom).provide :linux do

@@ -1,4 +1,5 @@
 require 'puppet-strings/yard/code_objects/group'
+require 'puppet-strings/yard/util'
 
 # Implements the group for Puppet resource types.
 class PuppetStrings::Yard::CodeObjects::Types < PuppetStrings::Yard::CodeObjects::Group
@@ -78,7 +79,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     # @param [String] docstring The docstring of the feature.
     def initialize(name, docstring)
       @name = name
-      @docstring = Puppet::Util::Docs.scrub(docstring).gsub("\n", ' ')
+      @docstring = PuppetStrings::Yard::Util.scrub_string(docstring).gsub("\n", ' ')
     end
 
     # Converts the feature to a hash representation.

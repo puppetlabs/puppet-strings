@@ -55,6 +55,23 @@ SOURCE
     end
   end
 
+  describe 'parsing a type with a docstring which uses ruby `%Q` notation' do
+    let(:source) { <<-'SOURCE'
+Puppet::Type.newtype(:database) do
+  test = 'hello world!'
+  desc %Q{This is a multi-line
+  doc in %Q with #{test}}
+end
+SOURCE
+    }
+
+    it 'should strip the `%Q{}` and render the interpolation expression literally' do
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object.docstring).to eq("This is a multi-line\ndoc in %Q with \#{test}")
+    end
+  end
+
   describe 'parsing a type definition' do
     let(:source) { <<-SOURCE
 # @!puppet.type.param [value1, value2] dynamic_param Documentation for a dynamic parameter.
