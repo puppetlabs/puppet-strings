@@ -84,7 +84,7 @@
     {
       "name": "database",
       "file": "(stdin)",
-      "line": 45,
+      "line": 54,
       "docstring": {
         "text": "An example database server resource type."
       },
@@ -154,7 +154,7 @@
       "name": "linux",
       "type_name": "database",
       "file": "(stdin)",
-      "line": 34,
+      "line": 43,
       "docstring": {
         "text": "An example provider on Linux."
       },
@@ -195,7 +195,47 @@
       "file": "(stdin)",
       "line": 6,
       "type": "puppet",
-      "signature": "func(Integer $param1, Any $param2, String $param3 = hi)",
+      "signatures": [
+        {
+          "signature": "func(Integer $param1, Any $param2, String $param3 = hi)",
+          "docstring": {
+            "text": "A simple function.",
+            "tags": [
+              {
+                "tag_name": "param",
+                "text": "First param.",
+                "types": [
+                  "Integer"
+                ],
+                "name": "param1"
+              },
+              {
+                "tag_name": "param",
+                "text": "Second param.",
+                "types": [
+                  "Any"
+                ],
+                "name": "param2"
+              },
+              {
+                "tag_name": "param",
+                "text": "Third param.",
+                "types": [
+                  "String"
+                ],
+                "name": "param3"
+              },
+              {
+                "tag_name": "return",
+                "text": "Returns nothing.",
+                "types": [
+                  "Undef"
+                ]
+              }
+            ]
+          }
+        }
+      ],
       "docstring": {
         "text": "A simple function.",
         "tags": [
@@ -242,7 +282,39 @@
       "file": "(stdin)",
       "line": 1,
       "type": "ruby3x",
-      "signature": "func3x(String $first, Any $second)",
+      "signatures": [
+        {
+          "signature": "func3x(String $first, Any $second)",
+          "docstring": {
+            "text": "An example 3.x function.",
+            "tags": [
+              {
+                "tag_name": "param",
+                "text": "The first parameter.",
+                "types": [
+                  "String"
+                ],
+                "name": "first"
+              },
+              {
+                "tag_name": "param",
+                "text": "The second parameter.",
+                "types": [
+                  "Any"
+                ],
+                "name": "second"
+              },
+              {
+                "tag_name": "return",
+                "text": "Returns nothing.",
+                "types": [
+                  "Undef"
+                ]
+              }
+            ]
+          }
+        }
+      ],
       "docstring": {
         "text": "An example 3.x function.",
         "tags": [
@@ -278,6 +350,78 @@
       "file": "(stdin)",
       "line": 11,
       "type": "ruby4x",
+      "signatures": [
+        {
+          "signature": "func4x(Integer $param1, Any $param2, Optional[Array[String]] $param3)",
+          "docstring": {
+            "text": "The first overload.",
+            "tags": [
+              {
+                "tag_name": "param",
+                "text": "The first parameter.",
+                "types": [
+                  "Integer"
+                ],
+                "name": "param1"
+              },
+              {
+                "tag_name": "param",
+                "text": "The second parameter.",
+                "types": [
+                  "Any"
+                ],
+                "name": "param2"
+              },
+              {
+                "tag_name": "param",
+                "text": "The third parameter.",
+                "types": [
+                  "Optional[Array[String]]"
+                ],
+                "name": "param3"
+              },
+              {
+                "tag_name": "return",
+                "text": "Returns nothing.",
+                "types": [
+                  "Undef"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "signature": "func4x(Boolean $param, Callable &$block)",
+          "docstring": {
+            "text": "",
+            "tags": [
+              {
+                "tag_name": "param",
+                "text": "The first parameter.",
+                "types": [
+                  "Boolean"
+                ],
+                "name": "param"
+              },
+              {
+                "tag_name": "param",
+                "text": "The block parameter.",
+                "types": [
+                  "Callable"
+                ],
+                "name": "&block"
+              },
+              {
+                "tag_name": "return",
+                "text": "Returns a string.",
+                "types": [
+                  "String"
+                ]
+              }
+            ]
+          }
+        }
+      ],
       "docstring": {
         "text": "An example 4.x function.",
         "tags": [
@@ -358,6 +502,58 @@
         ]
       },
       "source": "Puppet::Functions.create_function(:func4x) do\n  # The first overload.\n  # @param param1 The first parameter.\n  # @param param2 The second parameter.\n  # @param param3 The third parameter.\n  # @return Returns nothing.\n  dispatch :foo do\n    param          'Integer',       :param1\n    param          'Any',           :param2\n    optional_param 'Array[String]', :param3\n    return_type 'Undef'\n  end\n\n  # @param param The first parameter.\n  # @param block The block parameter.\n  # @return Returns a string.\n  dispatch :other do\n    param 'Boolean', :param\n    block_param\n    return_type 'String'\n  end\nend"
+    },
+    {
+      "name": "func4x_1",
+      "file": "(stdin)",
+      "line": 35,
+      "type": "ruby4x",
+      "signatures": [
+        {
+          "signature": "func4x_1(Integer $param1)",
+          "docstring": {
+            "text": "An example 4.x function with only one signature.",
+            "tags": [
+              {
+                "tag_name": "param",
+                "text": "The first parameter.",
+                "types": [
+                  "Integer"
+                ],
+                "name": "param1"
+              },
+              {
+                "tag_name": "return",
+                "text": "Returns nothing.",
+                "types": [
+                  "Undef"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "docstring": {
+        "text": "An example 4.x function with only one signature.",
+        "tags": [
+          {
+            "tag_name": "param",
+            "text": "The first parameter.",
+            "types": [
+              "Integer"
+            ],
+            "name": "param1"
+          },
+          {
+            "tag_name": "return",
+            "text": "Returns nothing.",
+            "types": [
+              "Undef"
+            ]
+          }
+        ]
+      },
+      "source": "Puppet::Functions.create_function(:func4x_1) do\n  # @param param1 The first parameter.\n  # @return [Undef] Returns nothing.\n  dispatch :foobarbaz do\n    param          'Integer',       :param1\n  end\nend"
     }
   ]
 }
