@@ -2,7 +2,6 @@ require 'puppet-strings/tasks'
 
 namespace :strings do
   namespace :gh_pages do
-    desc 'Checkout the gh-pages branch for doc generation.'
     task :checkout do
       if Dir.exist?('doc')
         fail "The 'doc' directory (#{File.expand_path('doc')}) is not a Git repository! Remove it and run the Rake task again." unless Dir.exist?('doc/.git')
@@ -24,7 +23,6 @@ namespace :strings do
       end
     end
 
-    desc 'Add Jekyll _config.yml file to allow publishing of _index.html.'
     task :configure do
       unless File.exist?(File.join('doc', '_config.yml'))
         Dir.chdir('doc') do
@@ -33,16 +31,19 @@ namespace :strings do
       end
     end
 
-    desc 'Push new docs to GitHub.'
     task :push do
+      output = `git describe --long 2>/dev/null`
+      # If a project has never been tagged, fall back to latest SHA
+      output.empty? ? git_sha = `git log --pretty=format:'%H' -n 1` : git_sha = output
+
       Dir.chdir('doc') do
         system 'git add .'
-        system "git commit -m '[strings] Generated Documentation Update'"
+        system "git commit -m '[strings] Generated Documentation Update at Revision #{git_sha}'"
         system 'git push origin gh-pages -f'
       end
     end
 
-    desc 'Run checkout, generate, and push tasks.'
+    desc 'Update docs on the gh-pages branch and push to GitHub.'
     task :update => [
       :checkout,
       :'strings:generate',
