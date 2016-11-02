@@ -2,6 +2,13 @@ require 'puppet-strings/tasks'
 
 namespace :strings do
   namespace :gh_pages do
+    desc 'Determine the SHA of the branch to be documented'
+    task :get_sha do
+      output = `git describe --long 2>/dev/null`
+      # If a project has never been tagged, fall back to latest SHA
+      output.empty? ? @git_sha = `git log --pretty=format:'%H' -n 1` : @git_sha = output
+    end
+
     desc 'Checkout the gh-pages branch for doc generation.'
     task :checkout do
       if Dir.exist?('doc')
@@ -37,13 +44,14 @@ namespace :strings do
     task :push do
       Dir.chdir('doc') do
         system 'git add .'
-        system "git commit -m '[strings] Generated Documentation Update'"
+        system "git commit -m '[strings] Generated Documentation Update at Revision #{@git_sha}'"
         system 'git push origin gh-pages -f'
       end
     end
 
     desc 'Run checkout, generate, and push tasks.'
     task :update => [
+      :get_sha,
       :checkout,
       :'strings:generate',
       :configure,
