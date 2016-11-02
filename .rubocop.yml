@@ -555,3 +555,9 @@ Metrics/AbcSize:
 
 Metrics/PerceivedComplexity:
   Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/VariableNumber:
+  Enabled: false
