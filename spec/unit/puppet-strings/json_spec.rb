@@ -56,7 +56,6 @@ Puppet::Functions.create_function(:func4x) do
     return_type 'Undef'
   end
 
-  # The second overload.
   # @param param The first parameter.
   # @param block The block parameter.
   # @return Returns a string.
