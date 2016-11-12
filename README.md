@@ -39,7 +39,7 @@ Installing the YARD Gem
 
 The easiest way to install the `yard` gem is with Puppet itself:
 
-For Puppet 4.x:
+For Puppet 4.x and Puppet Enterprise 2015.2 and later:
 ```
 $ puppet resource package yard provider=puppet_gem
 ```
@@ -67,7 +67,7 @@ Strings can be installed using the [puppet-strings](https://rubygems.org/gems/pu
 
 To ensure it is installed in right place, it is best to install it using Puppet:
 
-For Puppet 4.x:
+For Puppet 4.x and Puppet Enterprise 2015.2 and later:
 ```
 $ puppet resource package puppet-strings provider=puppet_gem
 ```
