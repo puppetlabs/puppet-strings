@@ -68,6 +68,11 @@ SOURCE
       expect(tags[2].name).to eq('param3')
       expect(tags[2].text).to eq('Third param.')
       expect(tags[2].types).to eq(['String'])
+      tags = object.docstring.tags(:return)
+      expect(tags.size).to eq(1)
+      expect(tags[0].tag_name).to eq('return')
+      expect(tags[0].text).to eq('Returns nothing.')
+      expect(tags[0].types).to eq(['Undef'])
       tags = object.docstring.tags(:api)
       expect(tags.size).to eq(1)
       expect(tags[0].text).to eq('public')
@@ -164,6 +169,73 @@ SOURCE
 
     it 'should output a warning' do
       expect{ subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):5\./).to_stdout_from_any_process
+    end
+  end
+
+  describe 'parsing a function with a missing @return tag and return type specified in the function definition', if: TEST_FUNCTION_RETURN_TYPE do
+    let(:source) { <<-SOURCE
+# A simple foo function.
+function foo() >> String {
+  notice 'hello world'
+}
+SOURCE
+    }
+
+    it 'should register a function object with the correct return type' do
+      expect{ subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):2\./).to_stdout_from_any_process
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
+      tags = object.docstring.tags(:return)
+      expect(tags.size).to eq(1)
+      expect(tags[0].tag_name).to eq('return')
+      expect(tags[0].text).to eq('')
+      expect(tags[0].types).to eq(['String'])
+    end
+  end
+
+  describe 'parsing a function with a conflicting return tag and type in function definition', if: TEST_FUNCTION_RETURN_TYPE do
+    let(:source) { <<-SOURCE
+# A simple foo function.
+# @return [Integer] this is a lie.
+function foo() >> Struct[{'a' => Integer[1, 10]}] {
+  notice 'hello world'
+}
+SOURCE
+    }
+
+    it 'should prefer the return type from the function definition' do
+      expect{ subject }.to output(/\[warn\]: Documented return type does not match return type in function definition near \(stdin\):3\./).to_stdout_from_any_process
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
+      tags = object.docstring.tags(:return)
+      expect(tags.size).to eq(1)
+      expect(tags[0].tag_name).to eq('return')
+      expect(tags[0].text).to eq('this is a lie.')
+      expect(tags[0].types).to eq(["Struct[{'a' => Integer[1, 10]}]"])
+    end
+  end
+
+  describe 'parsing a function without a return tag or return type in the function definition' do
+    let(:source) { <<-SOURCE
+# A simple foo function.
+function foo() {
+  notice 'hello world'
+}
+SOURCE
+    }
+
+    it 'should add a return tag with a default type value of Any' do
+      expect{ subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):2\./).to_stdout_from_any_process
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
+      tags = object.docstring.tags(:return)
+      expect(tags.size).to eq(1)
+      expect(tags[0].tag_name).to eq('return')
+      expect(tags[0].text).to eq('')
+      expect(tags[0].types).to eq(['Any'])
     end
   end
 end

@@ -134,6 +134,7 @@ module PuppetStrings::Yard::Parsers::Puppet
   # Implements the Puppet function statement.
   class FunctionStatement < ParameterizedStatement
     attr_reader :name
+    attr_reader :type
 
     # Initializes the Puppet function statement.
     # @param [Puppet::Pops::Model::FunctionDefinition] object The model object for the function statement.
@@ -141,6 +142,13 @@ module PuppetStrings::Yard::Parsers::Puppet
     def initialize(object, file)
       super(object, file)
       @name = object.name
+      if object.respond_to? :return_type
+        type = object.return_type
+        if type
+          adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(type)
+          @type = adapter.extract_text.gsub('>> ', '')
+        end
+      end
     end
   end
 end

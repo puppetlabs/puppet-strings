@@ -168,4 +168,42 @@ SOURCE
       expect(statement.parameters[2].value).to eq('hi')
     end
   end
+
+  describe 'parsing puppet functions with return type in defintion', if: TEST_FUNCTION_RETURN_TYPE do
+      let(:source) { <<SOURCE
+  # A simple foo function.
+  # @return Returns a string
+  function foo() >> String {
+    notice world
+  }
+SOURCE
+      }
+
+    it 'should parse the puppet function statement' do
+      subject.parse
+      expect(subject.enumerator.size).to eq(1)
+      statement = subject.enumerator.first
+      expect(statement).to be_a(PuppetStrings::Yard::Parsers::Puppet::FunctionStatement)
+      expect(statement.type).to eq('String')
+    end
+  end
+
+  describe 'parsing puppet functions with complex return types in defintion', if: TEST_FUNCTION_RETURN_TYPE do
+      let(:source) { <<SOURCE
+  # A simple foo function.
+  # @return Returns a struct with a hash including one key which must be an integer between 1 and 10.
+  function foo() >> Struct[{'a' => Integer[1, 10]}] {
+    notice world
+  }
+SOURCE
+      }
+
+    it 'should parse the puppet function statement' do
+      subject.parse
+      expect(subject.enumerator.size).to eq(1)
+      statement = subject.enumerator.first
+      expect(statement).to be_a(PuppetStrings::Yard::Parsers::Puppet::FunctionStatement)
+      expect(statement.type).to eq("Struct\[{'a' => Integer[1, 10]}\]")
+    end
+  end
 end

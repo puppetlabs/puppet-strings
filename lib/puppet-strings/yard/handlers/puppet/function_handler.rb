@@ -20,7 +20,7 @@ class PuppetStrings::Yard::Handlers::Puppet::FunctionHandler < PuppetStrings::Ya
     set_parameter_types(object)
 
     # Add a return tag
-    add_return_tag(object)
+    add_return_tag(object, statement.type)
 
     # Set the parameters on the object
     object.parameters = statement.parameters.map { |p| [p.name, p.value] }
@@ -30,13 +30,18 @@ class PuppetStrings::Yard::Handlers::Puppet::FunctionHandler < PuppetStrings::Ya
   end
 
   private
-  def add_return_tag(object)
+  def add_return_tag(object, type=nil)
     tag = object.tag(:return)
     if tag
-      tag.types = ['Any'] unless tag.types
+      if (type && tag.types) && (type != tag.types)
+        log.warn "Documented return type does not match return type in function definition near #{statement.file}:#{statement.line}."
+      end
+
+      tag.types = type ? [type] : tag.types || ['Any']
       return
     end
     log.warn "Missing @return tag near #{statement.file}:#{statement.line}."
-    object.add_tag YARD::Tags::Tag.new(:return, '', 'Any')
+    type = type || 'Any'
+    object.add_tag YARD::Tags::Tag.new(:return, '', type)
   end
 end
