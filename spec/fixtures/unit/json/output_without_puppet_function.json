@@ -84,7 +84,7 @@
     {
       "name": "database",
       "file": "(stdin)",
-      "line": 44,
+      "line": 46,
       "docstring": {
         "text": "An example database server resource type."
       },
@@ -154,7 +154,7 @@
       "name": "linux",
       "type_name": "database",
       "file": "(stdin)",
-      "line": 33,
+      "line": 35,
       "docstring": {
         "text": "An example provider on Linux."
       },
@@ -310,7 +310,7 @@
           }
         ]
       },
-      "source": "Puppet::Functions.create_function(:func4x) do\n  # The first overload.\n  # @param param1 The first parameter.\n  # @param param2 The second parameter.\n  # @param param3 The third parameter.\n  # @return [Undef] Returns nothing.\n  dispatch :foo do\n    param          'Integer',       :param1\n    param          'Any',           :param2\n    optional_param 'Array[String]', :param3\n  end\n\n  # The second overload.\n  # @param param The first parameter.\n  # @param block The block parameter.\n  # @return [String] Returns a string.\n  dispatch :other do\n    param 'Boolean', :param\n    block_param\n  end\nend"
+      "source": "Puppet::Functions.create_function(:func4x) do\n  # The first overload.\n  # @param param1 The first parameter.\n  # @param param2 The second parameter.\n  # @param param3 The third parameter.\n  # @return Returns nothing.\n  dispatch :foo do\n    param          'Integer',       :param1\n    param          'Any',           :param2\n    optional_param 'Array[String]', :param3\n    return_type 'Undef'\n  end\n\n  # The second overload.\n  # @param param The first parameter.\n  # @param block The block parameter.\n  # @return Returns a string.\n  dispatch :other do\n    param 'Boolean', :param\n    block_param\n    return_type 'String'\n  end\nend"
     }
   ]
 }

@@ -15,6 +15,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     block_param
     required_block_param
     optional_block_param
+    return_type
   ).freeze
 
   namespace_only
@@ -132,6 +133,11 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
 
       method_name = child.method_name.source
       next unless DISPATCH_METHOD_NAMES.include?(method_name)
+
+      if method_name == 'return_type'
+        overload_tag.tag(:return).types = [node_as_string(child.parameters[0])]
+        next
+      end
 
       # Check for block
       if method_name.include?('block')
