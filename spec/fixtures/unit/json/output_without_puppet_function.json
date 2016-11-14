@@ -84,7 +84,7 @@
     {
       "name": "database",
       "file": "(stdin)",
-      "line": 45,
+      "line": 54,
       "docstring": {
         "text": "An example database server resource type."
       },
@@ -154,7 +154,7 @@
       "name": "linux",
       "type_name": "database",
       "file": "(stdin)",
-      "line": 34,
+      "line": 43,
       "docstring": {
         "text": "An example provider on Linux."
       },
@@ -228,7 +228,6 @@
           }
         }
       ],
-      "signature": "func3x(String $first, Any $second)",
       "docstring": {
         "text": "An example 3.x function.",
         "tags": [
