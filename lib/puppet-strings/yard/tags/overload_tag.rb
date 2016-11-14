@@ -21,7 +21,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
     tags = self.tags(:param)
     args = @parameters.map do |parameter|
       name, default = parameter
-      tag = tags.find { |tag| tag.name == name } if tags
+      tag = tags.find { |t| t.name == name } if tags
       type = tag && tag.types ? "#{tag.type} " : 'Any '
       prefix = "#{name[0]}" if name.start_with?('*', '&')
       name = name[1..-1] if prefix

@@ -114,23 +114,38 @@ Puppet Functions
 
 Each entry in the `puppet_functions` list is an object with the following attributes:
 
-| Attribute Key | Description                                          |
-| ------------- | ---------------------------------------------------- |
-| name          | The name of the function.                            |
-| file          | The file defining the provider.                      |
-| line          | The line where the provider is defined.              |
-| type          | The function type (e.g. ruby3x, ruby4x, puppet).     |
-| signature     | The Puppet signature of the function (no overloads). |
-| docstring     | The *DocString* object for the function (see below). |
-| defaults      | The map of parameter names to default values.        |
-| source        | The source code for the function.                    |
+| Attribute Key | Description                                                                   |
+| ------------- | ----------------------------------------------------------------------------- |
+| name          | The name of the function.                                                     |
+| file          | The file defining the provider.                                               |
+| line          | The line where the provider is defined.                                       |
+| type          | The function type (e.g. ruby3x, ruby4x, puppet).                              |
+| signatures    | A list of Puppet signatures of the function, including overloads if present.  |
+| docstring     | The *DocString* object for the function (see below).                          |
+| defaults      | The map of parameter names to default values.                                 |
+| source        | The source code for the function.                                             |
+
+Signature Objects
+-----------------
+
+The `signatures` key is a function-specific list containing an object for each signature of a
+function. Each object includes the `signature` itself, as well as each of its `param` and `return`
+tags. Puppet 4.x functions with overloads will contain multiple signatures, while other function
+types will contain only one.
+
+Each signature is represented as an object with the following attributes:
+
+| Attribute Key | Description                                                                                        |
+| ------------- | -------------------------------------------------------------------------------------------------- |
+| signature     | The signature of the function.                                                                     |
+| docstring     | The *DocString* object describing the signature, which includes `text`, `param` and `return` tags. |
 
 DocString Objects
 -----------------
 
 For the above types, their docstrings are represented as an object with the following attributes:
 
-| Attribute Key | Description                                       DocString  |
+| Attribute Key | Description                                         |
 | ------------- | --------------------------------------------------- |
 | text          | The textual part of the DocString.                  |
 | tags          | The array of tag objects, if any are present.       |
@@ -356,7 +371,47 @@ An example JSON document describing a Puppet class, defined type, resource type,
       "file": "site.pp",
       "line": 20,
       "type": "puppet",
-      "signature": "func(Integer $param1, Any $param2, String $param3 = hi)",
+      "signatures": [
+        {
+          "signature": "func(Integer $param1, Any $param2, String $param3 = hi)",
+          "docstring": {
+            "text": "A simple function.",
+            "tags": [
+              {
+                "tag_name": "param",
+                "text": "First param.",
+                "types": [
+                  "Integer"
+                ],
+                "name": "param1"
+              },
+              {
+                "tag_name": "param",
+                "text": "Second param.",
+                "types": [
+                  "Any"
+                ],
+                "name": "param2"
+              },
+              {
+                "tag_name": "param",
+                "text": "Third param.",
+                "types": [
+                  "String"
+                ],
+                "name": "param3"
+              },
+              {
+                "tag_name": "return",
+                "text": "Returns nothing.",
+                "types": [
+                  "Undef"
+                ]
+              }
+            ]
+          }
+        }
+      ],
       "docstring": {
         "text": "A simple function.",
         "tags": [
@@ -403,7 +458,39 @@ An example JSON document describing a Puppet class, defined type, resource type,
       "file": "func3x.rb",
       "line": 1,
       "type": "ruby3x",
-      "signature": "func3x(String $first, Any $second)",
+      "signatures": [
+        {
+          "signature": "func3x(String $first, Any $second)",
+          "docstring": {
+            "text": "An example 3.x function.",
+            "tags": [
+              {
+                "tag_name": "param",
+                "text": "The first parameter.",
+                "types": [
+                  "String"
+                ],
+                "name": "first"
+              },
+              {
+                "tag_name": "param",
+                "text": "The second parameter.",
+                "types": [
+                  "Any"
+                ],
+                "name": "second"
+              },
+              {
+                "tag_name": "return",
+                "text": "Returns nothing.",
+                "types": [
+                  "Undef"
+                ]
+              }
+            ]
+          }
+        }
+      ],
       "docstring": {
         "text": "An example 3.x function.",
         "tags": [
@@ -439,6 +526,78 @@ An example JSON document describing a Puppet class, defined type, resource type,
       "file": "func4x.rb",
       "line": 11,
       "type": "ruby4x",
+      "signatures": [
+        {
+          "signature": "func4x(Integer $param1, Any $param2, Optional[Array[String]] $param3)",
+          "docstring": {
+            "text": "The first overload.",
+            "tags": [
+              {
+                "tag_name": "param",
+                "text": "The first parameter.",
+                "types": [
+                  "Integer"
+                ],
+                "name": "param1"
+              },
+              {
+                "tag_name": "param",
+                "text": "The second parameter.",
+                "types": [
+                  "Any"
+                ],
+                "name": "param2"
+              },
+              {
+                "tag_name": "param",
+                "text": "The third parameter.",
+                "types": [
+                  "Optional[Array[String]]"
+                ],
+                "name": "param3"
+              },
+              {
+                "tag_name": "return",
+                "text": "Returns nothing.",
+                "types": [
+                  "Undef"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "signature": "func4x(Boolean $param, Callable &$block)",
+          "docstring": {
+            "text": "The second overload.",
+            "tags": [
+              {
+                "tag_name": "param",
+                "text": "The first parameter.",
+                "types": [
+                  "Boolean"
+                ],
+                "name": "param"
+              },
+              {
+                "tag_name": "param",
+                "text": "The block parameter.",
+                "types": [
+                  "Callable"
+                ],
+                "name": "&block"
+              },
+              {
+                "tag_name": "return",
+                "text": "Returns a string.",
+                "types": [
+                  "String"
+                ]
+              }
+            ]
+          }
+        }
+      ],
       "docstring": {
         "text": "An example 4.x function.",
         "tags": [

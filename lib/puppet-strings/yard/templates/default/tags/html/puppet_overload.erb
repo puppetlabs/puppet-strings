@@ -1,5 +1,5 @@
 <% if object.has_tag?(:overload) && object.tags(:overload).any? {|o| !o.docstring.blank? } %>
-  <p class="tag_title">Overloads:</p>
+  <p class="tag_title">Signatures:</p>
   <ul class="overload">
     <% object.tags(:overload).each_with_index do |overload, index| %>
       <% next if overload.docstring.blank? %>

@@ -64,7 +64,7 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
     tags = self.tags(:param)
     args = @parameters.map do |parameter|
       name, default = parameter
-      tag = tags.find { |tag| tag.name == name } if tags
+      tag = tags.find { |t| t.name == name } if tags
       type = tag && tag.types ? "#{tag.type} " : 'Any '
       prefix = "#{name[0]}" if name.start_with?('*', '&')
       name = name[1..-1] if prefix
@@ -78,12 +78,22 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
   # @return [Hash] Returns a hash representation of the code object.
   def to_hash
     hash = {}
+
     hash[:name] = name
     hash[:file] = file
     hash[:line] = line
     hash[:type] = @function_type.to_s
-    signature = self.signature
-    hash[:signature] = signature unless signature.empty?
+    hash[:signatures] = []
+    
+    if self.has_tag? :overload
+      # loop over overloads and append onto the signatures array
+      self.tags(:overload).each do |o|
+        hash[:signatures] << { :signature => o.signature, :docstring => PuppetStrings::Json.docstring_to_hash(o.docstring, [:param, :return]) }
+      end
+    else
+      hash[:signatures] << { :signature => self.signature, :docstring =>  PuppetStrings::Json.docstring_to_hash(docstring, [:param, :return]) }
+    end
+
     hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring)
     defaults = Hash[*parameters.select{ |p| !p[1].nil? }.flatten]
     hash[:defaults] = defaults unless defaults.empty?
