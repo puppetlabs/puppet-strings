@@ -15,7 +15,21 @@ expected = {
     "file" => "/etc/puppet/modules/test/lib/puppet/parser/functions/function3x.rb",
     "line" => 1,
     "type" => "ruby3x",
-    "signature" => "function3x()",
+    "signatures" => [
+      {
+        "signature" =>"function3x()",
+        "docstring" => {
+          "text" => "This is the function documentation for `function3x`",
+          "tags" => [
+            {
+              "tag_name"=>"return",
+              "text"=>"",
+              "types"=>["Any"]
+            }
+          ]
+        }
+      },
+    ],
     "docstring" => {
       "text" => "This is the function documentation for `function3x`",
       "tags" => ["tag_name" => "return", "text" => "", "types" => ["Any"]]},
