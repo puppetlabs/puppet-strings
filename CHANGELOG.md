@@ -1,3 +1,26 @@
+##2016-11-28 - Release 1.0.0
+
+###Summary
+
+This release fixes up minor bugs from the 0.99.0 release and modifies the JSON schema for Puppet functions.
+
+All related tickets can be found under the [PDOC](https://tickets.puppetlabs.com/browse/PDOC) JIRA project with the fix version of [1.0.0](https://tickets.puppetlabs.com/issues/?filter=23607).
+
+###Features
+- The JSON schema for Puppet functions has been altered to include a new 'signatures' top-level key **(PDOC-125)**
+  - Includes information about all function signatures (overloads). Existing overload key format has been preserved.
+- Reworked README for enhanced clarity **(PDOC-133)**
+
+###BugFixes
+- Fixed an issue where the search box in the code navigator overlapped list items below it **(PDOC-93)**
+- Strings can now handle multiple `defaultfor` calls in Puppet providers **(PDOC-95)**
+- Fixed an issue preventing the generated \_index.html file from being uploaded to GitHub pages via the gh_pages task **(PDOC-120)**
+- Fixed several issues with String's handling of Puppet 3.x and 4.x function return types **(PDOC-135)**, **(PDOC-136)**
+- Fixed an issue where String's didn't properly parse overloads if no summary description was provided **(PDOC-129)**
+- Strings now correctly handles Puppet 3.x functions when the `newfunction` call is on a newline **(PDOC-122)**
+- Fixed an issue where certain Ruby string constructs were incompletely stripped from some docstrings **(PDOC-126)**
+- Hanging indents from type feature descriptions are now properly stripped **(PDOC-127)**
+
 ##2016-10-10 - Release 0.99.0
 
 ###Summary
