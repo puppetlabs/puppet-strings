@@ -49,13 +49,20 @@ For Puppet 3.x:
 $ puppet resource package yard provider=gem
 ```
 
-For Puppet Enterprise 3.8:
+For Puppet Enterprise 3.8 (Linux):
 
 ```
 GEM_HOME=/opt/puppet/lib/ruby/gems/1.9.1 puppet resource package yard provider=gem
 ```
 
-### 2. Puppet Enterprise 3.8 only: Install the redcarpet gem
+For Puppet Enterprise 3.8 (Windows):
+
+```
+$env:GEM_HOME = "C:\Program Files\Puppet Labs\Puppet Enterprise\sys\ruby\lib\ruby\gems\2.0.0"
+puppet resource package yard provider=gem
+```
+
+### 2. Puppet Enterprise 3.8 in Linux only: Install the redcarpet gem
 
 ```
 GEM_HOME=/opt/puppet/lib/ruby/gems/1.9.1 puppet resource package redcarpet provider=gem
@@ -77,10 +84,17 @@ For Puppet 3.x:
 $ puppet resource package puppet-strings provider=gem
 ```
 
-For Puppet Enterprise 3.8:
+For Puppet Enterprise 3.8 (Linux):
 
 ```
 GEM_HOME=/opt/puppet/lib/ruby/gems/1.9.1 puppet resource package puppet-strings provider=gem
+```
+
+For Puppet Enterprise 3.8 (Windows)
+
+```
+$env:GEM_HOME = "C:\Program Files\Puppet Labs\Puppet Enterprise\sys\ruby\lib\ruby\gems\2.0.0"
+puppet resource package puppet-strings provider=gem
 ```
 
 ### 4. Optional: Set YARD options for Strings
