@@ -4,6 +4,14 @@ AllCops:
     - '**/*.erb'
     - 'lib/puppet-strings/yard/templates/**/*'
 
+# DISABLED - not useful
+Bundler/OrderedGems:
+  Enabled: false
+
+# DISABLED - Doesn't understand conditionals that result in different versions of a gem.
+Bundler/DuplicatedGem:
+  Enabled: false
+
 Lint/ConditionPosition:
   Enabled: true
 
