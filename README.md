@@ -213,8 +213,8 @@ The Strings elements appearing in the above comment block are:
 Puppet 4 is a typed language, so Puppet Strings automatically documents the parameter types from code. With Puppet 3, however, include the parameter type with the `@param` tag:
 
 ```
-# @param [String] first The first parameter for this class.
-# @param [Integer] second The second parameter for this class.
+# @param first [String] The first parameter for this class.
+# @param second [Integer] The second parameter for this class.
 ```
 
 Note that if you document a parameter's type, and that parameter already has a Puppet type specifier, Strings emits a warning.
@@ -346,8 +346,8 @@ To document a function in the Puppet 3 API, use the `doc` option to `newfunction
 ```ruby
 Puppet::Parser::Functions.newfunction(:example, doc: <<-DOC
 Documentation for an example 3.x function.
-@param [String] param1 The first parameter.
-@param [Integer] param2 The second parameter.
+@param param1 [String] The first parameter.
+@param param2 [Integer] The second parameter.
 @return [Undef]
 @example Calling the function.
   example('hi', 10)
