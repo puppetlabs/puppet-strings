@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "file_format": "This MAINTAINERS file format is described at http://pup.pt/maintainers",
+  "issues": "https://tickets.puppetlabs.com/browse/PDOC",
+  "people": [
+    {
+      "github": "whopper",
+      "email": "whopper@puppet.com",
+      "name": "Will Hopper"
+    },
+    {
+      "github": "scotje",
+      "email": "jesse@puppet.com",
+      "name": "Jesse Scott"
+    }
+  ]
+}
