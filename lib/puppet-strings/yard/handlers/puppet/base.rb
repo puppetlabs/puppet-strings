@@ -31,8 +31,8 @@ class PuppetStrings::Yard::Handlers::Puppet::Base < YARD::Handlers::Base
         next
       end
 
-      # Warn if the parameter is typed and the tag also has a type
-      log.warn "The @param tag for parameter '#{parameter.name}' should not contain a type specification near #{statement.file}:#{statement.line}: ignoring in favor of parameter type information." if parameter.type && tag.types && !tag.types.empty?
+      # Warn if the parameter type and tag types don't match
+      log.warn "The type of the @param tag for parameter '#{parameter.name}' does not match the parameter type specification near #{statement.file}:#{statement.line}: ignoring in favor of parameter type information." if parameter.type && tag.types && !tag.types.empty? && parameter.type != tag.types[0]
 
       if parameter.type
         tag.types = [parameter.type]

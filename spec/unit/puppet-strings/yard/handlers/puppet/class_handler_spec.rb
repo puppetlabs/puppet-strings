@@ -111,7 +111,30 @@ SOURCE
     end
   end
 
-  describe 'parsing a class with a typed parameter that also has a @param tag type' do
+  describe 'parsing a class with a typed parameter that also has a @param tag type which matches' do
+    let(:source) { <<-SOURCE
+# A simple foo class.
+# @param [Integer] param1 First param.
+# @param param2 Second param.
+# @param param3 Third param.
+class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+  file { '/tmp/foo':
+    ensure => present
+  }
+}
+SOURCE
+    }
+
+    it 'should respect the type that was documented' do
+      expect{ subject }.to output('').to_stdout_from_any_process
+      expect(subject.size).to eq(1)
+      tags = subject.first.tags(:param)
+      expect(tags.size).to eq(3)
+      expect(tags[0].types).to eq(['Integer'])
+    end
+  end
+
+  describe 'parsing a class with a typed parameter that also has a @param tag type which does not match' do
     let(:source) { <<-SOURCE
 # A simple foo class.
 # @param [Boolean] param1 First param.
@@ -126,7 +149,7 @@ SOURCE
     }
 
     it 'should output a warning' do
-      expect{ subject }.to output(/\[warn\]: The @param tag for parameter 'param1' should not contain a type specification near \(stdin\):5: ignoring in favor of parameter type information\./).to_stdout_from_any_process
+      expect{ subject }.to output(/\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):5: ignoring in favor of parameter type information./).to_stdout_from_any_process
     end
   end
 
