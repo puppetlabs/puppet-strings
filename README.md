@@ -210,14 +210,14 @@ The Strings elements appearing in the above comment block are:
 * The `include` statement, which adds the usage example code.
 * Two `@param` tags, with the name of the parameter first, followed by a string describing the parameter's purpose.
 
-Puppet 4 is a typed language, so Puppet Strings automatically documents the parameter types from code. With Puppet 3, however, include the parameter type with the `@param` tag:
+Puppet 4 is a typed language, so Puppet Strings automatically documents the parameter types from code. You may optionally include a parameter type in the `@param` tag. Strings will emit a warning and ignore the documented type should it differ from the actual type.
+
+With Puppet 3 code, you must always include the parameter type with the `@param` tag:
 
 ```
 # @param first [String] The first parameter for this class.
 # @param second [Integer] The second parameter for this class.
 ```
-
-Note that if you document a parameter's type, and that parameter already has a Puppet type specifier, Strings emits a warning.
 
 Defined types are documented in exactly the same way as classes:
 
