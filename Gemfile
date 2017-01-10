@@ -4,7 +4,7 @@ gemspec
 
 gem 'rgen'
 gem 'redcarpet'
-gem 'yard', '~> 0.9.5'
+gem 'yard', '0.9.5'
 
 if ENV['PUPPET_GEM_VERSION']
   gem 'puppet', ENV['PUPPET_GEM_VERSION'], :require => false
