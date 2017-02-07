@@ -23,15 +23,15 @@ task :acceptance do
 
   install_type = 'aio'
   target = ENV['platform']
-  unless target =~ /type=/
-    puts "INFO: adding 'type=#{install_type}' to host config"
-    target += "{type=#{install_type}}"
-  end
-
   if ! target
     STDERR.puts 'TEST_TARGET environment variable is not set'
     STDERR.puts 'setting to default value of "centos7-64ma".'
     target = "centos7-64ma{type=#{install_type}}"
+  end
+
+  unless target =~ /type=/
+    puts "INFO: adding 'type=#{install_type}' to host config"
+    target += "{type=#{install_type}}"
   end
 
   cli = BeakerHostGenerator::CLI.new([target])
