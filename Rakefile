@@ -21,12 +21,17 @@ end
 task :acceptance do
   require 'beaker-hostgenerator'
 
+  install_type = 'aio'
   target = ENV['platform']
+  unless target =~ /type=/
+    puts "INFO: adding 'type=#{install_type}' to host config"
+    target += "{type=#{install_type}}"
+  end
+
   if ! target
     STDERR.puts 'TEST_TARGET environment variable is not set'
     STDERR.puts 'setting to default value of "centos7-64ma".'
-    target = 'centos7-64ma'
-    ENV['platform'] = target
+    target = "centos7-64ma{type=#{install_type}}"
   end
 
   cli = BeakerHostGenerator::CLI.new([target])
@@ -36,10 +41,15 @@ task :acceptance do
   File.open(nodeset, 'w') do |fh|
     fh.print(cli.execute)
   end
+  puts "nodeset file:"
   puts nodeset
   sh 'gem build puppet-strings.gemspec'
   sh 'puppet module build spec/fixtures/acceptance/modules/test'
-  sh "BEAKER_set=#{ENV['platform']} rspec spec/acceptance/*.rb"
+  if ENV['BEAKER_keyfile']
+    sh "BEAKER_set=#{target} rspec spec/acceptance/*.rb"
+  else
+    sh "BEAKER_keyfile=$HOME/.ssh/id_rsa-acceptance BEAKER_set=#{target} rspec spec/acceptance/*.rb"
+  end
 end
 
 task(:rubocop) do
