@@ -14,8 +14,11 @@ namespace :strings do
       markup: args[:markup] || 'markdown',
     }
 
-    options[:json] = args[:json] if args.key? :json
-    options[:yard_args] = args[:yard_args].split if args.key? :yard_args
+	# rubocop:disable Style/PreferredHashMethods
+	# `args` is a Rake::TaskArguments and has no key? method
+    options[:json] = args[:json] if args.has_key? :json
+    options[:yard_args] = args[:yard_args].split if args.has_key? :yard_args
+	# rubocop:enable Style/PreferredHashMethods
 
     PuppetStrings.generate(patterns, options)
   end
