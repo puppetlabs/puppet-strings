@@ -190,6 +190,8 @@ To document Puppet classes and defined types, use a series of comments to create
 #
 # This is an example of how to document a Puppet class
 #
+# @summary A short summary of the purpose of the class.
+#
 # @example Declaring the class
 #   include example
 #
@@ -206,6 +208,7 @@ class example_class(
 The Strings elements appearing in the above comment block are:
 
 * Three comment lines, not prefixed with tags, give the class description.
+* The `@summary` YARD tag, which can be used for a short description of the class (fewer than 140 characters recommended).
 * The `@example` YARD tag, immediately followed by an optional title.
 * The `include` statement, which adds the usage example code.
 * Two `@param` tags, with the name of the parameter first, followed by a string describing the parameter's purpose.
