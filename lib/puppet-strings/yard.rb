@@ -24,6 +24,9 @@ module PuppetStrings::Yard
     PuppetStrings::Yard::Tags::ParameterDirective.register!
     PuppetStrings::Yard::Tags::PropertyDirective.register!
 
+    # Register the summary tag
+    PuppetStrings::Yard::Tags::SummaryTag.register!
+
     # Ignore documentation on Puppet DSL calls
     # This prevents the YARD DSL parser from emitting warnings for Puppet's Ruby DSL
     YARD::Handlers::Ruby::DSLHandlerMethods::IGNORE_METHODS['create_function'] = true

@@ -1,3 +1,4 @@
+require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
 require 'puppet-strings/yard/util'
@@ -61,6 +62,9 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
 
     # Mark the function as public if it doesn't already have an api tag
     object.add_tag YARD::Tags::Tag.new(:api, 'public') unless object.has_tag? :api
+
+    # Warn if a summary longer than 140 characters was provided
+    PuppetStrings::Yard::Handlers::Helpers.validate_summary_tag(object) if object.has_tag? :summary
   end
 
   private

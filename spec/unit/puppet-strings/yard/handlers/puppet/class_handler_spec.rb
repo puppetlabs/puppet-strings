@@ -175,4 +175,43 @@ SOURCE
       expect(tags[1].types).to eq(['Boolean'])
     end
   end
+
+  describe 'parsing a class with a summary' do
+    context 'when the summary has fewer than 140 characters' do
+      let(:source) { <<-SOURCE
+  # A simple foo class.
+  # @summary A short summary.
+  class foo() {
+    file { '/tmp/foo':
+      ensure => present
+    }
+  }
+  SOURCE
+      }
+
+      it 'should parse the summary' do
+        expect{ subject }.to output('').to_stdout_from_any_process
+        expect(subject.size).to eq(1)
+        summary = subject.first.tags(:summary)
+        expect(summary.first.text).to eq('A short summary.')
+      end
+    end
+
+    context 'when the summary has more than 140 characters' do
+      let(:source) { <<-SOURCE
+  # A simple foo class.
+  # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
+  class foo() {
+    file { '/tmp/foo':
+      ensure => present
+    }
+  }
+  SOURCE
+      }
+
+      it 'should log a warning' do
+        expect{ subject }.to output(/\[warn\]: The length of the summary for puppet_class 'foo' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
+      end
+    end
+  end
 end

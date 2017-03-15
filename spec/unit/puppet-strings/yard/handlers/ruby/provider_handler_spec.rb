@@ -105,4 +105,35 @@ SOURCE
       expect(object.commands).to eq({'foo' => '/usr/bin/foo'})
     end
   end
+
+  describe 'parsing a provider with a summary' do
+    context 'when the summary has fewer than 140 characters' do
+      let(:source) { <<-SOURCE
+Puppet::Type.type(:custom).provide :linux do
+  @doc = '@summary A short summary.'
+end
+SOURCE
+      }
+
+      it 'should parse the summary' do
+        expect{ subject }.to output('').to_stdout_from_any_process
+        expect(subject.size).to eq(1)
+        summary = subject.first.tags(:summary)
+        expect(summary.first.text).to eq('A short summary.')
+      end
+    end
+
+    context 'when the summary has more than 140 characters' do
+      let(:source) { <<-SOURCE
+Puppet::Type.type(:custom).provide :linux do
+  @doc = '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!'
+end
+SOURCE
+      }
+
+      it 'should log a warning' do
+        expect{ subject }.to output(/\[warn\]: The length of the summary for puppet_provider 'linux' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
+      end
+    end
+  end
 end

@@ -1,3 +1,4 @@
+require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/puppet/base'
 require 'puppet-strings/yard/parsers'
 require 'puppet-strings/yard/code_objects'
@@ -19,5 +20,8 @@ class PuppetStrings::Yard::Handlers::Puppet::ClassHandler < PuppetStrings::Yard:
 
     # Mark the class as public if it doesn't already have an api tag
     object.add_tag YARD::Tags::Tag.new(:api, 'public') unless object.has_tag? :api
+
+    # Warn if a summary longer than 140 characters was provided
+    PuppetStrings::Yard::Handlers::Helpers.validate_summary_tag(object) if object.has_tag? :summary
   end
 end
