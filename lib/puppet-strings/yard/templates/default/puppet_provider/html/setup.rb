@@ -1,7 +1,7 @@
 # Initializes the template.
 # @return [void]
 def init
-  sections :header, :box_info, :overview, T('tags'), :features, :confines, :defaults, :commands
+  sections :header, :box_info, :summary, :overview, T('tags'), :features, :confines, :defaults, :commands
 end
 
 # Renders the confines section.
