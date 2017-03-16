@@ -34,6 +34,6 @@ group :development do
   end
 end
 
-gem 'json',      '<= 1.8'   if RUBY_VERSION < '2.0.0'
-gem 'json_pure', '<= 2.0.1' if RUBY_VERSION < '2.0.0'
-gem 'rubocop'               if RUBY_VERSION >= '2.0.0'
+gem 'json',      '<= 1.8'    if RUBY_VERSION < '2.0.0'
+gem 'json_pure', '<= 2.0.1'  if RUBY_VERSION < '2.0.0'
+gem 'rubocop',   '<= 0.47.0' if RUBY_VERSION >= '2.0.0'
