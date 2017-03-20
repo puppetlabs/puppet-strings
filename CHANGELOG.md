@@ -1,3 +1,15 @@
+##2017-03-20 - Release 1.1.0
+
+###Summary
+
+This release adds a new `summary` tag which can be used to add a short description to classes, functions, types, and providers. In addition, `@param` tags can now include type information in Puppet 4 code without warnings being issued.
+
+All related tickets can be found under the [PDOC](https://tickets.puppetlabs.com/browse/PDOC) JIRA project with the fix version of [1.1.0](https://tickets.puppetlabs.com/issues/?filter=25603).
+
+###Features
+- The `summary` tag can be added to any code that puppet-strings supports. The recommended length limit for a summary is 140 characters. Warnings will be issued for strings longer than this limit.
+- Puppet 4 parameter types can now be explicitly documented. Previously, this was not allowed because Puppet 4 parameter types can be automatically determined without extra documentation. However, users may desire to do so anyway for consistency. Strings will emit a warning if the documented type does not match the actual type. In such an event, the incorrect documented type will be ignored in favor of the real one.
+
 ##2016-11-28 - Release 1.0.0
 
 ###Summary
