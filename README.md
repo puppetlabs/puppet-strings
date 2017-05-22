@@ -120,7 +120,7 @@ To generate documentation for a Puppet module, run Strings from that module's di
 To generate documentation for specific files in a module, run the `puppet strings generate` subcommand and specify the files. 
 
 ```
-puppet strings generate first.pp second.pp`
+puppet strings generate first.pp second.pp
 ```
 
 To generate documentation for specific directories, run the `puppet strings generate` command and specify the directories:
