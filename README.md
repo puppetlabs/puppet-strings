@@ -438,19 +438,19 @@ The `strings:generate` and `strings:gh_pages:update` tasks are available in `pup
 
 First, update your Gemfile and your Rakefile.:
 
-1. Add the following to your Gemfile to use `puppet-strings`:
+1.  Add the following to your Gemfile to use `puppet-strings`:
 
-   ```ruby
-gem 'puppet-strings'
-   ```
+    ```ruby
+    gem 'puppet-strings'
+    ```
 
-2. Add the following to your `Rakefile` to use the `puppet-strings` tasks:
+2.  Add the following to your `Rakefile` to use the `puppet-strings` tasks:
 
-   ```ruby
-require 'puppet-strings/tasks'
-   ```
+    ```ruby
+    require 'puppet-strings/tasks'
+    ```
    
-   Adding this `require` automatically creates the Rake tasks below.
+    Adding this `require` automatically creates the Rake tasks below.
 
 #### Generate documentation with additional options
 
