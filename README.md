@@ -37,7 +37,7 @@ Note that if you are running PE 3.8, you'll have a few extra steps to install pu
 
 The easiest way to install the `yard` gem is with Puppet itself:
 
-For Puppet 4.x and Puppet Enterprise 2015.2 and later:
+For Puppet >= 4 and Puppet Enterprise 2015.2 and later:
 
 ```
 $ puppet resource package yard provider=puppet_gem
