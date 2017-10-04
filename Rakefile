@@ -23,6 +23,7 @@ task :acceptance do
 
   install_type = 'aio'
   target = ENV['platform']
+  abs = if ENV['BEAKER_ABS'] then 'abs' else 'vmpooler' end
   if ! target
     STDERR.puts 'TEST_TARGET environment variable is not set'
     STDERR.puts 'setting to default value of "centos7-64ma".'
@@ -34,7 +35,7 @@ task :acceptance do
     target += "{type=#{install_type}}"
   end
 
-  cli = BeakerHostGenerator::CLI.new([target])
+  cli = BeakerHostGenerator::CLI.new([target, '--hypervisor', abs])
   nodeset_dir = 'spec/acceptance/nodesets'
   nodeset = "#{nodeset_dir}/#{target}.yml"
   FileUtils.mkdir_p(nodeset_dir)
