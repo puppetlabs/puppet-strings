@@ -170,14 +170,14 @@ SOURCE
   end
 
   describe 'parsing puppet functions with return type in defintion', if: TEST_FUNCTION_RETURN_TYPE do
-      let(:source) { <<SOURCE
+    let(:source) { <<SOURCE
   # A simple foo function.
   # @return Returns a string
   function foo() >> String {
     notice world
   }
 SOURCE
-      }
+    }
 
     it 'should parse the puppet function statement' do
       subject.parse
@@ -189,14 +189,14 @@ SOURCE
   end
 
   describe 'parsing puppet functions with complex return types in defintion', if: TEST_FUNCTION_RETURN_TYPE do
-      let(:source) { <<SOURCE
+    let(:source) { <<SOURCE
   # A simple foo function.
   # @return Returns a struct with a hash including one key which must be an integer between 1 and 10.
   function foo() >> Struct[{'a' => Integer[1, 10]}] {
     notice world
   }
 SOURCE
-      }
+    }
 
     it 'should parse the puppet function statement' do
       subject.parse

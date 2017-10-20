@@ -83,12 +83,12 @@ Metrics/ModuleLength:
 Style/WhileUntilModifier:
   Enabled: false
 
-# DISABLED - the offender is just haskell envy
-Lint/AmbiguousRegexpLiteral:
+# DISABLED
+Security/Eval:
   Enabled: false
 
-# DISABLED
-Lint/Eval:
+# DISABLED - the offender is just haskell envy
+Lint/AmbiguousRegexpLiteral:
   Enabled: false
 
 # DISABLED
@@ -304,10 +304,10 @@ Style/IndentHash:
   Enabled: false
 
 Style/IndentationConsistency:
-  Enabled: false
+  Enabled: true
 
 Style/IndentationWidth:
-  Enabled: false
+  Enabled: true
 
 Style/EmptyLines:
   Enabled: false

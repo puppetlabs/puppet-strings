@@ -33,3 +33,8 @@ Gemfile.lock
 
 ## YARD output
 /doc/
+
+## Acceptance test artifacts
+/log/
+/*.gem
+/spec/acceptance/nodesets/
