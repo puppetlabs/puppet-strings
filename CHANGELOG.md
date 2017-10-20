@@ -1,3 +1,15 @@
+## 2017-10-20 - Release 1.1.1
+
+### BugFixes
+- Remove timestamps from footer of generated HTML pages ([GeoffWilliams](https://github.com/GeoffWilliams))
+- Fix argument handling for `rake strings::generate` ([hashar](https://github.com/hashar))
+
+### Other
+- Fixed Markdown formatting issues in CHANGELOG ([maju6406](https://github.com/maju6406))
+- Fixed typo in README ([hfm](https://github.com/hfm))
+- Fixed Markdown formatting issues in README ([gguillotte](https://github.com/gguillotte))
+- Update Travis CI configurations for Ruby and Puppet versions ([ghoneycutt](https://github.com/ghoneycutt))
+
 ## 2017-03-20 - Release 1.1.0
 
 ### Summary
