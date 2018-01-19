@@ -401,8 +401,6 @@ function example(string $name) {
 
 ### Available Strings tags
 
-The most commonly used tags for Strings are:
-
 * `@example`: Shows an example snippet of code for an object. The first line is an optional title. See above for more about how to [include examples in documentation](#including-examples-in-documentation).
 * `@param`: Documents a parameter with a given name, type and optional description.
 * `@!puppet.type.param`: Documents dynamic type parameters. See [Documenting resource types and providers](#documenting-resource-types-and-providers) above.
