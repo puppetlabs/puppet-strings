@@ -418,17 +418,14 @@ function example(string $name) {
 
 ### Available Strings tags
 
-The most commonly used tags for Strings are:
-
-* `@param`: Documents a parameter with a given name, type and optional description.
-* `@return`: Describes the return value (and type or types) of a method. You can list multiple return tags for a method if the method has distinct return cases. In this case, begin each case with "if".
 * `@example`: Shows an example snippet of code for an object. The first line is an optional title. See above for more about how to [include examples in documentation](#including-examples-in-documentation).
+* `@param`: Documents a parameter with a given name, type and optional description.
 * `@!puppet.type.param`: Documents dynamic type parameters. See [Documenting resource types and providers](#documenting-resource-types-and-providers) above.
 * `@!puppet.type.property`: Documents dynamic type properties. See [Documenting resource types and providers](#documenting-resource-types-and-providers) above.
-* `@since`: Lists the version in which the object was first added.
+* `@return`: Describes the return value (and type or types) of a method. You can list multiple return tags for a method if the method has distinct return cases. In this case, begin each case with "if".
 * `@see`: Adds "see also" references. Accepts URLs or other code objects with an optional description at the end. Note that the URL or object is automatically linked by YARD and does not need markup formatting.
-
-For a complete list of tags, see the [YARD Tags Overview](http://www.rubydoc.info/gems/yard/file/docs/Tags.md).
+* `@since`: Lists the version in which the object was first added.
+* `@summary`: A short description of the documented item.
 
 ### Rake tasks
 
