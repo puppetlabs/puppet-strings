@@ -7,11 +7,11 @@ Puppet::Face.define(:strings, '0.0.1') do
   action(:generate) do
     default
 
-    option '--emit-json-stdout' do
-      summary 'Print JSON representation of the documentation to stdout.'
+    option '--format OUTPUT_FORMAT' do
+      summary 'Designate output format, JSON or markdown.'
     end
-    option '--emit-json FILE' do
-      summary 'Write JSON representation of the documentation to the given file.'
+    option '--out PATH' do
+      summary 'Write selected format to PATH. If no path is designated, strings prints to STDOUT.'
     end
     option '--markup FORMAT' do
       summary "The markup format to use for docstring text (defaults to 'markdown')."
@@ -96,9 +96,14 @@ Puppet::Face.define(:strings, '0.0.1') do
     if options
       markup = options[:markup]
       generate_options[:markup] = markup if markup
-      json_file = options[:emit_json]
-      generate_options[:json] = json_file if json_file
-      generate_options[:json] = nil if options[:emit_json_stdout]
+      generate_options[:path] = options[:out] if options[:out]
+      generate_options[:stdout] = options[:stdout]
+      format = options[:format] || ""
+      if format.casecmp 'markdown'
+        generate_options[:markdown] = true
+      elsif format.casecmp 'json'
+        generate_options[:json] = true
+      end
     end
     generate_options
   end

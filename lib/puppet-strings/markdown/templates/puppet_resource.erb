@@ -1,0 +1,45 @@
+### <%= name %>
+
+<% if since -%>
+* **Since** <%= since %>
+
+<% end -%>
+<% if see -%>
+* **See also**
+<% see.each do |sa| -%>
+<%= sa[:name] %>
+<%= sa[:text] %>
+<% end -%>
+
+<% end -%>
+<% if examples -%>
+#### Examples
+<% examples.each do |eg| -%>
+##### <%= eg[:name] %>
+```puppet
+<%= eg[:text] %>
+```
+
+<% end -%>
+<% end -%>
+<% if params %>
+#### Parameters
+
+The following parameters are available in the `<%= name %>` <%= @type %>.
+
+<% params.each do |param| -%>
+##### `<%= param[:name] %>`
+
+<% if param[:types] -%>
+Data type: `<%= param[:types].join(', ') -%>`
+
+<% end -%>
+<%= param[:text] %>
+
+<% if defaults && defaults[param[:name]] -%>
+Default value: <%= value_string(defaults[param[:name]]) %>
+
+<% end -%>
+<% end -%>
+<% end -%>
+

@@ -29,7 +29,7 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
       source = node.source
       if source =~ HEREDOC_START
         lines = source.split("\n")
-        source = lines[1..(lines.last.include?($1) ? -2 : -1)].join("\n") if lines.size > 1
+        source = lines[1..(lines.last.include?($1[0..-2]) ? -2 : -1)].join("\n") if lines.size > 1
       end
 
       source

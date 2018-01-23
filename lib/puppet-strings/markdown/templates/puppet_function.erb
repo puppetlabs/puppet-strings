@@ -1,0 +1,24 @@
+### <%= name %>
+
+<% signatures.each do |sig| -%>
+#### `<%= sig.signature %>`
+
+<% if sig.text -%>
+<%= sig.text %>
+
+<% end -%>
+<% if sig.return_val -%>
+Returns: `<%= sig.return_type %>` <%= sig.return_val %>
+
+<% end -%>
+<% if sig.params -%>
+<% sig.params.each do |param| -%>
+##### `<%= param[:name]  %>`
+
+Data type: `<%= param[:types][0] %>`
+
+<%= param[:text] %>
+
+<% end -%>
+<% end -%>
+<% end -%>

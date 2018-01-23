@@ -2,6 +2,8 @@ require 'mocha'
 require 'rspec'
 require 'puppet/version'
 require 'puppet-strings'
+require 'puppet-strings/markdown'
+require 'puppet-strings/markdown/base'
 require 'puppet-strings/yard'
 
 # Explicitly set up YARD once

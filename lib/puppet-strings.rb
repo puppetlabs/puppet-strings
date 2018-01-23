@@ -14,7 +14,9 @@ module PuppetStrings
   # @option options [Boolean] :debug Enable YARD debug output.
   # @option options [Boolean] :backtrace Enable YARD backtraces.
   # @option options [String] :markup The YARD markup format to use (defaults to 'markdown').
-  # @option options [String] :json Enables JSON output to the given file. If the file is nil, STDOUT is used.
+  # @option options [String] :format Specify output format (markdown or json)
+  # @option options [String] :path Write the selected format to a file path
+  # @option options [Boolean] :stdout Use this switch to pipe the selected format to STDOUT
   # @option options [Array<String>] :yard_args The arguments to pass to yard.
   # @return [void]
   def self.generate(search_patterns = DEFAULT_SEARCH_PATTERNS, options = {})
@@ -27,15 +29,13 @@ module PuppetStrings
     args << '--backtrace' if options[:backtrace]
     args << "-m#{options[:markup] || 'markdown'}"
 
-    render_as_json = options.key? :json
-    json_file = nil
-    if render_as_json
-      json_file = options[:json]
+    if options[:json] || options[:markdown]
+      file = options[:path]
       # Disable output and prevent stats/progress when writing to STDOUT
       args << '-n'
-      args << '-q' unless json_file
-      args << '--no-stats' unless json_file
-      args << '--no-progress' unless json_file
+      args << '-q' unless file
+      args << '--no-stats' unless file
+      args << '--no-progress' unless file
     end
 
     yard_args = options[:yard_args]
@@ -46,10 +46,24 @@ module PuppetStrings
     YARD::CLI::Yardoc.run(*args)
 
     # If outputting JSON, render the output
-    if render_as_json
-      require 'puppet-strings/json'
-      PuppetStrings::Json.render(json_file)
+    if options[:json]
+      render_json(options[:path])
     end
+
+    # If outputting Markdown, render the output
+    if options[:markdown]
+      render_markdown(options[:path])
+    end
+  end
+
+  def self.render_json(path)
+    require 'puppet-strings/json'
+    PuppetStrings::Json.render(path)
+  end
+
+  def self.render_markdown(path)
+    require 'puppet-strings/markdown'
+    PuppetStrings::Markdown.render(path)
   end
 
   # Runs the YARD documentation server.

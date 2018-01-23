@@ -37,18 +37,18 @@ describe 'Emitting JSON' do
     ]
   }
 
-  it 'should emit JSON to stdout when using the --emit-json-stdout option' do
+  it 'should emit JSON to stdout when using --format json and --stdout' do
     test_module_path = get_test_module_path(master, /Module test/)
-    on master, puppet('strings', 'generate', '--emit-json-stdout', "#{test_module_path}/lib/puppet/parser/functions/function3x.rb") do
+    on master, puppet('strings', 'generate', '--format json', "#{test_module_path}/lib/puppet/parser/functions/function3x.rb") do
       output = stdout.chomp
       expect(JSON.parse(output)).to eq(expected)
     end
   end
 
-  it 'should write JSON to a file when using the --emit-json option' do
+  it 'should write JSON to a file when using --format json and --out' do
     test_module_path = get_test_module_path(master, /Module test/)
     tmpfile = master.tmpfile('json_output.json')
-    on master, puppet('strings', 'generate', "--emit-json #{tmpfile}", "#{test_module_path}/lib/puppet/parser/functions/function3x.rb")
+    on master, puppet('strings', 'generate', '--format json', "--out #{tmpfile}", "#{test_module_path}/lib/puppet/parser/functions/function3x.rb")
     output = read_file_on(master, tmpfile)
     expect(JSON.parse(output)).to eq(expected)
   end
