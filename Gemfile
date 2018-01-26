@@ -13,10 +13,12 @@ else
 end
 
 group :test do
-  gem "rspec", "~> 3.1"
+  gem 'codecov'
   gem 'mocha'
   gem 'puppetlabs_spec_helper'
   gem 'serverspec'
+  gem 'simplecov-console'
+  gem "rspec", "~> 3.1"
 end
 
 group :acceptance do

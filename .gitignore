@@ -25,7 +25,7 @@ Gemfile.lock
 ## MODULE BUILDS
 **/pkg
 
-## RubyMine 
+## RubyMine
 /.idea/
 
 ## rvm/rbenv
@@ -38,3 +38,6 @@ Gemfile.lock
 /log/
 /*.gem
 /spec/acceptance/nodesets/
+
+## local coverage results
+/coverage/

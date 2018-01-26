@@ -27,4 +27,4 @@ matrix:
   - rvm: 2.1.9
     env: PUPPET_GEM_VERSION="~> 4" CHECK=rubocop
 
-script: 'SPEC_OPTS="--format documentation" bundle exec rake $CHECK'
+script: 'SPEC_OPTS="--format documentation" COVERAGE="yes" bundle exec rake $CHECK'
