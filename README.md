@@ -196,7 +196,7 @@ To document Puppet classes and defined types, use a series of comments to create
 #   include example
 #
 # @param first The first parameter for this class
-# @param second The second paramter for this class
+# @param second The second parameter for this class
 class example_class(
   String $first  = $example::params::first_arg,
   Integer $second = $example::params::second_arg,
