@@ -77,7 +77,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
   end
 
   def add_tags(object)
-    log.warn "Missing documentation for Puppet function '#{object.name}' at #{statement.file}:#{statement.line}." if object.docstring.empty?
+    log.warn "Missing documentation for Puppet function '#{object.name}' at #{statement.file}:#{statement.line}." if object.docstring.empty? && object.tags.empty?
     log.warn "The docstring for Puppet 4.x function '#{object.name}' contains @param tags near #{object.file}:#{object.line}: parameter documentation should be made on the dispatch call." unless object.tags(:param).empty?
     log.warn "The docstring for Puppet 4.x function '#{object.name}' contains @return tags near #{object.file}:#{object.line}: return value documentation should be made on the dispatch call." unless object.tags(:return).empty?
     log.warn "The docstring for Puppet 4.x function '#{object.name}' contains @overload tags near #{object.file}:#{object.line}: overload tags are automatically generated from the dispatch calls." unless object.tags(:overload).empty?
