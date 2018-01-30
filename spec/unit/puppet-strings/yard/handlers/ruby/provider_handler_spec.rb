@@ -82,7 +82,7 @@ Puppet::Type.type(:custom).provide :linux do
   defaultfor :osfamily => 'RedHat', :operatingsystemmajrelease => '7'
   has_feature :implements_some_feature
   has_feature :some_other_feature
-  commands foo: /usr/bin/foo
+  commands foo: '/usr/bin/foo'
 end
 SOURCE
     }
