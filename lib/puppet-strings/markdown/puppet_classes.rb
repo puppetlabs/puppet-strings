@@ -2,12 +2,14 @@ require_relative 'puppet_class'
 
 module PuppetStrings::Markdown
   module PuppetClasses
+
+    # @return [Array] list of classes
     def self.in_classes
       YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash)
     end
 
     def self.render
-      final = "## Classes\n\n"
+      final = in_classes.length > 0 ? "## Classes\n\n" : ""
       in_classes.each do |klass|
         final << PuppetStrings::Markdown::PuppetClass.new(klass).render
       end

@@ -16,6 +16,12 @@ Puppet::Face.define(:strings, '0.0.1') do
     option '--markup FORMAT' do
       summary "The markup format to use for docstring text (defaults to 'markdown')."
     end
+    option '--emit-json-stdout' do
+      summary 'DEPRECATED: Print JSON representation of the documentation to stdout.'
+    end
+    option '--emit-json PATH' do
+      summary 'DEPRECATED: Write JSON representation of the documentation to the given file.'
+    end
 
     summary 'Generate documentation from files.'
     arguments '[[search_pattern] ...]'
@@ -94,14 +100,20 @@ Puppet::Face.define(:strings, '0.0.1') do
     generate_options[:yard_args] = yard_args unless yard_args.empty?
 
     if options
+      if options[:emit_json]
+        $stderr.puts "WARNING: '--emit-json PATH' is deprecated. Use '--format json --out PATH' instead."
+      end
+      if options[:emit_json_stdout]
+        $stderr.puts "WARNING: '--emit-json-stdout' is deprecated. Use '--format json' instead."
+      end
       markup = options[:markup]
       generate_options[:markup] = markup if markup
       generate_options[:path] = options[:out] if options[:out]
       generate_options[:stdout] = options[:stdout]
       format = options[:format] || ""
-      if format.casecmp 'markdown'
+      if format.casecmp('markdown') == 0
         generate_options[:markdown] = true
-      elsif format.casecmp 'json'
+      elsif format.casecmp('json') == 0 || options[:emit_json] || options[:emit_json_stdout]
         generate_options[:json] = true
       end
     end

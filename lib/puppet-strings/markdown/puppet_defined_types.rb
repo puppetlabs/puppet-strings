@@ -2,12 +2,14 @@ require_relative 'puppet_defined_type'
 
 module PuppetStrings::Markdown
   module PuppetDefinedTypes
+
+    # @return [Array] list of defined types
     def self.in_dtypes
       YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash)
     end
 
     def self.render
-      final = "## Defined types\n\n"
+      final = in_dtypes.length > 0 ? "## Defined types\n\n" : ""
       in_dtypes.each do |type|
         final << PuppetStrings::Markdown::PuppetDefinedType.new(type).render
       end

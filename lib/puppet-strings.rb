@@ -29,6 +29,7 @@ module PuppetStrings
     args << '--backtrace' if options[:backtrace]
     args << "-m#{options[:markup] || 'markdown'}"
 
+    file = nil
     if options[:json] || options[:markdown]
       file = options[:path]
       # Disable output and prevent stats/progress when writing to STDOUT
@@ -47,12 +48,12 @@ module PuppetStrings
 
     # If outputting JSON, render the output
     if options[:json]
-      render_json(options[:path])
+      render_json(file)
     end
 
     # If outputting Markdown, render the output
     if options[:markdown]
-      render_markdown(options[:path])
+      render_markdown(file)
     end
   end
 

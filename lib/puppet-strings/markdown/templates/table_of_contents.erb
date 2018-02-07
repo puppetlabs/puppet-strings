@@ -1,22 +1,22 @@
-<% if puppet_classes -%>
+<% if puppet_classes.length > 0 -%>
 ## Classes
 <% puppet_classes.each do |klassy| -%>
 * [`<%= klassy[:name] %>`](#<%= klassy[:link] %>): <%= klassy[:desc] %>
 <% end -%>
 <% end -%>
-<% if puppet_defined_types -%>
+<% if puppet_defined_types.length > 0 -%>
 ## Defined types
 <% puppet_defined_types.each do |dtype| -%>
 * [`<%= dtype[:name] %>`](#<%= dtype[:link] %>): <%= dtype[:desc] %>
 <% end -%>
 <% end -%>
-<% if puppet_resource_types -%>
+<% if puppet_resource_types.length > 0 -%>
 ## Resource types
 <% puppet_resource_types.each do |rtype| -%>
 * [`<%= rtype[:name] %>`](#<%= rtype[:link] %>): <%= rtype[:desc] %>
 <% end -%>
 <% end -%>
-<% if puppet_functions -%>
+<% if puppet_functions.length > 0 -%>
 ## Functions
 <% puppet_functions.each do |func| -%>
 * [`<%= func[:name] %>`](#<%= func[:link] %>): <%= func[:desc] %>
