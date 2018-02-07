@@ -111,9 +111,9 @@ Puppet::Face.define(:strings, '0.0.1') do
       generate_options[:path] = options[:out] if options[:out]
       generate_options[:stdout] = options[:stdout]
       format = options[:format] || ""
-      if format.casecmp('markdown') == 0
+      if format.casecmp('markdown').zero?
         generate_options[:markdown] = true
-      elsif format.casecmp('json') == 0 || options[:emit_json] || options[:emit_json_stdout]
+      elsif format.casecmp('json').zero? || options[:emit_json] || options[:emit_json_stdout]
         generate_options[:json] = true
       end
     end

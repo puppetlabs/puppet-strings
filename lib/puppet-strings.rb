@@ -14,9 +14,9 @@ module PuppetStrings
   # @option options [Boolean] :debug Enable YARD debug output.
   # @option options [Boolean] :backtrace Enable YARD backtraces.
   # @option options [String] :markup The YARD markup format to use (defaults to 'markdown').
-  # @option options [String] :format Specify output format (markdown or json)
   # @option options [String] :path Write the selected format to a file path
-  # @option options [Boolean] :stdout Use this switch to pipe the selected format to STDOUT
+  # @option options [Boolean] :markdown From the --format option, is the format Markdown?
+  # @option options [Boolean] :json Is the format JSON?
   # @option options [Array<String>] :yard_args The arguments to pass to yard.
   # @return [void]
   def self.generate(search_patterns = DEFAULT_SEARCH_PATTERNS, options = {})
