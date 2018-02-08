@@ -17,6 +17,9 @@ describe PuppetStrings::Markdown do
 #    param1 => 1,
 #    param3 => 'foo',
 #  }
+# @author eputnam
+# @option opts :foo bar
+# @raise SomeError
 # @param param1 First param.
 # @param param2 Second param.
 # @param param3 Third param.
@@ -37,6 +40,9 @@ class klass (
 #    param4 => false,
 #  }
 # @return shouldn't return squat
+# @author eputnam
+# @option opts :foo bar
+# @raise SomeError
 # @param param1 First param.
 # @param param2 Second param.
 # @param param3 Third param.
@@ -55,6 +61,9 @@ SOURCE
 # @param param1 First param.
 # @param param2 Second param.
 # @param param3 Third param.
+# @author eputnam
+# @option opts :foo bar
+# @raise SomeError
 # @return [Undef] Returns nothing.
 function func(Integer $param1, $param2, String $param3 = hi) {
 }
@@ -64,6 +73,9 @@ SOURCE
 # An example 4.x function.
 Puppet::Functions.create_function(:func4x) do
   # An overview for the first overload.
+  # @author eputnam
+  # @option opts :foo bar
+  # @raise SomeError
   # @param param1 The first parameter.
   # @param param2 The second parameter.
   # @param param3 The third parameter.
@@ -109,6 +121,9 @@ end
 Puppet::Type.newtype(:database) do
   desc <<-DESC
 An example database server resource type.
+@author eputnam
+@option opts :foo bar
+@raise SomeError
 @example here's an example
  database { 'foo':
    address => 'qux.baz.bar',
@@ -154,7 +169,8 @@ Puppet::ResourceApi.register_type(
   name: 'apt_key',
   desc: <<-EOS,
 @summary Example resource type using the new API.
-
+@author eputnam
+@raise SomeError
 This type provides Puppet with the capabilities to manage GPG keys needed
 by apt to perform package validation. Apt has it's own GPG keyring that can
 be manipulated through the `apt-key` command.

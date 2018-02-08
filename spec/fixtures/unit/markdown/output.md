@@ -20,6 +20,8 @@
 * **See also**
 www.puppet.com
 
+* **Author** eputnam
+
 
 #### Examples
 ##### This is an example
@@ -68,6 +70,8 @@ Default value: 'hi'
 
 * **See also**
 www.puppet.com
+
+* **Author** eputnam
 
 
 #### Examples
@@ -126,6 +130,8 @@ be manipulated through the `apt-key` command.
 If Puppet is given the location of a key file which looks like an absolute
 path this type will autorequire that file.
 
+* **Author** eputnam
+
 #### Examples
 ##### here's an example
 ```puppet
@@ -167,6 +173,8 @@ The ID of the key you want to manage.
 ### database
 
 An example database server resource type.
+
+* **Author** eputnam
 
 #### Examples
 ##### here's an example
