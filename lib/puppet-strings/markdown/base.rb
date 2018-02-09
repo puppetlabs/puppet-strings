@@ -110,7 +110,7 @@ module PuppetStrings::Markdown
 
     def options_for_param(parameter_name)
       opts_for_p = options.select { |o| o[:parent] == parameter_name } unless options.nil?
-      opts_for_p unless opts_for_p.nil? || opts_for_p.length == 0
+      opts_for_p unless opts_for_p.nil? || opts_for_p.length.zero?
     end
 
     # @return [Array] any defaults found for the component
