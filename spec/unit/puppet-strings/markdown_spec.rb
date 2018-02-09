@@ -17,12 +17,18 @@ describe PuppetStrings::Markdown do
 #    param1 => 1,
 #    param3 => 'foo',
 #  }
-# @author eputnam
-# @option opts :foo bar
+# @example This is another example
+#  class { 'klass':
+#    param1 => 1,
+#    param3 => 'foo',
+#  }
 # @raise SomeError
 # @param param1 First param.
 # @param param2 Second param.
+# @option param2 [String] :opt1 something about opt1
+# @option param2 [Hash] :opt2 a hash of stuff
 # @param param3 Third param.
+#
 class klass (
   Integer $param1 = 1,
   $param2 = undef,
@@ -40,11 +46,11 @@ class klass (
 #    param4 => false,
 #  }
 # @return shouldn't return squat
-# @author eputnam
-# @option opts :foo bar
 # @raise SomeError
 # @param param1 First param.
 # @param param2 Second param.
+# @option param2 [String] :opt1 something about opt1
+# @option param2 [Hash] :opt2 a hash of stuff
 # @param param3 Third param.
 # @param param4 Fourth param.
 define klass::dt (
@@ -61,9 +67,8 @@ SOURCE
 # @param param1 First param.
 # @param param2 Second param.
 # @param param3 Third param.
-# @author eputnam
-# @option opts :foo bar
-# @raise SomeError
+# @option param3 [Array] :param3opt Something about this option
+# @raise SomeError this is some error
 # @return [Undef] Returns nothing.
 function func(Integer $param1, $param2, String $param3 = hi) {
 }
@@ -73,11 +78,11 @@ SOURCE
 # An example 4.x function.
 Puppet::Functions.create_function(:func4x) do
   # An overview for the first overload.
-  # @author eputnam
-  # @option opts :foo bar
-  # @raise SomeError
+  # @raise SomeError this is some error
   # @param param1 The first parameter.
   # @param param2 The second parameter.
+  # @option param2 [String] :option an option
+  # @option param2 [String] :option2 another option
   # @param param3 The third parameter.
   # @return Returns nothing.
   dispatch :foo do
@@ -121,7 +126,6 @@ end
 Puppet::Type.newtype(:database) do
   desc <<-DESC
 An example database server resource type.
-@author eputnam
 @option opts :foo bar
 @raise SomeError
 @example here's an example
@@ -169,7 +173,6 @@ Puppet::ResourceApi.register_type(
   name: 'apt_key',
   desc: <<-EOS,
 @summary Example resource type using the new API.
-@author eputnam
 @raise SomeError
 This type provides Puppet with the capabilities to manage GPG keys needed
 by apt to perform package validation. Apt has it's own GPG keyring that can
@@ -214,7 +217,7 @@ SOURCE
 
   describe 'rendering markdown to a file' do
     it 'should output the expected markdown content' do
-      Tempfile.open('md') do |file|
+      File.open('/Users/eric.putnam/src/puppet-strings/md.md', 'w') do |file|
         PuppetStrings::Markdown.render(file.path)
         expect(File.read(file.path)).to eq(baseline)
       end

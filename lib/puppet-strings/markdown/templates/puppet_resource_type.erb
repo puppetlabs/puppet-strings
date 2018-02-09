@@ -8,17 +8,13 @@
 * **See also**
 <% see.each do |sa| -%>
 <%= sa[:name] %>
-    <%= sa[:text] %>
+<%= sa[:text] %>
 <% end -%>
 
 <% end -%>
 <% if text -%>
 <%= text %>
 <% end %>
-<% if author -%>
-* **Author** <%= author %>
-
-<% end -%>
 <% if examples -%>
 #### Examples
 <% examples.each do |eg| -%>
@@ -40,16 +36,28 @@ The following properties are available in the `<%= name %>` <%= @type %>.
 Valid values: <%= prop[:values].map { |value| value_string(value) }.join(', ') %>
 
 <% end -%>
+<% if prop[:isnamevar] -%>
+namevar
+
+<% end -%>
 <% if prop[:aliases] -%>
 Aliases: <%= prop[:aliases].to_s.delete('{').delete('}') %>
 
 <% end -%>
 <% if prop[:data_type] -%>
-Data type: `<%= prop[:data_type] %>`
+Data type: `<%= prop[:data_type] %>`<%= "\n_\*this data type contains a regex that may not be accurately reflected in generated documentation_" if regex_in_data_type?(prop[:data_type]) %>
 
 <% end -%>
 <%= prop[:description] %>
 
+<% if options_for_param(prop[:name]) -%>
+Options:
+
+<% options_for_param(prop[:name]).each do |o| -%>
+* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+<% end -%>
+
+<% end -%>
 <% if prop[:default] -%>
 Default value: <%= prop[:default] %>
 
@@ -72,12 +80,24 @@ Valid values: <%= param[:values].map { |value| value_string(value) }.join(', ') 
 namevar
 
 <% end -%>
+<% if param[:aliases] -%>
+Aliases: <%= param[:aliases].to_s.delete('{').delete('}') %>
+
+<% end -%>
 <% if param[:data_type] -%>
 Data type: `<%= param[:data_type] %>`<%= "\n_\*this data type contains a regex that may not be accurately reflected in generated documentation_" if regex_in_data_type?(param[:data_type]) %>
 
 <% end -%>
 <%= param[:description] %>
 
+<% if options_for_param(param[:name]) -%>
+Options:
+
+<% options_for_param(param[:name]).each do |o| -%>
+* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+<% end -%>
+
+<% end -%>
 <% if param[:default] -%>
 Default value: <%= value_string(param[:default]) %>
 

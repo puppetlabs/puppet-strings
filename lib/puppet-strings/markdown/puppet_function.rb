@@ -16,6 +16,27 @@ module PuppetStrings::Markdown
     def render
       super(@template)
     end
+
+    def type
+      t = @registry[:type]
+      if t =~ /ruby4x/
+        "Ruby 4.x API"
+      elsif t =~ /ruby3/
+        "Ruby 3.x API"
+      elsif t =~ /ruby/
+        "Ruby"
+      else
+        "Puppet Language"
+      end
+    end
+
+    def error_type(r)
+      "`#{r.split(' ')[0]}`"
+    end
+
+    def error_text(r)
+      "#{r.split(' ').drop(1).join(' ')}"
+    end
   end
 
   class PuppetFunction::Signature < Base

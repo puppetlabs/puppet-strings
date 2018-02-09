@@ -20,7 +20,8 @@ module PuppetStrings::Markdown
     end
 
     def regex_in_data_type?(data_type)
-      data_type.match(/\w+\[\/.*\/\]/).length > 0
+      m = data_type.match(/\w+\[\/.*\/\]/)
+      m unless m.nil? || m.length.zero?
     end
   end
 end

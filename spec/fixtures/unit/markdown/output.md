@@ -20,11 +20,17 @@
 * **See also**
 www.puppet.com
 
-* **Author** eputnam
-
 
 #### Examples
 ##### This is an example
+```puppet
+class { 'klass':
+  param1 => 1,
+  param3 => 'foo',
+}
+```
+
+##### This is another example
 ```puppet
 class { 'klass':
   param1 => 1,
@@ -51,6 +57,11 @@ Data type: `Any`
 
 Second param.
 
+Options:
+
+* **:opt1** `String`: something about opt1
+* **:opt2** `Hash`: a hash of stuff
+
 Default value: `undef`
 
 ##### `param3`
@@ -70,8 +81,6 @@ Default value: 'hi'
 
 * **See also**
 www.puppet.com
-
-* **Author** eputnam
 
 
 #### Examples
@@ -102,6 +111,11 @@ Data type: `Any`
 
 Second param.
 
+Options:
+
+* **:opt1** `String`: something about opt1
+* **:opt2** `Hash`: a hash of stuff
+
 ##### `param3`
 
 Data type: `String`
@@ -129,8 +143,6 @@ be manipulated through the `apt-key` command.
 **Autorequires**:
 If Puppet is given the location of a key file which looks like an absolute
 path this type will autorequire that file.
-
-* **Author** eputnam
 
 #### Examples
 ##### here's an example
@@ -173,8 +185,6 @@ The ID of the key you want to manage.
 ### database
 
 An example database server resource type.
-
-* **Author** eputnam
 
 #### Examples
 ##### here's an example
@@ -236,12 +246,16 @@ Default value: `false`
 ## Functions
 
 ### func
+Type: Puppet Language
 
 #### `func(Integer $param1, Any $param2, String $param3 = hi)`
 
 A simple Puppet function.
 
 Returns: `Undef` Returns nothing.
+
+Raises:
+* `SomeError` this is some error
 
 ##### `param1`
 
@@ -261,7 +275,12 @@ Data type: `String`
 
 Third param.
 
+Options:
+
+* **:param3opt** `Array`: Something about this option
+
 ### func4x
+Type: Ruby 4.x API
 
 #### `func4x(Integer $param1, Any $param2, Optional[Array[String]] $param3)`
 
@@ -280,6 +299,11 @@ The first parameter.
 Data type: `Any`
 
 The second parameter.
+
+Options:
+
+* **:option** `String`: an option
+* **:option2** `String`: another option
 
 ##### `param3`
 
@@ -306,6 +330,7 @@ Data type: `Callable`
 The block parameter.
 
 ### func4x_1
+Type: Ruby 4.x API
 
 #### `func4x_1(Integer $param1)`
 

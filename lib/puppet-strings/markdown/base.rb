@@ -58,8 +58,6 @@ module PuppetStrings::Markdown
     { :return_val => 'return',
       :since => 'since',
       :summary => 'summary',
-      :author => 'author',
-      :raise => 'raise',
       :option => 'option' }.each do |method_name, tag_name|
       define_method method_name do
         @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0][:text] unless @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0].nil?
@@ -99,6 +97,20 @@ module PuppetStrings::Markdown
     # @return [Array] example tag hashes
     def examples
       @tags.select { |tag| tag[:tag_name] == 'example' } unless @tags.select { |tag| tag[:tag_name] == 'example' }[0].nil?
+    end
+
+    # @return [Array] example tag hashes
+    def raises
+      @tags.select { |tag| tag[:tag_name] == 'raise' } unless @tags.select { |tag| tag[:tag_name] == 'raise' }[0].nil?
+    end
+
+    def options
+      @tags.select { |tag| tag[:tag_name] == 'option' } unless @tags.select { |tag| tag[:tag_name] == 'option' }[0].nil?
+    end
+
+    def options_for_param(parameter_name)
+      opts_for_p = options.select { |o| o[:parent] == parameter_name } unless options.nil?
+      opts_for_p unless opts_for_p.nil? || opts_for_p.length == 0
     end
 
     # @return [Array] any defaults found for the component

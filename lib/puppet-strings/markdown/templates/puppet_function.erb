@@ -1,4 +1,5 @@
 ### <%= name %>
+Type: <%= type %>
 
 <% signatures.each do |sig| -%>
 #### `<%= sig.signature %>`
@@ -11,6 +12,13 @@
 Returns: `<%= sig.return_type %>` <%= sig.return_val %>
 
 <% end -%>
+<% if raises -%>
+Raises:
+<% raises.each do |r| -%>
+* <%= error_type(r[:text]) %> <%= error_text(r[:text]) %>
+<% end -%>
+
+<% end -%>
 <% if sig.params -%>
 <% sig.params.each do |param| -%>
 ##### `<%= param[:name]  %>`
@@ -19,6 +27,14 @@ Data type: `<%= param[:types][0] %>`
 
 <%= param[:text] %>
 
+<% if sig.options_for_param(param[:name]) -%>
+Options:
+
+<% sig.options_for_param(param[:name]).each do |o| -%>
+* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+<% end -%>
+
+<% end -%>
 <% end -%>
 <% end -%>
 <% end -%>

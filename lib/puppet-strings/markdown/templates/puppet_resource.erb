@@ -10,10 +10,6 @@
 <%= sa[:name] %>
 <%= sa[:text] %>
 <% end -%>
-<% if author -%>
-* **Author** <%= author %>
-
-<% end -%>
 
 <% end -%>
 <% if examples -%>
@@ -40,6 +36,14 @@ Data type: `<%= param[:types].join(', ') -%>`
 <% end -%>
 <%= param[:text] %>
 
+<% if options_for_param(param[:name]) -%>
+Options:
+
+<% options_for_param(param[:name]).each do |o| -%>
+* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+<% end -%>
+
+<% end -%>
 <% if defaults && defaults[param[:name]] -%>
 Default value: <%= value_string(defaults[param[:name]]) %>
 
