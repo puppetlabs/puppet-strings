@@ -57,8 +57,7 @@ module PuppetStrings::Markdown
     # e.g. {:tag_name=>"author", :text=>"eputnam"}
     { :return_val => 'return',
       :since => 'since',
-      :summary => 'summary',
-      :option => 'option' }.each do |method_name, tag_name|
+      :summary => 'summary' }.each do |method_name, tag_name|
       define_method method_name do
         @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0][:text] unless @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0].nil?
       end
@@ -99,15 +98,19 @@ module PuppetStrings::Markdown
       @tags.select { |tag| tag[:tag_name] == 'example' } unless @tags.select { |tag| tag[:tag_name] == 'example' }[0].nil?
     end
 
-    # @return [Array] example tag hashes
+    # @return [Array] raise tag hashes
     def raises
       @tags.select { |tag| tag[:tag_name] == 'raise' } unless @tags.select { |tag| tag[:tag_name] == 'raise' }[0].nil?
     end
 
+    # @return [Array] option tag hashes
     def options
       @tags.select { |tag| tag[:tag_name] == 'option' } unless @tags.select { |tag| tag[:tag_name] == 'option' }[0].nil?
     end
 
+    # @param parameter_name
+    #   parameter name to match to option tags
+    # @return [Array] option tag hashes that have a parent parameter_name
     def options_for_param(parameter_name)
       opts_for_p = options.select { |o| o[:parent] == parameter_name } unless options.nil?
       opts_for_p unless opts_for_p.nil? || opts_for_p.length.zero?

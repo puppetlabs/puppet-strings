@@ -1,7 +1,7 @@
-require_relative 'puppet_function'
+require_relative 'function'
 
 module PuppetStrings::Markdown
-  module PuppetFunctions
+  module Functions
 
     # @return [Array] list of functions
     def self.in_functions
@@ -11,7 +11,7 @@ module PuppetStrings::Markdown
     def self.render
       final = in_functions.length > 0 ? "## Functions\n\n" : ""
       in_functions.each do |func|
-        final << PuppetStrings::Markdown::PuppetFunction.new(func).render
+        final << PuppetStrings::Markdown::Function.new(func).render
       end
       final
     end
@@ -20,7 +20,7 @@ module PuppetStrings::Markdown
       final = []
 
       in_functions.each do |func|
-        final.push(PuppetStrings::Markdown::PuppetFunction.new(func).toc_info)
+        final.push(PuppetStrings::Markdown::Function.new(func).toc_info)
       end
 
       final

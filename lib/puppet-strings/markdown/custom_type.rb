@@ -1,10 +1,10 @@
 require 'puppet-strings/markdown/base'
 
 module PuppetStrings::Markdown
-  class PuppetResourceType < Base
+  class CustomType < Base
     def initialize(registry)
-      @template = 'puppet_resource_type.erb'
-      super(registry, 'resource type')
+      @template = 'custom_type.erb'
+      super(registry, 'type')
     end
 
     def render

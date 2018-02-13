@@ -1,7 +1,7 @@
-require_relative 'puppet_resource_type'
+require_relative 'custom_type'
 
 module PuppetStrings::Markdown
-  module PuppetResourceTypes
+  module CustomTypes
 
     # @return [Array] list of resource types
     def self.in_rtypes
@@ -11,7 +11,7 @@ module PuppetStrings::Markdown
     def self.render
       final = in_rtypes.length > 0 ? "## Resource types\n\n" : ""
       in_rtypes.each do |type|
-        final << PuppetStrings::Markdown::PuppetResourceType.new(type).render
+        final << PuppetStrings::Markdown::CustomType.new(type).render
       end
       final
     end
@@ -20,7 +20,7 @@ module PuppetStrings::Markdown
       final = []
 
       in_rtypes.each do |type|
-        final.push(PuppetStrings::Markdown::PuppetResourceType.new(type).toc_info)
+        final.push(PuppetStrings::Markdown::CustomType.new(type).toc_info)
       end
 
       final

@@ -3,9 +3,9 @@ require 'puppet-strings/json'
 # module for parsing Yard Registries and generating markdown
 module PuppetStrings::Markdown
   require_relative 'markdown/puppet_classes'
-  require_relative 'markdown/puppet_functions'
-  require_relative 'markdown/puppet_defined_types'
-  require_relative 'markdown/puppet_resource_types'
+  require_relative 'markdown/functions'
+  require_relative 'markdown/defined_types'
+  require_relative 'markdown/custom_types'
   require_relative 'markdown/table_of_contents'
 
   # generates markdown documentation
@@ -14,9 +14,9 @@ module PuppetStrings::Markdown
     final = "# Reference\n\n"
     final << PuppetStrings::Markdown::TableOfContents.render
     final << PuppetStrings::Markdown::PuppetClasses.render
-    final << PuppetStrings::Markdown::PuppetDefinedTypes.render
-    final << PuppetStrings::Markdown::PuppetResourceTypes.render
-    final << PuppetStrings::Markdown::PuppetFunctions.render
+    final << PuppetStrings::Markdown::DefinedTypes.render
+    final << PuppetStrings::Markdown::CustomTypes.render
+    final << PuppetStrings::Markdown::Functions.render
 
     final
   end

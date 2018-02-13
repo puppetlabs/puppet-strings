@@ -1,11 +1,11 @@
 require 'puppet-strings/markdown/base'
 
 module PuppetStrings::Markdown
-  class PuppetFunction < Base
+  class Function < Base
     attr_reader :signatures
 
     def initialize(registry)
-      @template = 'puppet_function.erb'
+      @template = 'function.erb'
       super(registry, 'function')
       @signatures = []
       registry[:signatures].each do |sig|
@@ -39,7 +39,7 @@ module PuppetStrings::Markdown
     end
   end
 
-  class PuppetFunction::Signature < Base
+  class Function::Signature < Base
     def initialize(registry)
       @registry = registry
       super(@registry, 'function signature')

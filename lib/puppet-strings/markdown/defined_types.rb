@@ -1,7 +1,7 @@
-require_relative 'puppet_defined_type'
+require_relative 'defined_type'
 
 module PuppetStrings::Markdown
-  module PuppetDefinedTypes
+  module DefinedTypes
 
     # @return [Array] list of defined types
     def self.in_dtypes
@@ -11,7 +11,7 @@ module PuppetStrings::Markdown
     def self.render
       final = in_dtypes.length > 0 ? "## Defined types\n\n" : ""
       in_dtypes.each do |type|
-        final << PuppetStrings::Markdown::PuppetDefinedType.new(type).render
+        final << PuppetStrings::Markdown::DefinedType.new(type).render
       end
       final
     end
@@ -20,7 +20,7 @@ module PuppetStrings::Markdown
       final = []
 
       in_dtypes.each do |type|
-        final.push(PuppetStrings::Markdown::PuppetDefinedType.new(type).toc_info)
+        final.push(PuppetStrings::Markdown::DefinedType.new(type).toc_info)
       end
 
       final

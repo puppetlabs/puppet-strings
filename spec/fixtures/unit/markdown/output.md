@@ -6,7 +6,7 @@
 * [`klass::dt`](#klassdt): A simple defined type.
 ## Resource types
 * [`apt_key`](#apt_key): Example resource type using the new API.
-* [`database`](#database): An example database server resource type.
+* [`database`](#database): An example database server type.
 ## Functions
 * [`func`](#func): A simple Puppet function.
 * [`func4x`](#func4x): An example 4.x function.
@@ -154,7 +154,7 @@ apt_key { '6F6B15509CF8E59E6E469F327F438280EF8D349F':
 
 #### Properties
 
-The following properties are available in the `apt_key` resource type.
+The following properties are available in the `apt_key` type.
 
 ##### `ensure`
 
@@ -170,7 +170,7 @@ Date the key was created, in ISO format.
 
 #### Parameters
 
-The following parameters are available in the `apt_key` resource type.
+The following parameters are available in the `apt_key` type.
 
 ##### `id`
 
@@ -184,7 +184,7 @@ The ID of the key you want to manage.
 
 ### database
 
-An example database server resource type.
+An example database server type.
 
 #### Examples
 ##### here's an example
@@ -196,7 +196,7 @@ database { 'foo':
 
 #### Properties
 
-The following properties are available in the `database` resource type.
+The following properties are available in the `database` type.
 
 ##### `ensure`
 
@@ -222,7 +222,7 @@ Default value: warn
 
 #### Parameters
 
-The following parameters are available in the `database` resource type.
+The following parameters are available in the `database` type.
 
 ##### `address`
 

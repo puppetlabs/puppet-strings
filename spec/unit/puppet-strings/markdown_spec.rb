@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'puppet-strings/markdown'
-require 'puppet-strings/markdown/puppet_classes'
 require 'puppet-strings/markdown/table_of_contents'
 require 'tempfile'
 
@@ -125,7 +124,7 @@ end
 
 Puppet::Type.newtype(:database) do
   desc <<-DESC
-An example database server resource type.
+An example database server type.
 @option opts :foo bar
 @raise SomeError
 @example here's an example
