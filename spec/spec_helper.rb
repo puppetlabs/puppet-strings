@@ -1,3 +1,20 @@
+if ENV['COVERAGE'] == 'yes'
+  require 'simplecov'
+  require 'simplecov-console'
+  require 'codecov'
+
+  SimpleCov.formatters = [
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::Console,
+    SimpleCov::Formatter::Codecov,
+  ]
+  SimpleCov.start do
+    track_files 'lib/**/*.rb'
+
+    add_filter '/spec'
+  end
+end
+
 require 'mocha'
 require 'rspec'
 require 'puppet/version'
@@ -21,4 +38,3 @@ RSpec.configure do |config|
     YARD::Registry.clear
   end
 end
-
