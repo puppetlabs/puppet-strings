@@ -5,7 +5,7 @@ module PuppetStrings::Markdown
   require_relative 'markdown/puppet_classes'
   require_relative 'markdown/functions'
   require_relative 'markdown/defined_types'
-  require_relative 'markdown/custom_types'
+  require_relative 'markdown/resource_types'
   require_relative 'markdown/table_of_contents'
 
   # generates markdown documentation
@@ -15,7 +15,7 @@ module PuppetStrings::Markdown
     final << PuppetStrings::Markdown::TableOfContents.render
     final << PuppetStrings::Markdown::PuppetClasses.render
     final << PuppetStrings::Markdown::DefinedTypes.render
-    final << PuppetStrings::Markdown::CustomTypes.render
+    final << PuppetStrings::Markdown::ResourceTypes.render
     final << PuppetStrings::Markdown::Functions.render
 
     final

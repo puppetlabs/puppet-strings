@@ -216,7 +216,7 @@ SOURCE
 
   describe 'rendering markdown to a file' do
     it 'should output the expected markdown content' do
-      File.open('/Users/eric.putnam/src/puppet-strings/md.md', 'w') do |file|
+      Tempfile.open('md') do |file|
         PuppetStrings::Markdown.render(file.path)
         expect(File.read(file.path)).to eq(baseline)
       end
