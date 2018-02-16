@@ -15,6 +15,8 @@
 * [`func3x`](#func3x): Documentation for an example 3.x function.
 * [`func4x`](#func4x): An example 4.x function.
 * [`func4x_1`](#func4x_1): An example 4.x function with only one signature.
+## Tasks
+* [`(stdin)`](#(stdin)): Allows you to backup your database to local file.
 ## Classes
 
 ### klass
@@ -380,4 +382,38 @@ Returns: `Undef` Returns nothing.
 Data type: `Integer`
 
 The first parameter.
+
+## Tasks
+
+### (stdin)
+
+Allows you to backup your database to local file.
+
+**Supports noop?** false
+
+#### Parameters
+
+##### `database`
+
+Data type: `Optional[String[1]]`
+
+Database to connect to
+
+##### `user`
+
+Data type: `Optional[String[1]]`
+
+The user
+
+##### `password`
+
+Data type: `Optional[String[1]]`
+
+The password
+
+##### `sql`
+
+Data type: `String[1]`
+
+Path to file you want backup to
 

@@ -1,0 +1,16 @@
+<% if @parameters && !@parameters.empty? %>
+<div class="tags">
+  <p class="tag_title"><%= @tag_title %></p>
+  <ul>
+    <% @parameters.each do |parameter, values| %>
+    <li>
+        <span class="name"><%= parameter %></span>
+        <span class="type">
+            <tt>(<%= values['type'] %>)</tt>
+        </span>
+        <% if values['description'] %> &mdash; <%= values['description'] %><% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

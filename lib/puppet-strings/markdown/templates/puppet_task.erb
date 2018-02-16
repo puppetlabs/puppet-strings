@@ -1,0 +1,28 @@
+### <%= name %>
+
+<% if text -%>
+<%= text %>
+
+<% elsif summary -%>
+<%= summary %>
+
+<% else -%>
+<%= "The #{name} task." %>
+
+<% end -%>
+**Supports noop?** <%= supports_noop %>
+
+<% if params -%>
+#### Parameters
+
+<% params.each do |param| -%>
+##### `<%= param[:name] %>`
+
+<% if param[:types] -%>
+Data type: `<%= param[:types].join(', ') -%>`
+
+<% end -%>
+<%= param[:text] %>
+
+<% end -%>
+<% end -%>
