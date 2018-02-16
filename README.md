@@ -162,16 +162,32 @@ Strings can produce documentation in JSON and then either generate a `.json` fil
 To generate JSON documentation to a file, run:
 
 ```
-$ puppet strings generate --emit-json documentation.json
+$ puppet strings generate --format json --out documentation.json
 ```
 
 To generate and then print JSON documentation to stdout, run:
 
 ```
-$ puppet strings generate --emit-json-stdout
+$ puppet strings generate --format json
 ```
 
 For details about Strings JSON output, see [Strings JSON schema](https://github.com/puppetlabs/puppet-strings/blob/master/JSON.md).
+
+### Output documents in Markdown
+
+Strings can also produce documentation in Markdown and then either generate an `.md` file or print Markdown to stdout. The generated markdown layout has been reviewed and approved by Puppet's tech pubs team and is the same that is used in Puppet Supported modules.
+
+To generate Markdown documentation to a file, run:
+
+```
+$ puppet strings generate --format markdown --out REFERENCE.md
+```
+
+To generate and then print Markdown documentation to stdout, run:
+
+```
+$ puppet strings generate --format markdown
+```
 
 ### Output documents to GitHub Pages
 
@@ -284,6 +300,35 @@ end
 ```
 
 All provider method calls, including `confine`, `defaultfor`, and `commands`, are automatically parsed and documented by Strings. The `desc` method is used to generate the docstring, and can include tags such as `@example` if written as a heredoc.
+
+Document types that use the new [Resource API](https://github.com/puppetlabs/puppet-resource_api).
+
+```ruby
+Puppet::ResourceApi.register_type(
+  name: 'database',
+  docs: 'An example database server resource type.',
+  attributes: {
+    ensure: {
+      type: 'Enum[present, absent, up, down]',
+      desc: 'What state the database should be in.',
+      default: 'up',
+    },
+    address: {
+      type: 'String',
+      desc: 'The database server name.',
+      behaviour: :namevar,
+    },
+    encrypt: {
+      type: 'Boolean',
+      desc: 'Whether or not to encrypt the database.',
+      default: false,
+      behaviour: :parameter,
+    },
+  },
+)
+```
+
+Here, the `docs` key acts like the `desc` method of the traditional resource type. Everything else is the same, except that now everything is a value in the data structure, not passed to methods.
 
 **Note**: Puppet Strings can not evaluate your Ruby code, so only certain static expressions are supported.
 
