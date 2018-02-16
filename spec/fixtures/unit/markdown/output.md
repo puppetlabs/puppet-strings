@@ -9,6 +9,7 @@
 * [`database`](#database): An example database server type.
 ## Functions
 * [`func`](#func): A simple Puppet function.
+* [`func3x`](#func3x): Documentation for an example 3.x function.
 * [`func4x`](#func4x): An example 4.x function.
 * [`func4x_1`](#func4x_1): An example 4.x function with only one signature.
 ## Classes
@@ -278,6 +279,27 @@ Third param.
 Options:
 
 * **:param3opt** `Array`: Something about this option
+
+### func3x
+Type: Ruby 3.x API
+
+#### `func3x(String $param1, Integer $param2)`
+
+Documentation for an example 3.x function.
+
+Returns: `Undef`
+
+##### `param1`
+
+Data type: `String`
+
+The first parameter.
+
+##### `param2`
+
+Data type: `Integer`
+
+The second parameter.
 
 ### func4x
 Type: Ruby 4.x API

@@ -8,8 +8,8 @@ Type: <%= type %>
 <%= sig.text %>
 
 <% end -%>
-<% if sig.return_val -%>
-Returns: `<%= sig.return_type %>` <%= sig.return_val %>
+<% if sig.return_type -%>
+Returns: `<%= sig.return_type %>`<% if sig.return_val %> <%= sig.return_val %><% end %>
 
 <% end -%>
 <% if raises -%>
