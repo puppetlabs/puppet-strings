@@ -31,7 +31,11 @@ module PuppetStrings
 
     file = nil
     if options[:json] || options[:markdown]
-      file = options[:path]
+      file = if options[:json]
+               options[:path]
+             elsif options[:markdown]
+               options[:path] || "REFERENCE.md"
+             end
       # Disable output and prevent stats/progress when writing to STDOUT
       args << '-n'
       args << '-q' unless file

@@ -177,16 +177,16 @@ For details about Strings JSON output, see [Strings JSON schema](https://github.
 
 Strings can also produce documentation in Markdown and then either generate an `.md` file or print Markdown to stdout. The generated markdown layout has been reviewed and approved by Puppet's tech pubs team and is the same that is used in Puppet Supported modules.
 
-To generate Markdown documentation to a file, run:
-
-```
-$ puppet strings generate --format markdown --out REFERENCE.md
-```
-
-To generate and then print Markdown documentation to stdout, run:
+To generate REFERENCE.md:
 
 ```
 $ puppet strings generate --format markdown
+```
+
+To write Markdown documentation to another file, use the --out option:
+
+```
+$ puppet strings generate --format markdown --out docs/INFO.md
 ```
 
 ### Output documents to GitHub Pages
@@ -301,7 +301,7 @@ end
 
 All provider method calls, including `confine`, `defaultfor`, and `commands`, are automatically parsed and documented by Strings. The `desc` method is used to generate the docstring, and can include tags such as `@example` if written as a heredoc.
 
-Document types that use the new [Resource API](https://github.com/puppetlabs/puppet-resource_api).
+Document types that use the new [Resource API](https://github.com/puppetlabs/puppet-resource_api):
 
 ```ruby
 Puppet::ResourceApi.register_type(

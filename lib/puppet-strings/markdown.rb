@@ -21,12 +21,15 @@ module PuppetStrings::Markdown
     final
   end
 
+  # mimicks the behavior of the json render, although path will never be nil
+  # @param [String] path path to destination file
   def self.render(path = nil)
     if path.nil?
       puts generate
       exit
     else
       File.open(path, 'w') { |file| file.write(generate) }
+      YARD::Logger.instance.debug "Wrote markdown to #{path}"
     end
   end
 end

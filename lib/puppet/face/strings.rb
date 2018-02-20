@@ -110,11 +110,15 @@ Puppet::Face.define(:strings, '0.0.1') do
       generate_options[:markup] = markup if markup
       generate_options[:path] = options[:out] if options[:out]
       generate_options[:stdout] = options[:stdout]
-      format = options[:format] || ""
-      if format.casecmp('markdown').zero?
-        generate_options[:markdown] = true
-      elsif format.casecmp('json').zero? || options[:emit_json] || options[:emit_json_stdout]
-        generate_options[:json] = true
+      format = options[:format]
+      if format
+        if format.casecmp('markdown').zero?
+          generate_options[:markdown] = true
+        elsif format.casecmp('json').zero? || options[:emit_json] || options[:emit_json_stdout]
+          generate_options[:json] = true
+        else
+          raise RuntimeError, "Invalid format #{options[:format]}. Please select 'json' or 'markdown'."
+        end
       end
     end
     generate_options
