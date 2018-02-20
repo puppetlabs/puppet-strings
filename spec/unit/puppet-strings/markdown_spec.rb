@@ -1,52 +1,87 @@
 require 'spec_helper'
-require 'puppet-strings/json'
+require 'puppet-strings/markdown'
+require 'puppet-strings/markdown/table_of_contents'
 require 'tempfile'
 
-describe PuppetStrings::Json do
+describe PuppetStrings::Markdown do
   before :each do
     # Populate the YARD registry with both Puppet and Ruby source
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
-# A simple class.
+# An overview for a simple class.
+# @summary A simple class.
+# @since 1.0.0
+# @see www.puppet.com
+# @example This is an example
+#  class { 'klass':
+#    param1 => 1,
+#    param3 => 'foo',
+#  }
+# @example This is another example
+#  class { 'klass':
+#    param1 => 1,
+#    param3 => 'foo',
+#  }
+# @raise SomeError
 # @param param1 First param.
 # @param param2 Second param.
+# @option param2 [String] :opt1 something about opt1
+# @option param2 [Hash] :opt2 a hash of stuff
 # @param param3 Third param.
-class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+#
+class klass (
+  Integer $param1 = 1,
+  $param2 = undef,
+  String $param3 = 'hi'
+) inherits foo::bar {
 }
 
-# A simple defined type.
+# An overview for a simple defined type.
+# @summary A simple defined type.
+# @since 1.1.0
+# @see www.puppet.com
+# @example Here's an example of this type:
+#  klass::dt { 'foo':
+#    param1 => 33,
+#    param4 => false,
+#  }
+# @return shouldn't return squat
+# @raise SomeError
 # @param param1 First param.
 # @param param2 Second param.
+# @option param2 [String] :opt1 something about opt1
+# @option param2 [Hash] :opt2 a hash of stuff
 # @param param3 Third param.
-define dt(Integer $param1, $param2, String $param3 = hi) {
+# @param param4 Fourth param.
+define klass::dt (
+  Integer $param1 = 44,
+  $param2,
+  String $param3 = 'hi',
+  Boolean $param4 = true
+) {
 }
 SOURCE
 
-    # Only include Puppet functions for 4.1+
-    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_FUNCTIONS
-# A simple function.
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
+# A simple Puppet function.
 # @param param1 First param.
 # @param param2 Second param.
 # @param param3 Third param.
+# @option param3 [Array] :param3opt Something about this option
+# @raise SomeError this is some error
 # @return [Undef] Returns nothing.
 function func(Integer $param1, $param2, String $param3 = hi) {
 }
 SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
-Puppet::Parser::Functions.newfunction(:func3x, doc: <<-DOC
-An example 3.x function.
-@param [String] first The first parameter.
-@param second The second parameter.
-@return [Undef] Returns nothing.
-DOC
-) do |*args|
-end
-
 # An example 4.x function.
 Puppet::Functions.create_function(:func4x) do
-  # The first overload.
+  # An overview for the first overload.
+  # @raise SomeError this is some error
   # @param param1 The first parameter.
   # @param param2 The second parameter.
+  # @option param2 [String] :option an option
+  # @option param2 [String] :option2 another option
   # @param param3 The third parameter.
   # @return Returns nothing.
   dispatch :foo do
@@ -56,6 +91,7 @@ Puppet::Functions.create_function(:func4x) do
     return_type 'Undef'
   end
 
+  # An overview for the second overload.
   # @param param The first parameter.
   # @param block The block parameter.
   # @return Returns a string.
@@ -75,6 +111,19 @@ Puppet::Functions.create_function(:func4x_1) do
   end
 end
 
+# An example 3.x function
+Puppet::Parser::Functions.newfunction(:func3x, doc: <<-DOC
+ Documentation for an example 3.x function.
+ @param param1 [String] The first parameter.
+ @param param2 [Integer] The second parameter.
+ @return [Undef]
+ @example Calling the function.
+   func3x('hi', 10)
+ DOC
+ ) do |*args|
+   #...
+end
+
 Puppet::Type.type(:database).provide :linux do
   desc 'An example provider on Linux.'
   confine kernel: 'Linux'
@@ -87,7 +136,15 @@ Puppet::Type.type(:database).provide :linux do
 end
 
 Puppet::Type.newtype(:database) do
-  desc 'An example database server resource type.'
+  desc <<-DESC
+An example database server type.
+@option opts :foo bar
+@raise SomeError
+@example here's an example
+ database { 'foo':
+   address => 'qux.baz.bar',
+ }
+DESC
   feature :encryption, 'The provider supports encryption.', methods: [:encrypt]
   ensurable do
     desc 'What state the database should be in.'
@@ -166,22 +223,22 @@ path this type will autorequire that file.
 SOURCE
   end
 
-  let(:filename) { TEST_PUPPET_FUNCTIONS ? 'output.json' : 'output_without_puppet_function.json' }
-  let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/json/#{filename}") }
+  let(:filename) { 'output.md' }
+  let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/markdown/#{filename}") }
   let(:baseline) { File.read(baseline_path) }
 
-  describe 'rendering JSON to a file' do
-    it 'should output the expected JSON content' do
-      Tempfile.open('json') do |file|
-        PuppetStrings::Json.render(file.path)
+  describe 'rendering markdown to a file' do
+    it 'should output the expected markdown content' do
+      Tempfile.open('md') do |file|
+        PuppetStrings::Markdown.render(file.path)
         expect(File.read(file.path)).to eq(baseline)
       end
     end
   end
 
-  describe 'rendering JSON to stdout' do
-    it 'should output the expected JSON content' do
-      expect{ PuppetStrings::Json.render(nil) }.to output(baseline).to_stdout
+  describe 'rendering markdown to stdout' do
+    it 'should output the expected markdown content' do
+      expect{ PuppetStrings::Markdown.render }.to output(baseline).to_stdout
     end
   end
 end

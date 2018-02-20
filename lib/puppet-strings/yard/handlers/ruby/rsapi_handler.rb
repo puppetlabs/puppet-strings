@@ -24,7 +24,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
     object = PuppetStrings::Yard::CodeObjects::Type.new(schema['name'])
     register object
 
-    docstring = schema['docs']
+    docstring = schema['desc'] || ""
     if docstring
       register_docstring(object, PuppetStrings::Yard::Util.scrub_string(docstring.to_s), nil)
     else
@@ -49,7 +49,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
 
   # check that the params of the register_type call are key/value pairs.
   def kv_arg_list?(params)
-    params.type == :list && params.children.count > 0 && params.children.first.type == :list && params.children.first.children.count > 0        && statement.parameters.children.first.children.first.type == :assoc
+    params.type == :list && params.children.count > 0 && params.children.first.type == :list && params.children.first.children.count > 0 && statement.parameters.children.first.children.first.type == :assoc
   end
 
   def extract_schema
@@ -134,7 +134,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
   end
 
   def set_values(definition, object)
-    object.add(definition['type']) if definition.key? 'type'
+    object.data_type = definition['type'] if definition.key? 'type'
     object.default = definition['default'] if definition.key? 'default'
     object.isnamevar = definition.key?('behaviour') && definition['behaviour'] == 'namevar'
   end

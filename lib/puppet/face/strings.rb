@@ -7,14 +7,20 @@ Puppet::Face.define(:strings, '0.0.1') do
   action(:generate) do
     default
 
-    option '--emit-json-stdout' do
-      summary 'Print JSON representation of the documentation to stdout.'
+    option '--format OUTPUT_FORMAT' do
+      summary 'Designate output format, JSON or markdown.'
     end
-    option '--emit-json FILE' do
-      summary 'Write JSON representation of the documentation to the given file.'
+    option '--out PATH' do
+      summary 'Write selected format to PATH. If no path is designated, strings prints to STDOUT.'
     end
     option '--markup FORMAT' do
       summary "The markup format to use for docstring text (defaults to 'markdown')."
+    end
+    option '--emit-json-stdout' do
+      summary 'DEPRECATED: Print JSON representation of the documentation to stdout.'
+    end
+    option '--emit-json PATH' do
+      summary 'DEPRECATED: Write JSON representation of the documentation to the given file.'
     end
 
     summary 'Generate documentation from files.'
@@ -94,11 +100,26 @@ Puppet::Face.define(:strings, '0.0.1') do
     generate_options[:yard_args] = yard_args unless yard_args.empty?
 
     if options
+      if options[:emit_json]
+        $stderr.puts "WARNING: '--emit-json PATH' is deprecated. Use '--format json --out PATH' instead."
+      end
+      if options[:emit_json_stdout]
+        $stderr.puts "WARNING: '--emit-json-stdout' is deprecated. Use '--format json' instead."
+      end
       markup = options[:markup]
       generate_options[:markup] = markup if markup
-      json_file = options[:emit_json]
-      generate_options[:json] = json_file if json_file
-      generate_options[:json] = nil if options[:emit_json_stdout]
+      generate_options[:path] = options[:out] if options[:out]
+      generate_options[:stdout] = options[:stdout]
+      format = options[:format]
+      if format
+        if format.casecmp('markdown').zero?
+          generate_options[:markdown] = true
+        elsif format.casecmp('json').zero? || options[:emit_json] || options[:emit_json_stdout]
+          generate_options[:json] = true
+        else
+          raise RuntimeError, "Invalid format #{options[:format]}. Please select 'json' or 'markdown'."
+        end
+      end
     end
     generate_options
   end

@@ -34,6 +34,13 @@ module PuppetStrings::Json
       next t.to_hash if t.respond_to?(:to_hash)
 
       tag = { tag_name: t.tag_name }
+      # grab nested information for @option tags
+      if tag[:tag_name] == 'option'
+        tag[:opt_name] = t.pair.name
+        tag[:opt_text] = t.pair.text
+        tag[:opt_types] = t.pair.types
+        tag[:parent] = t.name
+      end
       tag[:text] = t.text if t.text
       tag[:types] = t.types if t.types
       tag[:name] = t.name if t.name
