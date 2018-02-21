@@ -12,6 +12,7 @@ module PuppetStrings::Json
       resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash),
       providers: YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash),
       puppet_functions: YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash),
+      puppet_tasks: YARD::Registry.all(:puppet_task).sort_by!(&:name).map!(&:to_hash),
       # TODO: Need Ruby documentation?
     }
 

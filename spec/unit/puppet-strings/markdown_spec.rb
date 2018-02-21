@@ -60,6 +60,30 @@ define klass::dt (
 ) {
 }
 SOURCE
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :json)
+{
+  "description": "Allows you to backup your database to local file.",
+  "input_method": "stdin",
+  "parameters": {
+    "database": {
+      "description": "Database to connect to",
+      "type": "Optional[String[1]]"
+    },
+    "user": {
+      "description": "The user",
+      "type": "Optional[String[1]]"
+    },
+    "password": {
+      "description": "The password",
+      "type": "Optional[String[1]]"
+    },
+     "sql": {
+      "description": "Path to file you want backup to",
+      "type": "String[1]"
+    }
+  }
+}
+SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :json)
 {

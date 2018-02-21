@@ -1,3 +1,5 @@
+require 'puppet-strings/yard/parsers/json/task_statement'
+
 class PuppetStrings::Yard::Parsers::JSON::Parser < YARD::Parser::Base
   attr_reader :file, :source
 
@@ -6,17 +8,23 @@ class PuppetStrings::Yard::Parsers::JSON::Parser < YARD::Parser::Base
   # @param [String] filename The file name of the file being parsed.
   # @return [void]
   def initialize(source, filename)
-    @source = source
     @file = filename
+    @source = source
+    @statements = []
   end
 
-  # Parses the source.
+  def enumerator
+    @statements
+  end
+
+  # Parses the source
   # @return [void]
   def parse
     begin
-      @statements ||= (@visitor.visit(::Puppet::Pops::Parser::Parser.new.parse_string(source)) || []).compact
-    rescue ::Puppet::ParseError => ex
-      log.error "Failed to parse #{@file}: #{ex.message}"
+      json = JSON.parse(source)
+      @statements.push(PuppetStrings::Yard::Parsers::JSON::TaskStatement.new(json, @file))
+    rescue
+      log.error "Failed to parse #{@file}: "
       @statements = []
     end
     @statements.freeze

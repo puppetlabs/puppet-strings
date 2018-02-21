@@ -32,6 +32,31 @@ function func(Integer $param1, $param2, String $param3 = hi) {
 }
 SOURCE
 
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :json)
+{
+  "description": "Allows you to backup your database to local file.",
+  "input_method": "stdin",
+  "parameters": {
+    "database": {
+      "description": "Database to connect to",
+      "type": "Optional[String[1]]"
+    },
+    "user": {
+      "description": "The user",
+      "type": "Optional[String[1]]"
+    },
+    "password": {
+      "description": "The password",
+      "type": "Optional[String[1]]"
+    },
+     "sql": {
+      "description": "Path to file you want backup to",
+      "type": "String[1]"
+    }
+  }
+}
+SOURCE
+
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
 Puppet::Parser::Functions.newfunction(:func3x, doc: <<-DOC
 An example 3.x function.
@@ -132,6 +157,7 @@ SOURCE
 
   describe 'rendering JSON to a file' do
     it 'should output the expected JSON content' do
+      require 'pry'; binding.pry
       Tempfile.open('json') do |file|
         PuppetStrings::Json.render(file.path)
         expect(File.read(file.path)).to eq(baseline)

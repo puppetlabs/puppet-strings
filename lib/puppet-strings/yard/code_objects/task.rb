@@ -18,16 +18,17 @@ end
 
 # Implements the Puppet task code object.
 class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects::Base
-  attr_reader :source
+  attr_reader :name, :description, :parameters
 
   # Initializes a Puppet task code object.
-  # @param [PuppetStrings::Parsers::ClassStatement] statement The class statement that was parsed.
+  # @param [String] source The task's JSON file source
+  # @param [String] filepath Path to task's .json file
   # @return [void]
-  def initialize(source)
-    @source = source
-    j = JSON.parse(source)
-    @parameters = j['parameters'].map { |name,value| [p.name, p.value] }
-    super(PuppetStrings::Yard::CodeObjects::Tasks.instance, statement.name)
+  def initialize(statement)
+    @name = statement.name
+    @description = statement.description
+    @parameters = statement.parameters
+    super(PuppetStrings::Yard::CodeObjects::Tasks.instance, name)
   end
 
   # Gets the type of the code object.
@@ -47,10 +48,8 @@ class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects:
   def to_hash
     hash = {}
     hash[:name] = name
-    hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring)
-    defaults = Hash[*parameters.select{ |p| !p[1].nil? }.flatten]
-    hash[:defaults] = defaults unless defaults.empty?
-    hash[:source] = source unless source && source.empty?
+    hash[:description] = description unless description.empty?
+    hash[:parameters] = parameters unless parameters.empty?
     hash
   end
 end
