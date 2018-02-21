@@ -22,7 +22,7 @@ class PuppetStrings::Yard::Parsers::JSON::Parser < YARD::Parser::Base
   def parse
     begin
       json = JSON.parse(source)
-      @statements.push(PuppetStrings::Yard::Parsers::JSON::TaskStatement.new(json, @file))
+      @statements.push(PuppetStrings::Yard::Parsers::JSON::TaskStatement.new(json, @source, @file))
     rescue
       log.error "Failed to parse #{@file}: "
       @statements = []

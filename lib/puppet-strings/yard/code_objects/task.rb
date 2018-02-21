@@ -18,7 +18,7 @@ end
 
 # Implements the Puppet task code object.
 class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects::Base
-  attr_reader :name, :description, :parameters
+  attr_reader :name, :statement
 
   # Initializes a Puppet task code object.
   # @param [String] source The task's JSON file source
@@ -26,8 +26,7 @@ class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects:
   # @return [void]
   def initialize(statement)
     @name = statement.name
-    @description = statement.description
-    @parameters = statement.parameters
+    @statement = statement
     super(PuppetStrings::Yard::CodeObjects::Tasks.instance, name)
   end
 
@@ -48,8 +47,9 @@ class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects:
   def to_hash
     hash = {}
     hash[:name] = name
-    hash[:description] = description unless description.empty?
-    hash[:parameters] = parameters unless parameters.empty?
+    statement.json.each do |key, value|
+      hash[key] = value unless value.nil?
+    end
     hash
   end
 end
