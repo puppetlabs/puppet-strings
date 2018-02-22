@@ -11,7 +11,8 @@ module PuppetStrings::Markdown
     def self.render
       final = in_rtypes.length > 0 ? "## Resource types\n\n" : ""
       in_rtypes.each do |type|
-        final << PuppetStrings::Markdown::ResourceType.new(type).render
+        to_render = PuppetStrings::Markdown::ResourceType.new(type)
+        final << to_render.render if to_render.contains_displayed_tags?
       end
       final
     end

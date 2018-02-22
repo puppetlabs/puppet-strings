@@ -11,7 +11,8 @@ module PuppetStrings::Markdown
     def self.render
       final = in_classes.length > 0 ? "## Classes\n\n" : ""
       in_classes.each do |klass|
-        final << PuppetStrings::Markdown::PuppetClass.new(klass).render
+        to_render = PuppetStrings::Markdown::PuppetClass.new(klass)
+        final << to_render.render if to_render.contains_displayed_tags?
       end
       final
     end

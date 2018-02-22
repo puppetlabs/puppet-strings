@@ -47,6 +47,9 @@ module PuppetStrings::Markdown
   #  ") inherits foo::bar {\n" +
   #  "}"}
   class Base
+
+    DISPLAYED_TAGS = %w[summary see since version param raise option overload]
+
     def initialize(registry, component_type)
       @type = component_type
       @registry = registry
@@ -147,6 +150,14 @@ module PuppetStrings::Markdown
       else
         return value
       end
+    end
+
+    def contains_displayed_tags?
+      result = @registry[:docstring][:text] ? true : false
+      @tags.each do |tag|
+        result = true if DISPLAYED_TAGS.include? tag[:tag_name]
+      end
+      result
     end
 
     # @return [String] full markdown rendering of a component

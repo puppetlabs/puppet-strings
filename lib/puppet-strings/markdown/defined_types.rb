@@ -11,7 +11,8 @@ module PuppetStrings::Markdown
     def self.render
       final = in_dtypes.length > 0 ? "## Defined types\n\n" : ""
       in_dtypes.each do |type|
-        final << PuppetStrings::Markdown::DefinedType.new(type).render
+        to_render = PuppetStrings::Markdown::DefinedType.new(type)
+        final << to_render.render if to_render.contains_displayed_tags?
       end
       final
     end

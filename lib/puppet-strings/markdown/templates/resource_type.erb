@@ -1,5 +1,7 @@
 ### <%= name %>
 
+<%= text || summary || "The #{name} type." %>
+
 <% if since -%>
 * **Since** <%= since %>
 
@@ -12,9 +14,6 @@
 <% end -%>
 
 <% end -%>
-<% if text -%>
-<%= text %>
-<% end %>
 <% if examples -%>
 #### Examples
 <% examples.each do |eg| -%>

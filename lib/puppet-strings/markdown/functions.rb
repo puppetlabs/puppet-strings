@@ -11,7 +11,8 @@ module PuppetStrings::Markdown
     def self.render
       final = in_functions.length > 0 ? "## Functions\n\n" : ""
       in_functions.each do |func|
-        final << PuppetStrings::Markdown::Function.new(func).render
+        to_render = PuppetStrings::Markdown::Function.new(func)
+        final << to_render.render if to_render.contains_displayed_tags?
       end
       final
     end
