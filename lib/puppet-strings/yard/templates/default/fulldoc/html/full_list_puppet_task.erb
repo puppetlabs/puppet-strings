@@ -1,5 +1,4 @@
 <% even = false  %>
-<% require 'pry'; binding.pry %>
 <% @items.each do |item| %>
     <li id="object_<%=item.path%>" class="<%= even ? 'even' : 'odd' %>">
       <div class="item">

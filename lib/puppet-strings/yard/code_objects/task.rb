@@ -9,7 +9,7 @@ class PuppetStrings::Yard::CodeObjects::Tasks < PuppetStrings::Yard::CodeObjects
   end
 
   # Gets the display name of the group.
-  # @param [Boolean] prefix whether to show a prefix. Ignored for Puppet group namespaces.
+  # @param [Boolean] prefix whether to show a prefix.
   # @return [String] Returns the display name of the group.
   def name(prefix = false)
     'Puppet Tasks'
@@ -18,9 +18,9 @@ end
 
 # Implements the Puppet task code object.
 class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects::Base
-  attr_reader :name, :statement
+  attr_reader :statement
 
-  # Initializes a Puppet task code object.
+  # Initializes a JSON task code object.
   # @param [String] source The task's JSON file source
   # @param [String] filepath Path to task's .json file
   # @return [void]
@@ -42,14 +42,16 @@ class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects:
     @statement.source
   end
 
+  # A task can't be undocumented, which is nice. Because of this,
+  # just return a generic docstring for stats purposes.
+  # @return [YARD::Docstring] generic docstring
+  def docstring
+    YARD::Docstring.new("Puppet Task docstring")
+  end
+
   # Converts the code object to a hash representation.
   # @return [Hash] Returns a hash representation of the code object.
   def to_hash
-    hash = {}
-    hash[:name] = name
-    statement.json.each do |key, value|
-      hash[key] = value unless value.nil?
-    end
-    hash
+    { name: name.to_s }.merge statement.json
   end
 end
