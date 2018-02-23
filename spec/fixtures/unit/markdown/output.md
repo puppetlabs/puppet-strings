@@ -2,6 +2,8 @@
 
 ## Classes
 * [`klass`](#klass): A simple class.
+* [`noparams`](#noparams): Overview for class noparams
+* [`noparams_desc`](#noparams_desc): 
 ## Defined types
 * [`klass::dt`](#klassdt): A simple defined type.
 ## Resource types
@@ -74,6 +76,16 @@ Data type: `String`
 Third param.
 
 Default value: 'hi'
+
+
+### noparams
+
+Overview for class noparams
+
+
+### noparams_desc
+
+The noparams_desc class.
 
 
 ## Defined types
