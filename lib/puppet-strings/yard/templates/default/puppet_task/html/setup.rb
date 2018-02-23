@@ -1,7 +1,7 @@
 # Initializes the template.
 # @return [void]
 def init
-  sections :header, :box_info, T('tags'), :overview, :input_method, :parameters
+  sections :header, :box_info, T('tags'), :overview, :input, :parameters
 end
 
 def json

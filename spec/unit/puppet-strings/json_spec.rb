@@ -157,7 +157,6 @@ SOURCE
 
   describe 'rendering JSON to a file' do
     it 'should output the expected JSON content' do
-      require 'pry'; binding.pry
       Tempfile.open('json') do |file|
         PuppetStrings::Json.render(file.path)
         expect(File.read(file.path)).to eq(baseline)
