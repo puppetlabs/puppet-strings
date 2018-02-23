@@ -37,7 +37,7 @@ class PuppetStrings::Yard::Handlers::Puppet::FunctionHandler < PuppetStrings::Ya
   def add_return_tag(object, type=nil)
     tag = object.tag(:return)
     if tag
-      if (type && tag.types) && (type != tag.types)
+      if (type && tag.types.first) && (type != tag.types.first)
         log.warn "Documented return type does not match return type in function definition near #{statement.file}:#{statement.line}."
       end
 
