@@ -8,6 +8,11 @@ module PuppetStrings::Yard::Handlers
     require 'puppet-strings/yard/handlers/ruby/function_handler'
   end
 
+  # The module for custom JSON YARD handlers.
+  module JSON
+    require 'puppet-strings/yard/handlers/json/task_handler'
+  end
+
   # The module for custom Puppet YARD handlers.
   module Puppet
     require 'puppet-strings/yard/handlers/puppet/class_handler'

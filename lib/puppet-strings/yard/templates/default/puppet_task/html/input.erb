@@ -1,0 +1,13 @@
+<% if json['input_method'] || json['supports_noop'] %>
+<div class="tags">
+  <p class="tag_title"> Input </p>
+  <ul>
+<% if json['input_method'] %>
+    <li> Input method: <%= json['input_method'] %> </li>
+<% end %>
+<% if json['supports_noop'] %>
+    <li> Supports noop? <%= json['supports_noop'] %> </li>
+<% end %>
+  </ul>
+</div>
+<% end %>
