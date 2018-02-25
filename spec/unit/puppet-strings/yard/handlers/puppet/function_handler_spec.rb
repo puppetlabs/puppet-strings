@@ -20,7 +20,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     let(:source) { 'function foo{' }
 
     it 'should log an error' do
-      expect{ subject }.to output(/\[error\]: Failed to parse \(stdin\): Syntax error at end of file/).to_stdout_from_any_process
+      expect{ subject }.to output(/\[error\]: Failed to parse \(stdin\): Syntax error at end of/).to_stdout_from_any_process
       expect(subject.empty?).to eq(true)
     end
   end
@@ -213,6 +213,21 @@ SOURCE
       expect(tags[0].tag_name).to eq('return')
       expect(tags[0].text).to eq('')
       expect(tags[0].types).to eq(['String'])
+    end
+  end
+
+  describe 'parsing a function with a non-conflicting return tag and type in function definition', if: TEST_FUNCTION_RETURN_TYPE do
+    let(:source) { <<-SOURCE
+# A simple foo function
+# @return [String] Hi there
+function foo() >> String {
+  notice 'hi there'
+}
+SOURCE
+    }
+
+    it 'should not output a warning if return types match' do
+      expect{ subject }.not_to output(/Documented return type does not match return type in function definition/).to_stdout_from_any_process
     end
   end
 
