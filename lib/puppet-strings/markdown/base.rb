@@ -47,9 +47,6 @@ module PuppetStrings::Markdown
   #  ") inherits foo::bar {\n" +
   #  "}"}
   class Base
-
-    DISPLAYED_TAGS = %w[summary see since version param raise option overload]
-
     def initialize(registry, component_type)
       @type = component_type
       @registry = registry
@@ -130,7 +127,7 @@ module PuppetStrings::Markdown
       {
         name: name.to_s,
         link: link,
-        desc: summary || @registry[:docstring][:text].gsub("\n", ". "),
+        desc: summary || @registry[:docstring][:text][0..140].gsub("\n",' '),
         private: private?
       }
     end
@@ -158,14 +155,6 @@ module PuppetStrings::Markdown
       api = @tags.find { |tag| tag[:tag_name] == 'api' }
       unless api.nil?
         result = api[:text] == 'private' ? true : false
-      end
-      result
-    end
-
-    def contains_displayed_tags?
-      result = @registry[:docstring][:text] ? true : false
-      @tags.each do |tag|
-        result = true if DISPLAYED_TAGS.include? tag[:tag_name]
       end
       result
     end

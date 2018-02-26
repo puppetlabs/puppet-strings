@@ -5,6 +5,7 @@ describe PuppetStrings::Markdown::Base do
     before :each do
       YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
 # An overview
+# @api private
 # @summary A simple class.
 # @param param1 First param.
 # @param param2 Second param.
@@ -34,6 +35,12 @@ SOURCE
         end
       end
 
+    end
+
+    describe '#private?' do
+      it do
+        expect(component.private?).to be true
+      end
     end
 
     describe '#params' do
@@ -126,7 +133,7 @@ SOURCE
         expect(toc).to be_instance_of Hash
       end
       it 'uses overview for :desc in absence of summary' do
-        expect(toc[:desc]).to eq 'An overview. It\'s a longer overview. Ya know?'
+        expect(toc[:desc]).to eq 'An overview It\'s a longer overview Ya know?'
       end
     end
 
