@@ -114,6 +114,12 @@ SOURCE
       end
     end
 
+    describe '#private?' do
+      it do
+        expect(component.private?).to be false
+      end
+    end
+
     describe '#toc_info' do
       let(:toc) { component.toc_info }
       it 'returns a hash' do

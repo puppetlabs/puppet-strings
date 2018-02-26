@@ -36,9 +36,8 @@ class klass (
 }
 
 # Overview for class noparams
+# @api private
 class noparams () {}
-
-class noparams_desc () {}
 
 # An overview for a simple defined type.
 # @summary A simple defined type.

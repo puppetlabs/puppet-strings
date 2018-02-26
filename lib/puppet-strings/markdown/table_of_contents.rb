@@ -1,13 +1,21 @@
 module PuppetStrings::Markdown
   module TableOfContents
     def self.render
-      puppet_classes = PuppetStrings::Markdown::PuppetClasses.toc_info
-      puppet_defined_types = PuppetStrings::Markdown::DefinedTypes.toc_info
-      puppet_resource_types = PuppetStrings::Markdown::ResourceTypes.toc_info
-      puppet_functions = PuppetStrings::Markdown::Functions.toc_info
+      final = ""
 
-      template = File.join(File.dirname(__FILE__),"templates/table_of_contents.erb")
-      ERB.new(File.read(template), nil, '-').result(binding)
+      [PuppetStrings::Markdown::PuppetClasses,
+      PuppetStrings::Markdown::DefinedTypes,
+      PuppetStrings::Markdown::ResourceTypes,
+      PuppetStrings::Markdown::Functions].each do |r|
+        toc = r.toc_info
+        group_name = toc.shift
+        group = toc
+        priv = r.contains_private?
+
+        template = File.join(File.dirname(__FILE__),"templates/table_of_contents.erb")
+        final << ERB.new(File.read(template), nil, '-').result(binding)
+      end
+      final
     end
   end
 end

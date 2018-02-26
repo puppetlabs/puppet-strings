@@ -5,23 +5,30 @@ module PuppetStrings::Markdown
 
     # @return [Array] list of classes
     def self.in_classes
-      YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash)
+      arr = YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash)
+      arr.map! { |a| PuppetStrings::Markdown::PuppetClass.new(a) }
+    end
+
+    def self.contains_private?
+      result = false
+      unless in_classes.nil?
+        in_classes.find { |klass| klass.private? }.nil? ? false : true
+      end
     end
 
     def self.render
       final = in_classes.length > 0 ? "## Classes\n\n" : ""
       in_classes.each do |klass|
-        to_render = PuppetStrings::Markdown::PuppetClass.new(klass)
-        final << to_render.render if to_render.contains_displayed_tags?
+        final << klass.render unless klass.private?
       end
       final
     end
 
     def self.toc_info
-      final = []
+      final = ["Classes"]
 
       in_classes.each do |klass|
-        final.push(PuppetStrings::Markdown::PuppetClass.new(klass).toc_info)
+        final.push(klass.toc_info)
       end
 
       final

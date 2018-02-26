@@ -130,7 +130,8 @@ module PuppetStrings::Markdown
       {
         name: name.to_s,
         link: link,
-        desc: summary || @registry[:docstring][:text].gsub("\n", ". ")
+        desc: summary || @registry[:docstring][:text].gsub("\n", ". "),
+        private: private?
       }
     end
 
@@ -150,6 +151,15 @@ module PuppetStrings::Markdown
       else
         return value
       end
+    end
+
+    def private?
+      result = false
+      api = @tags.find { |tag| tag[:tag_name] == 'api' }
+      unless api.nil?
+        result = api[:text] == 'private' ? true : false
+      end
+      result
     end
 
     def contains_displayed_tags?
