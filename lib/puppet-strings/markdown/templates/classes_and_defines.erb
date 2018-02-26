@@ -1,5 +1,15 @@
 ### <%= name %>
 
+<% if text -%>
+<%= text %>
+
+<% elsif summary -%>
+<%= summary %>
+
+<% else -%>
+<%= "The #{name} class." %>
+
+<% end -%>
 <% if since -%>
 * **Since** <%= since %>
 

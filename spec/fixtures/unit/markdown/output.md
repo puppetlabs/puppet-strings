@@ -1,7 +1,10 @@
 # Reference
 
 ## Classes
+### Public Classes
 * [`klass`](#klass): A simple class.
+### Private Classes
+* `noparams`: Overview for class noparams
 ## Defined types
 * [`klass::dt`](#klassdt): A simple defined type.
 ## Resource types
@@ -15,6 +18,8 @@
 ## Classes
 
 ### klass
+
+An overview for a simple class.
 
 * **Since** 1.0.0
 
@@ -77,6 +82,8 @@ Default value: 'hi'
 ## Defined types
 
 ### klass::dt
+
+An overview for a simple defined type.
 
 * **Since** 1.1.0
 
@@ -249,6 +256,8 @@ Default value: `false`
 ### func
 Type: Puppet Language
 
+A simple Puppet function.
+
 #### `func(Integer $param1, Any $param2, String $param3 = hi)`
 
 A simple Puppet function.
@@ -283,6 +292,8 @@ Options:
 ### func3x
 Type: Ruby 3.x API
 
+Documentation for an example 3.x function.
+
 #### `func3x(String $param1, Integer $param2)`
 
 Documentation for an example 3.x function.
@@ -303,6 +314,8 @@ The second parameter.
 
 ### func4x
 Type: Ruby 4.x API
+
+An example 4.x function.
 
 #### `func4x(Integer $param1, Any $param2, Optional[Array[String]] $param3)`
 
@@ -353,6 +366,8 @@ The block parameter.
 
 ### func4x_1
 Type: Ruby 4.x API
+
+An example 4.x function with only one signature.
 
 #### `func4x_1(Integer $param1)`
 

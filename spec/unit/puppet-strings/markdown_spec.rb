@@ -35,6 +35,10 @@ class klass (
 ) inherits foo::bar {
 }
 
+# Overview for class noparams
+# @api private
+class noparams () {}
+
 # An overview for a simple defined type.
 # @summary A simple defined type.
 # @since 1.1.0
