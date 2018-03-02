@@ -19,7 +19,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
     let(:source) { 'define foo{' }
 
     it 'should log an error' do
-      expect{ subject }.to output(/\[error\]: Failed to parse \(stdin\): Syntax error at end of file/).to_stdout_from_any_process
+      expect{ subject }.to output(/\[error\]: Failed to parse \(stdin\): Syntax error at end of input/).to_stdout_from_any_process
       expect(subject.empty?).to eq(true)
     end
   end
