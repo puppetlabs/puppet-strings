@@ -7,6 +7,7 @@ module PuppetStrings
     types/**/*.pp
     lib/**/*.rb
     tasks/*.json
+    plans/*.pp
   ).freeze
 
   # Generates documentation.
@@ -60,6 +61,10 @@ module PuppetStrings
     if options[:markdown]
       render_markdown(file)
     end
+  end
+
+  def self.puppet_5?
+    Puppet::Util::Package.versioncmp(Puppet.version, "5.0.0") >= 0
   end
 
   def self.render_json(path)

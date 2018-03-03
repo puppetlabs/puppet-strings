@@ -49,7 +49,8 @@ class YARD::CLI::Yardoc
       :puppet_type,
       :puppet_provider,
       :puppet_function,
-      :puppet_task
+      :puppet_task,
+      :puppet_plan
     )
   end
 end
@@ -80,6 +81,11 @@ class YARD::CLI::Stats
 
   def stats_for_puppet_tasks
     output 'Puppet Tasks', *type_statistics_all(:puppet_task)
+  end
+
+  def stats_for_puppet_plans
+    return unless PuppetStrings.puppet_5?
+    output 'Puppet Plans', *type_statistics_all(:puppet_plan)
   end
 
   def output(name, data, undoc = nil)

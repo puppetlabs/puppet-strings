@@ -71,3 +71,12 @@ def generate_puppet_task_list
   @list_type = 'puppet_task'
   generate_list_contents
 end
+
+# Generates the searchable Puppet Plan list.
+# @return [void]
+def generate_puppet_plan_list
+  @items = Registry.all(:puppet_plan).sort_by {|t| t.name.to_s }
+  @list_title = 'Puppet Plan List'
+  @list_type = 'puppet_plan'
+  generate_list_contents
+end

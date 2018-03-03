@@ -647,6 +647,43 @@
     }
   ],
   "puppet_plans": [
-
+    {
+      "name": "plann",
+      "file": "(stdin)",
+      "line": 5,
+      "docstring": {
+        "text": "A simple plan.",
+        "tags": [
+          {
+            "tag_name": "param",
+            "text": "First param.",
+            "types": [
+              "String"
+            ],
+            "name": "param1"
+          },
+          {
+            "tag_name": "param",
+            "text": "Second param.",
+            "types": [
+              "Any"
+            ],
+            "name": "param2"
+          },
+          {
+            "tag_name": "param",
+            "text": "Third param.",
+            "types": [
+              "Integer"
+            ],
+            "name": "param3"
+          }
+        ]
+      },
+      "defaults": {
+        "param3": "1"
+      },
+      "source": "plan plann(String $param1, $param2, Integer $param3 = 1) {\n}"
+    }
   ]
 }
