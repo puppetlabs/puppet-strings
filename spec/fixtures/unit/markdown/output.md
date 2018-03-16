@@ -41,7 +41,6 @@ An overview for a simple class.
 * **See also**
 www.puppet.com
 
-
 #### Examples
 
 ##### This is an example
@@ -61,7 +60,6 @@ class { 'klass':
   param3 => 'foo',
 }
 ```
-
 
 #### Parameters
 
@@ -96,7 +94,6 @@ Third param.
 
 Default value: 'hi'
 
-
 ## Defined types
 
 ### klass::dt
@@ -108,7 +105,6 @@ An overview for a simple defined type.
 * **See also**
 www.puppet.com
 
-
 #### Examples
 
 ##### Here's an example of this type:
@@ -119,7 +115,6 @@ klass::dt { 'foo':
   param4 => false,
 }
 ```
-
 
 #### Parameters
 
@@ -159,7 +154,6 @@ Data type: `Boolean`
 Fourth param.
 
 Default value: `true`
-
 
 ## Resource types
 
@@ -210,7 +204,6 @@ Data type: `Variant[Pattern[/A(0x)?[0-9a-fA-F]{8}Z/], Pattern[/A(0x)?[0-9a-fA-F]
 _*this data type contains a regex that may not be accurately reflected in generated documentation_
 
 The ID of the key you want to manage.
-
 
 ### database
 
@@ -273,7 +266,6 @@ Valid values: `true`, `false`, yes, no
 Whether or not to encrypt the database.
 
 Default value: `false`
-
 
 ## Functions
 

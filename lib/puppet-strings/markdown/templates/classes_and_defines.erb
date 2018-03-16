@@ -17,8 +17,12 @@
 <% if see -%>
 * **See also**
 <% see.each do |sa| -%>
+<% if sa[:name] -%>
 <%= sa[:name] %>
+<% end -%>
+<% if sa[:text] -%>
 <%= sa[:text] %>
+<% end -%>
 <% end -%>
 
 <% end -%>
@@ -34,7 +38,7 @@
 
 <% end -%>
 <% end -%>
-<% if params %>
+<% if params -%>
 #### Parameters
 
 The following parameters are available in the `<%= name %>` <%= @type %>.
@@ -62,4 +66,3 @@ Default value: <%= value_string(defaults[param[:name]]) %>
 <% end -%>
 <% end -%>
 <% end -%>
-

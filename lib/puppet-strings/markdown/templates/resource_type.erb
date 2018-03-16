@@ -17,8 +17,12 @@
 <% if see -%>
 * **See also**
 <% see.each do |sa| -%>
+<% if sa[:name] -%>
 <%= sa[:name] %>
+<% end -%>
+<% if sa[:text] -%>
 <%= sa[:text] %>
+<% end -%>
 <% end -%>
 
 <% end -%>
@@ -114,4 +118,3 @@ Default value: <%= value_string(param[:default]) %>
 <% end -%>
 <% end -%>
 <% end -%>
-
