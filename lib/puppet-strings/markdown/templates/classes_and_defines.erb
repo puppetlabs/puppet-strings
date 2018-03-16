@@ -24,8 +24,10 @@
 <% end -%>
 <% if examples -%>
 #### Examples
+
 <% examples.each do |eg| -%>
 ##### <%= eg[:name] %>
+
 ```puppet
 <%= eg[:text] %>
 ```

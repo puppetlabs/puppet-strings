@@ -1,22 +1,35 @@
 # Reference
 
 ## Classes
+
 ### Public Classes
+
 * [`klass`](#klass): A simple class.
+
 ### Private Classes
+
 * `noparams`: Overview for class noparams
+
 ## Defined types
+
 * [`klass::dt`](#klassdt): A simple defined type.
+
 ## Resource types
+
 * [`apt_key`](#apt_key): Example resource type using the new API.
 * [`database`](#database): An example database server type.
+
 ## Functions
+
 * [`func`](#func): A simple Puppet function.
 * [`func3x`](#func3x): Documentation for an example 3.x function.
 * [`func4x`](#func4x): An example 4.x function.
 * [`func4x_1`](#func4x_1): An example 4.x function with only one signature.
+
 ## Tasks
+
 * [`(stdin)`](#(stdin)): Allows you to backup your database to local file.
+
 ## Classes
 
 ### klass
@@ -30,7 +43,9 @@ www.puppet.com
 
 
 #### Examples
+
 ##### This is an example
+
 ```puppet
 class { 'klass':
   param1 => 1,
@@ -39,6 +54,7 @@ class { 'klass':
 ```
 
 ##### This is another example
+
 ```puppet
 class { 'klass':
   param1 => 1,
@@ -94,7 +110,9 @@ www.puppet.com
 
 
 #### Examples
+
 ##### Here's an example of this type:
+
 ```puppet
 klass::dt { 'foo':
   param1 => 33,
@@ -155,7 +173,9 @@ If Puppet is given the location of a key file which looks like an absolute
 path this type will autorequire that file.
 
 #### Examples
+
 ##### here's an example
+
 ```puppet
 apt_key { '6F6B15509CF8E59E6E469F327F438280EF8D349F':
   source => 'http://apt.puppetlabs.com/pubkey.gpg'
@@ -197,7 +217,9 @@ The ID of the key you want to manage.
 An example database server type.
 
 #### Examples
+
 ##### here's an example
+
 ```puppet
 database { 'foo':
   address => 'qux.baz.bar',
@@ -256,6 +278,7 @@ Default value: `false`
 ## Functions
 
 ### func
+
 Type: Puppet Language
 
 A simple Puppet function.
@@ -292,6 +315,7 @@ Options:
 * **:param3opt** `Array`: Something about this option
 
 ### func3x
+
 Type: Ruby 3.x API
 
 Documentation for an example 3.x function.
@@ -315,6 +339,7 @@ Data type: `Integer`
 The second parameter.
 
 ### func4x
+
 Type: Ruby 4.x API
 
 An example 4.x function.
@@ -367,6 +392,7 @@ Data type: `Callable`
 The block parameter.
 
 ### func4x_1
+
 Type: Ruby 4.x API
 
 An example 4.x function with only one signature.

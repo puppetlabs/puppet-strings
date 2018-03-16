@@ -24,14 +24,17 @@
 <% end -%>
 <% if examples -%>
 #### Examples
+
 <% examples.each do |eg| -%>
 ##### <%= eg[:name] %>
+
 ```puppet
 <%= eg[:text] %>
 ```
+
 <% end -%>
 <% end -%>
-<% if properties %>
+<% if properties -%>
 #### Properties
 
 The following properties are available in the `<%= name %>` <%= @type %>.
