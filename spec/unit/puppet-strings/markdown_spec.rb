@@ -187,7 +187,7 @@ end
 
 Puppet::ResourceApi.register_type(
   name: 'apt_key',
-  desc: <<-EOS,
+  docs: <<-EOS,
 @summary Example resource type using the new API.
 @raise SomeError
 This type provides Puppet with the capabilities to manage GPG keys needed
@@ -237,12 +237,6 @@ SOURCE
         PuppetStrings::Markdown.render(file.path)
         expect(File.read(file.path)).to eq(baseline)
       end
-    end
-  end
-
-  describe 'rendering markdown to stdout' do
-    it 'should output the expected markdown content' do
-      expect{ PuppetStrings::Markdown.render }.to output(baseline).to_stdout
     end
   end
 end
