@@ -42,7 +42,7 @@ Puppet Strings creates documentation for Puppet code by reading code and [YARD](
 
 By default, Puppet Strings outputs documentation as HTML, or you can specify JSON or Markdown output instead.
 
-Strings generates reference documentation based on the code and Strings code comments in all Puppet and Ruby source files under the `./manifests/`, `./functions/`, and `./lib/` directories.
+Strings generates reference documentation based on the code and Strings code comments in all Puppet and Ruby source files under the `./manifests/`, `./functions/`, `./lib/`, `./types/``./tasks/` directories.
 
 Strings outputs HTML of the reference information and the module README to the module's `./doc/` directory. This output can be rendered in any browser.
 
@@ -69,9 +69,9 @@ $ puppet strings generate 'modules/foo/lib/**/*.rb' 'modules/foo/manifests/**/*.
 
 ### Generate documentation in Markdown
 
-Strings outputs documentation in Markdown to either an `.md` file or to stdout.
+Strings outputs documentation in Markdown to a Markdown file in the main directory of the module.
 
-By default, Markdown output generates a `REFERENCE.md` file in the main directory of the module, but you can specify a different location or filename if you prefer. The generated Markdown includes reference information only. The `REFERENCE.md` file is the same format and information we are introducing into Puppet Supported modules.
+By default, Markdown output generates a `REFERENCE.md` file, but you can specify a different location or filename if you prefer. The generated Markdown includes reference information only. The `REFERENCE.md` file is the same format and information we are introducing into Puppet Supported modules.
 
 1. Change directory into the module: `cd /modules/<MODULE_NAME>`.
 2. Run the command: `puppet strings generate --format markdown`.
@@ -84,7 +84,7 @@ By default, Markdown output generates a `REFERENCE.md` file in the main director
 
 ### Generate documentation in JSON
 
-Strings can generate a `.json` file or print JSON to stdout. This can be useful for handling or displaying the data with your own custom applications.
+Strings can generate a JSON file or print JSON to stdout. This can be useful for handling or displaying the data with your own custom applications.
 
 By default, Strings prints JSON output to stdout.
 
@@ -104,7 +104,7 @@ For details about Strings JSON output, see [Strings JSON schema](https://github.
 
 The `puppet strings` command generates module documentation based on code and code comments. 
 
-By default, running `puppet strings` generates HTML documentation for a module into a `docs` directory within that module. To pass any options or arguments, use the `generate` action.
+By default, running `puppet strings` generates HTML documentation for a module into a `doc/` directory within that module. To pass any options or arguments, use the `generate` action.
 
 Action   | Description   
 ----------------|-------------------------
@@ -255,7 +255,7 @@ The Strings elements appearing in the above comment block are:
 * Under the `@example` tag, indented two spaces, the usage example code.
 * Two `@param` tags, with the name of the parameter first, followed by a string describing the parameter's purpose.
 
-Puppet Strings automatically documents information such as data types, default values. [TODO: we should be specific; what else?].
+Puppet Strings automatically documents information such as data types, default values, the namevar, and the return value type for functions.
 
 Defined types are documented in exactly the same way as classes:
 
