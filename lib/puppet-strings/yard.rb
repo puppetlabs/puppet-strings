@@ -15,10 +15,12 @@ module PuppetStrings::Yard
 
     # Register the Puppet parser
     YARD::Parser::SourceParser.register_parser_type(:puppet, PuppetStrings::Yard::Parsers::Puppet::Parser, ['pp'])
+    YARD::Parser::SourceParser.register_parser_type(:json, PuppetStrings::Yard::Parsers::JSON::Parser, ['json'])
 
     # Register our handlers
     YARD::Handlers::Processor.register_handler_namespace(:puppet, PuppetStrings::Yard::Handlers::Puppet)
     YARD::Handlers::Processor.register_handler_namespace(:puppet_ruby, PuppetStrings::Yard::Handlers::Ruby)
+    YARD::Handlers::Processor.register_handler_namespace(:json, PuppetStrings::Yard::Handlers::JSON)
 
     # Register the tag directives
     PuppetStrings::Yard::Tags::ParameterDirective.register!
@@ -46,7 +48,8 @@ class YARD::CLI::Yardoc
       :puppet_defined_type,
       :puppet_type,
       :puppet_provider,
-      :puppet_function
+      :puppet_function,
+      :puppet_task
     )
   end
 end
@@ -73,6 +76,10 @@ class YARD::CLI::Stats
 
   def stats_for_puppet_functions
     output 'Puppet Functions', *type_statistics_all(:puppet_function)
+  end
+
+  def stats_for_puppet_tasks
+    output 'Puppet Tasks', *type_statistics_all(:puppet_task)
   end
 
   def output(name, data, undoc = nil)

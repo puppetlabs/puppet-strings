@@ -1,0 +1,9 @@
+<% even = false  %>
+<% @items.each do |item| %>
+    <li id="object_<%=item.path%>" class="<%= even ? 'even' : 'odd' %>">
+      <div class="item">
+        <%= linkify item, h(item.name(true)) %>
+      </div>
+    </li>
+    <% even = !even %>
+<% end %>

@@ -62,3 +62,12 @@ def generate_class_list
   @list_type = 'class'
   generate_list_contents
 end
+
+# Generates the searchable Puppet Task list.
+# @return [void]
+def generate_puppet_task_list
+  @items = Registry.all(:puppet_task).sort_by {|t| t.name.to_s }
+  @list_title = 'Puppet Task List'
+  @list_type = 'puppet_task'
+  generate_list_contents
+end

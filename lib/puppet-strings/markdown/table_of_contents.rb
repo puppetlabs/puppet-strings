@@ -6,7 +6,8 @@ module PuppetStrings::Markdown
       [PuppetStrings::Markdown::PuppetClasses,
       PuppetStrings::Markdown::DefinedTypes,
       PuppetStrings::Markdown::ResourceTypes,
-      PuppetStrings::Markdown::Functions].each do |r|
+      PuppetStrings::Markdown::Functions,
+      PuppetStrings::Markdown::PuppetTasks].each do |r|
         toc = r.toc_info
         group_name = toc.shift
         group = toc
