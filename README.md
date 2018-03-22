@@ -99,8 +99,63 @@ By default, Strings prints JSON output to stdout.
 
 For details about Strings JSON output, see [Strings JSON schema](https://github.com/puppetlabs/puppet-strings/blob/master/JSON.md).
 
-## Reference
+## Viewing generated documentation
 
+Strings generates documentation as HTML, JSON, or Markdown within the module for which you are generating documentation.
+
+By default, Strings outputs documentation as HTML in a `/docs/` folder in the module. If you generate Markdown documentation with Strings, it outputs a `REFERENCE.md` file in the main directory of the module.
+
+You can serve HTML documentation locally with the `server` action. This action serves documentation for all modules in the [module path](https://docs.puppet.com/puppet/latest/reference/dirs_modulepath.html) at `http://localhost:8808`.
+
+To serve documentation locally, run:
+
+```
+puppet strings server
+```
+
+## Publishing documentation to GitHub Pages with Rake tasks
+
+To publish generated HTML documentation to GitHub Pages, set up Rake tasks for Puppet Strings and generate your docs with a Rake task.
+
+The `strings:gh_pages:update` tasks is available in `puppet-strings/tasks`.
+
+This task:
+
+1. Creates a `doc` directory in the root of your project.
+1. Creates a `gh-pages` branch of the current repository, if it doesn't already exist.
+1. Checks out the `gh-pages` branch of the current repository.
+1. Generates Strings documentation.
+1. Commits the changes and pushes them to the `gh-pages` branch with the `--force` flag.
+
+This task keeps the `gh-pages` branch up to date with the current code and uses the `--force` option when pushing to the `gh-pages` branch.
+
+### Set up Rake tasks
+
+To set up Rake tasks, update your Gemfile and your Rakefile.
+
+1.  Add the following to your Gemfile to use `puppet-strings`:
+
+    ```ruby
+    gem 'puppet-strings'
+    ```
+
+2.  Add the following to your `Rakefile` to use the `puppet-strings` tasks:
+
+    ```ruby
+    require 'puppet-strings/tasks'
+    ```
+   
+    Adding this `require` automatically creates the Rake tasks below.
+
+
+### Generate and push documentation to GitHub Pages
+
+To generate Puppet Strings documentation and make it available on [GitHub Pages](https://pages.github.com/), use the `strings:gh_pages:update` task.
+
+1. Generate and push your docs by running `strings:gh_pages:update`
+
+
+## Reference
 
 The `puppet strings` command generates module documentation based on code and code comments. 
 
@@ -126,7 +181,7 @@ puppet strings generate --format markdown --out docs/info.md
 puppet strings generate manifest1.pp manifest2.pp
 ```
 
-[--format <FORMAT>][--out <DESTINATION>] [<ARGUMENTS>]
+[--format <OUTPUT_FORMAT>][--out <DESTINATION_PATH> [<ARGUMENTS>]
 
 Option   | Description   | Values      | Default
 ----------------|:---------------:|:------------------:|-------------------------
@@ -134,94 +189,10 @@ Option   | Description   | Values      | Default
 `--format` | Specifies a format for documentation. | Markdown, JSON    | If not specified, Strings outputs HTML documentation.
 `--out` | Specifies an output location for documentation | A valid directory location and filename.    | If not specified, outputs to default locations depending on format: HTML (`/docs/`), Markdown (main module directory), or JSON (stdout).
 Filenames or directory paths | Outputs documentation for only specified files or directories. | Markdown, JSON.    | If not specified, Strings outputs HTML documentation.
-
-
-## Setting additional options with Rake tasks
-
-You can use Puppet Strings Rake tasks to generate documentation with additional options or to make your generated docs available on [GitHub Pages](https://pages.github.com/).
-
-To specify additional options when generating documentation, use the `puppet strings:generate` rake task. This command behaves exactly as `puppet strings generate`, but allows you to add the following parameters:
-
-* `patterns`: the search patterns to use for finding files to document (defaults to `manifests/**/*.pp functions/**/*.pp types/**/*.pp lib/**/*.rb`).
-* `debug`: enables debug output when set to `true`.
-* `backtrace`: enables backtraces for errors when set to `true`.
-* `markup`: the markup language to use (defaults to `markdown`).
-* `yard_args`: additional arguments to pass to YARD.
-
-For setup and usage details for the `puppet strings:generate` task, see [Rake tasks](#rake-tasks).
-
-### Set up Rake tasks
-
-The `strings:generate` and `strings:gh_pages:update` tasks are available in `puppet-strings/tasks`. To set up Rake tasks, update your Gemfile and your Rakefile.
-
-1.  Add the following to your Gemfile to use `puppet-strings`:
-
-    ```ruby
-    gem 'puppet-strings'
-    ```
-
-2.  Add the following to your `Rakefile` to use the `puppet-strings` tasks:
-
-    ```ruby
-    require 'puppet-strings/tasks'
-    ```
-   
-    Adding this `require` automatically creates the Rake tasks below.
-
-### Generate documentation with Rake
-
-Use the `strings:generate` task to generate documentation:
-
-```
-$ rake strings:generate
-```
-
-This command behaves exactly as `puppet strings generate`, but allows you to add the following parameters:
-
-* `patterns`: Specifies the search patterns to find files to document. Defaults to `manifests/**/*.pp functions/**/*.pp types/**/*.pp lib/**/*.rb`.
-* `debug`: Enables debug output when set to `true`.
-* `backtrace`: Enables backtraces for errors when set to `true`.
-* `markup`: Sets the markup language to use. Defaults to `markdown`.
-* `yard_args`: Sets additional arguments to pass to YARD.
-
-For example, the task below adds a search pattern, debugs output, backtraces errors, sets the markup language to `markdown`, and passes an additional YARD argument setting the readme file to `README.md`:
-
-```
-$ rake strings:generate\['**/*{.pp\,.rb}, true, true, markdown, --readme README.md']
-```
-
-**Warning**: This operation is destructive if not used properly.
-
-### Publish documents to GitHub Pages
-
-To generate documents and then make them available on [GitHub Pages](https://pages.github.com/), use the Strings Rake task `strings:gh_pages:update`. See [Rake tasks](#rake-tasks) for setup and usage details.
-
-#### Generate documentation on GitHub Pages
-
-To generate Puppet Strings documentation and make it available on [GitHub Pages](https://pages.github.com/), use the `strings:gh_pages:update` task.
-
-This task:
-
-1. Creates a `doc` directory in the root of your project.
-1. Checks out the `gh-pages` branch of the current repository in the `doc` directory (it creates a branch if one does not already exist).
-1. Generates Strings documentation with the `strings:generate` task.
-1. Commits the changes and pushes them to the `gh-pages` branch **with the `--force` flag**.
-
-This task aims to keep the `gh-pages` branch up to date with the current code and uses the `-f` flag when pushing to the `gh-pages` branch.
-
-## Viewing generated documentation
-
-Strings generates documentation as HTML, JSON, or Markdown within the module for which you are generating documentation.
-
-By default, Strings outputs documentation as HTML in a `/docs/` folder in the module. If you generate Markdown documentation with Strings, it outputs a `REFERENCE.md` file in the main directory of the module.
-
-You can serve HTML documentation locally with the `server` action. This action serves documentation for all modules in the [module path](https://docs.puppet.com/puppet/latest/reference/dirs_modulepath.html) at `http://localhost:8808`.
-
-To serve documentation locally, run:
-
-```
-puppet strings server
-```
+`--verbose` | Logs verbosely. | none    | If not specified, Strings logs basic information.
+`--debug` | Logs debug information. | none    | If not specified, Strings does not log debug information.
+`--markup FORMAT` | The markup format to use for docstring text | "markdown", "textile", "rdoc", "ruby", "text", "html", or "none"    | By default, Strings outputs HTML, if no `--format` is specified or Markdown if `--format markdown` is specified.
+`--help` | Displays help documentation for the command. | Markdown, JSON    | If not specified, Strings outputs HTML documentation.
 
 ## Documenting Puppet code for Strings
 
