@@ -2,8 +2,8 @@ Puppet Strings
 ==============
 [![Build Status](https://travis-ci.org/puppetlabs/puppet-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppet-strings) [![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
 
+Puppet Strings generates documentation for Puppet code and extensions written in Puppet and Ruby. Strings processes code and YARD-style code comments to create documentation in HTML, Markdown, or JSON formats.
 
-Puppet Strings creates documentation for Puppet code by reading code and [YARD](http://yardoc.org/)-style code comments and generating HTML, JSON, or Markdown output.
 
 |                |                                                                 |
 | -------------- |---------------------------------------------------------------- |
@@ -42,7 +42,7 @@ Puppet Strings creates documentation for Puppet code by reading code and [YARD](
 
 By default, Puppet Strings outputs documentation as HTML, or you can specify JSON or Markdown output instead.
 
-Strings generates reference documentation based on the code and Strings code comments in all Puppet and Ruby source files under the `./manifests/`, `./functions/`, `./lib/`, `./types/``./tasks/` directories.
+Strings generates reference documentation based on the code and Strings code comments in all Puppet and Ruby source files under the `./manifests/`, `./functions/`, `./lib/`, `./types/`, and `./tasks/` directories.
 
 Strings outputs HTML of the reference information and the module README to the module's `./doc/` directory. This output can be rendered in any browser.
 
@@ -103,7 +103,7 @@ For details about Strings JSON output, see [Strings JSON schema](https://github.
 
 Strings generates documentation as HTML, JSON, or Markdown within the module for which you are generating documentation.
 
-By default, Strings outputs documentation as HTML in a `/docs/` folder in the module. If you generate Markdown documentation with Strings, it outputs a `REFERENCE.md` file in the main directory of the module.
+By default, Strings outputs documentation as HTML in a `/doc/` folder in the module. If you generate Markdown documentation with Strings, it outputs a `REFERENCE.md` file in the main directory of the module.
 
 You can serve HTML documentation locally with the `server` action. This action serves documentation for all modules in the [module path](https://docs.puppet.com/puppet/latest/reference/dirs_modulepath.html) at `http://localhost:8808`.
 
