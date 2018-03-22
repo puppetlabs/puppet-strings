@@ -29,7 +29,7 @@ SOURCE
     }
 
     it 'should raise an exception' do
-      expect{ subject.parse }.to output(/\[error\]: Failed to parse test.pp: Syntax error at end of file/).to_stdout_from_any_process
+      expect{ subject.parse }.to output(/\[error\]: Failed to parse test.pp: Syntax error at end of (file|input)/).to_stdout_from_any_process
     end
   end
 

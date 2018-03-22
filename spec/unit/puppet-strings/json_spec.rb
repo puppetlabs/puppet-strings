@@ -151,7 +151,7 @@ end
 
 Puppet::ResourceApi.register_type(
   name: 'apt_key',
-  desc: <<-EOS,
+  docs: <<-EOS,
 @summary Example resource type using the new API.
 @raise SomeError
 This type provides Puppet with the capabilities to manage GPG keys needed

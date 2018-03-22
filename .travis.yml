@@ -14,13 +14,9 @@ before_install:
 matrix:
   fast_finish: true
   include:
-  - rvm: 1.9.3
-    env: PUPPET_GEM_VERSION="~> 3" CHECK=spec
-  - rvm: 2.0.0
-    env: PUPPET_GEM_VERSION="~> 3" CHECK=spec
   - rvm: 2.1.9
-    env: PUPPET_GEM_VERSION="~> 3" CHECK=spec
-  - rvm: 2.1.9
+    env: PUPPET_GEM_VERSION="~> 4" CHECK=spec
+  - rvm: 2.4.1
     env: PUPPET_GEM_VERSION="~> 4" CHECK=spec
   - rvm: 2.4.1
     env: PUPPET_GEM_VERSION="~> 5" CHECK=spec

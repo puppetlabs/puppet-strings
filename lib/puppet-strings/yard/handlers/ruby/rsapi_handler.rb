@@ -24,7 +24,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
     object = PuppetStrings::Yard::CodeObjects::Type.new(schema['name'])
     register object
 
-    docstring = schema['desc'] || ""
+    docstring = schema['docs']
     if docstring
       register_docstring(object, PuppetStrings::Yard::Util.scrub_string(docstring.to_s), nil)
     else
