@@ -15,7 +15,7 @@ class PuppetStrings::Yard::Handlers::Puppet::FunctionHandler < PuppetStrings::Ya
     register object
 
     # Log a warning if missing documentation
-    log.warn "Missing documentation for Puppet function '#{object.name}' at #{statement.file}:#{statement.line}." if object.docstring.empty?
+    log.warn "Missing documentation for Puppet function '#{object.name}' at #{statement.file}:#{statement.line}." if object.docstring.empty? && object.tags.empty?
 
     # Set the parameter tag types
     set_parameter_types(object)
