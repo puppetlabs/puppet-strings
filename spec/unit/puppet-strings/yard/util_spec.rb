@@ -28,4 +28,16 @@ STR
       expect(subject.scrub_string(str)).to eq('this is a test string')
     end
   end
+
+  describe 'github_to_yard_links' do
+    it 'converts a link correctly' do
+      str = '<a href="#module-description">'
+      expect(subject.github_to_yard_links(str)).to eq('<a href="#label-Module+description">')
+    end
+
+    it 'leaves other links with hashes alone' do
+      str = '<a href="www.github.com/blah/document.html#module-description">'
+      expect(subject.github_to_yard_links(str)).to eq(str)
+    end
+  end
 end

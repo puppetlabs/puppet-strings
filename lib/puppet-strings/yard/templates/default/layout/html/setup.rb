@@ -54,7 +54,13 @@ def layout
     @path = object.path
   end
 
-  erb(:layout)
+  final_layout = erb(:layout)
+
+  if @file && @file.name == 'README'
+    PuppetStrings::Yard::Util.github_to_yard_links(final_layout)
+  end
+
+  final_layout
 end
 
 # Creates the dynamic menu lists.
