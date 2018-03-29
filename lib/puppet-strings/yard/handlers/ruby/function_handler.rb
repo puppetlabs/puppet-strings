@@ -139,6 +139,9 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
       next unless DISPATCH_METHOD_NAMES.include?(method_name)
 
       if method_name == 'return_type'
+        # Add a return tag if missing
+        overload_tag.add_tag YARD::Tags::Tag.new(:return, '', 'Any') if overload_tag.tag(:return).nil?
+
         overload_tag.tag(:return).types = [node_as_string(child.parameters[0])]
         next
       end
