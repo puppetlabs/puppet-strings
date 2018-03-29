@@ -267,6 +267,39 @@ SOURCE
       end
     end
 
+    describe 'parsing a function using only return_type' do
+      let(:source) { <<-SOURCE
+# An example 4.x function.
+Puppet::Functions.create_function(:foo) do
+  # @param param1 The first parameter.
+  # @param param2 The second parameter.
+  # @param param3 The third parameter.
+  dispatch :foo do
+    param          'Integer',       :param1
+    param          'Any',           :param2
+    optional_param 'Array[String]', :param3
+    return_type 'String'
+  end
+
+  def foo(param1, param2, param3 = nil)
+    "Bar"
+  end
+end
+SOURCE
+      }
+
+      it 'does not throw an error with no @return' do
+        expect { subject }.not_to raise_error NoMethodError
+      end
+
+      it 'contains a return data type' do
+        tags = subject.first.docstring.tags(:return)
+        expect(tags.size).to eq(1)
+        expect(tags[0].name).to be_nil
+        expect(tags[0].types).to eq(['String'])
+      end
+    end
+
     describe 'parsing a function with various dispatch parameters.' do
       let(:source) { <<-SOURCE
 # An example 4.x function.
