@@ -6,7 +6,8 @@ def param
     object.type == :puppet_class ||
     object.type == :puppet_defined_type ||
     object.type == :puppet_function ||
-    object.type == :puppet_task
+    object.type == :puppet_task ||
+    object.type == :puppet_plan
 end
 
 # Renders the overload section.

@@ -1,0 +1,4 @@
+<% if object.docstring.has_tag?(:summary) %>
+  <h2>Summary</h2>
+  <%= object.docstring.tag(:summary).text %>
+<% end %>

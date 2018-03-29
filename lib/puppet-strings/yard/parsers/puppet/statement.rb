@@ -151,4 +151,18 @@ module PuppetStrings::Yard::Parsers::Puppet
       end
     end
   end
+
+  # Implements the Puppet plan statement.
+  class PlanStatement < ParameterizedStatement
+    attr_reader :name
+
+    # Initializes the Puppet plan statement.
+    # @param [Puppet::Pops::Model::PlanDefinition] object The model object for the plan statement.
+    # @param [String] file The file containing the statement.
+    def initialize(object, file)
+      super(object, file)
+      @name = object.name
+    end
+  end
+
 end

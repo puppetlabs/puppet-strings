@@ -27,10 +27,13 @@ require 'puppet-strings/yard'
 PuppetStrings::Yard.setup!
 
 # Enable testing of Puppet functions if running against 4.1+
-TEST_PUPPET_FUNCTIONS = Gem::Dependency.new('', '>= 4.1.0').match?('', Puppet::PUPPETVERSION)
+TEST_PUPPET_FUNCTIONS = Puppet::Util::Package.versioncmp(Puppet.version, "4.1.0") >= 0
 
 # Enable testing of Puppet language functions declared with return type if running against 4.8+
-TEST_FUNCTION_RETURN_TYPE = Gem::Dependency.new('', '>= 4.8.0').match?('', Puppet::PUPPETVERSION)
+TEST_FUNCTION_RETURN_TYPE = Puppet::Util::Package.versioncmp(Puppet.version, "4.8.0") >= 0
+
+# Enable testing of Plans if Puppet version is greater than 5.0.0
+TEST_PUPPET_PLANS = Puppet::Util::Package.versioncmp(Puppet.version, "5.0.0") >= 0
 
 RSpec.configure do |config|
   config.mock_with :mocha
