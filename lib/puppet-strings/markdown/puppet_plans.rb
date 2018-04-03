@@ -27,7 +27,7 @@ module PuppetStrings::Markdown
     def self.toc_info
       final = ["Plans"]
 
-      in_classes.each do |plan|
+      in_plans.each do |plan|
         final.push(plan.toc_info)
       end
 

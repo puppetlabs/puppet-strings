@@ -30,6 +30,10 @@
 
 * [`(stdin)`](#(stdin)): Allows you to backup your database to local file.
 
+## Plans
+
+* [`plann`](#plann): A simple plan.
+
 ## Classes
 
 ### klass
