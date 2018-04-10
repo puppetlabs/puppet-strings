@@ -4,7 +4,7 @@ def init
   case object
   when '_index.html'
     @page_title = options.title
-    sections :layout, [:index, [:listing, [:classes, :defined_types, :types, :providers, :functions, :tasks, :files, :objects]]]
+    sections :layout, [:index, [:listing, [:classes, :defined_types, :types, :providers, :functions, :tasks, :plans, :files, :objects]]]
   else
     super
   end
@@ -50,11 +50,21 @@ def layout
     @nav_url = url_for_list('puppet_task')
     @page_title = "Puppet Task: #{object.name}"
     @path = object.path
+  when PuppetStrings::Yard::CodeObjects::Plan
+    @nav_url = url_for_list('puppet_plan')
+    @page_title = "Puppet Plan: #{object.name}"
+    @path = object.path
   else
     @path = object.path
   end
 
-  erb(:layout)
+  final_layout = erb(:layout)
+
+  if @file && @file.name == 'README'
+    PuppetStrings::Yard::Util.github_to_yard_links(final_layout)
+  end
+
+  final_layout
 end
 
 # Creates the dynamic menu lists.
@@ -90,6 +100,11 @@ def create_menu_lists
       type: 'puppet_task',
       title: 'Puppet Tasks',
       search_totle: 'Puppet Tasks'
+    },
+    {
+      type: 'puppet_plan',
+      title: 'Puppet Plans',
+      search_totle: 'Puppet Plans'
     },
     {
       type: 'class',
@@ -177,6 +192,14 @@ end
 def tasks
   @title = 'Puppet Task Listing A-Z'
   @objects_by_letter = objects_by_letter(:puppet_task)
+  erb(:objects)
+end
+
+# Renders the plans section.
+# @return [String] Returns the rendered section.
+def plans
+  @title = 'Puppet Plan Listing A-Z'
+  @objects_by_letter = objects_by_letter(:puppet_plan)
   erb(:objects)
 end
 

@@ -64,28 +64,12 @@ define klass::dt (
 ) {
 }
 SOURCE
-    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :json)
-{
-  "description": "Allows you to backup your database to local file.",
-  "input_method": "stdin",
-  "parameters": {
-    "database": {
-      "description": "Database to connect to",
-      "type": "Optional[String[1]]"
-    },
-    "user": {
-      "description": "The user",
-      "type": "Optional[String[1]]"
-    },
-    "password": {
-      "description": "The password",
-      "type": "Optional[String[1]]"
-    },
-     "sql": {
-      "description": "Path to file you want backup to",
-      "type": "String[1]"
-    }
-  }
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_PLANS
+# A simple plan.
+# @param param1 First param.
+# @param param2 Second param.
+# @param param3 Third param.
+plan plann(String $param1, $param2, Integer $param3 = 1) {
 }
 SOURCE
 
@@ -276,7 +260,13 @@ path this type will autorequire that file.
 SOURCE
   end
 
-  let(:filename) { 'output.md' }
+  let(:filename) do
+    if TEST_PUPPET_PLANS
+      'output_with_plan.md'
+    else
+      'output.md'
+    end
+  end
   let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/markdown/#{filename}") }
   let(:baseline) { File.read(baseline_path) }
 

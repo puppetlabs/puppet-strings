@@ -35,6 +35,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
   describe 'parsing a defined type with a docstring' do
     let(:source) { <<-SOURCE
 # A simple foo defined type.
+# @param name The type name.
 # @param param1 First param.
 # @param param2 Second param.
 # @param param3 Third param.
@@ -45,6 +46,9 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
 }
 SOURCE
     }
+    it 'does not output a warning for title/name' do
+      expect{ subject }.not_to output(/\[warn\].*(name|title).*/).to_stdout_from_any_process
+    end
 
     it 'should register a defined type object' do
       expect(subject.size).to eq(1)
@@ -55,18 +59,21 @@ SOURCE
       expect(object.statement).not_to eq(nil)
       expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', 'hi']])
       expect(object.docstring).to eq('A simple foo defined type.')
-      expect(object.docstring.tags.size).to eq(4)
+      expect(object.docstring.tags.size).to eq(5)
       tags = object.docstring.tags(:param)
-      expect(tags.size).to eq(3)
-      expect(tags[0].name).to eq('param1')
-      expect(tags[0].text).to eq('First param.')
-      expect(tags[0].types).to eq(['Integer'])
-      expect(tags[1].name).to eq('param2')
-      expect(tags[1].text).to eq('Second param.')
-      expect(tags[1].types).to eq(['Any'])
-      expect(tags[2].name).to eq('param3')
-      expect(tags[2].text).to eq('Third param.')
-      expect(tags[2].types).to eq(['String'])
+      expect(tags.size).to eq(4)
+      expect(tags[0].name).to eq('name')
+      expect(tags[0].text).to eq('The type name.')
+      expect(tags[0].types).to eq(nil)
+      expect(tags[1].name).to eq('param1')
+      expect(tags[1].text).to eq('First param.')
+      expect(tags[1].types).to eq(['Integer'])
+      expect(tags[2].name).to eq('param2')
+      expect(tags[2].text).to eq('Second param.')
+      expect(tags[2].types).to eq(['Any'])
+      expect(tags[3].name).to eq('param3')
+      expect(tags[3].text).to eq('Third param.')
+      expect(tags[3].types).to eq(['String'])
       tags = object.docstring.tags(:api)
       expect(tags.size).to eq(1)
       expect(tags[0].text).to eq('public')

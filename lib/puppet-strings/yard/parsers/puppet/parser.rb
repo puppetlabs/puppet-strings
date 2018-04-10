@@ -20,6 +20,11 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
   # @return [void]
   def parse
     begin
+      Puppet[:tasks] = true if Puppet.settings.include?(:tasks)
+      if Puppet::Util::Package.versioncmp(Puppet.version, "5.0.0") < 0 && @file.to_s.match(/^plans\//)
+        log.warn "Skipping #{@file}: Puppet Plans require Puppet 5 or greater."
+        return
+      end
       @statements ||= (@visitor.visit(::Puppet::Pops::Parser::Parser.new.parse_string(source)) || []).compact
     rescue ::Puppet::ParseError => ex
       log.error "Failed to parse #{@file}: #{ex.message}"
@@ -60,6 +65,12 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
 
   def transform_FunctionDefinition(o)
     statement = PuppetStrings::Yard::Parsers::Puppet::FunctionStatement.new(o, @file)
+    statement.extract_docstring(@lines)
+    statement
+  end
+
+  def transform_PlanDefinition(o)
+    statement = PuppetStrings::Yard::Parsers::Puppet::PlanStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end

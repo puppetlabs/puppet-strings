@@ -1,16 +1,15 @@
 ### <%= name %>
+
 Type: <%= type %>
 
 <% if text -%>
 <%= text %>
-
 <% elsif summary -%>
 <%= summary %>
-
 <% else -%>
 <%= "The #{name} class." %>
-
 <% end -%>
+
 <% signatures.each do |sig| -%>
 #### `<%= sig.signature %>`
 

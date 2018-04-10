@@ -21,6 +21,15 @@ define dt(Integer $param1, $param2, String $param3 = hi) {
 }
 SOURCE
 
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_PLANS
+# A simple plan.
+# @param param1 First param.
+# @param param2 Second param.
+# @param param3 Third param.
+plan plann(String $param1, $param2, Integer $param3 = 1) {
+}
+SOURCE
+
     # Only include Puppet functions for 4.1+
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_FUNCTIONS
 # A simple function.
@@ -191,7 +200,13 @@ path this type will autorequire that file.
 SOURCE
   end
 
-  let(:filename) { TEST_PUPPET_FUNCTIONS ? 'output.json' : 'output_without_puppet_function.json' }
+  let(:filename) do
+    if TEST_PUPPET_PLANS
+      'output_with_plan.json'
+    else
+      TEST_PUPPET_FUNCTIONS ? 'output.json' : 'output_without_puppet_function.json'
+    end
+  end
   let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/json/#{filename}") }
   let(:baseline) { File.read(baseline_path) }
 

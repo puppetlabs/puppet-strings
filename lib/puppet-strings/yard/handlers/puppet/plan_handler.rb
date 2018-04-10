@@ -4,16 +4,16 @@ require 'puppet-strings/yard/parsers'
 require 'puppet-strings/yard/code_objects'
 
 # Implements the handler for Puppet classes.
-class PuppetStrings::Yard::Handlers::Puppet::ClassHandler < PuppetStrings::Yard::Handlers::Puppet::Base
-  handles PuppetStrings::Yard::Parsers::Puppet::ClassStatement
+class PuppetStrings::Yard::Handlers::Puppet::PlanHandler < PuppetStrings::Yard::Handlers::Puppet::Base
+  handles PuppetStrings::Yard::Parsers::Puppet::PlanStatement
 
   process do
     # Register the object
-    object = PuppetStrings::Yard::CodeObjects::Class.new(statement)
+    object = PuppetStrings::Yard::CodeObjects::Plan.new(statement)
     register object
 
     # Log a warning if missing documentation
-    log.warn "Missing documentation for Puppet class '#{object.name}' at #{statement.file}:#{statement.line}." if object.docstring.empty? && object.tags.empty?
+    log.warn "Missing documentation for Puppet plan '#{object.name}' at #{statement.file}:#{statement.line}." if object.docstring.empty? && object.tags.empty?
 
     # Set the parameter types
     set_parameter_types(object)

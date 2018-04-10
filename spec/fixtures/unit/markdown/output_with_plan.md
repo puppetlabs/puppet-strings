@@ -30,6 +30,10 @@
 
 * [`(stdin)`](#(stdin)): Allows you to backup your database to local file.
 
+## Plans
+
+* [`plann`](#plann): A simple plan.
+
 ## Classes
 
 ### klass
@@ -434,4 +438,34 @@ The password
 Data type: `String[1]`
 
 Path to file you want backup to
+
+## Plans
+
+### plann
+
+A simple plan.
+
+#### Parameters
+
+The following parameters are available in the `plann` plan.
+
+##### `param1`
+
+Data type: `String`
+
+First param.
+
+##### `param2`
+
+Data type: `Any`
+
+Second param.
+
+##### `param3`
+
+Data type: `Integer`
+
+Third param.
+
+Default value: 1
 
