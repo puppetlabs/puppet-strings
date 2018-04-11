@@ -66,6 +66,15 @@ To generate documentation for specific directories, run the `puppet strings gene
 ```
 $ puppet strings generate 'modules/foo/lib/**/*.rb' 'modules/foo/manifests/**/*.pp' 'modules/foo/functions/**/*.pp' ...
 ```
+Strings outputs documentation as HTML in a `./doc/` folder in the module. 
+
+You can serve HTML documentation locally with the `server` action. This action serves documentation for all modules in the [module path](https://docs.puppet.com/puppet/latest/reference/dirs_modulepath.html) at `http://localhost:8808`.
+
+To serve documentation locally, run:
+
+```
+puppet strings server
+```
 
 ### Generate documentation in Markdown
 
@@ -81,6 +90,7 @@ By default, Markdown output generates a `REFERENCE.md` file, but you can specify
    ```
    puppet strings generate --format markdown --out docs/INFO.md
    ```
+
 
 ### Generate documentation in JSON
 
@@ -99,19 +109,6 @@ By default, Strings prints JSON output to stdout.
 
 For details about Strings JSON output, see [Strings JSON schema](https://github.com/puppetlabs/puppet-strings/blob/master/JSON.md).
 
-## Viewing generated documentation
-
-Strings generates documentation as HTML, JSON, or Markdown within the module for which you are generating documentation.
-
-By default, Strings outputs documentation as HTML in a `/doc/` folder in the module. If you generate Markdown documentation with Strings, it outputs a `REFERENCE.md` file in the main directory of the module.
-
-You can serve HTML documentation locally with the `server` action. This action serves documentation for all modules in the [module path](https://docs.puppet.com/puppet/latest/reference/dirs_modulepath.html) at `http://localhost:8808`.
-
-To serve documentation locally, run:
-
-```
-puppet strings server
-```
 
 ## Publishing documentation to GitHub Pages with Rake tasks
 
@@ -129,17 +126,14 @@ This task:
 
 This task keeps the `gh-pages` branch up to date with the current code and uses the `--force` option when pushing to the `gh-pages` branch.
 
-### Set up Rake tasks
 
-To set up Rake tasks, update your Gemfile and your Rakefile.
-
-1.  Add the following to your Gemfile to use `puppet-strings`:
+1.  Add the following to your Gemfile:
 
     ```ruby
     gem 'puppet-strings'
     ```
 
-2.  Add the following to your `Rakefile` to use the `puppet-strings` tasks:
+2.  Add the following to your `Rakefile`:
 
     ```ruby
     require 'puppet-strings/tasks'
@@ -147,12 +141,7 @@ To set up Rake tasks, update your Gemfile and your Rakefile.
    
     Adding this `require` automatically creates the Rake tasks below.
 
-
-### Generate and push documentation to GitHub Pages
-
-To generate Puppet Strings documentation and make it available on [GitHub Pages](https://pages.github.com/), use the `strings:gh_pages:update` task.
-
-1. Generate and push your docs by running `strings:gh_pages:update`
+3. Generate and push your docs by running `strings:gh_pages:update`
 
 
 ## Reference
@@ -163,7 +152,6 @@ By default, running `puppet strings` generates HTML documentation for a module i
 
 Action   | Description   
 ----------------|-------------------------
-
 `generate` | Generates documentation with the specified parameters, including format and output location.
 `server` | Serves documentation for all modules in the [module path](https://docs.puppet.com/puppet/latest/reference/dirs_modulepath.html) locally at `http://localhost:8808`.
 
@@ -185,8 +173,7 @@ puppet strings generate manifest1.pp manifest2.pp
 
 Option   | Description   | Values      | Default
 ----------------|:---------------:|:------------------:|-------------------------
-
-`--format` | Specifies a format for documentation. | Markdown, JSON    | If not specified, Strings outputs HTML documentation.
+`--format` | Specifies a format for documentation. | markdown, json    | If not specified, Strings outputs HTML documentation.
 `--out` | Specifies an output location for documentation | A valid directory location and filename.    | If not specified, outputs to default locations depending on format: HTML (`/docs/`), Markdown (main module directory), or JSON (stdout).
 Filenames or directory paths | Outputs documentation for only specified files or directories. | Markdown, JSON.    | If not specified, Strings outputs HTML documentation.
 `--verbose` | Logs verbosely. | none    | If not specified, Strings logs basic information.
@@ -194,143 +181,188 @@ Filenames or directory paths | Outputs documentation for only specified files or
 `--markup FORMAT` | The markup format to use for docstring text | "markdown", "textile", "rdoc", "ruby", "text", "html", or "none"    | By default, Strings outputs HTML, if no `--format` is specified or Markdown if `--format markdown` is specified.
 `--help` | Displays help documentation for the command. | Markdown, JSON    | If not specified, Strings outputs HTML documentation.
 
-## Documenting Puppet code for Strings
 
-Strings relies on code comments and YARD docstrings to specify documentation comments. You can also include any number of YARD tags that hold semantic metadata for various aspects of the code. These tags allow you to add this information to your module without worrying about presentation.
+# Puppet Strings style
 
-### Documenting Puppet classes and defined types
+Applies to Puppet 4 and later
 
-To document Puppet classes and defined types, use a series of comments to create a YARD docstring before the class or defined type definition.
+Puppet Strings combines source code and code comments to create complete, user-friendly reference information for modules. Strings can generate module documentation for classes, defined types, functions, and resource types in HTML, JSON, and Markdown formats.
 
-```puppet
-# @summary A short summary of the purpose of the class.
+Instead of manually writing and formatting long reference lists, add a few descriptive tags and comments for each element (class, defined type, function) of your module. Whenever you update code, update your documentation comments at the same time. Strings automatically extracts some information, such as data types and attribute defaults from the code, so you need to add minimal documentation comments.
+
+
+## Module README
+
+Module READMEs are where users can learn more about what a module does and how to use it. In the module README, include basic module information and extended usage examples that address common use cases. 
+
+Strings generates complete information about classes, defined types, functions, and resource types and providers. Strings does not yet generate information for type aliases, facts, or custom providers. If your module includes these elements, document them in your README.
+
+The README should contain the following sections:
+
+* Module description: What the module does and why it is useful.
+* Setup: Prerequisites for module use and getting started information.
+* Usage: Instructions and examples for common use cases or advanced configuration options.
+* Reference: If the module contains elements that Strings doesn't document, such as facts or type aliases, include a short Reference section for those elements.
+* Limitations: OS compatibility and known issues.
+* Development: Guide for contributing to the module.
+
+
+## Comment style
+
+Generally, Strings documentation comments follow a similar format:
+
+* Comments must immediately precede the code for that element. You cannot have a blank return separating the comment section from the code it documents.
+* Each comment tag (such as `@example`) can have more than one line of comments.
+* Any additional lines following a tag should be uniformly indented by two spaces.
+* Each comment line should be no more than 140 characters, to improve readability.
+* Each section (such as `@summary`, `@example`, or the `@param` list) should be followed by a blank comment line to improve readability.
+* All untagged comments are output in an overview section that precedes all tagged information for that code element.
+
+
+### Classes and defined types
+
+Document each class and defined type, along with its parameters, with comments before the code for that class or defined type.
+
+To specify that a class or defined type is private and should not be adjusted by the user, specify the API tag as private: `@api private`.
+
+Class and defined type information should be listed in the following order. 
+
+1. A `@summary` tag with a summary describing the class or defined type. This summary should be 140 characters or fewer. If a class or defined type is deprecated, indicate it here with **Deprecated**.
+1. Optional: Other tags such as `@see`, `@note`, or `@api`.
+1. Optional: usage examples, each consisting of:
+1. An `@example` tag with a description of a usage example on the same line 
+1. Code example showing how the class or defined type is used. This example should be directly under the `@example` tag and description, indented two spaces.
+1. One `@param` tag for each parameter in the class or defined type. See the parameter section for formatting guidelines.
+
+
+### Parameters
+
+Add parameter information as part of any class, defined type, or function that accepts parameters.  Parameter information should appear in the following order.
+
+1. The `@param` tag, a space, and then the name of the parameter.
+1. Description of what the parameter does. This may be on the same line as the `@param` tag or on the next line.
+1. Any additional information about valid values that is not clear from the data type. For example, if the data type is [String], but the value must specifically be a path, say so here.
+1. Any other information about the parameter, such as warnings or special behavior.
+
+For example:
+
+```
+# @param noselect_servers
+#   Specifies one or more peers to not sync with. Puppet appends 'noselect' to each matching item in the `servers` array.
+```
+
+#### Example class
+
+```
+# This is an example of how to document a Puppet class
 #
-# @example Declaring the class
-#   include example
+# @summary configures the Apache PHP module
 #
-# @param first The first parameter for this class
-# @param second The second parameter for this class
+# @example Basic usage
+#   class { 'apache::mod::php':
+#     package_name => 'mod_php5',
+#     source       => '/etc/php/custom_config.conf',
+#     php_version  => '7',
+#   }
 #
-class my_class(
-  String $first  = $my_class::params::first_arg,
-  Integer $second = $my_class::params::second_arg,
-) inherits my_class::params {
-  # ...
-}
-```
-
-The Strings elements appearing in the above comment block are:
-
-* The `@summary` tag, a short description of the class (should be fewer than 140 characters).
-* The `@example` tag, immediately followed by an optional title.
-* Under the `@example` tag, indented two spaces, the usage example code.
-* Two `@param` tags, with the name of the parameter first, followed by a string describing the parameter's purpose.
-
-Puppet Strings automatically documents information such as data types, default values, the namevar, and the return value type for functions.
-
-Defined types are documented in exactly the same way as classes:
-
-```
+# @see http://php.net/manual/en/security.apache.php
 #
-# This is an example of how to document a defined type.
-# @param ports The array of port numbers to use.
-define example_type(
-   Array[Integer] $ports = []
-) {
-  # ...
-}
+# @param package_name
+#   Names the package that installs mod_php
+# @param package_ensure
+#   Defines ensure for the PHP module package
+# @param path
+#   Defines the path to the mod_php shared object (.so) file.
+# @param extensions
+#   Defines an array of extensions to associate with PHP.
+# @param content
+#   Adds arbitrary content to php.conf.
+# @param template
+#   Defines the path to the php.conf template Puppet uses to generate the configuration file.
+# @param source
+#   Defines the path to the default configuration. Values include a puppet:/// path.
+# @param root_group
+#   Names a group with root access
+# @param php_version
+#   Names the PHP version Apache will be using.
+#
+class apache::mod::php (
+  $package_name     = undef,
+  $package_ensure   = 'present',
+  $path             = undef,
+  Array $extensions = ['.php'],
+  $content          = undef,
+  $template         = 'apache/mod/php.conf.erb',
+  $source           = undef,
+  $root_group       = $::apache::params::root_group,
+  $php_version      = $::apache::params::php_version,
+) { … }
 ```
 
-### Documenting resource types and providers
+#### Example defined type
 
-To document resource types, pass descriptions for each parameter, property, and the resource type itself to the `desc` method. Each description can include other tags as well, including examples.
-
-```ruby
-Puppet::Type.newtype(:example) do
-  desc <<-DESC
-An example resource type.
-@example Using the type.
-  example { foo:
-    param => 'hi'
-  }
-DESC
-
-  newparam(:param) do
-    desc 'An example parameter.'
-    # ...
-  end
-
-  newproperty(:prop) do
-    desc 'An example property.'
-    #...
-  end
-
-  # ...  
-end
 ```
- 
-If your resource type includes dynamically created parameters and properties, you must also use the `#@!puppet.type.param` and `#@!puppet.type.property` directives **before** the `newtype` call. This is necessary because Strings does not evaluate Ruby code, so it cannot detect dynamic attributes.
-
-```ruby
-# @!puppet.type.param [value1, value2, value3] my_param Documentation for a dynamic parameter.
-# @!puppet.type.property [foo, bar, baz] my_prop Documentation for a dynamic property.
-Puppet::Type.newtype(:example) do
-  #...
-end
-```
-
-Document providers similarly, again using the `desc` method:
-
-```ruby
-Puppet::Type.type(:example).provide :platform do
-  desc 'An example provider.'
-
-  # ...
-end
+# @summary
+#   Create and configure a MySQL database.
+#
+# @example Create a database
+#   mysql::db { 'mydb':
+#     user     => 'myuser',
+#     password => 'mypass',
+#     host     => 'localhost',
+#     grant    => ['SELECT', 'UPDATE'],
+#   }
+#
+# @param name
+#   The name of the database to create. (dbname)
+# @param user
+#   The user for the database you're creating.
+# @param password
+#   The password for $user for the database you're creating.
+# @param dbname
+#   The name of the database to create.
+# @param charset
+#   The character set for the database.
+# @param collate
+#   The collation for the database.
+# @param host
+#   The host to use as part of user@host for grants.
+# @param grant
+#   The privileges to be granted for user@host on the database.
+# @param sql
+#   The path to the sqlfile you want to execute. This can be single file specified as string, or it can be an array of strings.
+# @param enforce_sql
+#   Specifies whether executing the sqlfiles should happen on every run. If set to false, sqlfiles only run once.
+# @param ensure
+#   Specifies whether to create the database. Valid values are 'present', 'absent'. Defaults to 'present'.
+# @param import_timeout
+#   Timeout, in seconds, for loading the sqlfiles. Defaults to 300.
+# @param import_cat_cmd
+#   Command to read the sqlfile for importing the database. Useful for compressed sqlfiles. For example, you can use 'zcat' for .gz files.
+#
 ```
 
-All provider method calls, including `confine`, `defaultfor`, and `commands`, are automatically parsed and documented by Strings. The `desc` method is used to generate the docstring, and can include tags such as `@example` if written as a heredoc.
 
-Document types that use the new [Resource API](https://github.com/puppetlabs/puppet-resource_api):
 
-```ruby
-Puppet::ResourceApi.register_type(
-  name: 'database',
-  docs: 'An example database server resource type.',
-  attributes: {
-    ensure: {
-      type: 'Enum[present, absent, up, down]',
-      desc: 'What state the database should be in.',
-      default: 'up',
-    },
-    address: {
-      type: 'String',
-      desc: 'The database server name.',
-      behaviour: :namevar,
-    },
-    encrypt: {
-      type: 'Boolean',
-      desc: 'Whether or not to encrypt the database.',
-      default: false,
-      behaviour: :parameter,
-    },
-  },
-)
+### Functions
+
+Functions must be documented before the function definition, and should include the following information:
+
+An untagged docstring describing what the function does
+One `@param` tag for each parameter in the function. See the parameter section for formatting guidelines.
+A `@return` tag with the data type and a description of the returned value.
+Optionally, a usage example, consisting of:
+An `@example` tag with a description of a usage example on the same line 
+Code example showing how the function is used. This example should be directly under the `@example` tag and description, indented two spaces.
+For custom Ruby functions, docs should come before each ‘dispatch’ call.
+For functions in Puppet, docs should be put on top of the function name
+
+
+#### Ruby function examples
+
+This example has one potential return type
+
 ```
-
-Here, the `docs` key acts like the `desc` method of the traditional resource type. Everything else is the same, except that now everything is a value in the data structure, not passed to methods.
-
-**Note**: Puppet Strings can not evaluate your Ruby code, so only certain static expressions are supported.
-
-### Documenting functions
-
-Puppet Strings supports the documenting of defined functions with the Puppet 4 API, the Puppet 3 API, or in the Puppet language itself.
-
-#### Document Puppet 4 functions
-
-To document a function in the Puppet 4 API, use a YARD docstring before the `create_function` call and before any `dispatch` calls:
-
-```ruby
 # An example 4.x function.
 Puppet::Functions.create_function(:example) do
   # @param first The first parameter.
@@ -347,102 +379,132 @@ Puppet::Functions.create_function(:example) do
 end
 ```
 
-**Note**: Puppet Strings automatically uses the parameter type information from the `dispatch` block to document the parameter types. Only document your parameter types when the Puppet 4.x function contains no `dispatch` calls.
+If there is than one potential return type, you can use the `@return` tag multiple times. In this case, begin each tag string with ‘if’ to differentiate between cases.
 
-If the Puppet 4 function contains multiple `dispatch` calls, Puppet Strings automatically creates `overload` tags to describe the function's overloads:
-
-```ruby
+```
 # An example 4.x function.
 Puppet::Functions.create_function(:example) do
-  # Overload by string.
   # @param first The first parameter.
-  # @return [String] Returns a string.
-  # @example Calling the function
-  #   example('hi')
-  dispatch :example_string do
+  # @param second The second parameter.
+  # @return [String] If second argument is less than 10, the name of one item.
+  # @return [Array] If second argument is greater than 10, a list of item names.
+  # @example Calling the function.
+  #   example('hi', 10)
+  dispatch :example do
     param 'String', :first
-  end
-
-  # Overload by integer.
-  # @param first The first parameter.
-  # @return [Integer] Returns an integer.
-  # @example Calling the function
-  #   example(10)
-  dispatch :example_integer do
-    param 'Integer', :first
+    param 'Integer', :second
   end
 
   # ...
-```
-
-The resulting HTML for this example function documents both `example(String $first)` and `example(Integer $first)`.
-
-#### Document Puppet 3 functions
-
-To document a function in the Puppet 3 API, use the `doc` option to `newfunction`:
-
-```ruby
-Puppet::Parser::Functions.newfunction(:example, doc: <<-DOC
-Documentation for an example 3.x function.
-@param param1 The first parameter.
-@param param2 The second parameter.
-@return [Undef]
-@example Calling the function.
-  example('hi', 10)
-DOC
-) do |*args|
-  #...
 end
 ```
 
-#### Document Puppet language functions
+#### Puppet function example
 
-To document Puppet functions written in the Puppet language, use a YARD docstring before the function definition:
-
-```puppet
-# @param name The name to say hello to.
+```
+# An example function written in Puppet.
+# @param name the name to say hello to.
 # @return [String] Returns a string.
-# @example Calling the function
-#   example('world')
+# @example Calling the function.
+#    example(‘world’)
 function example(String $name) {
-  "hello $name"
+    “hello, $name”
 }
 ```
 
-**Note**: Puppet Strings automatically uses the parameter type information from the function's parameter list to document the parameter types.
 
-### Including examples in documentation
+### Resource types
 
-The `@example` YARD tag adds usage examples to any Ruby or Puppet language code.
+Strings automatically detects much of the information for types, including their parameters and properties. Add descriptions to the type and its attributes by passing either a here document (heredoc) or a short string to the `desc` method.
 
-```puppet
-# @example String describing what this example demonstrates.
-#   $content = example('world')
-#   if $content == 'world' {
-#     include world
-#   }
-function example(string $name) {
-  "hello $name"
-}
+To document the resource type itself, pass a here document (heredoc) to the `desc` method immediately after the type definition. The heredoc allows you to use String comment tags and multiple lines for your type documentation.
+
+For parameters, where a short description is usually enough, pass a string to `desc` in the attribute. Puppet Strings interprets strings passed to `desc` the same way in interprets the `@param` tag. Like `@param` tag strings, strings passed to `desc` should be no more than 140 characters. If you need a long description for a parameter, you can pass a heredoc to `desc` in the attribute.
+
+Every other method call present in a resource type is automatically included and documented by Strings, and each parameter or property is updated accordingly in the final documentation. This includes method calls such as `defaultto`, `newvalue`, and `namevar`.
+
+If your type dynamically generates parameters or properties, document those attributes with the `@!puppet.type.param` and `@!puppet.type.property` tags before the type definition. These are the only tags you can use before the resource type definition.
+
+The resource type description should appear in the following order:
+
+1. Directly under the type definition, indented two spaces, the `desc` method, with a heredoc including a descriptive delimiting keyword, such as `DESC`.
+1. A `@summary` tag with a summary describing the type. This summary should be 140 characters or fewer. 
+1. Optionally, usage examples, each consisting of:
+   1. An `@example` tag with a description of a usage example on the same line.
+   1. Code example showing how the type is used. This example should be directly under the `@example` tag and description, indented two spaces.
+
+
+#### Example resource type
+
+```
+# @!puppet.type.param [value1, value2, value3] my_param Documentation for a dynamic parameter.
+# @!puppet.type.property [foo, bar, baz] my_prop Documentation for a dynamic property.
+Puppet::Type.newtype(:database) do
+  desc <<-DESC
+An example resource type.
+@example Using the type.
+  database { ‘foo’:
+    qux => ‘hi’,
+  }
+DESC
+
+     newproperty(:qux) do
+       desc ‘Is a metasyntactic variable’
+     end
+
+     newparam(:foo) do`
+    desc ‘Is another metasyntactic variable’
+    defaultto “THE CLOUD”
+  end
+end
 ```
 
-The string following the `@example` tag is an optional title which is displayed prominently above the code block.
+### Resource API type
 
-The example body must begin on a newline underneath the tag, and each line of the example itself must be indented by at least one space. Further indentation is preserved as preformatted text in the generated documentation.
+Document resource API types the same way you would standard resource types, but pass the heredoc or documentation string to a `desc` key in the data structure. You can include tags and multiple lines with the heredoc. Strings pulls the heredoc information along with other information from this data structure.
 
-### Including multi-line tag descriptions
+The heredoc and documentation strings that Strings uses are bolded in this code example:
 
-You can spread tag descriptions across multiple lines, similar to multi-line examples, as long as subsequent lines are each uniformly indented by at least one space.
+#### Resource API example
 
-For example:
+```
+Puppet::ResourceApi.register_type(
+  name: 'apt_key',
+  docs: <<-EOS,
+@summary Fancy new type.
+@example Fancy new example.
+ apt_key { '6F6B15509CF8E59E6E469F327F438280EF8D349F':
+   source => 'http://apt.puppetlabs.com/pubkey.gpg'
+ }
 
-```puppet
-# @param name The name the function uses to say hello. Note that this
-#   description is extra long, so we've broken it up onto newlines for the sake
-#   of readability.
-function example(string $name) {
-  "hello $name"
-}
+This type provides Puppet with the capabilities to
+manage GPG keys needed by apt to perform package validation. Apt has its own GPG keyring that can be manipulated through the `apt-key` command.
+
+**Autorequires**:
+If Puppet is given the location of a key file which looks like an absolute path this type will autorequire that file.
+EOS
+  attributes:   {
+    ensure:      {
+      type: 'Enum[present, absent]',
+      desc: 'Whether this apt key should be present or absent on the target system.'
+    },
+    id:          {
+      type:      'Variant[Pattern[/\A(0x)?[0-9a-fA-F]{8}\Z/], Pattern[/\A(0x)?[0-9a-fA-F]{16}\Z/], Pattern[/\A(0x)?[0-9a-fA-F]{40}\Z/]]',
+      behaviour: :namevar,
+      desc:      'The ID of the key you want to manage.',
+    },
+    # ...
+    created:     {
+      type:      'String',
+      behavior: :read_only,
+      desc:      'Date the key was created, in ISO format.',
+    },
+  },
+  autorequires: {
+    file:    '$source', # will evaluate to the value of the `source` attribute
+    package: 'apt',
+  },
+)
 ```
 
 ## Tags reference
@@ -456,6 +518,7 @@ function example(string $name) {
 * `@!puppet.type.property`: Documents dynamic type properties. See [Documenting resource types and providers](#documenting-resource-types-and-providers) above.
 * `@option`: With a `@param` tag, defines what optional parameters the user can pass in an options hash to the method.
   For example:
+  
   ```
   # @param [Hash] opts
   #      List of options
@@ -464,6 +527,7 @@ function example(string $name) {
   # @option opts [Array] :option2
   #      option 2 in the hash
   ```
+  
 * `@raise`Documents any exceptions that can be raised by the given component. For example: `# @raise PuppetError this error will be raised if x`
 * `@return`: Describes the return value (and type or types) of a method. You can list multiple return tags for a method if the method has distinct return cases. In this case, begin each case with "if".
 * `@see`: Adds "see also" references. Accepts URLs or other code objects with an optional description at the end. Note that the URL or object is automatically linked by YARD and does not need markup formatting.
