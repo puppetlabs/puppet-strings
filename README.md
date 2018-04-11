@@ -238,12 +238,18 @@ Class and defined type information should be listed in the following order.
 ### Parameters
 
 Add parameter information as part of any class, defined type, or function that accepts parameters.  Parameter information should appear in the following order.
-The `@param` tag, a space, and then the name of the parameter.
-Description of what the parameter does. This may be on the same line as the `@param` tag or on the next line.
-Any additional information about valid values that is not clear from the data type. For example, if the data type is [String], but the value must specifically be a path, say so here.
-Any other information about the parameter, such as warnings or special behavior.
 
+1. The `@param` tag, a space, and then the name of the parameter.
+1. Description of what the parameter does. This may be on the same line as the `@param` tag or on the next line.
+1. Any additional information about valid values that is not clear from the data type. For example, if the data type is [String], but the value must specifically be a path, say so here.
+1. Any other information about the parameter, such as warnings or special behavior.
 
+For example:
+
+```
+# @param noselect_servers
+#   Specifies one or more peers to not sync with. Puppet appends 'noselect' to each matching item in the `servers` array.
+```
 
 #### Example class
 
@@ -293,12 +299,49 @@ class apache::mod::php (
 ) { … }
 ```
 
-For example:
+#### Example defined type
 
 ```
-# @param noselect_servers
-#   Specifies one or more peers to not sync with. Puppet appends 'noselect' to each matching item in the `servers` array.
+# @summary
+#   Create and configure a MySQL database.
+#
+# @example Create a database
+#   mysql::db { 'mydb':
+#     user     => 'myuser',
+#     password => 'mypass',
+#     host     => 'localhost',
+#     grant    => ['SELECT', 'UPDATE'],
+#   }
+#
+# @param name
+#   The name of the database to create. (dbname)
+# @param user
+#   The user for the database you're creating.
+# @param password
+#   The password for $user for the database you're creating.
+# @param dbname
+#   The name of the database to create.
+# @param charset
+#   The character set for the database.
+# @param collate
+#   The collation for the database.
+# @param host
+#   The host to use as part of user@host for grants.
+# @param grant
+#   The privileges to be granted for user@host on the database.
+# @param sql
+#   The path to the sqlfile you want to execute. This can be single file specified as string, or it can be an array of strings.
+# @param enforce_sql
+#   Specifies whether executing the sqlfiles should happen on every run. If set to false, sqlfiles only run once.
+# @param ensure
+#   Specifies whether to create the database. Valid values are 'present', 'absent'. Defaults to 'present'.
+# @param import_timeout
+#   Timeout, in seconds, for loading the sqlfiles. Defaults to 300.
+# @param import_cat_cmd
+#   Command to read the sqlfile for importing the database. Useful for compressed sqlfiles. For example, you can use 'zcat' for .gz files.
+#
 ```
+
 
 
 ### Functions
