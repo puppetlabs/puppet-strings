@@ -44,7 +44,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
   private
 
   def raise_parse_error(msg, location = statement)
-    raise YARD::Parser::UndocumentableError, "#{msg} at #{location.file}:#{location.line}." if parameters.empty?
+    raise YARD::Parser::UndocumentableError, "#{msg} at #{location.file}:#{location.line}."
   end
 
   # check that the params of the register_type call are key/value pairs.
@@ -67,12 +67,22 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
       node.source.to_i
     when :hash
       hash_from_node(node)
+    when :array
+      array_from_node(node)
     when :var_ref
       var_ref_from_node(node)
     when :symbol, :symbol_literal, :label, :dyna_symbol, :string_literal
       node_as_string(node)
     else
       raise_parse_error("unexpected construct #{node.type}")
+    end
+  end
+
+  def array_from_node(node)
+    return nil unless node
+
+    arr = node.children.collect do |assoc|
+      value_from_node(assoc.children[0])
     end
   end
 
