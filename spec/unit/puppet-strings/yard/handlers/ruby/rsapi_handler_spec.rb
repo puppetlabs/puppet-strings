@@ -70,6 +70,7 @@ SOURCE
 Puppet::ResourceApi.register_type(
   name: 'database',
   docs: 'An example database server resource type.',
+  features: ['remote-resource'],
   attributes: {
     ensure: {
       type: 'Enum[present, absent, up, down]',
