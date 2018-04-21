@@ -57,7 +57,9 @@ module PuppetStrings::Markdown
     # e.g. {:tag_name=>"author", :text=>"eputnam"}
     { :return_val => 'return',
       :since => 'since',
-      :summary => 'summary' }.each do |method_name, tag_name|
+      :summary => 'summary',
+      :note => 'note',
+      :todo => 'todo' }.each do |method_name, tag_name|
       # @return [String] unless the tag is nil or the string.length == 0
       define_method method_name do
         @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0][:text] unless @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0].nil? || @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0][:text].length.zero?

@@ -7,6 +7,8 @@ describe PuppetStrings::Json do
     # Populate the YARD registry with both Puppet and Ruby source
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
 # A simple class.
+# @todo Do a thing
+# @note Some note
 # @param param1 First param.
 # @param param2 Second param.
 # @param param3 Third param.

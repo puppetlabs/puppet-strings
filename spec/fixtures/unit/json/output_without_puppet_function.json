@@ -9,6 +9,14 @@
         "text": "A simple class.",
         "tags": [
           {
+            "tag_name": "todo",
+            "text": "Do a thing"
+          },
+          {
+            "tag_name": "note",
+            "text": "Some note"
+          },
+          {
             "tag_name": "param",
             "text": "First param.",
             "types": [

@@ -8,6 +8,14 @@
 <%= "The #{name} type." %>
 <% end -%>
 
+<% if todo -%>
+* **TODO** <%= todo %>
+
+<% end -%>
+<% if note -%>
+* **Note** <%= note %>
+
+<% end -%>
 <% if since -%>
 * **Since** <%= since %>
 
