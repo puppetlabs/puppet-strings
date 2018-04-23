@@ -39,5 +39,10 @@ STR
       str = '<a href="www.github.com/blah/document.html#module-description">'
       expect(subject.github_to_yard_links(str)).to eq(str)
     end
+
+    it 'leaves plain text alone' do
+      str = '<a href="#module-description"> module-description'
+      expect(subject.github_to_yard_links(str)).to eq('<a href="#label-Module+description"> module-description')
+    end
   end
 end
