@@ -1,15 +1,15 @@
 Puppet Strings JSON Data
 ========================
 
-Puppet Strings has two flags to the `generate` action that can be used to emit JSON data:
-
-* `--emit-json <file>`: Emits the JSON data to the given file.
-* `--emit-json-stdout`: Emits the JSON data to STDOUT.
+Puppet Strings can generate JSON to STDOUT with the `--format` option:
+```shell
+puppet strings generate --format json
+```
 
 Document Schema
 ===============
 
-At the top level, there are five arrays in the JSON document:
+At the top level, there are seven arrays in the JSON document:
 
 | Document Key     | Description                                                                   |
 | ---------------- | ----------------------------------------------------------------------------- |
@@ -17,7 +17,9 @@ At the top level, there are five arrays in the JSON document:
 | defined_types    | The list of defined types that were parsed.                                   |
 | resource_types   | The list of resource types that were parsed.                                  |
 | providers        | The list of resource providers that were parsed.                              |
-| puppet_functions | The list of Puppet functions (3.x, 4.x and Puppet language) that were parsed. |
+| puppet_functions | The list of Puppet functions (4.x, 4.x and Puppet language) that were parsed. |
+| puppet_tasks     | The list of Puppet tasks that were parsed.                                    |
+| puppet_plans     | The list of Puppet plans that were parsed.                                    |
 
 Puppet Classes
 --------------
@@ -117,13 +119,42 @@ Each entry in the `puppet_functions` list is an object with the following attrib
 | Attribute Key | Description                                                                   |
 | ------------- | ----------------------------------------------------------------------------- |
 | name          | The name of the function.                                                     |
-| file          | The file defining the provider.                                               |
-| line          | The line where the provider is defined.                                       |
+| file          | The file defining the function.                                               |
+| line          | The line where the function is defined.                                       |
 | type          | The function type (e.g. ruby3x, ruby4x, puppet).                              |
 | signatures    | A list of Puppet signatures of the function, including overloads if present.  |
 | docstring     | The *DocString* object for the function (see below).                          |
 | defaults      | The map of parameter names to default values.                                 |
 | source        | The source code for the function.                                             |
+
+Puppet Tasks
+------------
+
+Each entry in the `puppet_tasks` list is an object with the following attributes:
+
+| Attribute Key | Description                                                                   |
+| ------------- | ----------------------------------------------------------------------------- |
+| name          | The name of the task.                                                         |
+| file          | The file defining the task.                                                   |
+| line          | The line where the task is defined.                                           |
+| docstring     | The *DocString* object for the task (see below).                              |
+| source        | The source code for the task.                                                 |
+| supports_noop | Whether the task supports noop mode                                           |
+| input_method  | Maps to the `input_method` key in the task json                               |
+
+Puppet Plans
+------------
+
+Each entry in the `puppet_plans` list is an object with the following attributes:
+
+| Attribute Key | Description                                                                   |
+| ------------- | ----------------------------------------------------------------------------- |
+| name          | The name of the plan.                                                         |
+| file          | The file defining the plan.                                                   |
+| line          | The line where the plan is defined.                                           |
+| docstring     | The *DocString* object for the plan (see below).                              |
+| defaults      | The map of parameter names to default values.                                 |
+| source        | The source code for the plan.                                                 |
 
 Signature Objects
 -----------------
@@ -678,6 +709,93 @@ An example JSON document describing a Puppet class, defined type, resource type,
         ]
       },
       "source": "Puppet::Functions.create_function(:func4x) do\n  # The first overload.\n  # @param param1 The first parameter.\n  # @param param2 The second parameter.\n  # @param param3 The third parameter.\n  # @return [Undef] Returns nothing.\n  dispatch :foo do\n    param          'Integer',       :param1\n    param          'Any',           :param2\n    optional_param 'Array[String]', :param3\n  end\n\n  # The second overload.\n  # @param param The first parameter.\n  # @param block The block parameter.\n  # @return [String] Returns a string.\n  dispatch :other do\n    param 'Boolean', :param\n    block_param\n  end\nend"
+    }
+  ],
+  "puppet_tasks": [
+    {
+      "name": "(stdin)",
+      "file": "(stdin)",
+      "line": 0,
+      "docstring": {
+        "text": "Allows you to backup your database to local file.",
+        "tags": [
+          {
+            "name": "database",
+            "tag_name": "param",
+            "text": "Database to connect to",
+            "types": [
+              "Optional[String[1]]"
+            ]
+          },
+          {
+            "name": "user",
+            "tag_name": "param",
+            "text": "The user",
+            "types": [
+              "Optional[String[1]]"
+            ]
+          },
+          {
+            "name": "password",
+            "tag_name": "param",
+            "text": "The password",
+            "types": [
+              "Optional[String[1]]"
+            ]
+          },
+          {
+            "name": "sql",
+            "tag_name": "param",
+            "text": "Path to file you want backup to",
+            "types": [
+              "String[1]"
+            ]
+          }
+        ]
+      },
+      "source": "{\n  \"description\": \"Allows you to backup your database to local file.\",\n  \"input_method\": \"stdin\",\n  \"parameters\": {\n    \"database\": {\n      \"description\": \"Database to connect to\",\n      \"type\": \"Optional[String[1]]\"\n    },\n    \"user\": {\n      \"description\": \"The user\",\n      \"type\": \"Optional[String[1]]\"\n    },\n    \"password\": {\n      \"description\": \"The password\",\n      \"type\": \"Optional[String[1]]\"\n    },\n     \"sql\": {\n      \"description\": \"Path to file you want backup to\",\n      \"type\": \"String[1]\"\n    }\n  }\n}\n",
+      "supports_noop": false,
+      "input_method": "stdin"
+    }
+  ],
+  "puppet_plans": [
+    {
+      "name": "plann",
+      "file": "(stdin)",
+      "line": 5,
+      "docstring": {
+        "text": "A simple plan.",
+        "tags": [
+          {
+            "tag_name": "param",
+            "text": "First param.",
+            "types": [
+              "String"
+            ],
+            "name": "param1"
+          },
+          {
+            "tag_name": "param",
+            "text": "Second param.",
+            "types": [
+              "Any"
+            ],
+            "name": "param2"
+          },
+          {
+            "tag_name": "param",
+            "text": "Third param.",
+            "types": [
+              "Integer"
+            ],
+            "name": "param3"
+          }
+        ]
+      },
+      "defaults": {
+        "param3": "1"
+      },
+      "source": "plan plann(String $param1, $param2, Integer $param3 = 1) {\n}"
     }
   ]
 }

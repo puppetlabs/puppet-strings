@@ -1,6 +1,6 @@
 # How to contribute
 
-Third-party patches are essential for keeping strings great. We want to keep it
+Third-party patches are essential for keeping Puppet Strings great. We want to keep it
 as easy as possible to contribute changes that get things working in your
 environment. There are a few guidelines that we need contributors to follow so
 that we can have a chance of keeping on top of things.
@@ -72,18 +72,14 @@ a ticket number.
 * Push your changes to a topic branch in your fork of the repository.
 * Submit a pull request to the repository in the puppetlabs organization.
 * Update your Jira ticket to mark that you have submitted code and are ready for it to be reviewed (Status: Ready for Merge).
-  * Include a link to the pull request in the ticket.
-* The core team looks at Pull Requests on a regular basis in a weekly triage
-  meeting that we hold in a public Google Hangout. The hangout is announced in
-  the weekly status updates that are sent to the puppet-dev list.
+* Include a link to the pull request in the ticket.
 * After feedback has been given we expect responses within two weeks. After two
   weeks will may close the pull request if it isn't showing any activity.
 
 # Additional Resources
 
 * [More information on contributing](http://links.puppet.com/contribute-to-puppet)
-* [Bug tracker (Jira)](http://tickets.puppetlabs.com)
+* [Bug tracker (Jira)](http://tickets.puppet.com)
 * [Contributor License Agreement](http://links.puppet.com/cla)
 * [General GitHub documentation](http://help.github.com/)
 * [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
-* #puppet-dev IRC channel on freenode.org

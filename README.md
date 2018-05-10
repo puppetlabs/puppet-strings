@@ -157,7 +157,7 @@ Action   | Description
 
 ### `puppet strings generate` command reference
 
-Usage: `puppet strings [generate] [--format <FORMAT>][--out <DESTINATION>] [<ARGUMENTS>]
+Usage: `puppet strings generate [--format <FORMAT>][--out <DESTINATION>] [<ARGUMENTS>]`
 
 For example:
 
@@ -169,8 +169,6 @@ puppet strings generate --format markdown --out docs/info.md
 puppet strings generate manifest1.pp manifest2.pp
 ```
 
-[--format <OUTPUT_FORMAT>][--out <DESTINATION_PATH> [<ARGUMENTS>]
-
 Option   | Description   | Values      | Default
 ----------------|:---------------:|:------------------:|-------------------------
 `--format` | Specifies a format for documentation. | markdown, json    | If not specified, Strings outputs HTML documentation.
@@ -179,7 +177,29 @@ Filenames or directory paths | Outputs documentation for only specified files or
 `--verbose` | Logs verbosely. | none    | If not specified, Strings logs basic information.
 `--debug` | Logs debug information. | none    | If not specified, Strings does not log debug information.
 `--markup FORMAT` | The markup format to use for docstring text | "markdown", "textile", "rdoc", "ruby", "text", "html", or "none"    | By default, Strings outputs HTML, if no `--format` is specified or Markdown if `--format markdown` is specified.
-`--help` | Displays help documentation for the command. | Markdown, JSON    | If not specified, Strings outputs HTML documentation.
+`--help` | Displays help documentation for the command. | none | If not specified, Strings outputs HTML documentation.
+
+### `puppet strings server` command reference
+
+Usage: `puppet strings server [--markup <FORMAT>][[module_name]...][--modulepath <PATH]`
+
+For example:
+
+```
+puppet strings server --modulepath path/to/modules
+```
+
+```
+puppet strings server concat
+```
+
+Option   | Description   | Values      | Default
+----------------|:---------------:|:------------------:|-------------------------
+`--modulepath` | Puppet option for setting the module path | Valid path | Defaults to Puppet's current module path
+`--verbose` | Logs verbosely. | none    | If not specified, Strings logs basic information.
+`--debug` | Logs debug information. | none    | If not specified, Strings does not log debug information.
+`--markup FORMAT` | The markup format to use for docstring text | "markdown", "textile", "rdoc", "ruby", "text", "html", or "none"    | By default, Strings outputs HTML, if no `--format` is specified or Markdown if `--format markdown` is specified.
+`--help` | Displays help documentation for the command. | none | If not specified, Strings outputs HTML documentation.
 
 
 # Puppet Strings style
