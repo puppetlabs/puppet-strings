@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [2.0.0](https://github.com/puppetlabs/puppet-strings/tree/2.0.0) (2018-05-11)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.2.1...2.0.0)
+
+### Changed
+
+- bump required ruby and puppet versions [\#178](https://github.com/puppetlabs/puppet-strings/pull/178) ([eputnam](https://github.com/eputnam))
+
+### Added
+
+- \(PDOC-238\) add generated message to markdown [\#175](https://github.com/puppetlabs/puppet-strings/pull/175) ([eputnam](https://github.com/eputnam))
+- \(PDOC-228\) puppet plan support [\#168](https://github.com/puppetlabs/puppet-strings/pull/168) ([eputnam](https://github.com/eputnam))
+- \(PDOC-206\) support for tasks [\#161](https://github.com/puppetlabs/puppet-strings/pull/161) ([eputnam](https://github.com/eputnam))
+
+### Fixed
+
+- \(PDOC-36\) fix hack for README urls [\#176](https://github.com/puppetlabs/puppet-strings/pull/176) ([eputnam](https://github.com/eputnam))
+- \(PDOC-240\) add handling for :array node type in rsapi\_handler [\#174](https://github.com/puppetlabs/puppet-strings/pull/174) ([eputnam](https://github.com/eputnam))
+- \(PDOC-159\) server urls fix [\#173](https://github.com/puppetlabs/puppet-strings/pull/173) ([eputnam](https://github.com/eputnam))
+- \(maint\) display Plans in markdown table of contents [\#171](https://github.com/puppetlabs/puppet-strings/pull/171) ([eputnam](https://github.com/eputnam))
+- \(PDOC-233\) markdown whitespace fixes [\#170](https://github.com/puppetlabs/puppet-strings/pull/170) ([JohnLyman](https://github.com/JohnLyman))
+- \(PDOC-229\) fix error with return\_type and @return [\#169](https://github.com/puppetlabs/puppet-strings/pull/169) ([eputnam](https://github.com/eputnam))
+- \(PDOC-36\) hack to fix README links in generated HTML [\#167](https://github.com/puppetlabs/puppet-strings/pull/167) ([eputnam](https://github.com/eputnam))
+- \(PDOC-192\) remove warning for title/name [\#166](https://github.com/puppetlabs/puppet-strings/pull/166) ([eputnam](https://github.com/eputnam))
+- \(maint\) add condition for misleading warning [\#155](https://github.com/puppetlabs/puppet-strings/pull/155) ([eputnam](https://github.com/eputnam))
+
 ## [1.2.1](https://github.com/puppetlabs/puppet-strings/tree/1.2.1) (2018-03-01)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.2.0...1.2.1)
