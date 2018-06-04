@@ -1,7 +1,7 @@
 module PuppetStrings::Markdown
   module TableOfContents
     def self.render
-      final = ""
+      final = "## Table of Contents\n\n"
 
       [PuppetStrings::Markdown::PuppetClasses,
       PuppetStrings::Markdown::DefinedTypes,
