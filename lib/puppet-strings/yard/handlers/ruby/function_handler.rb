@@ -35,7 +35,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     # Create and register the function object
     is_3x = module_name == 'Puppet::Parser::Functions' || module_name == 'newfunction'
     object = PuppetStrings::Yard::CodeObjects::Function.new(
-      get_name,
+      get_name(statement, 'Puppet::Functions.create_function'),
       is_3x ? PuppetStrings::Yard::CodeObjects::Function::RUBY_3X : PuppetStrings::Yard::CodeObjects::Function::RUBY_4X
     )
     object.source = statement
@@ -68,14 +68,6 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
   end
 
   private
-  def get_name
-    parameters = statement.parameters(false)
-    raise YARD::Parser::UndocumentableError, "Expected at least one parameter to Puppet::Functions.create_function at #{statement.file}:#{statement.line}." if parameters.empty?
-    name = node_as_string(parameters.first)
-    raise YARD::Parser::UndocumentableError, "Expected a symbol or string literal for first parameter but found '#{parameters.first.type}' at #{statement.file}:#{statement.line}." unless name
-    name
-  end
-
   def add_tags(object)
     log.warn "Missing documentation for Puppet function '#{object.name}' at #{statement.file}:#{statement.line}." if object.docstring.empty? && object.tags.empty?
     log.warn "The docstring for Puppet 4.x function '#{object.name}' contains @param tags near #{object.file}:#{object.line}: parameter documentation should be made on the dispatch call." unless object.tags(:param).empty?

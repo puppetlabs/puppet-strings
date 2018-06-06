@@ -24,7 +24,7 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
     raise YARD::Parser::UndocumentableError, "Could not determine the resource type name for the provider defined at #{statement.file}:#{statement.line}." unless type_name
 
     # Register the object
-    object = PuppetStrings::Yard::CodeObjects::Provider.new(type_name, get_name)
+    object = PuppetStrings::Yard::CodeObjects::Provider.new(type_name, get_name(statement, "'provide'"))
     register object
 
     # Extract the docstring
@@ -41,14 +41,6 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
   end
 
   private
-  def get_name
-    parameters = statement.parameters(false)
-    raise YARD::Parser::UndocumentableError, "Expected at least one parameter to 'provide' at #{statement.file}:#{statement.line}." if parameters.empty?
-    name = node_as_string(parameters.first)
-    raise YARD::Parser::UndocumentableError, "Expected a symbol or string literal for first parameter but found '#{parameters.first.type}' at #{statement.file}:#{statement.line}." unless name
-    name
-  end
-
   def register_provider_docstring(object)
     # Walk the tree searching for assignments or calls to desc/doc=
     statement.traverse do |child|
