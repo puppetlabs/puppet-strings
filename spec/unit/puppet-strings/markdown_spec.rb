@@ -9,6 +9,8 @@ describe PuppetStrings::Markdown do
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
 # An overview for a simple class.
 # @summary A simple class.
+# @todo Do a thing
+# @note some note
 # @since 1.0.0
 # @see www.puppet.com
 # @example This is an example

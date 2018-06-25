@@ -3,11 +3,19 @@
     {
       "name": "klass",
       "file": "(stdin)",
-      "line": 5,
+      "line": 7,
       "inherits": "foo::bar",
       "docstring": {
         "text": "A simple class.",
         "tags": [
+          {
+            "tag_name": "todo",
+            "text": "Do a thing"
+          },
+          {
+            "tag_name": "note",
+            "text": "Some note"
+          },
           {
             "tag_name": "param",
             "text": "First param.",
@@ -44,7 +52,7 @@
     {
       "name": "dt",
       "file": "(stdin)",
-      "line": 12,
+      "line": 14,
       "docstring": {
         "text": "A simple defined type.",
         "tags": [

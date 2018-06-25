@@ -1,7 +1,7 @@
 # Initializes the template.
 # @return [void]
 def init
-  sections :header, :box_info, :summary, :overview, T('tags'), :properties, :parameters, :features
+  sections :header, :box_info, :summary, :overview, :note, :todo, T('tags'), :properties, :parameters, :features
 end
 
 # Renders the box_info section.

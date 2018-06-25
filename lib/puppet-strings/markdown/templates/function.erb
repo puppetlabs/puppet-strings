@@ -7,7 +7,15 @@ Type: <%= type %>
 <% elsif summary -%>
 <%= summary %>
 <% else -%>
-<%= "The #{name} class." %>
+<%= "The #{name} function." %>
+<% end -%>
+<% if todo -%>
+* **TODO** <%= todo %>
+
+<% end -%>
+<% if note -%>
+* **Note** <%= note %>
+
 <% end -%>
 
 <% signatures.each do |sig| -%>
@@ -15,6 +23,16 @@ Type: <%= type %>
 
 <% if sig.text -%>
 <%= sig.text %>
+
+<% elsif sig.summary -%>
+<%= sig.summary %>
+
+<% else -%>
+<%= "The #{name} function." %>
+
+<% end -%>
+<% if sig.note -%>
+* **Note** <%= sig.note %>
 
 <% end -%>
 <% if sig.return_type -%>

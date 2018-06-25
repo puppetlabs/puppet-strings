@@ -39,6 +39,10 @@ _Private Classes_
 
 An overview for a simple class.
 
+* **TODO** Do a thing
+
+* **Note** some note
+
 * **Since** 1.0.0
 
 * **See also**
