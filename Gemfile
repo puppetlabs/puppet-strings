@@ -31,13 +31,7 @@ end
 group :development do
   gem 'github_changelog_generator', git: 'https://github.com/skywinder/github-changelog-generator', ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')
   gem 'pry'
-  if RUBY_VERSION[0..2] == '1.9'
-    gem 'pry-debugger'
-  elsif RUBY_VERSION[0] == '2'
-    gem 'pry-byebug'
-  end
+  gem 'pry-byebug'
 end
 
-gem 'json',      '<= 1.8'    if RUBY_VERSION < '2.0.0'
-gem 'json_pure', '<= 2.0.1'  if RUBY_VERSION < '2.0.0'
-gem 'rubocop',   '<= 0.47.0' if RUBY_VERSION >= '2.0.0'
+gem 'rubocop', '<= 0.47.0'
