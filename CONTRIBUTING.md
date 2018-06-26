@@ -51,7 +51,7 @@ that we can have a chance of keeping on top of things.
 For changes of a trivial nature to comments and documentation, it is not
 always necessary to create a new ticket in Jira. In this case, it is
 appropriate to start the first line of a commit with '(doc)' instead of
-a ticket number. 
+a ticket number.
 
 ````
     (doc) Add documentation commit example to CONTRIBUTING
@@ -75,6 +75,25 @@ a ticket number.
 * Include a link to the pull request in the ticket.
 * After feedback has been given we expect responses within two weeks. After two
   weeks will may close the pull request if it isn't showing any activity.
+
+## Cutting a release
+
+To cut a new release, from a current `master` checkout:
+
+* Start the release branch with `git checkout -b release-prep`
+* Update `lib/puppet-strings/version.rb` to the new version
+* Update the CHANGELOG
+  * Have a [CHANGELOG_GITHUB_TOKEN](https://github.com/skywinder/github-changelog-generator#github-token) set in your environment
+  * run `rake changelog`
+  * double check the PRs to make sure they're all tagged correctly (using the new CHANGELOG for cross-checking)
+* Check README and other materials for up-to-date-ness
+* Commit changes with title "Release prep for v\<VERSION>"
+* Upload and PR the release-prep branch to the puppetlabs GitHub repo
+* Check that CI is green and merge the PR
+* Run `rake release[upstream]` to release from your checkout
+  * make sure to use the name of your git remote pointing to the puppetlabs GitHub repo
+* Remove the release-prep branch
+* Send the release announcements using the template in [misc/ANNOUNCEMENT_TEMPLATE.md](misc/ANNOUNCEMENT_TEMPLATE.md)
 
 # Additional Resources
 

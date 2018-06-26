@@ -1,4 +1,4 @@
-require 'rubygems'
+require 'bundler/gem_tasks'
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 
@@ -57,4 +57,37 @@ task(:rubocop) do
   require 'rubocop'
   cli = RuboCop::CLI.new
   cli.run(%w(-D -f s))
+end
+
+#### CHANGELOG ####
+begin
+  require 'github_changelog_generator/task'
+  GitHubChangelogGenerator::RakeTask.new :changelog do |config|
+    require 'puppet-strings/version'
+    config.future_release = "v#{PuppetStrings::VERSION}"
+    config.header = "# Changelog\n\n" \
+      "All significant changes to this repo will be summarized in this file.\n"
+    config.configure_sections = {
+          added: {
+            prefix: "Added",
+            labels: ["enhancement"]
+          },
+          fixed: {
+            prefix: "Fixed",
+            labels: ["bugfix"]
+          },
+          breaking: {
+            prefix: "Changed",
+            labels: ["backwards-incompatible"]
+          }
+        }
+    config.exclude_labels = ['maintenance']
+    config.user = 'puppetlabs'
+    config.project = 'puppet-strings'
+  end
+rescue LoadError
+  desc 'Install github_changelog_generator to get access to automatic changelog generation'
+  task :changelog do
+    raise 'Install github_changelog_generator to get access to automatic changelog generation'
+  end
 end
