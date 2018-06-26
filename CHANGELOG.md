@@ -1,6 +1,22 @@
-# Change log
+# Changelog
 
-All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
+All significant changes to this repo will be summarized in this file.
+
+
+## [v2.1.0](https://github.com/puppetlabs/puppet-strings/tree/v2.1.0) (2018-06-25)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/2.0.0...v2.1.0)
+
+**Implemented enhancements:**
+
+- \(PDOC-212, PDOC-213\) add support for @note and @todo [\#182](https://github.com/puppetlabs/puppet-strings/pull/182) ([eputnam](https://github.com/eputnam))
+- \(PDOC-255\) markdown table of contents update [\#181](https://github.com/puppetlabs/puppet-strings/pull/181) ([eputnam](https://github.com/eputnam))
+
+**Merged pull requests:**
+
+- \(PDOC-259\) relax ruby requirement to 2.1.0 from 2.1.9 [\#184](https://github.com/puppetlabs/puppet-strings/pull/184) ([DavidS](https://github.com/DavidS))
+
+# Previous Changes
 
 ## [2.0.0](https://github.com/puppetlabs/puppet-strings/tree/2.0.0) (2018-05-11)
 
