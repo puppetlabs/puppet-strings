@@ -29,6 +29,7 @@ group :acceptance do
 end
 
 group :development do
+  gem 'github_changelog_generator', git: 'https://github.com/skywinder/github-changelog-generator', ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')
   gem 'pry'
   if RUBY_VERSION[0..2] == '1.9'
     gem 'pry-debugger'
