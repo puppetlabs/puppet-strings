@@ -2,6 +2,11 @@ require 'bundler/gem_tasks'
 #require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.exclude_pattern = "spec/acceptance/**/*.rb"
+end
+
 # Add our own tasks
 require 'puppet-strings/tasks'
 
