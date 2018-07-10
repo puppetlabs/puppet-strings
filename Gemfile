@@ -34,4 +34,4 @@ group :development do
   gem 'pry-byebug'
 end
 
-gem 'rubocop', '<= 0.47.0'
+gem 'rubocop', '~> 0.49'
