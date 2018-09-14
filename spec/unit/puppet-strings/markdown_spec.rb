@@ -108,12 +108,20 @@ SOURCE
 # @option param3 [Array] :param3opt Something about this option
 # @raise SomeError this is some error
 # @return [Undef] Returns nothing.
+# @example Test
+#   $result = func(1, 2)
 function func(Integer $param1, $param2, String $param3 = hi) {
 }
 SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
 # An example 4.x function.
+#
+# @example Calling the function
+#   $result = func4x(1, 'foo')
+#
+# @example Calling the function with all args
+#   $result = func4x(1, 'foo', ['bar'])
 Puppet::Functions.create_function(:func4x) do
   # An overview for the first overload.
   # @raise SomeError this is some error
@@ -123,6 +131,9 @@ Puppet::Functions.create_function(:func4x) do
   # @option param2 [String] :option2 another option
   # @param param3 The third parameter.
   # @return Returns nothing.
+  # @example Calling the function foo
+  #   $result = func4x(1, 'foooo')
+  #
   dispatch :foo do
     param          'Integer',       :param1
     param          'Any',           :param2
@@ -134,6 +145,8 @@ Puppet::Functions.create_function(:func4x) do
   # @param param The first parameter.
   # @param block The block parameter.
   # @return Returns a string.
+  # @example Calling the function bar
+  #   $result = func4x(1, 'bar', ['foo'])
   dispatch :other do
     param 'Boolean', :param
     block_param
