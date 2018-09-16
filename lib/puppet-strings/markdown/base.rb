@@ -60,9 +60,9 @@ module PuppetStrings::Markdown
       :summary => 'summary',
       :note => 'note',
       :todo => 'todo' }.each do |method_name, tag_name|
-      # @return [String] unless the tag is nil or the string.length == 0
+      # @return [String] unless the tag is nil or the string.empty?
       define_method method_name do
-        @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0][:text] unless @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0].nil? || @tags.select { |tag| tag[:tag_name] == "#{tag_name}" }[0][:text].length.zero?
+        @tags.find { |tag| tag[:tag_name] == tag_name && !tag[:text].empty? }[:text] if @tags.any? { |tag| tag[:tag_name] == tag_name && !tag[:text].empty? }
       end
     end
 
@@ -78,37 +78,37 @@ module PuppetStrings::Markdown
 
     # @return [String] data type of return value
     def return_type
-      @tags.select { |tag| tag[:tag_name] == 'return' }[0][:types][0] unless @tags.select { |tag| tag[:tag_name] == 'return' }[0].nil?
+      @tags.find { |tag| tag[:tag_name] == 'return' }[:types][0] if @tags.any? { |tag| tag[:tag_name] == 'return' }
     end
 
     # @return [String] text from @since tag
     def since
-      @tags.select { |tag| tag[:tag_name] == 'since' }[0][:text] unless @tags.select { |tag| tag[:tag_name] == 'since' }[0].nil?
+      @tags.find { |tag| tag[:tag_name] == 'since' }[:text] if @tags.any? { |tag| tag[:tag_name] == 'since' }
     end
 
     # @return [Array] @see tag hashes
     def see
-      @tags.select { |tag| tag[:tag_name] == 'see' } unless @tags.select { |tag| tag[:tag_name] == 'see' }[0].nil?
+      select_tags('see')
     end
 
     # @return [Array] parameter tag hashes
     def params
-      @tags.select { |tag| tag[:tag_name] == 'param' } unless @tags.select { |tag| tag[:tag_name] == 'param' }[0].nil?
+      select_tags('param')
     end
 
     # @return [Array] example tag hashes
     def examples
-      @tags.select { |tag| tag[:tag_name] == 'example' } unless @tags.select { |tag| tag[:tag_name] == 'example' }[0].nil?
+      select_tags('example')
     end
 
     # @return [Array] raise tag hashes
     def raises
-      @tags.select { |tag| tag[:tag_name] == 'raise' } unless @tags.select { |tag| tag[:tag_name] == 'raise' }[0].nil?
+      select_tags('raise')
     end
 
     # @return [Array] option tag hashes
     def options
-      @tags.select { |tag| tag[:tag_name] == 'option' } unless @tags.select { |tag| tag[:tag_name] == 'option' }[0].nil?
+      select_tags('option')
     end
 
     # @param parameter_name
@@ -153,18 +153,20 @@ module PuppetStrings::Markdown
     end
 
     def private?
-      result = false
-      api = @tags.find { |tag| tag[:tag_name] == 'api' }
-      unless api.nil?
-        result = api[:text] == 'private' ? true : false
-      end
-      result
+      @tags.any? { |tag| tag[:tag_name] == 'api' && tag[:text] == 'private' }
     end
 
     # @return [String] full markdown rendering of a component
     def render(template)
       file = File.join(File.dirname(__FILE__),"templates/#{template}")
       ERB.new(File.read(file), nil, '-').result(binding)
+    end
+
+    private
+
+    def select_tags(name)
+      tags = @tags.select { |tag| tag[:tag_name] == name }
+      tags.empty? ? nil : tags
     end
   end
 end
