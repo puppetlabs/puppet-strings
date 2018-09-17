@@ -33,6 +33,8 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
       end
 
       source
+    when :regexp_literal
+      node.source
     end
   end
 end
