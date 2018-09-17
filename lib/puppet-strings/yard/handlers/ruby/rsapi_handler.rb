@@ -71,7 +71,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
       array_from_node(node)
     when :var_ref
       var_ref_from_node(node)
-    when :symbol, :symbol_literal, :label, :dyna_symbol, :string_literal
+    when :symbol, :symbol_literal, :label, :dyna_symbol, :string_literal, :regexp_literal
       node_as_string(node)
     else
       raise_parse_error("unexpected construct #{node.type}")

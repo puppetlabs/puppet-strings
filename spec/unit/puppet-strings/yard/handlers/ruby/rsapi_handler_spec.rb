@@ -211,4 +211,25 @@ SOURCE
       end
     end
   end
+
+  describe 'parsing a type with title_patterns' do
+    let(:source) { <<-SOURCE
+Puppet::ResourceApi.register_type(
+  name: 'database',
+  docs: 'An example database server resource type.',
+  title_patterns: [
+    {
+      pattern: %r{(?<name>.*)},
+      desc: 'Generic title match',
+    }
+  ]
+)
+SOURCE
+    }
+
+    it 'should not emit a warning' do
+      expect{ subject }.not_to output(/\[warn\].*unexpected construct regexp_literal/).to_stdout_from_any_process
+    end
+  end
+
 end
