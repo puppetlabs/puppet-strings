@@ -289,7 +289,7 @@ SOURCE
       }
 
       it 'does not throw an error with no @return' do
-        expect { subject }.not_to raise_error NoMethodError
+        expect { subject }.not_to raise_error
       end
 
       it 'contains a return data type' do

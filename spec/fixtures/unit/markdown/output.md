@@ -282,6 +282,14 @@ Type: Puppet Language
 
 A simple Puppet function.
 
+#### Examples
+
+##### Test
+
+```puppet
+$result = func(1, 2)
+```
+
 #### `func(Integer $param1, Any $param2, String $param3 = hi)`
 
 A simple Puppet function.
@@ -290,6 +298,14 @@ Returns: `Undef` Returns nothing.
 
 Raises:
 * `SomeError` this is some error
+
+##### Examples
+
+###### Test
+
+```puppet
+$result = func(1, 2)
+```
 
 ##### `param1`
 
@@ -319,11 +335,27 @@ Type: Ruby 3.x API
 
 Documentation for an example 3.x function.
 
+#### Examples
+
+##### Calling the function.
+
+```puppet
+func3x('hi', 10)
+```
+
 #### `func3x(String $param1, Integer $param2)`
 
 Documentation for an example 3.x function.
 
 Returns: `Undef`
+
+##### Examples
+
+###### Calling the function.
+
+```puppet
+func3x('hi', 10)
+```
 
 ##### `param1`
 
@@ -343,11 +375,33 @@ Type: Ruby 4.x API
 
 An example 4.x function.
 
+#### Examples
+
+##### Calling the function
+
+```puppet
+$result = func4x(1, 'foo')
+```
+
+##### Calling the function with all args
+
+```puppet
+$result = func4x(1, 'foo', ['bar'])
+```
+
 #### `func4x(Integer $param1, Any $param2, Optional[Array[String]] $param3)`
 
 An overview for the first overload.
 
 Returns: `Undef` Returns nothing.
+
+##### Examples
+
+###### Calling the function foo
+
+```puppet
+$result = func4x(1, 'foooo')
+```
 
 ##### `param1`
 
@@ -377,6 +431,14 @@ The third parameter.
 An overview for the second overload.
 
 Returns: `String` Returns a string.
+
+##### Examples
+
+###### Calling the function bar
+
+```puppet
+$result = func4x(1, 'bar', ['foo'])
+```
 
 ##### `param`
 
