@@ -53,13 +53,17 @@ module PuppetStrings
     YARD::CLI::Yardoc.run(*args)
 
     # If outputting JSON, render the output
-    if options[:json]
+    if options[:json] && !options[:describe]
       render_json(file)
     end
 
     # If outputting Markdown, render the output
     if options[:markdown]
       render_markdown(file)
+    end
+
+    if options[:describe]
+      render_describe(options[:describe_types], options[:describe_list], options[:providers])
     end
   end
 
@@ -75,6 +79,11 @@ module PuppetStrings
   def self.render_markdown(path)
     require 'puppet-strings/markdown'
     PuppetStrings::Markdown.render(path)
+  end
+
+  def self.render_describe(describe_types, list = false, providers = false)
+    require 'puppet-strings/describe'
+    PuppetStrings::Describe.render(describe_types, list, providers)
   end
 
   # Runs the YARD documentation server.

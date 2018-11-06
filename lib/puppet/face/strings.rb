@@ -81,6 +81,65 @@ Puppet::Face.define(:strings, '0.0.1') do
     end
   end
 
+  action(:describe) do #This is Kris' experiment with string based describe
+    option "--list" do
+      summary "list types"
+    end
+    option "--providers" do
+      summary "provide details on providers"
+    end
+
+#TODO: Implement the rest of describe behavior
+#     * --help:
+#   Print this help text
+
+# * --providers:
+#   Describe providers in detail for each type
+
+# * --list:
+#   List all types
+
+# * --meta:
+#   List all metaparameters
+
+# * --short:
+#   List only parameters without detail
+
+
+    when_invoked do |*args|
+      check_required_features
+      require 'puppet-strings'
+
+      options = args.last
+      options[:describe] = true
+      options[:stdout] = true
+      options[:format] = 'json'
+      
+      if args.length > 1
+        if options[:list]
+          $stderr.puts "WARNING: ignoring types when listing all types."
+        else
+          options[:describe_types] = args[0..-2]
+        end
+      end
+
+      #TODO: Set up search_patterns and whatever else needed to collect data for describe - currently missing some
+      #          manifests/**/*.pp
+      #          functions/**/*.pp
+      #          tasks/*.json
+      #          plans/*.pp
+      search_patterns = %w(
+        types/**/*.pp
+        lib/**/*.rb
+      )
+      PuppetStrings::generate(
+        search_patterns,
+        build_generate_options(options)
+      )
+      nil
+    end
+  end
+
   # Checks that the required features are installed.
   # @return [void]
   def check_required_features
@@ -98,7 +157,6 @@ Puppet::Face.define(:strings, '0.0.1') do
     generate_options[:debug] = Puppet[:debug]
     generate_options[:backtrace] = Puppet[:trace]
     generate_options[:yard_args] = yard_args unless yard_args.empty?
-
     if options
       if options[:emit_json]
         $stderr.puts "WARNING: '--emit-json PATH' is deprecated. Use '--format json --out PATH' instead."
@@ -110,6 +168,13 @@ Puppet::Face.define(:strings, '0.0.1') do
       generate_options[:markup] = markup if markup
       generate_options[:path] = options[:out] if options[:out]
       generate_options[:stdout] = options[:stdout]
+
+      if options[:describe]
+        generate_options[:describe] = true
+        generate_options[:describe_types] = options[:describe_types]
+        generate_options[:describe_list] = options[:list]
+      end
+
       format = options[:format]
       if format
         if format.casecmp('markdown').zero?

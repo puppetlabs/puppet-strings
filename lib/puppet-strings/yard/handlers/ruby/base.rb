@@ -37,4 +37,13 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
       node.source
     end
   end
+
+  def get_name(statementobject, statementtype)
+    parameters = statementobject.parameters(false)
+    raise YARD::Parser::UndocumentableError, "Expected at least one parameter to #{statementtype} at #{statementobject.file}:#{statementobject.line}." if parameters.empty?
+    name = node_as_string(parameters.first)
+    raise YARD::Parser::UndocumentableError, "Expected a symbol or string literal for first parameter but found '#{parameters.first.type}' at #{statement.file}:#{statement.line}." unless name
+    name
+  end
+
 end
