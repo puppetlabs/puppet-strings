@@ -119,7 +119,7 @@ module PuppetStrings::Markdown
       opts_for_p unless opts_for_p.nil? || opts_for_p.length.zero?
     end
 
-    # @return [Array] any defaults found for the component
+    # @return [Hash] any defaults found for the component
     def defaults
       @registry[:defaults] unless @registry[:defaults].nil?
     end
