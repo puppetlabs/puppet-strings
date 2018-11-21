@@ -2,6 +2,7 @@
 module PuppetStrings
   # The glob patterns used to search for files to document.
   DEFAULT_SEARCH_PATTERNS = %w(
+    site/**/*.pp
     manifests/**/*.pp
     functions/**/*.pp
     types/**/*.pp
