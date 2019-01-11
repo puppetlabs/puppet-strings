@@ -41,5 +41,11 @@ namespace :strings do
 
     PuppetStrings.generate(patterns, options)
   end
-end
 
+  namespace :generate do
+    desc 'Generate Puppet Reference documentation.'
+    task :reference, [:patterns, :debug, :backtrace] do |t, args|
+      Rake::Task['strings:generate'].invoke(args[:patterns], args[:debug], args[:backtrace], nil, 'false', 'true')
+    end
+  end
+end
