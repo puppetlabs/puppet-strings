@@ -216,6 +216,8 @@ SOURCE
     it 'should output the expected JSON content' do
       Tempfile.open('json') do |file|
         PuppetStrings::Json.render(file.path)
+
+        # TODO: update expectations to validate specific content but not be sensitive to tag order, etc.
         expect(File.read(file.path)).to eq(baseline)
       end
     end
@@ -223,6 +225,7 @@ SOURCE
 
   describe 'rendering JSON to stdout' do
     it 'should output the expected JSON content' do
+      # TODO: update expectations to validate specific content but not be sensitive to tag order, etc.
       expect{ PuppetStrings::Json.render(nil) }.to output(baseline).to_stdout
     end
   end
