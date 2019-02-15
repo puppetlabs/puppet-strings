@@ -122,5 +122,9 @@ Options:
 Default value: <%= value_string(param[:default]) %>
 
 <% end -%>
+<% if param[:required_features] -%>
+Required features: <%= param[:required_features] %>.
+
+<% end -%>
 <% end -%>
 <% end -%>

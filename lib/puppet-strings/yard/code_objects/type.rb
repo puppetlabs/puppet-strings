@@ -22,7 +22,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
   # Represents a resource type parameter.
   class Parameter
     attr_reader :name, :values, :aliases
-    attr_accessor :docstring, :isnamevar, :default, :data_type
+    attr_accessor :docstring, :isnamevar, :default, :data_type, :required_features
 
     # Initializes a resource type parameter or property.
     # @param [String] name The name of the parameter or property.
@@ -63,6 +63,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
       hash[:data_type] = data_type unless data_type.empty?
       hash[:aliases] = aliases unless aliases.empty?
       hash[:isnamevar] = true if isnamevar
+      hash[:required_features] = required_features if required_features
       hash[:default] = default if default
       hash
     end
