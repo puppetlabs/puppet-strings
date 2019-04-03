@@ -18,7 +18,8 @@ group :test do
   gem 'puppetlabs_spec_helper'
   gem 'serverspec'
   gem 'simplecov-console'
-  gem "rspec", "~> 3.1"
+  gem 'rspec', '~> 3.1'
+  gem 'json_spec', '~> 1.1', '>= 1.1.5'
 end
 
 group :acceptance do

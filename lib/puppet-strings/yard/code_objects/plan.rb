@@ -47,7 +47,7 @@ class PuppetStrings::Yard::CodeObjects::Plan < PuppetStrings::Yard::CodeObjects:
     hash[:name] = name
     hash[:file] = file
     hash[:line] = line
-    hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring)
+    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
     defaults = Hash[*parameters.select{ |p| !p[1].nil? }.flatten]
     hash[:defaults] = defaults unless defaults.empty?
     hash[:source] = source unless source && source.empty?

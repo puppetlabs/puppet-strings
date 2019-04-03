@@ -202,31 +202,82 @@ path this type will autorequire that file.
 SOURCE
   end
 
-  let(:filename) do
-    if TEST_PUPPET_PLANS
-      'output_with_plan.json'
-    else
-      TEST_PUPPET_FUNCTIONS ? 'output.json' : 'output_without_puppet_function.json'
+  RSpec.shared_examples "correct JSON" do
+    it 'should include data for Puppet Classes' do
+      puppet_class_json = YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash).to_json
+
+      expect(json_output).to include_json(puppet_class_json)
+    end
+
+    it 'should include data for Puppet Defined Types' do
+      defined_types_json = YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash).to_json
+
+      expect(json_output).to include_json(defined_types_json)
+    end
+
+    it 'should include data for Puppet Resouce Types' do
+      resource_types_json = YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash).to_json
+
+      expect(json_output).to include_json(resource_types_json)
+    end
+
+    it 'should include data for Puppet Providers' do
+      providers_json = YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash).to_json
+
+      expect(json_output).to include_json(providers_json)
+    end
+
+    it 'should include data for Puppet Functions', if: TEST_PUPPET_FUNCTIONS do
+      puppet_functions_json = YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash).to_json
+
+      expect(json_output).to include_json(puppet_functions_json)
+    end
+
+    it 'should include data for Puppet Tasks' do
+      puppet_tasks_json = YARD::Registry.all(:puppet_task).sort_by!(&:name).map!(&:to_hash).to_json
+
+      expect(json_output).to include_json(puppet_tasks_json)
+    end
+
+    it 'should include data for Puppet Plans', if: TEST_PUPPET_PLANS do
+      puppet_plans_json = YARD::Registry.all(:puppet_plan).sort_by!(&:name).map!(&:to_hash).to_json
+
+      expect(json_output).to include_json(puppet_plans_json)
     end
   end
-  let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/json/#{filename}") }
-  let(:baseline) { File.read(baseline_path) }
 
   describe 'rendering JSON to a file' do
-    it 'should output the expected JSON content' do
+    let(:json_output) do
+      json_output = nil
+
       Tempfile.open('json') do |file|
         PuppetStrings::Json.render(file.path)
 
-        # TODO: update expectations to validate specific content but not be sensitive to tag order, etc.
-        expect(File.read(file.path)).to eq(baseline)
+        json_output = File.read(file.path)
       end
+
+      json_output
     end
+
+    include_examples "correct JSON"
   end
 
   describe 'rendering JSON to stdout' do
-    it 'should output the expected JSON content' do
-      # TODO: update expectations to validate specific content but not be sensitive to tag order, etc.
-      expect{ PuppetStrings::Json.render(nil) }.to output(baseline).to_stdout
+    let(:json_output) { @json_output }
+
+    before(:each) do
+      output = StringIO.new
+
+      old_stdout = $stdout
+      $stdout = output
+
+      PuppetStrings::Json.render(nil)
+
+      $stdout = old_stdout
+
+      @json_output = output.string
     end
+
+    include_examples "correct JSON"
   end
 end

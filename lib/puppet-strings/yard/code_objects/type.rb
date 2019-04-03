@@ -141,7 +141,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     hash[:name] = name
     hash[:file] = file
     hash[:line] = line
-    hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring)
+    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
     hash[:properties] = properties.map(&:to_hash) if properties && !properties.empty?
     hash[:parameters] = parameters.map(&:to_hash) if parameters && !parameters.empty?
     hash[:features] = features.map(&:to_hash) if features && !features.empty?
