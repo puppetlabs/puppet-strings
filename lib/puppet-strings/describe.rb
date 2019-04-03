@@ -47,6 +47,8 @@ module PuppetStrings::Describe
   def self.show_one_parameter(parameter)
     puts "\n- **%{name}**\n" % { name: parameter[:name] }
     puts parameter[:description]
+    puts "Valid values are `%{values}`." % { values: parameter[:values].join("`, `") } unless parameter[:values].nil?
+    puts "Requires features %{required_features}." % { required_features: parameter[:required_features] } unless parameter[:required_features].nil?
   end
 
   def self.list_one_type(type)

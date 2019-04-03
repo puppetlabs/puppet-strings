@@ -178,7 +178,8 @@
         },
         {
           "name": "encryption_key",
-          "description": "The encryption key to use."
+          "description": "The encryption key to use.",
+          "required_features": "encryption"
         },
         {
           "name": "encrypt",

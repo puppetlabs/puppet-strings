@@ -266,6 +266,8 @@ The database server name.
 
 The encryption key to use.
 
+Required features: encryption.
+
 ##### `encrypt`
 
 Valid values: `true`, `false`, yes, no

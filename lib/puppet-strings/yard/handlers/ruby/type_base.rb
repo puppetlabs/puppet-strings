@@ -82,9 +82,17 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
         object.default = 'present'
       end
     end
+
+    parameters = node.parameters(false)
+
+    if parameters.count >= 2
+      kvps = parameters[1].find_all { |kvp| kvp.count == 2 }
+      required_features_kvp = kvps.find { |kvp| node_as_string(kvp[0]) == 'required_features' }
+      object.required_features = node_as_string(required_features_kvp[1]) unless required_features_kvp.nil?
+    end
+
     if object.is_a? PuppetStrings::Yard::CodeObjects::Type::Parameter
       # Process the options for parameter base types
-      parameters = node.parameters(false)
       if parameters.count >= 2
         parameters[1].each do |kvp|
           next unless kvp.count == 2

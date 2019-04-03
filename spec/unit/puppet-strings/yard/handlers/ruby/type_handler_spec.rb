@@ -72,6 +72,32 @@ SOURCE
     end
   end
 
+  describe 'parsing a type with a param with arguments' do
+    let(:source) { <<-SOURCE
+Puppet::Type.newtype(:database) do
+  feature :encryption, 'The provider supports encryption.', methods: [:encrypt]
+
+  newparam(:encryption_key, :parent => Puppet::Parameter::Boolean, required_features: :encryption) do
+    desc 'The encryption key to use.'
+    defaultto false
+  end
+end
+SOURCE
+    }
+
+    it 'should correctly detect the required_feature' do
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object.parameters[0].required_features).to eq('encryption')
+    end
+
+    it 'should correctly detect a boolean parent' do
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object.parameters[0].default).to eq('false')
+    end
+  end
+
   describe 'parsing a type definition' do
     let(:source) { <<-SOURCE
 # @!puppet.type.param [value1, value2] dynamic_param Documentation for a dynamic parameter.
