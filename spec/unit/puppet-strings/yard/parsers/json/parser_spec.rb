@@ -6,7 +6,7 @@ describe PuppetStrings::Yard::Parsers::JSON::Parser do
   let(:file) { 'test.json' }
 
   describe 'initialization of the parser' do
-    let(:source) { 'notice hi' }
+    let(:source) { '{}' }
 
     it 'should store the original source' do
       expect(subject.source).to eq(source)
@@ -18,6 +18,7 @@ describe PuppetStrings::Yard::Parsers::JSON::Parser do
 
     it 'should have no relevant statements' do
       subject.parse
+
       expect(subject.enumerator.empty?).to be_truthy
     end
   end
@@ -34,7 +35,7 @@ SOURCE
   end
 
 
-  describe 'parsing puppet functions with return type in defintion', if: TEST_FUNCTION_RETURN_TYPE do
+  describe 'parsing valid task metadata JSON' do
     let(:source) { <<SOURCE
 {
   "description": "Allows you to backup your database to local file.",
@@ -60,8 +61,9 @@ SOURCE
 }
 SOURCE
     }
-    it 'should parse the puppet function statement' do
+    it 'should parse the JSON and extract a TaskStatement' do
       subject.parse
+
       expect(subject.enumerator.size).to eq(1)
       statement = subject.enumerator.first
       expect(statement).to be_instance_of(PuppetStrings::Yard::Parsers::JSON::TaskStatement)
