@@ -41,3 +41,6 @@ Gemfile.lock
 
 ## local coverage results
 /coverage/
+
+## local rspec config
+/.rspec-local
