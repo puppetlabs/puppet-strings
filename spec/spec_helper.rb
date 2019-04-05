@@ -17,6 +17,7 @@ end
 
 require 'mocha'
 require 'rspec'
+require 'json_spec'
 require 'puppet/version'
 require 'puppet-strings'
 require 'puppet-strings/markdown'

@@ -82,7 +82,7 @@ class PuppetStrings::Yard::CodeObjects::Provider < PuppetStrings::Yard::CodeObje
     hash[:type_name] = type_name
     hash[:file] = file
     hash[:line] = line
-    hash[:docstring] = PuppetStrings::Json.docstring_to_hash(docstring)
+    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
     hash[:confines] = confines if confines && !confines.empty?
     hash[:features] = features if features && !features.empty?
     hash[:defaults] = defaults if defaults && !defaults.empty?
