@@ -3,16 +3,31 @@
 All significant changes to this repo will be summarized in this file.
 
 
-## [v2.1.0](https://github.com/puppetlabs/puppet-strings/tree/v2.1.0) (2018-06-25)
+## [v2.2.0](https://github.com/puppetlabs/puppet-strings/tree/v2.2.0) (2019-04-05)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.1.0...v2.2.0)
+
+Added
+
+- \(PDOC-272\) Add required features attribute [\#194](https://github.com/puppetlabs/puppet-strings/pull/194) ([kris-bosland](https://github.com/kris-bosland))
+- \(maint\) Implement a strings:generate:reference task [\#192](https://github.com/puppetlabs/puppet-strings/pull/192) ([ekohl](https://github.com/ekohl))
+- \(PDOC-265\) Add examples to function reference docs [\#188](https://github.com/puppetlabs/puppet-strings/pull/188) ([ekohl](https://github.com/ekohl))
+- \(PDOC-252\) Add describe features to puppet-strings face [\#183](https://github.com/puppetlabs/puppet-strings/pull/183) ([kris-bosland](https://github.com/kris-bosland))
+
+Fixed
+
+- \(PDOC-266\) Silence 'unexpected construct regexp\_literal' warning [\#189](https://github.com/puppetlabs/puppet-strings/pull/189) ([seanmil](https://github.com/seanmil))
+
+## [v2.1.0](https://github.com/puppetlabs/puppet-strings/tree/v2.1.0) (2018-06-26)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/2.0.0...v2.1.0)
 
-**Implemented enhancements:**
+Added
 
 - \(PDOC-212, PDOC-213\) add support for @note and @todo [\#182](https://github.com/puppetlabs/puppet-strings/pull/182) ([eputnam](https://github.com/eputnam))
 - \(PDOC-255\) markdown table of contents update [\#181](https://github.com/puppetlabs/puppet-strings/pull/181) ([eputnam](https://github.com/eputnam))
 
-**Merged pull requests:**
+Fixed
 
 - \(PDOC-259\) relax ruby requirement to 2.1.0 from 2.1.9 [\#184](https://github.com/puppetlabs/puppet-strings/pull/184) ([DavidS](https://github.com/DavidS))
 
