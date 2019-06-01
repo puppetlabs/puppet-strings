@@ -30,7 +30,7 @@ Puppet Strings generates documentation for Puppet code and extensions written in
 
 ### Install Puppet Strings
 
-1. Install the YARD gem by running sudo /opt/puppetlabs/puppet/bin/gem install `yard`
+1. Install the YARD gem by running `sudo /opt/puppetlabs/puppet/bin/gem install yard`
 1. Install the `puppet-strings` gem by running `sudo /opt/puppetlabs/puppet/bin/gem install puppet-strings`
 1. **Optional**: Set YARD options for Strings
 
