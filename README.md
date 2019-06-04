@@ -25,19 +25,33 @@ Puppet Strings generates documentation for Puppet code and extensions written in
 ### Requirements
 
   * Ruby 2.1.9 or newer
-  * Puppet 4.0 or newer
-  * The `yard` Ruby gem
+  * Puppet 4.0.0 or newer
 
 ### Install Puppet Strings
 
-1. Install the YARD gem by running `gem install yard`
-1. Install the `puppet-strings` gem by running `gem install puppet-strings`
-1. **Optional**: Set YARD options for Strings
+Installation instructions vary slightly depending on how you have installed Puppet:
 
-   To use YARD options with Puppet Strings, specify a `yardopts` file in the same directory in which you run `puppet strings`. Puppet Strings supports the Markdown format and automatically sets the YARD `markup` option to `markdown`.
+#### Installing Puppet Strings with [`puppet-agent`](https://puppet.com/docs/puppet/6.4/about_agent.html#what-puppet-agent-and-puppetserver-are) package
 
-   To see a list of available YARD options, run `yard help doc`. For details about YARD options configuration, see the [YARD docs](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md#config).
+Install the `puppet-strings` gem into the `puppet-agent` environment:
 
+```
+sudo /opt/puppetlabs/puppet/bin/gem install puppet-strings
+```
+
+#### Installing Puppet Strings with standalone `puppet` gem
+
+Install the `puppet-strings` gem into the same Ruby installation where you have installed the `puppet` gem:
+
+```
+gem install puppet-strings
+```
+
+### Configure Puppet Strings (Optional)
+
+ To use YARD options with Puppet Strings, specify a `.yardopts` file in the same directory in which you run `puppet strings`. Puppet Strings supports the Markdown format and automatically sets the YARD `markup` option to `markdown`.
+
+ To see a list of available YARD options, run `yard help doc`. For details about YARD options configuration, see the [YARD docs](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md#config).
 
 ## Generating documentation with Puppet Strings
 
