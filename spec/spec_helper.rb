@@ -36,6 +36,9 @@ TEST_FUNCTION_RETURN_TYPE = Puppet::Util::Package.versioncmp(Puppet.version, "4.
 # Enable testing of Plans if Puppet version is greater than 5.0.0
 TEST_PUPPET_PLANS = Puppet::Util::Package.versioncmp(Puppet.version, "5.0.0") >= 0
 
+# Enable testing of Data Types if Puppet version is greater than 4.1.0
+TEST_PUPPET_DATATYPES = Puppet::Util::Package.versioncmp(Puppet.version, "4.1.0") >= 0
+
 RSpec.configure do |config|
   config.mock_with :mocha
 

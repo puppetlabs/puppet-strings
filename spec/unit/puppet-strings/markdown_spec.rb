@@ -278,6 +278,22 @@ plan plann(String $param1, $param2, Integer $param3 = 1) {
     SOURCE
   end
 
+  def parse_data_type_content
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
+# An example Puppet Data Type in Ruby.
+#
+# @param param1 A variant parameter.
+# @param param2 Optional String parameter.
+Puppet::DataTypes.create_type('UnitDataType') do
+  interface <<-PUPPET
+    attributes => {
+      param1 => Variant[Numeric, String[1,2]],
+      param2 => { type => Optional[String[1]], value => "param2" }
+    }
+    PUPPET
+end
+    SOURCE
+  end
   let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/markdown/#{filename}") }
   let(:baseline) { File.read(baseline_path) }
 
@@ -302,6 +318,21 @@ plan plann(String $param1, $param2, Integer $param3 = 1) {
 
       before(:each) do
         parse_plan_content
+      end
+
+      it 'should output the expected markdown content' do
+        Tempfile.open('md') do |file|
+          PuppetStrings::Markdown.render(file.path)
+          expect(File.read(file.path)).to eq(baseline)
+        end
+      end
+    end
+
+    describe 'with Puppet Data Types', :if => TEST_PUPPET_DATATYPES do
+      let(:filename) { 'output_with_data_types.md' }
+
+      before(:each) do
+        parse_data_type_content
       end
 
       it 'should output the expected markdown content' do

@@ -46,6 +46,7 @@ class YARD::CLI::Yardoc
       :module,
       :class,
       :puppet_class,
+      :puppet_data_type,
       :puppet_defined_type,
       :puppet_type,
       :puppet_provider,
@@ -62,6 +63,10 @@ end
 class YARD::CLI::Stats
   def stats_for_puppet_classes
     output 'Puppet Classes', *type_statistics_all(:puppet_class)
+  end
+
+  def stats_for_puppet_data_types
+    output 'Puppet Data Types', *type_statistics_all(:puppet_data_type)
   end
 
   def stats_for_puppet_defined_types

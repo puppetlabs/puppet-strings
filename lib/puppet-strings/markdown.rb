@@ -5,6 +5,7 @@ module PuppetStrings::Markdown
   require_relative 'markdown/puppet_classes'
   require_relative 'markdown/functions'
   require_relative 'markdown/defined_types'
+  require_relative 'markdown/data_types'
   require_relative 'markdown/resource_types'
   require_relative 'markdown/puppet_tasks'
   require_relative 'markdown/puppet_plans'
@@ -20,6 +21,7 @@ module PuppetStrings::Markdown
     final << PuppetStrings::Markdown::DefinedTypes.render
     final << PuppetStrings::Markdown::ResourceTypes.render
     final << PuppetStrings::Markdown::Functions.render
+    final << PuppetStrings::Markdown::DataTypes.render
     final << PuppetStrings::Markdown::PuppetTasks.render
     final << PuppetStrings::Markdown::PuppetPlans.render
 
