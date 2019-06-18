@@ -14,15 +14,15 @@ before_install:
 matrix:
   fast_finish: true
   include:
-  - rvm: 2.1.9
+  - rvm: 2.1.0
     env: PUPPET_GEM_VERSION="~> 4" CHECK=spec
   - rvm: 2.4.1
     env: PUPPET_GEM_VERSION="~> 4" CHECK=spec
   - rvm: 2.4.1
     env: PUPPET_GEM_VERSION="~> 5" CHECK=spec
+  - rvm: 2.5
+    env: PUPPET_GEM_VERSION="~> 6" CHECK=spec
   - rvm: 2.1.9
     env: PUPPET_GEM_VERSION="~> 4" CHECK=rubocop
-  - rvm: 2.1.0
-    env: PUPPET_GEM_VERSION="~> 4" CHECK=spec
 
 script: 'SPEC_OPTS="--format documentation" COVERAGE="yes" bundle exec rake $CHECK'
