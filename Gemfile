@@ -23,7 +23,7 @@ group :test do
 end
 
 group :acceptance do
-  gem 'beaker', '~> 3.0'
+  gem 'beaker', '~> 3.37'
   gem 'beaker-rspec'
   gem 'beaker-hostgenerator'
   gem 'beaker-abs'
