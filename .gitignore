@@ -16,6 +16,7 @@ tmtags
 
 ## BUNDLER
 .bundle
+Gemfile.local
 Gemfile.lock
 
 ## YARD
