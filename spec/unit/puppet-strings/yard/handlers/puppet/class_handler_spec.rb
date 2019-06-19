@@ -43,7 +43,7 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should register a class object' do
@@ -85,7 +85,7 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -103,7 +103,7 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -122,7 +122,7 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should respect the type that was documented' do
@@ -145,7 +145,7 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -164,7 +164,7 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should respect the type that was documented' do
@@ -186,7 +186,7 @@ SOURCE
       ensure => present
     }
   }
-  SOURCE
+      SOURCE
       }
 
       it 'should parse the summary' do
@@ -206,7 +206,7 @@ SOURCE
       ensure => present
     }
   }
-  SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do

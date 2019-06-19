@@ -18,7 +18,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
     }
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should log an error' do
@@ -50,7 +50,7 @@ SOURCE
     }
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should log a warning' do
@@ -83,7 +83,7 @@ SOURCE
   }
 }
 
-SOURCE
+    SOURCE
     }
 
     it 'should register a task object' do
@@ -105,7 +105,7 @@ SOURCE
     }
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do

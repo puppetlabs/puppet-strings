@@ -65,7 +65,7 @@ define klass::dt (
   Boolean $param4 = true
 ) {
 }
-SOURCE
+    SOURCE
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_PLANS
 # A simple plan.
 # @param param1 First param.
@@ -73,7 +73,7 @@ SOURCE
 # @param param3 Third param.
 plan plann(String $param1, $param2, Integer $param3 = 1) {
 }
-SOURCE
+    SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :json)
 {
@@ -98,7 +98,7 @@ SOURCE
     }
   }
 }
-SOURCE
+    SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
 # A simple Puppet function.
@@ -112,7 +112,7 @@ SOURCE
 #   $result = func(1, 2)
 function func(Integer $param1, $param2, String $param3 = hi) {
 }
-SOURCE
+    SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
 # An example 4.x function.
@@ -272,7 +272,7 @@ path this type will autorequire that file.
     package: 'apt',
   },
 )
-SOURCE
+    SOURCE
   end
 
   let(:filename) do

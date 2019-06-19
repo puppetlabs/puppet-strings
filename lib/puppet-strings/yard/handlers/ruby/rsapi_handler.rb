@@ -15,7 +15,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
     # Only accept calls to Puppet::ResourceApi
     return unless statement.count > 1
     module_name = statement[0].source
-    return unless [ 'Puppet::ResourceApi' ].include? module_name
+    return unless ['Puppet::ResourceApi'].include? module_name
 
     schema = extract_schema
 
@@ -92,7 +92,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
     # puts "hash from #{node.inspect}"
 
     kv_pairs = node.children.collect do |assoc|
-      [ value_from_node(assoc.children[0]), value_from_node(assoc.children[1]) ]
+      [value_from_node(assoc.children[0]), value_from_node(assoc.children[1])]
     end
     Hash[kv_pairs]
   end

@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   Exclude:
     # Ignore HTML related things
@@ -569,3 +571,6 @@ Naming/VariableNumber:
 # Enforce LF line endings, even when on Windows
 Layout/EndOfLine:
   EnforcedStyle: lf
+
+Layout/IndentHeredoc: # Not appicable on Ruby 2.1
+  Enabled: false

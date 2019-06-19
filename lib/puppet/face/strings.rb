@@ -117,7 +117,7 @@ Puppet::Face.define(:strings, '0.0.1') do
       
       if args.length > 1
         if options[:list]
-          $stderr.puts "WARNING: ignoring types when listing all types."
+          warn "WARNING: ignoring types when listing all types."
         else
           options[:describe_types] = args[0..-2]
         end
@@ -159,10 +159,10 @@ Puppet::Face.define(:strings, '0.0.1') do
     generate_options[:yard_args] = yard_args unless yard_args.empty?
     if options
       if options[:emit_json]
-        $stderr.puts "WARNING: '--emit-json PATH' is deprecated. Use '--format json --out PATH' instead."
+        warn "WARNING: '--emit-json PATH' is deprecated. Use '--format json --out PATH' instead."
       end
       if options[:emit_json_stdout]
-        $stderr.puts "WARNING: '--emit-json-stdout' is deprecated. Use '--format json' instead."
+        warn "WARNING: '--emit-json-stdout' is deprecated. Use '--format json' instead."
       end
       markup = options[:markup]
       generate_options[:markup] = markup if markup

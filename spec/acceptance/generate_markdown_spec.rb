@@ -29,7 +29,7 @@ The name of the package
 
 The name of the service
 
-EOF
+  EOF
 
   it 'should render Markdown to stdout when using --format markdown and --stdout' do
     test_module_path = get_test_module_path(master, /Module test/)

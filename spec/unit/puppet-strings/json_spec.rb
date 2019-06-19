@@ -21,7 +21,7 @@ class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
 # @param param3 Third param.
 define dt(Integer $param1, $param2, String $param3 = hi) {
 }
-SOURCE
+    SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_PLANS
 # A simple plan.
@@ -30,7 +30,7 @@ SOURCE
 # @param param3 Third param.
 plan plann(String $param1, $param2, Integer $param3 = 1) {
 }
-SOURCE
+    SOURCE
 
     # Only include Puppet functions for 4.1+
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_FUNCTIONS
@@ -41,7 +41,7 @@ SOURCE
 # @return [Undef] Returns nothing.
 function func(Integer $param1, $param2, String $param3 = hi) {
 }
-SOURCE
+    SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :json)
 {
@@ -66,7 +66,7 @@ SOURCE
     }
   }
 }
-SOURCE
+    SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
 Puppet::Parser::Functions.newfunction(:func3x, doc: <<-DOC
@@ -199,7 +199,7 @@ path this type will autorequire that file.
     package: 'apt',
   },
 )
-SOURCE
+    SOURCE
   end
 
   RSpec.shared_examples "correct JSON" do

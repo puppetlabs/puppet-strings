@@ -19,7 +19,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
     let(:source) { <<-SOURCE
 Puppet::Type.type(:custom).provide :linux do
 end
-SOURCE
+    SOURCE
     }
 
     it 'should log a warning' do
@@ -32,7 +32,7 @@ SOURCE
 Puppet::Type.type(:custom).provide :linux do
   @doc = 123
 end
-SOURCE
+    SOURCE
     }
 
     it 'should log an error' do
@@ -45,7 +45,7 @@ SOURCE
 Puppet::Type.type(:custom).provide :linux do
   @doc = 'An example provider on Linux.'
 end
-SOURCE
+    SOURCE
     }
 
     it 'should correctly detect the docstring' do
@@ -62,7 +62,7 @@ Puppet::Type.type(:custom).provide :linux do
   desc %Q{This is a multi-line
   doc in %Q with #{test}}
 end
-SOURCE
+    SOURCE
     }
 
     it 'should strip the `%Q{}` and render the interpolation expression literally' do
@@ -84,7 +84,7 @@ Puppet::Type.type(:custom).provide :linux do
   has_feature :some_other_feature
   commands foo: '/usr/bin/foo'
 end
-SOURCE
+    SOURCE
     }
 
     it 'should register a provider object' do
@@ -112,7 +112,7 @@ SOURCE
 Puppet::Type.type(:custom).provide :linux do
   @doc = '@summary A short summary.'
 end
-SOURCE
+      SOURCE
       }
 
       it 'should parse the summary' do
@@ -128,7 +128,7 @@ SOURCE
 Puppet::Type.type(:custom).provide :linux do
   @doc = '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!'
 end
-SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do
