@@ -23,7 +23,7 @@ group :test do
 end
 
 group :acceptance do
-  gem 'beaker', '< 3.0'
+  gem 'beaker', '~> 3.0'
   gem 'beaker-rspec'
   gem 'beaker-hostgenerator'
   gem 'beaker-abs'
@@ -35,7 +35,7 @@ group :development do
   gem 'pry-byebug'
 end
 
-gem 'rubocop', '~> 0.49'
+gem 'rubocop', '~> 0.57.2'
 
 # Evaluate Gemfile.local if it exists
 if File.exists? "#{__FILE__}.local"

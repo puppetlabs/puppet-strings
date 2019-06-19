@@ -19,7 +19,7 @@ describe PuppetStrings::Yard::Util do
       str = <<-STR
 %Q{this is
 a test string}
-STR
+      STR
       expect(subject.scrub_string(str)).to eq("this is\na test string")
     end
 

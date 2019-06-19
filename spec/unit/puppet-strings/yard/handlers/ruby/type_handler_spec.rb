@@ -19,7 +19,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeHandler do
     let(:source) { <<-SOURCE
 Puppet::Type.newtype(:database) do
 end
-SOURCE
+    SOURCE
     }
 
     it 'should log a warning' do
@@ -32,7 +32,7 @@ SOURCE
 Puppet::Type.newtype(:database) do
   @doc = 123
 end
-SOURCE
+    SOURCE
     }
 
     it 'should log an error' do
@@ -45,7 +45,7 @@ SOURCE
 Puppet::Type.newtype(:database) do
   @doc = 'An example database server resource type.'
 end
-SOURCE
+    SOURCE
     }
 
     it 'should correctly detect the docstring' do
@@ -62,7 +62,7 @@ Puppet::Type.newtype(:database) do
   desc %Q{This is a multi-line
   doc in %Q with #{test}}
 end
-SOURCE
+    SOURCE
     }
 
     it 'should strip the `%Q{}` and render the interpolation expression literally' do
@@ -82,7 +82,7 @@ Puppet::Type.newtype(:database) do
     defaultto false
   end
 end
-SOURCE
+    SOURCE
     }
 
     it 'should correctly detect the required_feature' do
@@ -150,7 +150,7 @@ Puppet::Type.newtype(:database) do
     defaultto 'warn'
   end
 end
-SOURCE
+    SOURCE
     }
 
     it 'should register a type object' do
@@ -229,7 +229,7 @@ Puppet::Type.newtype(:database) do
   desc 'An example database server resource type.'
   ensurable
 end
-SOURCE
+    SOURCE
     }
 
     it 'should register a type object with default ensure values' do
@@ -250,7 +250,7 @@ Puppet::Type.newtype(:database) do
     desc 'The database server name.'
   end
 end
-SOURCE
+    SOURCE
     }
 
     it 'should register a type object with the "name" parameter as the namevar' do
@@ -268,7 +268,7 @@ SOURCE
 Puppet::Type.newtype(:database) do
   @doc = '@summary A short summary.'
 end
-SOURCE
+      SOURCE
       }
 
       it 'should parse the summary' do
@@ -284,7 +284,7 @@ SOURCE
 Puppet::Type.newtype(:database) do
   @doc = '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!'
 end
-SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do

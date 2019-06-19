@@ -100,7 +100,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
     hash[:text] = text if text
     hash[:signature] = signature
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring) if !docstring.blank?
-    defaults = Hash[*parameters.select{ |p| !p[1].nil? }.flatten]
+    defaults = Hash[*parameters.reject{ |p| p[1].nil? }.flatten]
     hash[:defaults] = defaults unless defaults.empty?
     hash[:types] = types if types
     hash[:name] = name if name

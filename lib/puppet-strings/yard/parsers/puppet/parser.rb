@@ -41,41 +41,42 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
   end
 
   private
-  def transform_Program(o)
+
+  def transform_Program(o) # rubocop:disable Naming/UncommunicativeMethodParamName
     # Cache the lines of the source text; we'll use this to locate comments
     @lines = o.source_text.lines.to_a
     o.definitions.map { |d| @visitor.visit(d) }
   end
 
-  def transform_Factory(o)
+  def transform_Factory(o) # rubocop:disable Naming/UncommunicativeMethodParamName
     @visitor.visit(o.current)
   end
 
-  def transform_HostClassDefinition(o)
+  def transform_HostClassDefinition(o) # rubocop:disable Naming/UncommunicativeMethodParamName
     statement = PuppetStrings::Yard::Parsers::Puppet::ClassStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end
 
-  def transform_ResourceTypeDefinition(o)
+  def transform_ResourceTypeDefinition(o) # rubocop:disable Naming/UncommunicativeMethodParamName
     statement = PuppetStrings::Yard::Parsers::Puppet::DefinedTypeStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end
 
-  def transform_FunctionDefinition(o)
+  def transform_FunctionDefinition(o) # rubocop:disable Naming/UncommunicativeMethodParamName
     statement = PuppetStrings::Yard::Parsers::Puppet::FunctionStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end
 
-  def transform_PlanDefinition(o)
+  def transform_PlanDefinition(o) # rubocop:disable Naming/UncommunicativeMethodParamName
     statement = PuppetStrings::Yard::Parsers::Puppet::PlanStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end
 
-  def transform_Object(o)
+  def transform_Object(o) # rubocop:disable Naming/UncommunicativeMethodParamName
     # Ignore anything else (will be compacted out of the resulting array)
   end
 end

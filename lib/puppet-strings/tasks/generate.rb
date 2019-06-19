@@ -33,11 +33,12 @@ namespace :strings do
         end
       end
     end
+    # rubocop:enable Style/PreferredHashMethods
 
-    [:json,:markdown].each { |format| parse_format_option(args, options, format) }
+    %i[json markdown].each { |format| parse_format_option(args, options, format) }
 
     warn('yard_args behavior is a little dodgy, use at your own risk') if args[:yard_args]
-    options[:yard_args] = args[:yard_args].split if args.has_key? :yard_args
+    options[:yard_args] = args[:yard_args].split if args.key? :yard_args
 
     PuppetStrings.generate(patterns, options)
   end

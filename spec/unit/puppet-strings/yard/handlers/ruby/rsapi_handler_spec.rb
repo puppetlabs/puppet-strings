@@ -20,7 +20,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
 Puppet::ResourceApi.register_type(
   name: 'database'
 )
-SOURCE
+    SOURCE
     }
 
     it 'should log a warning' do
@@ -34,7 +34,7 @@ Puppet::ResourceApi.register_type(
   name: 'database',
   docs: 'An example database server resource type.',
 )
-SOURCE
+    SOURCE
     }
 
     it 'should correctly detect the docstring' do
@@ -53,7 +53,7 @@ Puppet::ResourceApi.register_type(
   docs: %Q{This is a multi-line
 doc in %Q with #{test}},
 )
-SOURCE
+    SOURCE
     }
 
     it 'should strip the `%Q{}` and render the interpolation expression literally' do
@@ -110,7 +110,7 @@ Puppet::ResourceApi.register_type(
     },
   },
 )
-SOURCE
+    SOURCE
     }
 
     it 'should register a type object' do
@@ -186,7 +186,7 @@ Puppet::ResourceApi.register_type(
   name: 'database',
   docs: '@summary A short summary.',
 )
-SOURCE
+      SOURCE
       }
 
       it 'should parse the summary' do
@@ -203,7 +203,7 @@ Puppet::ResourceApi.register_type(
   name: 'database',
   docs: '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!',
 )
-SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do
@@ -224,7 +224,7 @@ Puppet::ResourceApi.register_type(
     }
   ]
 )
-SOURCE
+    SOURCE
     }
 
     it 'should not emit a warning' do

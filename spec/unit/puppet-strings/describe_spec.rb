@@ -19,7 +19,7 @@ describe PuppetStrings::Describe do
 Puppet::Type.newtype(:database) do
   desc 'An example database server resource type.'
 end
-SOURCE
+    SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
 Puppet::ResourceApi.register_type(
@@ -40,9 +40,9 @@ If Puppet is given the location of a key file which looks like an absolute
 path this type will autorequire that file.
   EOS
 )
-SOURCE
+    SOURCE
 
-     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
   Puppet::Type.type(:file).newproperty(:content) do
     include Puppet::Util::Checksums
     include Puppet::DataSync
@@ -54,7 +54,7 @@ SOURCE
       exclusive with `source` and `target`.
     EOT
   end
-SOURCE
+    SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
   Puppet::Type.newtype(:file) do
@@ -78,7 +78,7 @@ SOURCE
     end
 
   end
-SOURCE
+    SOURCE
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
 Puppet::Type.type(:file).newproperty(:source) do
@@ -92,7 +92,7 @@ Puppet::Type.type(:file).newproperty(:source) do
     exclusive with `source` and `target`.
   EOT
 end
-SOURCE
+    SOURCE
   end
 
   describe 'rendering DESCRIBE to stdout' do
@@ -134,7 +134,7 @@ exclusive with `source` and `target`.
 
 Providers
 ---------
-DATA
+      DATA
       expect{ PuppetStrings::Describe.render(['file']) }.to output(output).to_stdout
     end
   end

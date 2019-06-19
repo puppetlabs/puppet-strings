@@ -44,7 +44,7 @@ function foo(Integer $param1, $param2, String $param3 = hi) {
   notice 'hello world'
   undef
 }
-SOURCE
+    SOURCE
     }
 
     it 'should register a function object' do
@@ -90,7 +90,7 @@ SOURCE
 function foo(Integer $param1, $param2, String $param3 = hi) {
   notice 'hello world'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -107,7 +107,7 @@ SOURCE
 function foo(Integer $param1, $param2, String $param3 = hi) {
   notice 'hello world'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -125,7 +125,7 @@ SOURCE
 function foo(Integer $param1, $param2, String $param3 = hi) {
   notice 'hello world'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should respect the type that was documented' do
@@ -147,7 +147,7 @@ SOURCE
 function foo(Integer $param1, $param2, String $param3 = hi) {
   notice 'hello world'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -165,7 +165,7 @@ SOURCE
 function foo(Integer $param1, $param2, String $param3 = hi) {
   notice 'hello world'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should respect the type that was documented' do
@@ -186,7 +186,7 @@ SOURCE
 function foo(Integer $param1, $param2, String $param3 = hi) {
   notice 'hello world'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -200,7 +200,7 @@ SOURCE
 function foo() >> String {
   notice 'hello world'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should register a function object with the correct return type' do
@@ -223,7 +223,7 @@ SOURCE
 function foo() >> String {
   notice 'hi there'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should not output a warning if return types match' do
@@ -238,7 +238,7 @@ SOURCE
 function foo() >> Struct[{'a' => Integer[1, 10]}] {
   notice 'hello world'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should prefer the return type from the function definition' do
@@ -260,7 +260,7 @@ SOURCE
 function foo() {
   notice 'hello world'
 }
-SOURCE
+    SOURCE
     }
 
     it 'should add a return tag with a default type value of Any' do
@@ -285,7 +285,7 @@ SOURCE
 function foo() {
   notice 'hello world'
 }
-SOURCE
+      SOURCE
       }
 
       it 'should parse the summary' do
@@ -304,7 +304,7 @@ function foo() {
   notice 'hello world'
 }
 
-SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do

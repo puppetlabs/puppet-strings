@@ -15,7 +15,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
     register object
     object
   end
-    
+
   def find_docstring(node, kind)
     # Walk the tree searching for assignments or calls to desc/doc=
     node.traverse do |child|
@@ -98,10 +98,10 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
           next unless kvp.count == 2
           next unless node_as_string(kvp[0]) == 'parent'
           if kvp[1].source == 'Puppet::Parameter::Boolean'
-            object.add('true') unless object.values.include? 'true'
-            object.add('false') unless object.values.include? 'false'
-            object.add('yes') unless object.values.include? 'yes'
-            object.add('no') unless object.values.include? 'no'
+            object.add('true') unless object.values.include? 'true' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
+            object.add('false') unless object.values.include? 'false' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
+            object.add('yes') unless object.values.include? 'yes' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
+            object.add('no') unless object.values.include? 'no' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
           end
           break
         end
@@ -127,4 +127,3 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
     default.isnamevar = true if default
   end
 end
-      

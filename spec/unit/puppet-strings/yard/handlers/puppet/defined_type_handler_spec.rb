@@ -44,7 +44,7 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
     it 'does not output a warning for title/name' do
       expect{ subject }.not_to output(/\[warn\].*(name|title).*/).to_stdout_from_any_process
@@ -92,7 +92,7 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -110,7 +110,7 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -129,7 +129,7 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should respect the type that was documented' do
@@ -152,7 +152,7 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -171,7 +171,7 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
     ensure => present
   }
 }
-SOURCE
+    SOURCE
     }
 
     it 'should respect the type that was documented' do
@@ -197,7 +197,7 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
     ensure => present
   }
 }
-SOURCE
+      SOURCE
       }
 
       it 'should parse the summary' do
@@ -220,7 +220,7 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
     ensure => present
   }
 }
-SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do

@@ -301,9 +301,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
       name = '&' + name
     end
 
-    unless type
-      type = tag && tag.types ? tag.type : 'Any'
-    end
+    type ||= tag && tag.types ? tag.type : 'Any'
     type = optional ? "Optional[#{type}]" : type
 
     object.parameters << [name, to_puppet_literal(default)]

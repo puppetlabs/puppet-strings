@@ -61,7 +61,8 @@ end
 task(:rubocop) do
   require 'rubocop'
   cli = RuboCop::CLI.new
-  cli.run(%w(-D -f s))
+  result = cli.run(%w(-D -f s))
+  abort unless result == RuboCop::CLI::STATUS_SUCCESS
 end
 
 #### CHANGELOG ####

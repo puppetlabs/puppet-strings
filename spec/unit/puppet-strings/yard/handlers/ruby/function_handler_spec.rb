@@ -20,7 +20,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       let(:source) { <<-SOURCE
 Puppet::Parser::Functions.newfunction(:foo) do |*args|
 end
-SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do
@@ -38,7 +38,7 @@ An example 3.x function.
 DOC
 ) do |*args|
 end
-SOURCE
+      SOURCE
       }
 
       it 'should register a function object' do
@@ -82,7 +82,7 @@ DOC
 ) do |*args|
   end
 end
-SOURCE
+      SOURCE
       }
 
       it 'should register a function object' do
@@ -122,7 +122,7 @@ An example 3.x function.
 @param second The second parameter.
 DOC
 end
-SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do
@@ -136,7 +136,7 @@ SOURCE
       let(:source) { <<-SOURCE
 Puppet::Functions.create_function(:foo) do
 end
-SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do
@@ -149,7 +149,7 @@ SOURCE
 # An example 4.x function.
 Puppet::Functions.create_function(:foo) do
 end
-SOURCE
+      SOURCE
       }
 
       it 'should register a function object' do
@@ -179,7 +179,7 @@ Puppet::Functions.create_function(:foo) do
   def foo(param1, param2, param3 = nil)
   end
 end
-SOURCE
+      SOURCE
       }
 
       it 'should register a function object' do
@@ -231,7 +231,7 @@ Puppet::Functions.create_function(:foo) do
   def foo(param1, param2, param3 = nil)
   end
 end
-SOURCE
+      SOURCE
       }
 
       it 'should register a function object without any overload tags' do
@@ -285,7 +285,7 @@ Puppet::Functions.create_function(:foo) do
     "Bar"
   end
 end
-SOURCE
+      SOURCE
       }
 
       it 'does not throw an error with no @return' do
@@ -316,7 +316,7 @@ Puppet::Functions.create_function(:foo) do
     repeated_param 'String',  :param4
   end
 end
-SOURCE
+      SOURCE
       }
 
       it 'should register a function object with the expected parameters' do
@@ -365,7 +365,7 @@ Puppet::Functions.create_function(:foo) do
     optional_repeated_param 'String',  :param
   end
 end
-SOURCE
+      SOURCE
       }
 
       it 'should register a function object with the expected parameters' do
@@ -507,7 +507,7 @@ Puppet::Functions.create_function(:foo) do
     'lol'
   end
 end
-SOURCE
+    SOURCE
     }
 
     it 'should register a function object with overload tags' do
@@ -576,7 +576,7 @@ Puppet::Functions.create_function(:foo) do
   dispatch :foo do
   end
 end
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -593,7 +593,7 @@ Puppet::Functions.create_function(:foo) do
     param 'String', :param1
   end
 end
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -611,7 +611,7 @@ Puppet::Functions.create_function(:foo) do
     param 'String', :param1
   end
 end
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -628,7 +628,7 @@ Puppet::Functions.create_function(:foo) do
     param 'String', :param1
   end
 end
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -645,7 +645,7 @@ Puppet::Functions.create_function(:foo) do
   dispatch :foo do
   end
 end
-SOURCE
+    SOURCE
     }
 
     it 'should output a warning' do
@@ -698,7 +698,7 @@ Puppet::Functions.create_function(:foo) do
   dispatch :foo do
   end
 end
-SOURCE
+      SOURCE
       }
 
       it 'should parse the summary' do
@@ -718,7 +718,7 @@ Puppet::Functions.create_function(:foo) do
   dispatch :foo do
   end
 end
-SOURCE
+      SOURCE
       }
 
       it 'should log a warning' do

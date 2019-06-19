@@ -26,7 +26,7 @@ describe PuppetStrings::Yard::CodeObjects::Task do
     }
   }
 }
-SOURCE
+  SOURCE
   }
   let(:json) { JSON.parse(source) }
   let(:statement) { PuppetStrings::Yard::Parsers::JSON::TaskStatement.new(json, source, "test.json") }

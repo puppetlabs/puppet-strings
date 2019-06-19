@@ -24,7 +24,7 @@ describe PuppetStrings::Yard::Parsers::JSON::TaskStatement do
     }
   }
 }
-SOURCE
+  SOURCE
   }
   let(:json) { JSON.parse(source) }
   subject { PuppetStrings::Yard::Parsers::JSON::TaskStatement.new(json, source, "test.json") }
@@ -45,7 +45,7 @@ SOURCE
   "description": "Allows you to backup your database to local file.",
   "input_method": "stdin"
 }
-SOURCE
+      SOURCE
       }
       it 'returns an empty hash' do
         expect(subject.parameters).to eq({})

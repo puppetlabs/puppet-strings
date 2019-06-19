@@ -12,7 +12,7 @@ describe PuppetStrings::Markdown::Base do
 # @param param3 Third param.
 class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
 }
-SOURCE
+      SOURCE
     end
 
     let(:reg) { YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash)[0] }
@@ -24,7 +24,7 @@ SOURCE
       end
     end
 
-    [ 'examples',
+    ['examples',
       'see',
       'since',
       'return_val',
@@ -85,7 +85,7 @@ class klass::yeah(
 ) inherits foo::bar {
 
 }
-SOURCE
+      SOURCE
     end
 
     let(:reg) { YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash)[0] }
