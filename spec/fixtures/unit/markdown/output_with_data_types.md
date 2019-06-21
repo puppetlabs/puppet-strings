@@ -31,6 +31,8 @@ _Private Classes_
 
 **Data types**
 
+* [`Amodule::ComplexAlias`](#amodulecomplexalias): Documentation for Amodule::ComplexAlias
+* [`Amodule::SimpleAlias`](#amodulesimplealias): Documentation for Amodule::SimpleAlias
 * [`UnitDataType`](#unitdatatype): An example Puppet Data Type in Ruby.
 
 **Tasks**
@@ -477,6 +479,21 @@ Data type: `Integer`
 The first parameter.
 
 ## Data types
+
+### Amodule::ComplexAlias
+
+Documentation for Amodule::ComplexAlias
+
+Alias of `Struct[{
+  value_type => Optional[ValueType],
+  merge      => Optional[MergeType]
+}]`
+
+### Amodule::SimpleAlias
+
+Documentation for Amodule::SimpleAlias
+
+Alias of `Variant[Numeric, String[1,20]]`
 
 ### UnitDataType
 

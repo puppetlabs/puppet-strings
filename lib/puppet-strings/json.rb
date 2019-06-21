@@ -9,6 +9,7 @@ module PuppetStrings::Json
     document = {
       puppet_classes: YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash),
       data_types: YARD::Registry.all(:puppet_data_type).sort_by!(&:name).map!(&:to_hash),
+      data_type_aliases: YARD::Registry.all(:puppet_data_type_alias).sort_by!(&:name).map!(&:to_hash),
       defined_types: YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash),
       resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash),
       providers: YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash),

@@ -10,7 +10,7 @@ end
 # Generates the searchable Puppet data type list.
 # @return [void]
 def generate_puppet_data_type_list
-  @items = Registry.all(:puppet_data_type).sort_by {|dt| dt.name.to_s }
+  @items = Registry.all(:puppet_data_type, :puppet_data_type_alias).sort_by {|dt| dt.name.to_s }
   @list_title = 'Data Type List'
   @list_type = 'puppet_data_type'
   generate_list_contents

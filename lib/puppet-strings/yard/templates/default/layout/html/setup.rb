@@ -30,7 +30,7 @@ def layout
     @nav_url = url_for_list('puppet_class')
     @page_title = "Puppet Class: #{object.name}"
     @path = object.path
-  when PuppetStrings::Yard::CodeObjects::DataType
+  when PuppetStrings::Yard::CodeObjects::DataType, PuppetStrings::Yard::CodeObjects::DataTypeAlias
     @nav_url = url_for_list('puppet_data_type')
     @page_title = "Data Type: #{object.name}"
     @path = object.path
@@ -168,7 +168,7 @@ end
 # @return [String] Returns the rendered section.
 def data_types
   @title = 'Data Type Listing A-Z'
-  @objects_by_letter = objects_by_letter(:puppet_data_type)
+  @objects_by_letter = objects_by_letter(:puppet_data_type, :puppet_data_type_alias)
   erb(:objects)
 end
 

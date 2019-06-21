@@ -1,0 +1,10 @@
+<% if @alias_of && !@alias_of.empty? %>
+<div class="tags">
+  <p class="tag_title"><%= @tag_title %></p>
+  <div class="docstring">
+    <div class="discussion">
+      <pre class="code"><span class="info"><%= @alias_of %></span></pre>
+    </div>
+  </div>
+</div>
+<% end %>

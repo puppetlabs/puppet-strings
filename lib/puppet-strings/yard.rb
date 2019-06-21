@@ -47,6 +47,7 @@ class YARD::CLI::Yardoc
       :class,
       :puppet_class,
       :puppet_data_type,
+      :puppet_data_type_alias,
       :puppet_defined_type,
       :puppet_type,
       :puppet_provider,
@@ -67,6 +68,10 @@ class YARD::CLI::Stats
 
   def stats_for_puppet_data_types
     output 'Puppet Data Types', *type_statistics_all(:puppet_data_type)
+  end
+
+  def stats_for_puppet_data_type_aliases
+    output 'Puppet Data Type Aliases', *type_statistics_all(:puppet_data_type_alias)
   end
 
   def stats_for_puppet_defined_types

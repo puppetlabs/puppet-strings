@@ -76,6 +76,12 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
     statement
   end
 
+  def transform_TypeAlias(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    statement = PuppetStrings::Yard::Parsers::Puppet::DataTypeAliasStatement.new(o, @file)
+    statement.extract_docstring(@lines)
+    statement
+  end
+
   def transform_Object(o) # rubocop:disable Naming/UncommunicativeMethodParamName
     # Ignore anything else (will be compacted out of the resulting array)
   end

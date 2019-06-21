@@ -293,6 +293,17 @@ Puppet::DataTypes.create_type('UnitDataType') do
     PUPPET
 end
     SOURCE
+
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
+# Documentation for Amodule::SimpleAlias
+type Amodule::SimpleAlias = Variant[Numeric,String[1,20]]
+
+# Documentation for Amodule::ComplexAlias
+type Amodule::ComplexAlias = Struct[{
+  value_type => Optional[ValueType],
+  merge      => Optional[MergeType]
+}]
+    SOURCE
   end
   let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/markdown/#{filename}") }
   let(:baseline) { File.read(baseline_path) }
