@@ -4,7 +4,7 @@ require 'puppet-strings/markdown/table_of_contents'
 require 'tempfile'
 
 describe PuppetStrings::Markdown do
-  before :each do
+  def parse_shared_content
     # Populate the YARD registry with both Puppet and Ruby source
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
 # An overview for a simple class.
@@ -64,14 +64,6 @@ define klass::dt (
   String $param3 = 'hi',
   Boolean $param4 = true
 ) {
-}
-    SOURCE
-    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_PLANS
-# A simple plan.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-plan plann(String $param1, $param2, Integer $param3 = 1) {
 }
     SOURCE
 
@@ -275,21 +267,48 @@ path this type will autorequire that file.
     SOURCE
   end
 
-  let(:filename) do
-    if TEST_PUPPET_PLANS
-      'output_with_plan.md'
-    else
-      'output.md'
-    end
+  def parse_plan_content
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
+# A simple plan.
+# @param param1 First param.
+# @param param2 Second param.
+# @param param3 Third param.
+plan plann(String $param1, $param2, Integer $param3 = 1) {
+}
+    SOURCE
   end
+
   let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/markdown/#{filename}") }
   let(:baseline) { File.read(baseline_path) }
 
   describe 'rendering markdown to a file' do
-    it 'should output the expected markdown content' do
-      Tempfile.open('md') do |file|
-        PuppetStrings::Markdown.render(file.path)
-        expect(File.read(file.path)).to eq(baseline)
+    before(:each) do
+      parse_shared_content
+    end
+
+    context 'with common Puppet and ruby content' do
+      let(:filename) { 'output.md' }
+
+      it 'should output the expected markdown content' do
+        Tempfile.open('md') do |file|
+          PuppetStrings::Markdown.render(file.path)
+          expect(File.read(file.path)).to eq(baseline)
+        end
+      end
+    end
+
+    describe 'with Puppet Plans', :if => TEST_PUPPET_PLANS do
+      let(:filename) { 'output_with_plan.md' }
+
+      before(:each) do
+        parse_plan_content
+      end
+
+      it 'should output the expected markdown content' do
+        Tempfile.open('md') do |file|
+          PuppetStrings::Markdown.render(file.path)
+          expect(File.read(file.path)).to eq(baseline)
+        end
       end
     end
   end
