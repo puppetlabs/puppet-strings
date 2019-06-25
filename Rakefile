@@ -1,5 +1,6 @@
+require 'puppet_litmus/rake_tasks' if Bundler.rubygems.find_name('puppet_litmus').any?
+require 'puppetlabs_spec_helper/tasks/fixtures'
 require 'bundler/gem_tasks'
-#require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 
 require 'rspec/core/rake_task'
@@ -23,38 +24,106 @@ task :validate do
   end
 end
 
-task :acceptance do
-  require 'beaker-hostgenerator'
+namespace :litmus do
+  # Install the puppet module fixture on a collection of nodes
+  #
+  # @param :target_node_name [Array] nodes on which to install a puppet module for testing.
+  desc 'install_module_fixtures - build and install module fixtures'
+  task :install_module_fixtures, [:target_node_name] do |_task, args|
+    inventory_hash = inventory_hash_from_inventory_file
+    target_nodes = find_targets(inventory_hash, args[:target_node_name])
+    if target_nodes.empty?
+      puts 'No targets found'
+      exit 0
+    end
+    include BoltSpec::Run
+    require 'pdk/module/build'
 
-  install_type = 'aio'
-  target = ENV['platform']
-  abs = if ENV['BEAKER_ABS'] then 'abs' else 'vmpooler' end
-  if ! target
-    STDERR.puts 'TEST_TARGET environment variable is not set'
-    STDERR.puts 'setting to default value of "centos7-64ma".'
-    target = "centos7-64ma{type=#{install_type}}"
+    module_fixture_dir = File.expand_path(File.join(File.dirname(__FILE__), 'spec', 'fixtures', 'acceptance', 'modules', 'test'))
+    module_tar = nil
+    Dir.chdir(module_fixture_dir) do
+      opts = {}
+      opts[:force] = true
+      builder = PDK::Module::Build.new(opts)
+      module_tar = builder.build
+      puts 'Built'
+      module_tar = Dir.glob('pkg/*.tar.gz').max_by { |f| File.mtime(f) }
+      raise "Unable to find package in 'pkg/*.tar.gz'" if module_tar.nil?
+      module_tar = File.expand_path(module_tar)
+    end
+
+    target_string = if args[:target_node_name].nil?
+                      'all'
+                    else
+                      args[:target_node_name]
+                    end
+    # TODO: Currently this is Linux only
+    tmp_path = '/tmp/'
+    run_local_command("bundle exec bolt file upload #{module_tar} #{tmp_path}#{File.basename(module_tar)} --nodes #{target_string} --inventoryfile inventory.yaml")
+    install_module_command = "puppet module install #{tmp_path}#{File.basename(module_tar)}"
+    result = run_command(install_module_command, target_nodes, config: nil, inventory: inventory_hash)
+    if result.is_a?(Array)
+      result.each do |node|
+        puts "#{node['node']} failed #{node['result']}" if node['status'] != 'success'
+      end
+    else
+      raise "Failed trying to run '#{install_module_command}' against inventory."
+    end
+    puts 'Installed'
   end
 
-  unless target =~ /type=/
-    puts "INFO: adding 'type=#{install_type}' to host config"
-    target += "{type=#{install_type}}"
+  def install_remote_gem(gem_name, target_nodes, inventory_hash)
+    # TODO: Currently this is Linux only
+    install_command = "/opt/puppetlabs/puppet/bin/gem install #{gem_name}"
+    result = run_command(install_command, target_nodes, config: nil, inventory: inventory_hash)
+    if result.is_a?(Array)
+      result.each do |node|
+        puts "#{node['node']} failed #{node['result']}" if node['status'] != 'success'
+      end
+    else
+      raise "Failed trying to run '#{install_command}' against inventory."
+    end
   end
 
-  cli = BeakerHostGenerator::CLI.new([target, '--hypervisor', abs])
-  nodeset_dir = 'spec/acceptance/nodesets'
-  nodeset = "#{nodeset_dir}/#{target}.yml"
-  FileUtils.mkdir_p(nodeset_dir)
-  File.open(nodeset, 'w') do |fh|
-    fh.print(cli.execute)
-  end
-  puts "nodeset file:"
-  puts nodeset
-  sh 'gem build puppet-strings.gemspec'
-  sh 'puppet module build spec/fixtures/acceptance/modules/test'
-  if ENV['BEAKER_keyfile']
-    sh "BEAKER_set=#{target} rspec spec/acceptance/*.rb"
-  else
-    sh "BEAKER_keyfile=$HOME/.ssh/id_rsa-acceptance BEAKER_set=#{target} rspec spec/acceptance/*.rb"
+  # Install the gem under test and required fixture on a collection of nodes
+  #
+  # @param :target_node_name [Array] nodes on which to install a puppet module for testing.
+  desc 'install_gems - build and install module fixtures'
+  task :install_gems, [:target_node_name] do |_task, args|
+    inventory_hash = inventory_hash_from_inventory_file
+    target_nodes = find_targets(inventory_hash, args[:target_node_name])
+    if target_nodes.empty?
+      puts 'No targets found'
+      exit 0
+    end
+    include BoltSpec::Run
+
+    # Build the gem
+    `gem build puppet-strings.gemspec --quiet`
+    result = $CHILD_STATUS
+    raise "Unable to build the puppet-strings gem. Returned exit code #{result.exitstatus}" unless result.exitstatus.zero?
+    puts 'Built'
+    # Find the gem build artifact
+    gem_tar = Dir.glob('puppet-strings-*.gem').max_by { |f| File.mtime(f) }
+    raise "Unable to find package in 'puppet-strings-*.gem'" if gem_tar.nil?
+    gem_tar = File.expand_path(gem_tar)
+
+    target_string = if args[:target_node_name].nil?
+                      'all'
+                    else
+                      args[:target_node_name]
+                    end
+    # TODO: Currently this is Linux only
+    tmp_path = '/tmp/'
+    run_local_command("bundle exec bolt file upload #{gem_tar} #{tmp_path}#{File.basename(gem_tar)} --nodes #{target_string} --inventoryfile inventory.yaml")
+
+
+    # Install dependent gems
+    install_remote_gem('yard', target_nodes, inventory_hash)
+    install_remote_gem('rgen', target_nodes, inventory_hash)
+    # Install puppet-strings
+    install_remote_gem(tmp_path + File.basename(gem_tar), target_nodes, inventory_hash)
+    puts 'Installed'
   end
 end
 

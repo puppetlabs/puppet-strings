@@ -88,6 +88,51 @@ To run specs, run the `spec` rake task:
     $ bundle install --path .bundle/gems
     $ bundle exec rake spec
 
+### Running Acceptance Tests
+
+We are experimenting with a new tool for running acceptance tests. It's name is [puppet_litmus](https://github.com/puppetlabs/puppet_litmus) and replaces beaker as the test runner.
+
+An example of running the acceptance tests locally with Docker:
+
+1. Ensure [Docker](https://www.docker.com/products/docker-desktop) is installed and running.
+
+2. Install Ruby gems. This step can be skipped if you have already followed the [Running Specs](#running-specs) instructions
+
+``` text
+    $ bundle install --path .bundle/gems
+```
+
+3. Provision a docker container, in this case CentOS 7
+
+``` text
+    $ bundle exec rake litmus:provision[docker, centos:7]
+```
+
+4. Install test items; Puppet Agent, our test module, and the puppet-strings gem built from this source code
+
+``` text
+    $ bundle exec rake litmus:install_agent[puppet6]
+    $ bundle exec rake litmus:install_module_fixtures
+    $ bundle exec rake litmus:install_gems
+```
+
+5. Run the acceptance tests. These tests can be run more than once without the need to run the provisioning steps again
+
+``` text
+    $ bundle exec rake litmus:acceptance:parallel
+```
+
+6. Remove any test containers
+
+``` text
+    $ bundle exec rake litmus:tear_down
+```
+
+The [Litmus Wiki](https://github.com/puppetlabs/puppet_litmus/wiki) contains more indepth information about Litmus. There is also a tutorial on using Litmus with an example [Puppet Module](https://github.com/puppetlabs/puppet_litmus/wiki/Tutorial:-use-Litmus-to-execute-acceptance-tests-with-a-sample-module-(MoTD)#install-the-necessary-gems-for-the-module)
+
+
+An example of run the acceptance tests follow the instructions [here].
+
 ## Support
 
 Please log tickets and issues in our [JIRA tracker][JIRA]. A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users) is available for asking questions and getting help from others.

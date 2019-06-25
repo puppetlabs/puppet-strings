@@ -23,10 +23,8 @@ group :test do
 end
 
 group :acceptance do
-  gem 'beaker', '~> 3.37'
-  gem 'beaker-rspec'
-  gem 'beaker-hostgenerator'
-  gem 'beaker-abs'
+  # Litmus has dependencies which require Ruby 2.5 (Puppet 6) or above.
+  gem 'puppet_litmus' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.5.0')
 end
 
 group :development do
@@ -35,6 +33,7 @@ group :development do
   gem 'pry-byebug'
 end
 
+gem 'rubocop-rspec'
 gem 'rubocop', '~> 0.57.2'
 
 # Evaluate Gemfile.local if it exists

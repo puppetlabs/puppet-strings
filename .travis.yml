@@ -24,5 +24,18 @@ matrix:
     env: PUPPET_GEM_VERSION="~> 6" CHECK=spec
   - rvm: 2.1.9
     env: PUPPET_GEM_VERSION="~> 4" CHECK=rubocop
+  -
+    bundler_args: ""
+    dist: trusty
+    rvm: 2.5
+    before_script:
+    - bundle exec rake 'litmus:provision[docker, centos:7]'
+    - bundle exec rake 'litmus:install_agent[puppet6]'
+    - bundle exec rake litmus:install_module_fixtures
+    - bundle exec rake litmus:install_gems
+    script:
+    - bundle exec rake litmus:acceptance:parallel
+    services: docker
+    sudo: required
 
 script: 'SPEC_OPTS="--format documentation" COVERAGE="yes" bundle exec rake $CHECK'
