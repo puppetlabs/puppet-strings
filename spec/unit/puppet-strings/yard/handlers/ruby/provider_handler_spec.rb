@@ -106,6 +106,25 @@ end
     end
   end
 
+  describe 'parsing a provider definition with a string based name' do
+    let(:source) { <<-SOURCE
+Puppet::Type.type(:'custom').provide :'linux' do
+  desc 'An example provider on Linux.'
+end
+    SOURCE
+    }
+
+    it 'should register a provider object' do
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Provider)
+      expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::Providers.instance('custom'))
+      expect(object.name).to eq(:linux)
+      expect(object.type_name).to eq('custom')
+      expect(object.docstring).to eq('An example provider on Linux.')
+    end
+  end
+
   describe 'parsing a provider with a summary' do
     context 'when the summary has fewer than 140 characters' do
       let(:source) { <<-SOURCE

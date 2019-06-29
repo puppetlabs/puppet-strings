@@ -223,6 +223,22 @@ end
     end
   end
 
+  describe 'parsing a valid type with string based name' do
+    let(:source) { <<-SOURCE
+Puppet::Type.newtype(:'database') do
+  desc 'An example database server resource type.'
+  ensurable
+end
+    SOURCE
+    }
+
+    it 'should register a type object with default ensure values' do
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object.name).to eq(:database)
+    end
+  end
+
   describe 'parsing an ensurable type with default ensure values' do
     let(:source) { <<-SOURCE
 Puppet::Type.newtype(:database) do

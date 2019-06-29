@@ -18,7 +18,13 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
     when :label
       node.source[0..-2]
     when :dyna_symbol
-      node.source
+      # YARD 0.9.20 changed how dyna_symbols are represented
+      # https://github.com/lsegal/yard/commit/225ded9ef38c6d2be5a3b0fc7effbc7d6644768d
+      if yard_version >= Gem::Version.new('0.9.20')
+        node.source[2..-2]
+      else
+        node.source
+      end
     when :string_literal
       content = node.jump(:tstring_content)
       return content.source if content != node
@@ -46,4 +52,9 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
     name
   end
 
+  private
+
+  def yard_version
+    @yard_version ||= Gem::Version.new(YARD::VERSION)
+  end
 end
