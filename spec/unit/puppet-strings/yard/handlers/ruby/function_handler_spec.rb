@@ -567,6 +567,23 @@ end
     end
   end
 
+  describe 'parsing a function with a namespaced name' do
+    let(:source) { <<-SOURCE
+# An example 4.x function.
+Puppet::Functions.create_function(:'foo::bar::baz') do
+  # @return [Undef]
+  dispatch :foo do
+  end
+end
+    SOURCE
+    }
+
+    it 'should output the name correctly as a symbol' do
+      expect(subject.size).to eq(1)
+      expect(subject.first.name).to eq(:'foo::bar::baz')
+    end
+  end
+
   describe 'parsing a function with a missing parameter' do
     let(:source) { <<-SOURCE
 # An example 4.x function.
