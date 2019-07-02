@@ -46,10 +46,4 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
     raise YARD::Parser::UndocumentableError, "Expected a symbol or string literal for first parameter but found '#{parameters.first.type}' at #{statement.file}:#{statement.line}." unless name
     name
   end
-
-  private
-
-  def yard_version
-    @yard_version ||= Gem::Version.new(YARD::VERSION)
-  end
 end
