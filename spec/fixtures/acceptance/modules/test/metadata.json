@@ -2,5 +2,9 @@
   "name": "username-test",
   "version": "0.0.1",
   "author": "username",
-  "license": "Apache 2.0"
+  "summary": "brief summary",
+  "license": "MIT",
+  "source": "git://github.com/not_a/real_repo.git",
+  "dependencies": [
+  ]
 }

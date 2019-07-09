@@ -5,6 +5,8 @@ AllCops:
     # Ignore HTML related things
     - '**/*.erb'
     - 'lib/puppet-strings/yard/templates/**/*'
+    # Ignore fixtures we do not control
+    - spec/fixtures/modules/**/*
 
 # DISABLED - not useful
 Bundler/OrderedGems:

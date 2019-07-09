@@ -39,6 +39,9 @@ Gemfile.lock
 /log/
 /*.gem
 /spec/acceptance/nodesets/
+/spec/fixtures/manifests/
+/spec/fixtures/modules/
+/inventory.yaml
 
 ## local coverage results
 /coverage/
