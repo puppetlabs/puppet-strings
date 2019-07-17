@@ -165,4 +165,29 @@ module PuppetStrings::Yard::Parsers::Puppet
     end
   end
 
+  # Implements the Puppet data type alias statement.
+  class DataTypeAliasStatement < Statement
+    attr_reader :name
+    attr_reader :alias_of
+
+    # Initializes the Puppet data type alias statement.
+    # @param [Puppet::Pops::Model::TypeAlias] object The model object for the type statement.
+    # @param [String] file The file containing the statement.
+    def initialize(object, file)
+      super(object, file)
+
+      type_expr = object.type_expr
+      case type_expr
+      when Puppet::Pops::Model::AccessExpression
+        # TODO: I don't like rebuilding the source from the AST, but AccessExpressions don't expose the original source
+        @alias_of = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(type_expr.left_expr).extract_text + '['
+        @alias_of << type_expr.keys.map { |key| ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(key).extract_text }.join(', ')
+        @alias_of << ']'
+      else
+        adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(type_expr)
+        @alias_of = adapter.extract_text
+      end
+      @name = object.name
+    end
+  end
 end

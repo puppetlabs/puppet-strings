@@ -9,6 +9,8 @@ describe 'Emitting JSON' do
   let(:expected) do
     {
       "puppet_classes" => [],
+      "data_types" => [],
+      "data_type_aliases" => [],
       "defined_types" => [],
       "resource_types" => [],
       "providers" => [],

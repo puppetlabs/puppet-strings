@@ -7,6 +7,7 @@ module PuppetStrings::Markdown
       PuppetStrings::Markdown::DefinedTypes,
       PuppetStrings::Markdown::ResourceTypes,
       PuppetStrings::Markdown::Functions,
+      PuppetStrings::Markdown::DataTypes,
       PuppetStrings::Markdown::PuppetTasks,
       PuppetStrings::Markdown::PuppetPlans].each do |r|
         toc = r.toc_info

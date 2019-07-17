@@ -43,6 +43,20 @@ function func(Integer $param1, $param2, String $param3 = hi) {
 }
     SOURCE
 
+    # Only include Puppet types for 5.0+
+    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby) if TEST_PUPPET_DATATYPES
+# Basic Puppet Data Type in Ruby
+#
+# @param msg A message parameter
+Puppet::DataTypes.create_type('RubyDataType') do
+  interface <<-PUPPET
+    attributes => {
+      msg => String[1]
+    }
+    PUPPET
+end
+SOURCE
+
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :json)
 {
   "description": "Allows you to backup your database to local file.",
@@ -207,6 +221,11 @@ path this type will autorequire that file.
       puppet_class_json = YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash).to_json
 
       expect(json_output).to include_json(puppet_class_json)
+    end
+
+    it 'should include data for Puppet Data Types' do
+      data_types_json = YARD::Registry.all(:puppet_data_type).sort_by!(&:name).map!(&:to_hash).to_json
+      expect(json_output).to include_json(data_types_json)
     end
 
     it 'should include data for Puppet Defined Types' do

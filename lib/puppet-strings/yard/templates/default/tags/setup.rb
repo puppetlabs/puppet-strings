@@ -4,6 +4,7 @@ def param
   tag(:param) if
     object.type == :method ||
     object.type == :puppet_class ||
+    object.type == :puppet_data_type ||
     object.type == :puppet_defined_type ||
     object.type == :puppet_function ||
     object.type == :puppet_task ||

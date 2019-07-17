@@ -4,7 +4,7 @@ def init
   case object
   when '_index.html'
     @page_title = options.title
-    sections :layout, [:index, [:listing, [:classes, :defined_types, :types, :providers, :functions, :tasks, :plans, :files, :objects]]]
+    sections :layout, [:index, [:listing, [:classes, :data_types, :defined_types, :types, :providers, :functions, :tasks, :plans, :files, :objects]]]
   else
     super
   end
@@ -29,6 +29,10 @@ def layout
   when PuppetStrings::Yard::CodeObjects::Class
     @nav_url = url_for_list('puppet_class')
     @page_title = "Puppet Class: #{object.name}"
+    @path = object.path
+  when PuppetStrings::Yard::CodeObjects::DataType, PuppetStrings::Yard::CodeObjects::DataTypeAlias
+    @nav_url = url_for_list('puppet_data_type')
+    @page_title = "Data Type: #{object.name}"
     @path = object.path
   when PuppetStrings::Yard::CodeObjects::DefinedType
     @nav_url = url_for_list('puppet_defined_type')
@@ -75,6 +79,11 @@ def create_menu_lists
       type: 'puppet_class',
       title: 'Puppet Classes',
       search_title: 'Puppet Classes'
+    },
+    {
+      type: 'puppet_data_type',
+      title: 'Data Types',
+      search_title: 'Data Types',
     },
     {
       type: 'puppet_defined_type',
@@ -152,6 +161,14 @@ end
 def classes
   @title = 'Puppet Class Listing A-Z'
   @objects_by_letter = objects_by_letter(:puppet_class)
+  erb(:objects)
+end
+
+# Renders the data types section.
+# @return [String] Returns the rendered section.
+def data_types
+  @title = 'Data Type Listing A-Z'
+  @objects_by_letter = objects_by_letter(:puppet_data_type, :puppet_data_type_alias)
   erb(:objects)
 end
 

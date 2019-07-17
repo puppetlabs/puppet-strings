@@ -9,17 +9,19 @@ puppet strings generate --format json
 Document Schema
 ===============
 
-At the top level, there are seven arrays in the JSON document:
+At the top level, there are nine arrays in the JSON document:
 
-| Document Key     | Description                                                                   |
-| ---------------- | ----------------------------------------------------------------------------- |
-| puppet_classes   | The list of Puppet classes that were parsed.                                  |
-| defined_types    | The list of defined types that were parsed.                                   |
-| resource_types   | The list of resource types that were parsed.                                  |
-| providers        | The list of resource providers that were parsed.                              |
-| puppet_functions | The list of Puppet functions (4.x, 4.x and Puppet language) that were parsed. |
-| puppet_tasks     | The list of Puppet tasks that were parsed.                                    |
-| puppet_plans     | The list of Puppet plans that were parsed.                                    |
+| Document Key      | Description                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| puppet_classes    | The list of Puppet classes that were parsed.                                  |
+| data_types        | The list of data types that were parsed.                                      |
+| data_type_aliases | | The list of data types that were parsed.                                      |
+| defined_types     | The list of defined types that were parsed.                                   |
+| resource_types    | The list of resource types that were parsed.                                  |
+| providers         | The list of resource providers that were parsed.                              |
+| puppet_functions  | The list of Puppet functions (4.x, 4.x and Puppet language) that were parsed. |
+| puppet_tasks      | The list of Puppet tasks that were parsed.                                    |
+| puppet_plans      | The list of Puppet plans that were parsed.                                    |
 
 Puppet Classes
 --------------
@@ -35,6 +37,34 @@ Each entry in the `puppet_classes` list is an object with the following attribut
 | docstring     | The *DocString* object for the class (see below).     |
 | defaults      | The map of parameter names to default values.         |
 | source        | The Puppet source code for the class.                 |
+
+Data Types
+----------
+
+Each entry in the `data_types` list is an object with the following attributes:
+
+| Attribute Key | Description                                                 |
+| ------------- | ----------------------------------------------------------- |
+| name          | The name of the data type.                                  |
+| file          | The file defining the data type.                            |
+| line          | The line where the data type is data.                       |
+| docstring     | The *DocString* object for the data type (see below).       |
+| defaults      | The map of parameter names to default values.               |
+| source        | The ruby source code for the data type. (Not Implemented)   |
+
+Data Type Aliases
+-----------------
+
+Each entry in the `data_type_aliases` list is an object with the following attributes:
+
+| Attribute Key | Description                                                       |
+| ------------- | ----------------------------------------------------------------- |
+| name          | The name of the data type.                                        |
+| file          | The file defining the data type.                                  |
+| line          | The line where the data type is defined.                          |
+| docstring     | The *DocString* object for the data type (see below).             |
+| alias_of      | The actual type this is an alias of.                              |
+| source        | The Puppet source code for the data type alias. (Not Implemented) |
 
 Defined Types
 -------------

@@ -23,6 +23,8 @@
               <small>(Resource type: <%= obj.type_name %>)</small>
       <% elsif obj.type == :puppet_function %>
               <small>(<%= obj.function_type %>)</small>
+      <% elsif obj.type == :puppet_data_type_alias %>
+              <small>(Alias)</small>
       <% end %>
             </li>
     <% end %>

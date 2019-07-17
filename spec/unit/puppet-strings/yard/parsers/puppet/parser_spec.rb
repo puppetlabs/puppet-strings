@@ -206,4 +206,46 @@ SOURCE
       expect(statement.type).to eq("Struct\[{'a' => Integer[1, 10]}\]")
     end
   end
+
+  describe 'parsing type alias definitions', if: TEST_PUPPET_DATATYPES do
+    context 'given a type alias on a single line' do
+      let(:source) { <<-SOURCE
+# A simple foo type.
+type Module::Typename = Variant[Stdlib::Windowspath, Stdlib::Unixpath]
+SOURCE
+      }
+
+      it 'should parse the puppet type statement' do
+        subject.parse
+        expect(subject.enumerator.size).to eq(1)
+        statement = subject.enumerator.first
+        expect(statement).to be_a(PuppetStrings::Yard::Parsers::Puppet::DataTypeAliasStatement)
+        expect(statement.docstring).to eq('A simple foo type.')
+        expect(statement.name).to eq('Module::Typename')
+        expect(statement.alias_of).to eq('Variant[Stdlib::Windowspath, Stdlib::Unixpath]')
+      end
+    end
+
+    context 'given a type alias over multiple lines' do
+      let(:source) { <<-SOURCE
+# A multiline foo type
+# with long docs
+type OptionsWithoutName = Struct[{
+  value_type => Optional[ValueType],
+  merge      => Optional[MergeType]
+}]
+SOURCE
+      }
+
+      it 'should parse the puppet type statement' do
+        subject.parse
+        expect(subject.enumerator.size).to eq(1)
+        statement = subject.enumerator.first
+        expect(statement).to be_a(PuppetStrings::Yard::Parsers::Puppet::DataTypeAliasStatement)
+        expect(statement.docstring).to eq("A multiline foo type\nwith long docs")
+        expect(statement.name).to eq('OptionsWithoutName')
+        expect(statement.alias_of).to eq("Struct[{\n  value_type => Optional[ValueType],\n  merge      => Optional[MergeType]\n}]")
+      end
+    end
+  end
 end
