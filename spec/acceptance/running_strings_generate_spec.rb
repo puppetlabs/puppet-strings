@@ -59,4 +59,20 @@ describe 'Generating module documentation using generate action' do
       '<tt>database &mdash; /usr/bin/database</tt>',
     ])
   end
+
+  it 'should generate documentation for puppet data types' do
+    expect_file_contain('doc/puppet_types/database.html', [
+      'Resource Type: database',
+      'type/database.rb',
+      'An example server resource type.',
+    ])
+  end
+
+  it 'should generate documentation for puppet data type aliases' do
+    expect_file_contain('doc/puppet_data_type_aliases/Test_3A_3AElephant.html', [
+      'Data Type: Test::Elephant',
+      'types/elephant.pp',
+      'A simple elephant type.',
+    ])
+  end
 end
