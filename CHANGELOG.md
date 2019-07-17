@@ -3,6 +3,18 @@
 All significant changes to this repo will be summarized in this file.
 
 
+## [v2.3.0](https://github.com/puppetlabs/puppet-strings/tree/v2.3.0) (2019-07-17)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.2.0...v2.3.0)
+
+Added
+
+- Add Puppet Data Type documentation [\#199](https://github.com/puppetlabs/puppet-strings/pull/199) ([glennsarti](https://github.com/glennsarti))
+
+Fixed
+
+- \(PDOC-283\) Fix namespaced symbols [\#205](https://github.com/puppetlabs/puppet-strings/pull/205) ([glennsarti](https://github.com/glennsarti))
+
 ## [v2.2.0](https://github.com/puppetlabs/puppet-strings/tree/v2.2.0) (2019-04-05)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.1.0...v2.2.0)
