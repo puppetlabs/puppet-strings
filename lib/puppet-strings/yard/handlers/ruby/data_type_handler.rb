@@ -14,7 +14,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     return unless ruby_module_name == 'Puppet::DataTypes' || ruby_module_name == 'DataTypes' # rubocop:disable Style/MultipleComparison This reads better
     object = get_datatype_yard_object(get_name(statement, 'Puppet::DataTypes.create_type'))
 
-    actual_params = extract_params_for_data_type # populate_data_type_data(object)
+    actual_params = extract_params_for_data_type
 
     # Mark the data type as public if it doesn't already have an api tag
     object.add_tag YARD::Tags::Tag.new(:api, 'public') unless object.has_tag? :api
@@ -65,7 +65,13 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
         interface_string = node_as_string(parameters[0])
         next unless interface_string
         # Ref - https://github.com/puppetlabs/puppet/blob/ba4d1a1aba0095d3c70b98fea5c67434a4876a61/lib/puppet/datatypes.rb#L159
-        parsed_interface = Puppet::Pops::Parser::EvaluatingParser.new.parse_string("{ #{interface_string} }").body
+        parsed_interface = nil
+        begin
+          parsed_interface = Puppet::Pops::Parser::EvaluatingParser.new.parse_string("{ #{interface_string} }").body
+        rescue Puppet::Error => e
+          log.warn "Invalid datatype definition at #{statement.file}:#{statement.line}: #{e.basic_message}"
+          next
+        end
         next unless parsed_interface
 
         # Now that we parsed the Puppet code (as a string) into a LiteralHash PCore type (Puppet AST),
@@ -144,6 +150,10 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
 
     def literal_LiteralNumber(o) # rubocop:disable Naming/UncommunicativeMethodParamName
       o.value
+    end
+
+    def literal_UnaryMinusExpression(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+      -1 * literal(o.expr)
     end
 
     def literal_LiteralBoolean(o) # rubocop:disable Naming/UncommunicativeMethodParamName

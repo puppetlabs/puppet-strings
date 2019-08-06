@@ -189,6 +189,83 @@ SOURCE
     end
   end
 
+  testcases = [
+    { :value => '-1', :expected => -1 },
+    { :value => '0', :expected => 0 },
+    { :value => '10', :expected => 10 },
+    { :value => '0777', :expected => 511 },
+    { :value => '0xFF', :expected => 255 },
+    { :value => '0.1', :expected => 0.1 },
+    { :value => '31.415e-1', :expected => 3.1415 },
+    { :value => '0.31415e1', :expected => 3.1415 }
+  ].each do |testcase|
+    describe "parsing a valid data type definition with numeric default #{testcase[:value]}" do
+      let(:source) { <<-SOURCE
+# An example Puppet Data Type in Ruby.
+# @param num1 A numeric parameter
+Puppet::DataTypes.create_type('RubyDataType') do
+  interface <<-PUPPET
+    attributes => {
+      num1 => { type => Numeric, value => #{testcase[:value]} },
+    }
+    PUPPET
+end
+SOURCE
+      }
+
+      it 'should register a data type object' do
+        expect(subject.size).to eq(1)
+        object = subject.first
+        expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
+        expect(object.parameters.size).to eq(1)
+        expect(object.parameters[0]).to eq(['num1', testcase[:expected]])
+      end
+    end
+  end
+
+  describe 'parsing a invalid data type definition' do
+    let(:source) { <<-SOURCE
+# The msg attribute is missing a comma.
+#
+# @param msg A message parameter5.
+# @param arg1 Optional String parameter5. Defaults to 'param'.
+Puppet::DataTypes.create_type('RubyDataType') do
+  interface <<-PUPPET
+    attributes => {
+      msg   => Variant[Numeric, String[1,2]]
+      arg1  => { type => Optional[String[1]], value => "param" }
+    }
+    PUPPET
+end
+SOURCE
+    }
+
+    it 'should register a partial data type object' do
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
+      expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::DataTypes.instance)
+      expect(object.name).to eq(:RubyDataType)
+      expect(object.docstring).to eq('The msg attribute is missing a comma.')
+      # The attributes will be missing therefore only one tag
+      expect(object.docstring.tags.size).to eq(1)
+      tags = object.docstring.tags(:api)
+      expect(tags.size).to eq(1)
+      expect(tags[0].text).to eq('public')
+
+      # Check that the param tags are removed
+      tags = object.docstring.tags(:param)
+      expect(tags.size).to eq(0)
+
+      # Check for default values
+      expect(object.parameters.size).to eq(0)
+    end
+
+    it 'should log a warning' do
+      expect{ subject }.to output(/\[warn\]: Invalid datatype definition at (.+):[0-9]+: Syntax error at 'arg1'/).to_stdout_from_any_process
+    end
+  end
+
   describe 'parsing a data type with a summary' do
     context 'when the summary has fewer than 140 characters' do
       let(:source) { <<-SOURCE
