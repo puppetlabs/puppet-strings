@@ -3,6 +3,16 @@
 All significant changes to this repo will be summarized in this file.
 
 
+## [v2.3.1](https://github.com/puppetlabs/puppet-strings/tree/v2.3.1) (2019-09-23)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.3.0...v2.3.1)
+
+**Merged pull requests:**
+
+- \(maint\) Use parameters method instead of json\['parameters'\] [\#211](https://github.com/puppetlabs/puppet-strings/pull/211) ([lucywyman](https://github.com/lucywyman))
+- Create CODEOWNERS [\#210](https://github.com/puppetlabs/puppet-strings/pull/210) ([binford2k](https://github.com/binford2k))
+- \(PDOC-285\) Fix data\_type\_handler for errors and numbers [\#209](https://github.com/puppetlabs/puppet-strings/pull/209) ([glennsarti](https://github.com/glennsarti))
+
 ## [v2.3.0](https://github.com/puppetlabs/puppet-strings/tree/v2.3.0) (2019-07-17)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.2.0...v2.3.0)
@@ -14,6 +24,10 @@ Added
 Fixed
 
 - \(PDOC-283\) Fix namespaced symbols [\#205](https://github.com/puppetlabs/puppet-strings/pull/205) ([glennsarti](https://github.com/glennsarti))
+
+**Merged pull requests:**
+
+- \(MAINT\) Release prep for v2.3.0 [\#208](https://github.com/puppetlabs/puppet-strings/pull/208) ([scotje](https://github.com/scotje))
 
 ## [v2.2.0](https://github.com/puppetlabs/puppet-strings/tree/v2.2.0) (2019-04-05)
 
