@@ -3,6 +3,15 @@
 All significant changes to this repo will be summarized in this file.
 
 
+## [v2.3.1](https://github.com/puppetlabs/puppet-strings/tree/v2.3.1) (2019-09-23)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.3.0...v2.3.1)
+
+Fixed
+
+- \(maint\) Use parameters method instead of json\['parameters'\] [\#211](https://github.com/puppetlabs/puppet-strings/pull/211) ([lucywyman](https://github.com/lucywyman))
+- \(PDOC-285\) Fix data\_type\_handler for errors and numbers [\#209](https://github.com/puppetlabs/puppet-strings/pull/209) ([glennsarti](https://github.com/glennsarti))
+
 ## [v2.3.0](https://github.com/puppetlabs/puppet-strings/tree/v2.3.0) (2019-07-17)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.2.0...v2.3.0)
