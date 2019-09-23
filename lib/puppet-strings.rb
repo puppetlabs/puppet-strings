@@ -7,7 +7,7 @@ module PuppetStrings
     types/**/*.pp
     lib/**/*.rb
     tasks/*.json
-    plans/*.pp
+    plans/**/*.pp
   ).freeze
 
   # Generates documentation.
