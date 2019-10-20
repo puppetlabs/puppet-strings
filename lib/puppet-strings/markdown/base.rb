@@ -111,12 +111,25 @@ module PuppetStrings::Markdown
       select_tags('option')
     end
 
+    # @return [Array] enum tag hashes
+    def enums
+      select_tags('enum')
+    end
+
     # @param parameter_name
     #   parameter name to match to option tags
     # @return [Array] option tag hashes that have a parent parameter_name
     def options_for_param(parameter_name)
       opts_for_p = options.select { |o| o[:parent] == parameter_name } unless options.nil?
       opts_for_p unless opts_for_p.nil? || opts_for_p.length.zero?
+    end
+
+    # @param parameter_name
+    #   parameter name to match to enum tags
+    # @return [Array] enum tag hashes that have a parent parameter_name
+    def enums_for_param(parameter_name)
+      enums_for_p = enums.select { |e| e[:parent] == parameter_name } unless enums.nil?
+      enums_for_p unless enums_for_p.nil? || enums_for_p.length.zero?
     end
 
     # @return [Hash] any defaults found for the component

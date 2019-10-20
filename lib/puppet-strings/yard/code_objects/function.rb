@@ -88,10 +88,10 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
     if self.has_tag? :overload
       # loop over overloads and append onto the signatures array
       self.tags(:overload).each do |o|
-        hash[:signatures] << { :signature => o.signature, :docstring => PuppetStrings::Yard::Util.docstring_to_hash(o.docstring, %i[param option return example]) }
+        hash[:signatures] << { :signature => o.signature, :docstring => PuppetStrings::Yard::Util.docstring_to_hash(o.docstring, %i[param option enum return example]) }
       end
     else
-      hash[:signatures] << { :signature => self.signature, :docstring =>  PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option return example]) }
+      hash[:signatures] << { :signature => self.signature, :docstring =>  PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example]) }
     end
 
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)

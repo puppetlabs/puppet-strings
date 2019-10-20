@@ -11,6 +11,9 @@ module PuppetStrings::Yard
   # Sets up YARD for use with puppet-strings.
   # @return [void]
   def self.setup!
+    # Register our factory
+    YARD::Tags::Library.default_factory = PuppetStrings::Yard::Tags::Factory
+
     # Register the template path
     YARD::Templates::Engine.register_template_path(File.join(File.dirname(__FILE__), 'yard', 'templates'))
 
@@ -29,6 +32,9 @@ module PuppetStrings::Yard
 
     # Register the summary tag
     PuppetStrings::Yard::Tags::SummaryTag.register!
+
+    # Register the enum tag
+    PuppetStrings::Yard::Tags::EnumTag.register!
 
     # Ignore documentation on Puppet DSL calls
     # This prevents the YARD DSL parser from emitting warnings for Puppet's Ruby DSL

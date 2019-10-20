@@ -88,6 +88,14 @@ Options:
 <% end -%>
 
 <% end -%>
+<% if sig.enums_for_param(param[:name]) -%>
+Options:
+
+<% sig.enums_for_param(param[:name]).each do |e| -%>
+* **<%= e[:opt_name] %>**: <%= e[:opt_text] %>
+<% end -%>
+
+<% end -%>
 <% end -%>
 <% end -%>
 <% end -%>

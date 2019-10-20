@@ -29,11 +29,15 @@ describe PuppetStrings::Markdown do
 # @option param2 [String] :opt1 something about opt1
 # @option param2 [Hash] :opt2 a hash of stuff
 # @param param3 Third param.
+# @param param4 Fourth param.
+# @enum param4 :one One option
+# @enum param4 :two Second option
 #
 class klass (
   Integer $param1 = 1,
   $param2 = undef,
-  String $param3 = 'hi'
+  String $param3 = 'hi',
+  Enum['one', 'two'] $param4 = 'two',
 ) inherits foo::bar {
 }
 
@@ -58,11 +62,15 @@ class noparams () {}
 # @option param2 [Hash] :opt2 a hash of stuff
 # @param param3 Third param.
 # @param param4 Fourth param.
+# @param param5 Fifth param.
+# @enum param5 :a Option A
+# @enum param5 :b Option B
 define klass::dt (
   Integer $param1 = 44,
   $param2,
   String $param3 = 'hi',
-  Boolean $param4 = true
+  Boolean $param4 = true,
+  Enum['a', 'b'] $param5 = 'a'
 ) {
 }
     SOURCE
@@ -98,11 +106,14 @@ define klass::dt (
 # @param param2 Second param.
 # @param param3 Third param.
 # @option param3 [Array] :param3opt Something about this option
+# @param param4 Fourth param.
+# @enum param4 :yes Yes option.
+# @enum param4 :no No option.
 # @raise SomeError this is some error
 # @return [Undef] Returns nothing.
 # @example Test
 #   $result = func(1, 2)
-function func(Integer $param1, $param2, String $param3 = hi) {
+function func(Integer $param1, $param2, String $param3 = hi, Enum['yes', 'no'] $param4 = 'yes') {
 }
     SOURCE
 
@@ -122,6 +133,9 @@ Puppet::Functions.create_function(:func4x) do
   # @option param2 [String] :option an option
   # @option param2 [String] :option2 another option
   # @param param3 The third parameter.
+  # @param param4 The fourth parameter.
+  # @enum param4 :one Option one.
+  # @enum param4 :two Option two.
   # @return Returns nothing.
   # @example Calling the function foo
   #   $result = func4x(1, 'foooo')
@@ -130,6 +144,7 @@ Puppet::Functions.create_function(:func4x) do
     param          'Integer',       :param1
     param          'Any',           :param2
     optional_param 'Array[String]', :param3
+    optional_param 'Enum[one, two]', :param4
     return_type 'Undef'
   end
 
@@ -183,6 +198,8 @@ Puppet::Type.newtype(:database) do
   desc <<-DESC
 An example database server type.
 @option opts :foo bar
+@enum ensure :up Upstate
+@enum ensure :down Downstate
 @raise SomeError
 @example here's an example
  database { 'foo':
