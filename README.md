@@ -13,13 +13,6 @@ Puppet Strings generates documentation for Puppet code and extensions written in
 | *Change log*   | [CHANGELOG.md][changelog]                                       |
 | *Contributing* | [CONTRIBUTING.md][contributing] and [COMMITTERS.md][committers] |
 
-[repo]: https://github.com/puppetlabs/puppet-strings
-[issues]: https://github.com/puppetlabs/puppet-strings/issues
-[LICENSE]: https://github.com/puppetlabs/puppet-strings/blob/master/LICENSE
-[changelog]: https://github.com/puppetlabs/puppet-strings/blob/master/CHANGELOG.md
-[contributing]: https://github.com/puppetlabs/puppet-strings/blob/master/CONTRIBUTING.md
-[committers]: https://github.com/puppetlabs/puppet-strings/blob/master/COMMITTERS.md
-
 ## Installing Puppet Strings
 
 ### Requirements
@@ -139,8 +132,18 @@ Please log issues in [GitHub issues][issues]. Check out [CONTRIBUTING.md][contri
 
 A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users) is available for asking questions and getting help from others.
 
-There is also an active #puppet channel on the Freenode IRC network.
+There is also an active community on the [Puppet community Slack][] in the #forge-modules channel.
 
 We use semantic version numbers for our releases and recommend that users upgrade to patch releases and minor releases as they become available.
 
 Bug fixes and ongoing development will occur in minor releases for the current major version. Security fixes will be ported to a previous major version on a best-effort basis, until the previous major version is no longer maintained.
+
+
+[repo]: https://github.com/puppetlabs/puppet-strings
+[issues]: https://github.com/puppetlabs/puppet-strings/issues
+[LICENSE]: https://github.com/puppetlabs/puppet-strings/blob/master/LICENSE
+[changelog]: https://github.com/puppetlabs/puppet-strings/blob/master/CHANGELOG.md
+[contributing]: https://github.com/puppetlabs/puppet-strings/blob/master/CONTRIBUTING.md
+[committers]: https://github.com/puppetlabs/puppet-strings/blob/master/COMMITTERS.md
+[Puppet community Slack]: https://slack.puppet.com
+

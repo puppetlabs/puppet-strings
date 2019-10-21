@@ -7,7 +7,6 @@ that we can have a chance of keeping on top of things.
 
 ## Getting Started
 
-* Make sure you have a [Jira account](http://tickets.puppetlabs.com)
 * Make sure you have a [GitHub account](https://github.com/signup/free)
 * Submit a ticket for your issue, assuming one does not already exist.
   * Clearly describe the issue including steps to reproduce when it is a bug.
@@ -130,7 +129,6 @@ To cut a new release, from a current `master` checkout:
 # Additional Resources
 
 * [More information on contributing](http://links.puppet.com/contribute-to-puppet)
-* [Bug tracker (Jira)](http://tickets.puppet.com)
 * [Contributor License Agreement](http://links.puppet.com/cla)
 * [General GitHub documentation](http://help.github.com/)
 * [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
