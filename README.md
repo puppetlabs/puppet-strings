@@ -8,13 +8,13 @@ Puppet Strings generates documentation for Puppet code and extensions written in
 |                |                                                                 |
 | -------------- |---------------------------------------------------------------- |
 | *Code*         | [GitHub][repo]                                                  |
-| *Issues*       | [Puppet JIRA Tracker][JIRA]                                     |
+| *Issues*       | [GitHub issues][issues]                                         |
 | *License*      | [Apache 2.0][LICENSE]                                           |
 | *Change log*   | [CHANGELOG.md][changelog]                                       |
 | *Contributing* | [CONTRIBUTING.md][contributing] and [COMMITTERS.md][committers] |
 
 [repo]: https://github.com/puppetlabs/puppet-strings
-[JIRA]: https://tickets.puppetlabs.com/browse/PDOC
+[issues]: https://github.com/puppetlabs/puppet-strings/issues
 [LICENSE]: https://github.com/puppetlabs/puppet-strings/blob/master/LICENSE
 [changelog]: https://github.com/puppetlabs/puppet-strings/blob/master/CHANGELOG.md
 [contributing]: https://github.com/puppetlabs/puppet-strings/blob/master/CONTRIBUTING.md
@@ -135,7 +135,7 @@ An example of run the acceptance tests follow the instructions [here].
 
 ## Support
 
-Please log tickets and issues in our [JIRA tracker][JIRA]. A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users) is available for asking questions and getting help from others.
+Please log issues in [GitHub issues][issues]. A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users) is available for asking questions and getting help from others.
 
 There is also an active #puppet channel on the Freenode IRC network.
 
