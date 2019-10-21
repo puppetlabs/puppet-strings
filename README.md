@@ -135,7 +135,9 @@ An example of run the acceptance tests follow the instructions [here].
 
 ## Support
 
-Please log issues in [GitHub issues][issues]. A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users) is available for asking questions and getting help from others.
+Please log issues in [GitHub issues][issues]. Check out [CONTRIBUTING.md][contributing] for tips on writing _the best_ issues.
+
+A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users) is available for asking questions and getting help from others.
 
 There is also an active #puppet channel on the Freenode IRC network.
 
