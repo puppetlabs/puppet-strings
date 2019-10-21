@@ -7,12 +7,43 @@ that we can have a chance of keeping on top of things.
 
 ## Getting Started
 
-* Make sure you have a [Jira account](http://tickets.puppetlabs.com)
 * Make sure you have a [GitHub account](https://github.com/signup/free)
 * Submit a ticket for your issue, assuming one does not already exist.
   * Clearly describe the issue including steps to reproduce when it is a bug.
   * Make sure you fill in the earliest version that you know has the issue.
 * Fork the repository on GitHub
+
+## Submit an issue
+
+We use GitHub Issues for issue tracking on puppet-strings.
+
+Before you submit your issue, take a minute to...
+
+1. **Use the GitHub issue search** &mdash; check if the issue has already been
+   reported.
+
+2. **Check if the issue has been fixed** &mdash; try to reproduce it using the
+   latest `master` or release tag.
+
+A good bug report shouldn't leave others needing to chase you up for more
+information. Please try to be as **detailed as possible** in your issue. What is
+your environment? What steps will reproduce the issue? 
+
+Example:
+
+> Short and descriptive example issue title
+>
+> A summary of the issue with details about the environment it occurs in (Ruby version, Puppet version, Strings version, etc). If
+> suitable, include the steps required to reproduce the bug.
+>
+> 1. This is the first step
+> 2. This is the second step
+> 3. Further steps, etc.
+>
+> Any other information you want to share that is relevant to the issue being
+> reported. This might include the lines of code that you have identified as
+> causing the bug, and potential solutions (and your opinions on their
+> merits).
 
 ## Making Changes
 
@@ -98,7 +129,6 @@ To cut a new release, from a current `master` checkout:
 # Additional Resources
 
 * [More information on contributing](http://links.puppet.com/contribute-to-puppet)
-* [Bug tracker (Jira)](http://tickets.puppet.com)
 * [Contributor License Agreement](http://links.puppet.com/cla)
 * [General GitHub documentation](http://help.github.com/)
 * [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
