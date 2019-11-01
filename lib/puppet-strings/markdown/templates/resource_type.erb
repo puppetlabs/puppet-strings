@@ -78,6 +78,14 @@ Options:
 <% end -%>
 
 <% end -%>
+<% if enums_for_param(prop[:name]) -%>
+Options:
+
+<% enums_for_param(prop[:name]).each do |e| -%>
+* **<%= e[:opt_name] %>**: <%= e[:opt_text] %>
+<% end -%>
+
+<% end -%>
 <% if prop[:default] -%>
 Default value: <%= prop[:default] %>
 
@@ -115,6 +123,14 @@ Options:
 
 <% options_for_param(param[:name]).each do |o| -%>
 * **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+<% end -%>
+
+<% end -%>
+<% if enums_for_param(param[:name]) -%>
+Options:
+
+<% enums_for_param(param[:name]).each do |e| -%>
+* **<%= e[:opt_name] %>**: <%= e[:opt_text] %>
 <% end -%>
 
 <% end -%>

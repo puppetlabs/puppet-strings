@@ -38,11 +38,11 @@ module PuppetStrings::Yard::Util
       next t.to_hash if t.respond_to?(:to_hash)
 
       tag = { tag_name: t.tag_name }
-      # grab nested information for @option tags
-      if tag[:tag_name] == 'option'
+      # grab nested information for @option and @enum tags
+      if tag[:tag_name] == 'option' || tag[:tag_name] == 'enum'
         tag[:opt_name] = t.pair.name
         tag[:opt_text] = t.pair.text
-        tag[:opt_types] = t.pair.types
+        tag[:opt_types] = t.pair.types if t.pair.types
         tag[:parent] = t.name
       end
       tag[:text] = t.text if t.text

@@ -105,6 +105,19 @@ Third param.
 
 Default value: 'hi'
 
+##### `param4`
+
+Data type: `Enum['one', 'two']`
+
+Fourth param.
+
+Options:
+
+* **:one**: One option
+* **:two**: Second option
+
+Default value: 'two'
+
 ## Defined types
 
 ### klass::dt
@@ -165,6 +178,19 @@ Data type: `Boolean`
 Fourth param.
 
 Default value: `true`
+
+##### `param5`
+
+Data type: `Enum['a', 'b']`
+
+Fifth param.
+
+Options:
+
+* **:a**: Option A
+* **:b**: Option B
+
+Default value: 'a'
 
 ## Resource types
 
@@ -242,6 +268,11 @@ Aliases: "up"=>"present", "down"=>"absent"
 
 What state the database should be in.
 
+Options:
+
+* **:up**: Upstate
+* **:down**: Downstate
+
 Default value: up
 
 ##### `file`
@@ -296,7 +327,7 @@ A simple Puppet function.
 $result = func(1, 2)
 ```
 
-#### `func(Integer $param1, Any $param2, String $param3 = hi)`
+#### `func(Integer $param1, Any $param2, String $param3 = hi, Enum['yes', 'no'] $param4 = 'yes')`
 
 A simple Puppet function.
 
@@ -334,6 +365,17 @@ Third param.
 Options:
 
 * **:param3opt** `Array`: Something about this option
+
+##### `param4`
+
+Data type: `Enum['yes', 'no']`
+
+Fourth param.
+
+Options:
+
+* **:yes**: Yes option.
+* **:no**: No option.
 
 ### func3x
 
@@ -395,7 +437,7 @@ $result = func4x(1, 'foo')
 $result = func4x(1, 'foo', ['bar'])
 ```
 
-#### `func4x(Integer $param1, Any $param2, Optional[Array[String]] $param3)`
+#### `func4x(Integer $param1, Any $param2, Optional[Array[String]] $param3, Optional[Enum[one, two]] $param4)`
 
 An overview for the first overload.
 
@@ -431,6 +473,17 @@ Options:
 Data type: `Optional[Array[String]]`
 
 The third parameter.
+
+##### `param4`
+
+Data type: `Optional[Enum[one, two]]`
+
+The fourth parameter.
+
+Options:
+
+* **:one**: Option one.
+* **:two**: Option two.
 
 #### `func4x(Boolean $param, Callable &$block)`
 

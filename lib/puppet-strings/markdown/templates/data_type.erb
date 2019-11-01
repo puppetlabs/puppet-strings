@@ -70,6 +70,14 @@ Options:
 <% end -%>
 
 <% end -%>
+<% if enums_for_param(param[:name]) -%>
+Options:
+
+<% enums_for_param(param[:name]).each do |e| -%>
+* **<%= e[:opt_name] %>**: <%= e[:opt_text] %>
+<% end -%>
+
+<% end -%>
 <% if defaults && defaults[param[:name]] -%>
 Default value: <%= value_string(defaults[param[:name]]) %>
 
