@@ -35,13 +35,13 @@ The name of the service
 
   it 'should render Markdown to stdout when using --format markdown' do
     skip('This test is broken. Does not output to STDOUT by default.')
-    output = PuppetLitmus::Serverspec.run_shell("puppet strings generate --format markdown \"#{@test_module_path}/manifests/init.pp\"").stdout.chomp
+    output = PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate --format markdown \"#{@test_module_path}/manifests/init.pp\"").stdout.chomp
     expect(output).to eq(expected)
   end
 
   it 'should write Markdown to a file when using --format markdown and --out' do
     tmpfile = File.join(@remote_tmp_path, 'md_output.md')
-    remote = PuppetLitmus::Serverspec.run_shell("puppet strings generate --format markdown --out \"#{tmpfile}\" \"#{@test_module_path}/manifests/init.pp\"")
+    remote = PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate --format markdown --out \"#{tmpfile}\" \"#{@test_module_path}/manifests/init.pp\"")
     expect(file(tmpfile)).to contain expected
   end
 end

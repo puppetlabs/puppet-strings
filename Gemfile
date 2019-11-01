@@ -23,8 +23,11 @@ group :test do
 end
 
 group :acceptance do
-  # Litmus has dependencies which require Ruby 2.5 (Puppet 6) or above.
-  gem 'puppet_litmus' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.5.0')
+  if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.5.0')
+    # Litmus has dependencies which require Ruby 2.5 (Puppet 6) or above.
+    gem 'puppet_litmus', '~> 0.11', '>= 0.11.1'
+    gem 'net-ssh', '~> 5.2'
+  end
 end
 
 group :development do

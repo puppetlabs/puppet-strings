@@ -49,7 +49,7 @@ describe 'Emitting JSON' do
     { :title => '--emit-json-stdout', :cmd_line => '--emit-json-stdout' }
   ].each do |testcase|
     it "should emit JSON to stdout when using #{testcase[:title]}" do
-      output = PuppetLitmus::Serverspec.run_shell("puppet strings generate #{testcase[:cmd_line]} \"#{@test_module_path}/lib/puppet/parser/functions/function3x.rb\"").stdout.chomp
+      output = PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate #{testcase[:cmd_line]} \"#{@test_module_path}/lib/puppet/parser/functions/function3x.rb\"").stdout.chomp
       expect(JSON.parse(output)).to eq(expected)
     end
   end
@@ -61,7 +61,7 @@ describe 'Emitting JSON' do
     it "should write JSON to a file when using #{testcase[:title]}" do
       tmpfile = File.join(@remote_tmp_path, 'json_output.json')
       cmd = "puppet strings generate #{testcase[:cmd_line].gsub('TMPFILE', tmpfile)} \"#{@test_module_path}/lib/puppet/parser/functions/function3x.rb\""
-      PuppetLitmus::Serverspec.run_shell(cmd)
+      PuppetLitmus::PuppetHelpers.run_shell(cmd)
       output = JSON.parse(file(tmpfile).content)
       expect(output).to eq(expected)
     end
