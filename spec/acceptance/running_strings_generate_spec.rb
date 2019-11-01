@@ -4,10 +4,10 @@ include PuppetLitmus # rubocop:disable Style/MixinUsage This is fine
 describe 'Generating module documentation using generate action' do
   before :all do
     # TODO: Linux only
-    @sut_work_dir = PuppetLitmus::Serverspec.run_shell("pwd").stdout.chomp
+    @sut_work_dir = PuppetLitmus::PuppetHelpers.run_shell("pwd").stdout.chomp
 
     test_module_path = sut_module_path(/Module test/)
-    PuppetLitmus::Serverspec.run_shell("puppet strings generate \"#{test_module_path}/**/*.{rb,pp}\"")
+    PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate \"#{test_module_path}/**/*.{rb,pp}\"")
   end
 
   def expect_file_contain(path, expected_contents)
