@@ -1,0 +1,17 @@
+<% if object.has_tag?(:enum) %>
+  <% object.parameters.each do |param, default| %>
+    <% tags = object.tags(:enum).select {|x| x.name.to_s == param.to_s.sub(/^\*+|:$/, '') } %>
+    <% next if tags.empty? %>
+    <p class="tag_title">Enum Options (<tt><%= param %></tt>):</p>
+    <ul class="option">
+      <% for tag in tags %>
+        <li>
+          <span class="name"><%= tag.pair.name %></span>
+          <% if tag.pair.text && tag.pair.text =~ /\S/ %>
+            &mdash; <%= htmlify_line(tag.pair.text) %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>

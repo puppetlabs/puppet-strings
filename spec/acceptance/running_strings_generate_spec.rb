@@ -75,4 +75,14 @@ describe 'Generating module documentation using generate action' do
       'A simple elephant type.',
     ])
   end
+
+  it 'should generate documentation for enum tag' do
+    expect_file_contain('doc/puppet_classes/test.html', [
+      '<p class="tag_title">Enum Options (<tt>myenum</tt>):</p>',
+      '<span class="name">a</span>',
+      "&mdash; <div class='inline'>\n<p>Option A</p>\n</div>",
+      '<span class="name">b</span>',
+      "&mdash; <div class='inline'>\n<p>Option B</p>\n</div>",
+    ])
+  end
 end
