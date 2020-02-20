@@ -325,6 +325,17 @@ type Amodule::ComplexAlias = Struct[{
   let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/markdown/#{filename}") }
   let(:baseline) { File.read(baseline_path) }
 
+  RSpec.shared_examples 'markdown lint checker' do |parameter|
+    it 'should not generate markdown lint errors from the rendered markdown', if: mdl_available do
+      pending('Failures are expected')
+      Tempfile.open('md') do |file|
+        PuppetStrings::Markdown.render(file.path)
+
+        expect(File.read(file.path)).to have_no_markdown_lint_errors
+      end
+    end
+  end
+
   describe 'rendering markdown to a file' do
     before(:each) do
       parse_shared_content
@@ -339,6 +350,8 @@ type Amodule::ComplexAlias = Struct[{
           expect(File.read(file.path)).to eq(baseline)
         end
       end
+
+      include_examples 'markdown lint checker'
     end
 
     describe 'with Puppet Plans', :if => TEST_PUPPET_PLANS do
@@ -354,6 +367,8 @@ type Amodule::ComplexAlias = Struct[{
           expect(File.read(file.path)).to eq(baseline)
         end
       end
+
+      include_examples 'markdown lint checker'
     end
 
     describe 'with Puppet Data Types', :if => TEST_PUPPET_DATATYPES do
@@ -369,6 +384,8 @@ type Amodule::ComplexAlias = Struct[{
           expect(File.read(file.path)).to eq(baseline)
         end
       end
+
+      include_examples 'markdown lint checker'
     end
   end
 end

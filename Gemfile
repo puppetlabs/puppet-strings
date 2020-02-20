@@ -20,6 +20,7 @@ group :test do
   gem 'simplecov-console'
   gem 'rspec', '~> 3.1'
   gem 'json_spec', '~> 1.1', '>= 1.1.5'
+  gem 'mdl', '~> 0.8.0' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.4.0')
 end
 
 group :acceptance do
