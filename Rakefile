@@ -1,4 +1,39 @@
-require 'puppet_litmus/rake_tasks' if Bundler.rubygems.find_name('puppet_litmus').any?
+if Bundler.rubygems.find_name('puppet_litmus').any?
+  require 'puppet_litmus/rake_tasks'
+
+  # This is a _really_ horrible monkey-patch to fix up https://github.com/puppetlabs/bolt/issues/1614
+  # Based on resolution https://github.com/puppetlabs/bolt/pull/1620
+  # This can be removed once this is fixed, released into Bolt and into Litmus
+  require 'bolt_spec/run'
+  module BoltSpec
+    module Run
+      class BoltRunner
+        class << self
+          alias_method :original_with_runner, :with_runner
+        end
+
+        def self.with_runner(config_data, inventory_data)
+          original_with_runner(deep_duplicate_object(config_data), deep_duplicate_object(inventory_data)) { |runner| yield runner }
+        end
+
+        # From https://github.com/puppetlabs/pdk/blob/master/lib/pdk/util.rb
+        # Workaround for https://github.com/puppetlabs/bolt/issues/1614
+        def self.deep_duplicate_object(object)
+          if object.is_a?(Array)
+            object.map { |item| deep_duplicate_object(item) }
+          elsif object.is_a?(Hash)
+            hash = object.dup
+            hash.each_pair { |key, value| hash[key] = deep_duplicate_object(value) }
+            hash
+          else
+            object
+          end
+        end
+      end
+    end
+  end
+end
+
 require 'puppetlabs_spec_helper/tasks/fixtures'
 require 'bundler/gem_tasks'
 require 'puppet-lint/tasks/puppet-lint'
@@ -25,53 +60,6 @@ task :validate do
 end
 
 namespace :litmus do
-  # Install the puppet module fixture on a collection of nodes
-  #
-  # @param :target_node_name [Array] nodes on which to install a puppet module for testing.
-  desc 'install_module_fixtures - build and install module fixtures'
-  task :install_module_fixtures, [:target_node_name] do |_task, args|
-    inventory_hash = inventory_hash_from_inventory_file
-    target_nodes = find_targets(inventory_hash, args[:target_node_name])
-    if target_nodes.empty?
-      puts 'No targets found'
-      exit 0
-    end
-    include BoltSpec::Run
-    require 'pdk/module/build'
-
-    module_fixture_dir = File.expand_path(File.join(File.dirname(__FILE__), 'spec', 'fixtures', 'acceptance', 'modules', 'test'))
-    module_tar = nil
-    Dir.chdir(module_fixture_dir) do
-      opts = {}
-      opts[:force] = true
-      builder = PDK::Module::Build.new(opts)
-      module_tar = builder.build
-      puts 'Built'
-      module_tar = Dir.glob('pkg/*.tar.gz').max_by { |f| File.mtime(f) }
-      raise "Unable to find package in 'pkg/*.tar.gz'" if module_tar.nil?
-      module_tar = File.expand_path(module_tar)
-    end
-
-    target_string = if args[:target_node_name].nil?
-                      'all'
-                    else
-                      args[:target_node_name]
-                    end
-    # TODO: Currently this is Linux only
-    tmp_path = '/tmp/'
-    run_local_command("bundle exec bolt file upload #{module_tar} #{tmp_path}#{File.basename(module_tar)} --nodes #{target_string} --inventoryfile inventory.yaml")
-    install_module_command = "puppet module install #{tmp_path}#{File.basename(module_tar)}"
-    result = run_command(install_module_command, target_nodes, config: nil, inventory: inventory_hash)
-    if result.is_a?(Array)
-      result.each do |node|
-        puts "#{node['node']} failed #{node['result']}" if node['status'] != 'success'
-      end
-    else
-      raise "Failed trying to run '#{install_module_command}' against inventory."
-    end
-    puts 'Installed'
-  end
-
   def install_remote_gem(gem_name, target_nodes, inventory_hash)
     # TODO: Currently this is Linux only
     install_command = "/opt/puppetlabs/puppet/bin/gem install #{gem_name}"
@@ -96,6 +84,7 @@ namespace :litmus do
       puts 'No targets found'
       exit 0
     end
+    require 'bolt_spec/run'
     include BoltSpec::Run
 
     # Build the gem
@@ -113,15 +102,18 @@ namespace :litmus do
                     else
                       args[:target_node_name]
                     end
-    # TODO: Currently this is Linux only
+    # TODO: Currently this is Linux targets only. no windows localhost
     tmp_path = '/tmp/'
-    run_local_command("bundle exec bolt file upload #{gem_tar} #{tmp_path}#{File.basename(gem_tar)} --nodes #{target_string} --inventoryfile inventory.yaml")
-
+    puts 'Copying gem to targets...'
+    run_local_command("bolt file upload #{gem_tar} #{tmp_path}#{File.basename(gem_tar)} --targets #{target_string} --inventoryfile inventory.yaml")
 
     # Install dependent gems
+    puts 'Installing yard gem...'
     install_remote_gem('yard', target_nodes, inventory_hash)
+    puts 'Installing rgen gem...'
     install_remote_gem('rgen', target_nodes, inventory_hash)
     # Install puppet-strings
+    puts 'Installing puppet-strings gem...'
     install_remote_gem(tmp_path + File.basename(gem_tar), target_nodes, inventory_hash)
     puts 'Installed'
   end

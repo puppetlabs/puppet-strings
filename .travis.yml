@@ -31,7 +31,7 @@ matrix:
     before_script:
     - bundle exec rake 'litmus:provision[docker, centos:7]'
     - bundle exec rake 'litmus:install_agent[puppet6]'
-    - bundle exec rake litmus:install_module_fixtures
+    - bundle exec rake 'litmus:install_modules_from_directory[./spec/fixtures/acceptance/modules]'
     - bundle exec rake litmus:install_gems
     script:
     - bundle exec rake litmus:acceptance:parallel
