@@ -148,7 +148,7 @@ begin
             labels: ["backwards-incompatible"]
           }
         }
-    config.exclude_labels = ['maintenance']
+    config.exclude_labels = ['maintenance','incomplete']
     config.user = 'puppetlabs'
     config.project = 'puppet-strings'
   end

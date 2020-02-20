@@ -3,6 +3,16 @@
 All significant changes to this repo will be summarized in this file.
 
 
+## [v2.4.0](https://github.com/puppetlabs/puppet-strings/tree/v2.4.0) (2020-02-18)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.3.1...v2.4.0)
+
+Added
+
+- Add missing HTML output support for enum tag [\#218](https://github.com/puppetlabs/puppet-strings/pull/218) ([seanmil](https://github.com/seanmil))
+- \(PDOC-295\) Add @enum tag support for Enum data types [\#215](https://github.com/puppetlabs/puppet-strings/pull/215) ([seanmil](https://github.com/seanmil))
+- Expanded default search glob for plans. [\#214](https://github.com/puppetlabs/puppet-strings/pull/214) ([Raskil](https://github.com/Raskil))
+
 ## [v2.3.1](https://github.com/puppetlabs/puppet-strings/tree/v2.3.1) (2019-09-23)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.3.0...v2.3.1)
