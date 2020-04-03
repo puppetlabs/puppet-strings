@@ -1,0 +1,6 @@
+<h2>Data Type Functions</h2>
+<% method_listing.each_with_index do |meth, i| %>
+  <div id="<%= meth.name %>-instance_method"><h3><%= meth.name %></h3>
+  <%= yieldall :object => meth, :owner => object, :index => i %>
+  </div>
+<% end %>

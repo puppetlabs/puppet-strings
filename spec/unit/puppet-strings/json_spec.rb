@@ -48,10 +48,18 @@ function func(Integer $param1, $param2, String $param3 = hi) {
 # Basic Puppet Data Type in Ruby
 #
 # @param msg A message parameter
+# @!method func1(param1, param2)
+#   func1 documentation
+#   @param [String] param1 param1 documentation
+#   @param [Integer] param2 param2 documentation
+#   @return [Optional[String]]
 Puppet::DataTypes.create_type('RubyDataType') do
   interface <<-PUPPET
     attributes => {
       msg => String[1]
+    },
+    functions => {
+      func1 => Callable[[String, Integer], Optional[String]]
     }
     PUPPET
 end
