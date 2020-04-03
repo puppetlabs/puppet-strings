@@ -24,7 +24,6 @@ class PuppetStrings::Yard::CodeObjects::DataType < PuppetStrings::Yard::CodeObje
   # @return [void]
   def initialize(name)
     super(PuppetStrings::Yard::CodeObjects::DataTypes.instance, name)
-    @parameters = []
     @defaults = {}
   end
 
@@ -39,10 +38,6 @@ class PuppetStrings::Yard::CodeObjects::DataType < PuppetStrings::Yard::CodeObje
   def source
     # Not implemented, but would be nice!
     nil
-  end
-
-  def parameter_exist?(name)
-    !docstring.tags(:param).find { |item| item.name == name }.nil?
   end
 
   def add_parameter(name, type, default)
@@ -63,6 +58,31 @@ class PuppetStrings::Yard::CodeObjects::DataType < PuppetStrings::Yard::CodeObje
 
   def parameters
     docstring.tags(:param).map { |tag| [tag.name, defaults[tag.name]] }
+  end
+
+  def add_function(name, return_type, parameter_types)
+    meth_obj = YARD::CodeObjects::MethodObject.new(self, name, :class)
+
+    # Compute the signature using dummy parameter names
+    signature = name
+    unless parameter_types.empty?
+      signature += '(' + (1..parameter_types.count).map { |idx| 'param' + idx.to_s }.join(', ') + ')'
+    end
+    meth_obj.signature = 'def ' + signature
+
+    # Add return tag
+    meth_obj.add_tag(YARD::Tags::Tag.new(:return, '', return_type))
+
+    # Add parameters
+    parameter_types.each_with_index do |param_type, index|
+      meth_obj.add_tag(YARD::Tags::Tag.new(:param, '', [param_type], "param#{index + 1}"))
+    end
+
+    self.meths << meth_obj
+  end
+
+  def functions
+    meths
   end
 
   # Converts the code object to a hash representation.
