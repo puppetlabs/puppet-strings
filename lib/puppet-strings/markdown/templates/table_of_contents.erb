@@ -14,12 +14,12 @@ _Private <%= group_name %>_
 
 <% group.each do |item| -%>
 <% if item[:private] -%>
-* `<%= item[:name] %>`<% unless item[:desc].empty? %>: <%= item[:desc] %><% end %>
+* `<%= item[:name] %>`<% unless item[:desc].nil? || item[:desc].empty? %>: <%= item[:desc] %><% end %>
 <% end -%>
 <% end -%>
 <% else -%>
 <% group.each do |item| -%>
-* [`<%= item[:name] %>`](#<%= item[:link] %>)<% unless item[:desc].empty? %>: <%= item[:desc] %><% end %>
+* [`<%= item[:name] %>`](#<%= item[:link] %>)<% unless item[:desc].nil? || item[:desc].empty? %>: <%= item[:desc] %><% end %>
 <% end -%>
 <% end -%>
 
