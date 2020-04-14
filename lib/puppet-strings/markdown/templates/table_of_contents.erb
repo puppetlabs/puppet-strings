@@ -6,7 +6,7 @@ _Public <%= group_name %>_
 
 <% group.each do |item| -%>
 <% unless item[:private] -%>
-* [`<%= item[:name] %>`](#<%= item[:link] %>)<% unless item[:desc].empty? %>: <%= item[:desc] %><% end %>
+* [`<%= item[:name] %>`](#<%= item[:link] %>)<% unless item[:desc].nil? || item[:desc].empty? %>: <%= item[:desc] %><% end %>
 <% end -%>
 <% end -%>
 
