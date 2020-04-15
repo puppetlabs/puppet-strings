@@ -6,7 +6,7 @@ _Public <%= group_name %>_
 
 <% group.each do |item| -%>
 <% unless item[:private] -%>
-* [`<%= item[:name] %>`](#<%= item[:link] %>): <%= item[:desc] %>
+* [`<%= item[:name] %>`](#<%= item[:link] %>)<% unless item[:desc].nil? || item[:desc].empty? %>: <%= item[:desc] %><% end %>
 <% end -%>
 <% end -%>
 
@@ -14,12 +14,12 @@ _Private <%= group_name %>_
 
 <% group.each do |item| -%>
 <% if item[:private] -%>
-* `<%= item[:name] %>`: <%= item[:desc] %>
+* `<%= item[:name] %>`<% unless item[:desc].nil? || item[:desc].empty? %>: <%= item[:desc] %><% end %>
 <% end -%>
 <% end -%>
 <% else -%>
 <% group.each do |item| -%>
-* [`<%= item[:name] %>`](#<%= item[:link] %>): <%= item[:desc] %>
+* [`<%= item[:name] %>`](#<%= item[:link] %>)<% unless item[:desc].nil? || item[:desc].empty? %>: <%= item[:desc] %><% end %>
 <% end -%>
 <% end -%>
 
