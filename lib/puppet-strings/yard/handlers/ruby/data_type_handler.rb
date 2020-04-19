@@ -54,39 +54,58 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
 
   # @return [Hash{Object => Object}] The Puppet DataType interface definition as a ruby Hash
   def extract_data_type_interface
-    params = {}
-    # Traverse the block looking for interface
     block = statement.block
-    return unless block && block.count >= 2
-    block[1].children.each do |node|
-      next unless node.is_a?(YARD::Parser::Ruby::MethodCallNode) &&
-                  node.method_name
+    return {} unless block
 
-      method_name = node.method_name.source
+    # Declare the parsed interface outside of the closure
+    parsed_interface = nil
+
+    # Recursively traverse the block looking for the first valid 'interface' call
+    interface_node = find_ruby_ast_node(block, true) do |node|
+      next false unless node.is_a?(YARD::Parser::Ruby::MethodCallNode) &&
+                        node.method_name &&
+                        node.method_name.source == 'interface'
       parameters = node.parameters(false)
-      if method_name == 'interface'
-        next unless parameters.count >= 1
-        interface_string = node_as_string(parameters[0])
-        next unless interface_string
-        # Ref - https://github.com/puppetlabs/puppet/blob/ba4d1a1aba0095d3c70b98fea5c67434a4876a61/lib/puppet/datatypes.rb#L159
-        parsed_interface = nil
-        begin
-          parsed_interface = Puppet::Pops::Parser::EvaluatingParser.new.parse_string("{ #{interface_string} }").body
-        rescue Puppet::Error => e
-          log.warn "Invalid datatype definition at #{statement.file}:#{statement.line}: #{e.basic_message}"
-          next
-        end
-        next unless parsed_interface
+      next false unless parameters.count >= 1
+      interface_string = node_as_string(parameters[0])
+      next false unless interface_string
 
-        # Now that we parsed the Puppet code (as a string) into a LiteralHash PCore type (Puppet AST),
-        # We need to convert the LiteralHash into a conventional ruby hash of strings. The
-        # LazyLiteralEvaluator does this by traversing the AST tree can converting objects to strings
-        # where possible and ignoring object types which cannot (thus the 'Lazy' name)
-        literal_eval = LazyLiteralEvaluator.new
-        return literal_eval.literal(parsed_interface)
+      begin
+        # Ref - https://github.com/puppetlabs/puppet/blob/ba4d1a1aba0095d3c70b98fea5c67434a4876a61/lib/puppet/datatypes.rb#L159
+        parsed_interface = Puppet::Pops::Parser::EvaluatingParser.new.parse_string("{ #{interface_string} }").body
+      rescue Puppet::Error => e
+        log.warn "Invalid datatype definition at #{statement.file}:#{statement.line}: #{e.basic_message}"
+        next false
+      end
+      !parsed_interface.nil?
+    end
+
+    # Now that we parsed the Puppet code (as a string) into a LiteralHash PCore type (Puppet AST),
+    # We need to convert the LiteralHash into a conventional ruby hash of strings. The
+    # LazyLiteralEvaluator does this by traversing the AST tree can converting objects to strings
+    # where possible and ignoring object types which cannot (thus the 'Lazy' name)
+    literal_eval = LazyLiteralEvaluator.new
+    literal_eval.literal(parsed_interface)
+  end
+
+  # Find the first Ruby AST node within an AST Tree, optionally recursively. Returns nil of none could be found
+  #
+  # @param [YARD::Parser::Ruby::AstNode] ast_node The root AST node object to inspect
+  # @param [Boolean] recurse Whether to search the tree recursively.  Defaults to false
+  # @yieldparam [YARD::Parser::Ruby::AstNode] ast_node The AST Node that should be checked
+  # @yieldreturn [Boolean] Whether the node was what was searched for
+  # @return [YARD::Parser::Ruby::AstNode, nil]
+  def find_ruby_ast_node(ast_node, recurse = false, &block)
+    raise ArgumentError, 'find_ruby_ast_node requires a block' unless block_given?
+    is_found = yield ast_node
+    return ast_node if is_found
+    if ast_node.respond_to?(:children)
+      ast_node.children.each do |child_node|
+        child_found = find_ruby_ast_node(child_node, recurse, &block)
+        return child_found unless child_found.nil?
       end
     end
-    params
+    nil
   end
 
   # Lazily evaluates a Pops object, ignoring any objects that cannot

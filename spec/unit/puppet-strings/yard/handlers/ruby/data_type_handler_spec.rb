@@ -316,6 +316,7 @@ SOURCE
       # Check for functions
       expect(object.functions.size).to eq(1)
       func = object.functions.first
+      expect(func.name).to eq(:func1)
       expect(func.docstring).to eq('func1 documentation')
       expect(func.tag(:return)).to_not be_nil
       expect(func.tag(:return).types).to eq(['Optional[String]'])
@@ -327,6 +328,71 @@ SOURCE
       expect(param_tags[1].name).to eq('param2')
       expect(param_tags[1].text).to eq('param2 documentation')
       expect(param_tags[1].types).to eq(['Integer'])
+    end
+
+    context 'with multiple interfaces' do
+      let(:source) do <<-SOURCE
+        # An example Puppet Data Type in Ruby.
+        #
+        # @param msg A message parameter5.
+        # @param arg1 Optional String parameter5. Defaults to 'param'.
+        #
+        # @!method func1(param1, param2)
+        #   func1 documentation
+        #   @param [String] param1 param1 documentation
+        #   @param [Integer] param2 param2 documentation
+        #   @return [Optional[String]]
+        #
+        Puppet::DataTypes.create_type('RubyDataType') do
+          if 1 == 2
+            interface <<-PUPPET
+              This interface is invalid because of this text!
+              attributes => {
+                msg1 => Variant[Numeric, String[1,2]],
+              },
+              functions => {
+                func1 => Callable[[String, Integer], Optional[String]]
+              }
+              PUPPET
+          elsif 1 == 3
+            interface <<-PUPPET
+              attributes => {
+                msg2 => Variant[Numeric, String[1,2]],
+              },
+              functions => {
+                func2 => Callable[[String, Integer], Optional[String]]
+              }
+              PUPPET
+          else
+            interface <<-PUPPET
+              attributes => {
+                msg3 => Variant[Numeric, String[1,2]],
+              },
+              functions => {
+                func3 => Callable[[String, Integer], Optional[String]]
+              }
+              PUPPET
+          end
+        end
+        SOURCE
+      end
+
+      it 'should register only the first valid interface' do
+        suppress_yard_logging
+
+        expect(subject.size).to eq(1)
+        object = subject.first
+        expect(object.name).to eq(:RubyDataType)
+
+        # Check that the param tags are set
+        tags = object.docstring.tags(:param)
+        expect(tags.size).to eq(1)
+        expect(tags[0].name).to eq('msg2')
+
+        # Check for functions
+        expect(object.functions.size).to eq(1)
+        expect(object.functions.first.name).to eq(:func2)
+      end
     end
 
     context 'with missing, partial and addition function parameters' do
