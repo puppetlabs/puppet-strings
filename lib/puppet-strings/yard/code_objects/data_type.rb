@@ -92,9 +92,16 @@ class PuppetStrings::Yard::CodeObjects::DataType < PuppetStrings::Yard::CodeObje
     hash[:name] = name
     hash[:file] = file
     hash[:line] = line
-    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
+    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example])
     hash[:defaults] = defaults unless defaults.empty?
     hash[:source] = source unless source && source.empty?
+    hash[:functions] = functions.map do |func|
+      {
+        name: func.name,
+        signature: func.signature,
+        docstring: PuppetStrings::Yard::Util.docstring_to_hash(func.docstring, %i[param option enum return example])
+      }
+    end
     hash
   end
 end
