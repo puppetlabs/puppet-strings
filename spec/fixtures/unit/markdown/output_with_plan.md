@@ -311,6 +311,10 @@ Whether or not to encrypt the database.
 
 Default value: `false`
 
+##### `provider`
+
+The specific backend to use for this `database` resource. You will seldom need to specify this --- Puppet will usually discover the appropriate provider for your platform.
+
 ## Functions
 
 ### func
