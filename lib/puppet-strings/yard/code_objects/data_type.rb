@@ -63,13 +63,6 @@ class PuppetStrings::Yard::CodeObjects::DataType < PuppetStrings::Yard::CodeObje
   def add_function(name, return_type, parameter_types)
     meth_obj = YARD::CodeObjects::MethodObject.new(self, name, :class)
 
-    # Compute the signature using dummy parameter names
-    signature = name
-    unless parameter_types.empty?
-      signature += '(' + (1..parameter_types.count).map { |idx| 'param' + idx.to_s }.join(', ') + ')'
-    end
-    meth_obj.signature = 'def ' + signature
-
     # Add return tag
     meth_obj.add_tag(YARD::Tags::Tag.new(:return, '', return_type))
 

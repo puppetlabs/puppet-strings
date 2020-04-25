@@ -570,6 +570,30 @@ Optional String parameter.
 
 Default value: param2
 
+#### Functions
+
+The following functions are available in the `UnitDataType` data type.
+
+### func1
+
+#### `UnitDataType.func1(param1, param2)`
+
+func1 documentation
+
+Returns: `Optional[String]`
+
+##### `param1`
+
+Data type: `String`
+
+param1 documentation
+
+##### `param2`
+
+Data type: `Integer`
+
+param2 documentation
+
 ## Tasks
 
 ### (stdin)

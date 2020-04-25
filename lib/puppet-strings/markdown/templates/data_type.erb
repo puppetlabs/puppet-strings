@@ -84,3 +84,10 @@ Default value: <%= value_string(defaults[param[:name]]) %>
 <% end -%>
 <% end -%>
 <% end -%>
+<% if functions -%>
+#### Functions
+
+The following functions are available in the `<%= name %>` <%= @type %>.
+
+<% functions.each do |func| -%><%= func.render -%><% end -%>
+<% end -%>

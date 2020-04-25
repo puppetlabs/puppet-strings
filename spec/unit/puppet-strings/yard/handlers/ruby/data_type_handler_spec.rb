@@ -134,7 +134,7 @@ SOURCE
         expect(object.functions.size).to eq(1)
         func = object.functions.first
         expect(func.docstring).to eq('')
-        expect(func.signature).to eq('def func1(param1, param2)')
+        expect(func.signature).to eq('RubyDataType.func1(param1, param2)')
         expect(func.tag(:return)).to_not be_nil
         expect(func.tag(:return).types).to eq(['String'])
         param_tags = func.docstring.tags(:param)
@@ -180,14 +180,14 @@ SOURCE
           expect(object.functions.size).to eq(2)
           # A function with no parmeters
           func = object.functions.first
-          expect(func.signature).to eq('def func1')
+          expect(func.signature).to eq('RubyDataType.func1')
           expect(func.tag(:return).types).to eq(['String'])
           param_tags = func.docstring.tags(:param)
           expect(param_tags).to be_empty
 
           # A function with one parmeter
           func = object.functions.last
-          expect(func.signature).to eq('def func2(param1)')
+          expect(func.signature).to eq('RubyDataType.func2(param1)')
           expect(func.tag(:return).types).to eq(['String'])
           param_tags = func.docstring.tags(:param)
           expect(param_tags.size).to eq(1)
@@ -266,10 +266,10 @@ SOURCE
 # @param msg A message parameter5.
 # @param arg1 Optional String parameter5. Defaults to 'param'.
 #
-# @!method func1(param1, param2)
+# @!method func1(foo, bar)
 #   func1 documentation
-#   @param [String] param1 param1 documentation
-#   @param [Integer] param2 param2 documentation
+#   @param [String] foo foo documentation
+#   @param [Integer] bar bar documentation
 #   @return [Optional[String]]
 #
 Puppet::DataTypes.create_type('RubyDataType') do
@@ -322,11 +322,11 @@ SOURCE
       expect(func.tag(:return).types).to eq(['Optional[String]'])
       param_tags = func.docstring.tags(:param)
       expect(param_tags.size).to eq(2)
-      expect(param_tags[0].name).to eq('param1')
-      expect(param_tags[0].text).to eq('param1 documentation')
+      expect(param_tags[0].name).to eq('foo')
+      expect(param_tags[0].text).to eq('foo documentation')
       expect(param_tags[0].types).to eq(['String'])
-      expect(param_tags[1].name).to eq('param2')
-      expect(param_tags[1].text).to eq('param2 documentation')
+      expect(param_tags[1].name).to eq('bar')
+      expect(param_tags[1].text).to eq('bar documentation')
       expect(param_tags[1].types).to eq(['Integer'])
     end
 

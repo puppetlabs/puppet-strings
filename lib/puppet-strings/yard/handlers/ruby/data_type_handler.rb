@@ -338,6 +338,17 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
       next unless meth.docstring.tag(:return).nil?
       meth.docstring.add_tag(YARD::Tags::Tag.new(:return, '', actual_functions_hash[meth.name.to_s][:return_type]))
     end
+
+    # The default meth.signature assumes ruby invocation (e.g. def meth(...)) but this doesn't make sense for a
+    # Puppet Data Type function invocation. So instead we derive a signature from the method definition.
+    object.meths.each do |meth|
+      params = ''
+      unless meth.docstring.tags(:param).empty?
+        params += '(' + meth.docstring.tags(:param).map { |t| t.name }.join(', ') + ')'
+      end
+      meth.signature = "#{object.name}.#{meth.name}" + params
+    end
+
     nil
   end
 
