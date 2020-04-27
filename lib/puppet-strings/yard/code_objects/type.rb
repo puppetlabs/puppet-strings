@@ -95,7 +95,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     end
   end
 
-  attr_reader :properties, :parameters, :features
+  attr_reader :properties, :features
 
   # Initializes a new resource type.
   # @param [String] name The resource type name.
@@ -134,6 +134,31 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     @features << feature
   end
 
+  def parameters
+    # just return params if there are no providers
+    return @parameters if providers.empty?
+
+    # return existing params if we have already added provider
+    return @parameters if @parameters.any? { |p| p.name == 'provider' }
+
+    provider_param = Parameter.new(
+      'provider',
+      "The specific backend to use for this `#{self.name.to_s}` resource. You will seldom need " + \
+      "to specify this --- Puppet will usually discover the appropriate provider for your platform."
+    )
+
+    @parameters << provider_param
+  end
+
+  # Not sure if this is where this belongs or if providers should only be resolved at
+  # render-time. For now, this should re-resolve on every call.
+  # may be able to memoize this
+  def providers
+    providers = YARD::Registry.all("puppet_providers_#{name}".intern)
+    return providers if providers.empty?
+    providers.first.children
+  end
+
   # Converts the code object to a hash representation.
   # @return [Hash] Returns a hash representation of the code object.
   def to_hash
@@ -145,6 +170,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     hash[:properties] = properties.map(&:to_hash) if properties && !properties.empty?
     hash[:parameters] = parameters.map(&:to_hash) if parameters && !parameters.empty?
     hash[:features] = features.map(&:to_hash) if features && !features.empty?
+    hash[:providers] = self.providers.map(&:to_hash) if providers && !providers.empty?
     hash
   end
 end
