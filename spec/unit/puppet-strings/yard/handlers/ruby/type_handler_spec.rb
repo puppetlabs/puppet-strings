@@ -278,6 +278,25 @@ end
     end
   end
 
+  describe 'parsing a type with a check with the name of "onlyif"' do
+    let(:source) { <<-SOURCE
+Puppet::Type.newtype(:testexec) do
+  desc 'An example exec type with a check.'
+  newcheck(:onlyif) do
+    desc 'a test check param'
+  end
+end
+    SOURCE
+    }
+
+    it 'should register a check object on the parent type object' do
+      expect(subject.size).to eq(1)
+      type_object = subject.first
+      expect(type_object.checks.size).to eq(1)
+      expect(type_object.checks[0].name).to eq('onlyif')
+    end
+  end
+
   describe 'parsing a type with a summary' do
     context 'when the summary has fewer than 140 characters' do
       let(:source) { <<-SOURCE

@@ -84,6 +84,12 @@ describe PuppetStrings::Markdown do
       end
     end
 
+    describe 'resource types' do
+      it 'includes checks in parameter list for the database type' do
+        expect(output).to match(/check to see if the database already exists/i)
+      end
+    end
+
     describe 'with Puppet Plans', :if => TEST_PUPPET_PLANS do
       before(:each) do
         parse_plan_content

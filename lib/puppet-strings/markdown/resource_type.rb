@@ -12,11 +12,28 @@ module PuppetStrings::Markdown
     end
 
     def properties
-      @registry[:properties]
+      return nil unless @registry[:properties]
+
+      @registry[:properties].sort_by { |p| p[:name] }
+    end
+
+    def checks
+      return nil unless @registry[:checks]
+
+      @registry[:checks].sort_by { |p| p[:name] }
+    end
+
+    # "checks" (such as "onlyif" or "creates") are another type of property
+    def properties_and_checks
+      return nil if properties.nil? && checks.nil?
+
+      ((properties || []) + (checks || [])).sort_by { |p| p[:name] }
     end
 
     def parameters
-      @registry[:parameters]
+      return nil unless @registry[:parameters]
+
+      @registry[:parameters].sort_by { |p| p[:name] }
     end
 
     def regex_in_data_type?(data_type)

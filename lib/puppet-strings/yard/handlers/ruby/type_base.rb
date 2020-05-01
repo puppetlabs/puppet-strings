@@ -52,6 +52,12 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
     property
   end
 
+  def create_check(name, node)
+    check = PuppetStrings::Yard::CodeObjects::Type::Check.new(name, find_docstring(node, "Puppet resource check '#{name}'"))
+    set_values(node, check)
+    check
+  end
+
   def set_values(node, object)
     return unless node.block && node.block.count >= 2
 
