@@ -169,6 +169,12 @@ module PuppetStrings::Markdown
       @tags.any? { |tag| tag[:tag_name] == 'api' && tag[:text] == 'private' }
     end
 
+    def word_wrap(text, line_width: 120, break_sequence: "\n")
+      text.split("\n").collect! do |line|
+        line.length > line_width ? line.gsub(/(.{1,#{line_width}})(\s+|$)/, "\\1#{break_sequence}").strip : line
+      end * break_sequence
+    end
+
     # @return [String] full markdown rendering of a component
     def render(template)
       file = File.join(File.dirname(__FILE__),"templates/#{template}")

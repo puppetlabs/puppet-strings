@@ -55,6 +55,7 @@ Returns: `<%= sig.return_type %>`<% if sig.return_val %> <%= sig.return_val %><%
 <% end -%>
 <% if raises -%>
 Raises:
+
 <% raises.each do |r| -%>
 * <%= error_type(r[:text]) %> <%= error_text(r[:text]) %>
 <% end -%>

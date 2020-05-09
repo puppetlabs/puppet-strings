@@ -24,10 +24,10 @@
 * **See also**
 <% see.each do |sa| -%>
 <% if sa[:name] -%>
-<%= sa[:name] %>
+<%= "  * #{sa[:name]}" %>
 <% end -%>
 <% if sa[:text] -%>
-<%= sa[:text] %>
+<%= "  * #{sa[:text]}" %>
 <% end -%>
 <% end -%>
 
@@ -116,7 +116,7 @@ Aliases: <%= param[:aliases].to_s.delete('{').delete('}') %>
 Data type: `<%= param[:data_type] %>`<%= "\n_\*this data type contains a regex that may not be accurately reflected in generated documentation_" if regex_in_data_type?(param[:data_type]) %>
 
 <% end -%>
-<%= param[:description] %>
+<%= word_wrap(param[:description]) %>
 
 <% if options_for_param(param[:name]) -%>
 Options:

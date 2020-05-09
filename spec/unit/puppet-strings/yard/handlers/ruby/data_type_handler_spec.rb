@@ -241,6 +241,8 @@ SOURCE
     }
 
     it 'should register a partial data type object' do
+      suppress_yard_logging
+
       expect(subject.size).to eq(1)
       object = subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)

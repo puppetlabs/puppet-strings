@@ -39,70 +39,79 @@ describe PuppetStrings::Markdown do
     YARD::Parser::SourceParser.parse_string(fixture_content("puppet/type_alias.pp"), :puppet)
   end
 
-  let(:baseline_path) { File.join(File.dirname(__FILE__), "../../fixtures/unit/markdown/#{filename}") }
-  let(:baseline) { File.read(baseline_path) }
+  let(:output) { PuppetStrings::Markdown.generate }
 
   RSpec.shared_examples 'markdown lint checker' do |parameter|
     it 'should not generate markdown lint errors from the rendered markdown', if: mdl_available do
-      pending('Failures are expected')
-      Tempfile.open('md') do |file|
-        PuppetStrings::Markdown.render(file.path)
-
-        expect(File.read(file.path)).to have_no_markdown_lint_errors
-      end
+      expect(output).to have_no_markdown_lint_errors
     end
   end
 
-  describe 'rendering markdown to a file' do
+  describe 'markdown rendering' do
     before(:each) do
       parse_shared_content
     end
 
-    context 'with common Puppet and ruby content' do
-      let(:filename) { 'output.md' }
+    include_examples 'markdown lint checker'
 
-      it 'should output the expected markdown content' do
-        Tempfile.open('md') do |file|
-          PuppetStrings::Markdown.render(file.path)
-          expect(File.read(file.path)).to eq(baseline)
-        end
+    describe 'table of contents' do
+      it 'includes links to public classes' do
+        expect(output).to match(/\[`klass`\]\(#.*\).*simple class/i)
       end
 
-      include_examples 'markdown lint checker'
+      it 'includes links to private classes' do
+        expect(output).to match(/`noparams`.*overview.*noparams/i)
+      end
+
+      it 'includes links to defined types' do
+        expect(output).to match(/\[`klass::dt`\]\(#.*\).*simple defined type/i)
+      end
+
+      it 'includes links to resource types' do
+        expect(output).to match(/\[`apt_key`\]\(#.*\).*resource type.*new api/i)
+        expect(output).to match(/\[`database`\]\(#.*\).*example database.*type/i)
+      end
+
+      it 'includes links to functions' do
+        expect(output).to match(/\[`func`\]\(#.*\).*simple puppet function/i)
+        expect(output).to match(/\[`func3x`\]\(#.*\).*example 3\.x function/i)
+        expect(output).to match(/\[`func4x`\]\(#.*\).*example 4\.x function/i)
+        expect(output).to match(/\[`func4x_1`\]\(#.*\).*example 4\.x function.*one signature/i)
+      end
+
+      it 'includes links to tasks' do
+        expect(output).to match(/\[`backup`\]\(#.*\).*backup your database/i)
+      end
     end
 
     describe 'with Puppet Plans', :if => TEST_PUPPET_PLANS do
-      let(:filename) { 'output_with_plan.md' }
-
       before(:each) do
         parse_plan_content
       end
 
-      it 'should output the expected markdown content' do
-        Tempfile.open('md') do |file|
-          PuppetStrings::Markdown.render(file.path)
-          expect(File.read(file.path)).to eq(baseline)
+      include_examples 'markdown lint checker'
+
+      describe "table of contents" do
+        it 'includes links to plans' do
+          expect(output).to match(/\[`plann`\]\(#.*\).*simple plan/i)
         end
       end
-
-      include_examples 'markdown lint checker'
     end
 
     describe 'with Puppet Data Types', :if => TEST_PUPPET_DATATYPES do
-      let(:filename) { 'output_with_data_types.md' }
-
       before(:each) do
         parse_data_type_content
       end
 
-      it 'should output the expected markdown content' do
-        Tempfile.open('md') do |file|
-          PuppetStrings::Markdown.render(file.path)
-          expect(File.read(file.path)).to eq(baseline)
+      include_examples 'markdown lint checker'
+
+      describe "table of contents" do
+        it 'includes links to data types' do
+          expect(output).to match(/\[`Amodule::ComplexAlias`\]\(#.*\).*Amodule::ComplexAlias/i)
+          expect(output).to match(/\[`Amodule::SimpleAlias`\]\(#.*\).*Amodule::SimpleAlias/i)
+          expect(output).to match(/\[`UnitDataType`\]\(#.*\).*data type in ruby/i)
         end
       end
-
-      include_examples 'markdown lint checker'
     end
   end
 end
