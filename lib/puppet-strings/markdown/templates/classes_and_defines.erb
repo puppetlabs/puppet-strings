@@ -24,10 +24,10 @@
 * **See also**
 <% see.each do |sa| -%>
 <% if sa[:name] -%>
-<%= sa[:name] %>
+<%= "  * #{sa[:name]}" %>
 <% end -%>
 <% if sa[:text] -%>
-<%= sa[:text] %>
+  <%= "  * #{sa[:text]}" %>
 <% end -%>
 <% end -%>
 

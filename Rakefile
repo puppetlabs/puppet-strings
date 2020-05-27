@@ -43,6 +43,8 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.exclude_pattern = "spec/acceptance/**/*.rb"
 end
 
+task :spec => :spec_clean
+
 # Add our own tasks
 require 'puppet-strings/tasks'
 

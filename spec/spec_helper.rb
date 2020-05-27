@@ -56,11 +56,11 @@ def lint_markdown(content)
   return [] unless mdl_available
   require 'mdl'
 
-  ruleset = MarkdownLint::RuleSet.new
-  ruleset.load_default
+  # Load default mdl ruleset
+  ruleset = MarkdownLint::RuleSet.new.tap { |r| r.load_default }
 
-  # All rules
-  style = MarkdownLint::Style.load('all', ruleset.rules)
+  # Apply custom style to ruleset rules
+  MarkdownLint::Style.load(File.join(__dir__, 'markdownlint_style.rb'), ruleset.rules)
 
   # Create a document
   doc = MarkdownLint::Doc.new(content, false)
@@ -73,7 +73,7 @@ def lint_markdown(content)
     # record the error
     error_lines.each do |line|
       line += doc.offset # Correct line numbers for any yaml front matter
-      violations << "#{filename}:#{line}: #{id} #{rule.description}"
+      violations << "#{line}: #{id} #{rule.description}: #{doc.lines[line - 1]}"
     end
   end
   violations

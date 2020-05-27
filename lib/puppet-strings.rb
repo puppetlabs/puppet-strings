@@ -27,8 +27,9 @@ module PuppetStrings
 
     # Format the arguments to YARD
     args = ['doc']
+    args << '--no-progress'
     args << '--debug'     if options[:debug]
-    args << '--backtrace' if options[:backtrace]
+    args << '--backtrace' if options[:debug]
     args << "-m#{options[:markup] || 'markdown'}"
 
     file = nil
@@ -42,7 +43,6 @@ module PuppetStrings
       args << '-n'
       args << '-q' unless file
       args << '--no-stats' unless file
-      args << '--no-progress' unless file
     end
 
     yard_args = options[:yard_args]

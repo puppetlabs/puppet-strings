@@ -1,8 +1,8 @@
 <% if group.length > 0 -%>
-**<%= group_name %>**
+### <%= group_name %>
 
 <% if priv -%>
-_Public <%= group_name %>_
+#### Public <%= group_name %>
 
 <% group.each do |item| -%>
 <% unless item[:private] -%>
@@ -10,7 +10,7 @@ _Public <%= group_name %>_
 <% end -%>
 <% end -%>
 
-_Private <%= group_name %>_
+#### Private <%= group_name %>
 
 <% group.each do |item| -%>
 <% if item[:private] -%>
