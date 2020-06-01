@@ -26,10 +26,8 @@ end
 group :acceptance do
   # Litmus has dependencies which require Ruby 2.5 (Puppet 6) or above.
   if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.5.0')
-    # Until https://github.com/puppetlabs/puppet_litmus/pull/248 is merged we need to use the source of the
-    # of the PR.  Not the greatest and prone to error, but without it, all litmus based testing is broken.
-    # This can be reverted once this PR is merged and Litmus is released with this fix.
-    gem 'puppet_litmus', git: 'https://github.com/michaeltlombardi/puppet_litmus', ref: 'maint/master/fix-upload-file'
+    # Can't use puppet_litmus 0.18.0 until https://github.com/puppetlabs/puppet_litmus/issues/300 is fixed.
+    gem 'puppet_litmus', '~> 0.17.0'
     gem 'net-ssh', '~> 5.2'
   end
 end
