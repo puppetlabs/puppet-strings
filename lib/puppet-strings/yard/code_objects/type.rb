@@ -73,6 +73,9 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
   class Property < Parameter
   end
 
+  class Check < Parameter
+  end
+
   # Represents a resource type feature.
   class Feature
     attr_reader :name, :docstring
@@ -95,7 +98,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     end
   end
 
-  attr_reader :properties, :features
+  attr_reader :properties, :features, :checks
 
   # Initializes a new resource type.
   # @param [String] name The resource type name.
@@ -134,6 +137,14 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     @features << feature
   end
 
+  # Adds a check to the resource type.
+  # @param [PuppetStrings::Yard::CodeObjects::Type::Check] check The check to add.
+  # @return [void]
+  def add_check(check)
+    @checks ||= []
+    @checks << check
+  end
+
   def parameters
     # just return params if there are no providers
     return @parameters if providers.empty?
@@ -163,14 +174,18 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
   # @return [Hash] Returns a hash representation of the code object.
   def to_hash
     hash = {}
+
     hash[:name] = name
     hash[:file] = file
     hash[:line] = line
-    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
-    hash[:properties] = properties.map(&:to_hash) if properties && !properties.empty?
-    hash[:parameters] = parameters.map(&:to_hash) if parameters && !parameters.empty?
-    hash[:features] = features.map(&:to_hash) if features && !features.empty?
-    hash[:providers] = self.providers.map(&:to_hash) if providers && !providers.empty?
+
+    hash[:docstring]  = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
+    hash[:properties] = properties.sort_by { |p| p.name }.map(&:to_hash) if properties && !properties.empty?
+    hash[:parameters] = parameters.sort_by { |p| p.name }.map(&:to_hash) if parameters && !parameters.empty?
+    hash[:checks]     = checks.sort_by { |c| c.name }.map(&:to_hash) if checks && !checks.empty?
+    hash[:features]   = features.sort_by { |f| f.name }.map(&:to_hash) if features && !features.empty?
+    hash[:providers]  = providers.sort_by { |p| p.name }.map(&:to_hash) if providers && !providers.empty?
+
     hash
   end
 end

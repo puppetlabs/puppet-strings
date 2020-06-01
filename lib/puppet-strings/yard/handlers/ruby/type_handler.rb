@@ -59,6 +59,12 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
         name = node_as_string(parameters[0])
         next unless name
         object.add_parameter(create_parameter(name, node))
+      elsif method_name == 'newcheck'
+        # Add a check to the object
+        next unless parameters.count >= 1
+        name = node_as_string(parameters[0])
+        next unless name
+        object.add_check(create_check(name, node))
       elsif method_name == 'feature'
         # Add a feature to the object
         next unless parameters.count >= 2

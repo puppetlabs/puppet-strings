@@ -16,7 +16,9 @@ end
 def properties
   # Properties are the same thing as parameters (from the documentation standpoint),
   # so reuse the same template but with a different title and data source.
-  @parameters = object.properties || []
+  #
+  # "checks" such as "creates" and "onlyif" are another type of property
+  @parameters = (object.properties || []) + (object.checks || [])
   @parameters.sort_by! { |p| p.name }
   @tag_title = 'Properties'
   erb(:parameters)

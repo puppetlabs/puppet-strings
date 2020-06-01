@@ -44,12 +44,12 @@
 
 <% end -%>
 <% end -%>
-<% if properties -%>
+<% if properties_and_checks -%>
 #### Properties
 
 The following properties are available in the `<%= name %>` <%= @type %>.
 
-<% properties.each do |prop| -%>
+<% properties_and_checks.each do |prop| -%>
 ##### `<%= prop[:name] %>`
 
 <% if prop[:values] -%>

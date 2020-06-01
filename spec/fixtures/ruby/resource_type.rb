@@ -44,4 +44,8 @@ DESC
     newvalue(:error)
     defaultto 'warn'
   end
+
+  newcheck(:exists) do
+    desc 'Check to see if the database already exists'
+  end
 end
