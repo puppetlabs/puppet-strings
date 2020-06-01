@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
     'LICENSE',
     'README.md',
   ]
-  s.files = `git ls-files`.split("\n") - Dir['.*', '*.gemspec']
+  s.files = Dir['CHANGELOG.md', 'README.md', 'LICENSE', 'lib/**/*', 'exe/**/*']
 
   s.add_runtime_dependency 'yard', '~> 0.9.5'
   s.add_runtime_dependency 'rgen'
