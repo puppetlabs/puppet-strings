@@ -26,14 +26,13 @@ end
 group :acceptance do
   # Litmus has dependencies which require Ruby 2.5 (Puppet 6) or above.
   if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.5.0')
-    # Can't use puppet_litmus 0.18.0 until https://github.com/puppetlabs/puppet_litmus/issues/300 is fixed.
-    gem 'puppet_litmus', '~> 0.17.0'
+    gem 'puppet_litmus', '~> 0.18'
     gem 'net-ssh', '~> 5.2'
   end
 end
 
 group :development do
-  gem 'github_changelog_generator', git: 'https://github.com/skywinder/github-changelog-generator', ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')
+  gem 'github_changelog_generator', '~> 1.15' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.3.0')
   gem 'pry'
   gem 'pry-byebug'
 end
