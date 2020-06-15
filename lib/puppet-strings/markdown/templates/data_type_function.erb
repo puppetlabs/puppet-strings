@@ -1,0 +1,67 @@
+### <%= name %>
+
+#### `<%= signature %>`
+
+<% if text -%>
+<%= text %>
+
+<% elsif summary -%>
+<%= summary %>
+
+<% else -%>
+<%= "The #{name} function." %>
+
+<% end -%>
+<% if note -%>
+* **Note** <%= note %>
+
+<% end -%>
+<% if return_type -%>
+Returns: `<%= return_type %>`<% if return_val %> <%= return_val %><% end %>
+
+<% end -%>
+<% if raises -%>
+Raises:
+<% raises.each do |r| -%>
+* <%= error_type(r[:text]) %> <%= error_text(r[:text]) %>
+<% end -%>
+
+<% end -%>
+<% if examples -%>
+##### Examples
+
+<% examples.each do |eg| -%>
+###### <%= eg[:name] %>
+
+```puppet
+<%= eg[:text] %>
+```
+
+<% end -%>
+<% end -%>
+<% if params -%>
+<% params.each do |param| -%>
+##### `<%= param[:name]  %>`
+
+Data type: `<%= param[:types][0] %>`
+
+<%= param[:text] %>
+
+<% if options_for_param(param[:name]) -%>
+Options:
+
+<% options_for_param(param[:name]).each do |o| -%>
+* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+<% end -%>
+
+<% end -%>
+<% if enums_for_param(param[:name]) -%>
+Options:
+
+<% enums_for_param(param[:name]).each do |e| -%>
+* **<%= e[:opt_name] %>**: <%= e[:opt_text] %>
+<% end -%>
+
+<% end -%>
+<% end -%>
+<% end -%>

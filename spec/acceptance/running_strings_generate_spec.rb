@@ -61,10 +61,13 @@ describe 'Generating module documentation using generate action' do
   end
 
   it 'should generate documentation for puppet data types' do
-    expect_file_contain('doc/puppet_types/database.html', [
-      'Resource Type: database',
-      'type/database.rb',
-      'An example server resource type.',
+    expect_file_contain('doc/puppet_data_types/AcceptanceDataType.html', [
+      'A variant parameter called param1',
+      'Optional String parameter called param2',
+      '<h3>func1</h3>',
+      '<p>func1 documentation</p>',
+      '<p>param1 func1 documentation</p>',
+      '<p>param2 func1 documentation</p>',
     ])
   end
 
