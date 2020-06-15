@@ -105,11 +105,47 @@ describe PuppetStrings::Markdown do
 
       include_examples 'markdown lint checker'
 
-      describe "table of contents" do
+      describe 'table of contents' do
         it 'includes links to data types' do
           expect(output).to match(/\[`Amodule::ComplexAlias`\]\(#.*\).*Amodule::ComplexAlias/i)
           expect(output).to match(/\[`Amodule::SimpleAlias`\]\(#.*\).*Amodule::SimpleAlias/i)
           expect(output).to match(/\[`UnitDataType`\]\(#.*\).*data type in ruby/i)
+        end
+      end
+
+      describe 'parameter docs' do
+        it 'includes param name' do
+          expect(output).to match(/#+ `param1`/)
+        end
+
+        it 'includes param type' do
+          expect(output).to match(/Data type: `Variant\[Numeric, String\[1,2\]\]`/)
+        end
+
+        it 'includes param description' do
+          expect(output).to match(/a variant parameter/i)
+        end
+
+        it 'includes param default' do
+          expect(output).to match(/default value: param2/i)
+        end
+      end
+
+      describe 'function docs' do
+        it 'includes signature' do
+          expect(output).to match(/UnitDataType\.func1\(param1, param2\)/)
+        end
+
+        it 'includes summary' do
+          expect(output).to match(/func1 documentation/i)
+        end
+
+        it 'includes parameter docs' do
+          expect(output).to match(/param1 documentation/i)
+        end
+
+        it 'includes return value' do
+          expect(output).to match(/returns: `optional\[string\]`/i)
         end
       end
     end
