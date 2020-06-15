@@ -104,10 +104,8 @@ namespace :litmus do
                     else
                       args[:target_node_name]
                     end
-    # TODO: Currently this is Linux targets only. no windows localhost
-    tmp_path = '/tmp/'
     puts 'Copying gem to targets...'
-    run_local_command("bolt file upload #{gem_tar} #{tmp_path}#{File.basename(gem_tar)} --targets #{target_string} --inventoryfile inventory.yaml")
+    upload_file(gem_tar, File.basename(gem_tar), target_string, inventory: inventory_hash)
 
     # Install dependent gems
     puts 'Installing yard gem...'
@@ -116,7 +114,7 @@ namespace :litmus do
     install_remote_gem('rgen', target_nodes, inventory_hash)
     # Install puppet-strings
     puts 'Installing puppet-strings gem...'
-    install_remote_gem(tmp_path + File.basename(gem_tar), target_nodes, inventory_hash)
+    install_remote_gem(File.basename(gem_tar), target_nodes, inventory_hash)
     puts 'Installed'
   end
 end
