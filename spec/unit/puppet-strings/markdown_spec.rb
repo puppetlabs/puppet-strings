@@ -133,7 +133,7 @@ describe PuppetStrings::Markdown do
         end
 
         it 'includes param default' do
-          expect(output).to match(/default value: param2/i)
+          expect(output).to match(/default value: `param2`/i)
         end
       end
 

@@ -1,4 +1,4 @@
-### <%= name %>
+### `<%= name %>`
 
 <% if text -%>
 <%= text %>
@@ -53,7 +53,7 @@ The following properties are available in the `<%= name %>` <%= @type %>.
 ##### `<%= prop[:name] %>`
 
 <% if prop[:values] -%>
-Valid values: <%= prop[:values].map { |value| value_string(value) }.join(', ') %>
+Valid values: `<%= prop[:values].map { |value| value_string(value) }.join('`, `') %>`
 
 <% end -%>
 <% if prop[:isnamevar] -%>
@@ -61,7 +61,7 @@ namevar
 
 <% end -%>
 <% if prop[:aliases] -%>
-Aliases: <%= prop[:aliases].to_s.delete('{').delete('}') %>
+Aliases: `<%= prop[:aliases].to_s.delete('{').delete('}') %>`
 
 <% end -%>
 <% if prop[:data_type] -%>
@@ -87,7 +87,7 @@ Options:
 
 <% end -%>
 <% if prop[:default] -%>
-Default value: <%= prop[:default] %>
+Default value: `<%= prop[:default] %>`
 
 <% end -%>
 <% end -%>
@@ -101,7 +101,7 @@ The following parameters are available in the `<%= name %>` <%= @type %>.
 ##### `<%= param[:name] %>`
 
 <% if param[:values] -%>
-Valid values: <%= param[:values].map { |value| value_string(value) }.join(', ') %>
+Valid values: `<%= param[:values].map { |value| value_string(value) }.join('`, `') %>`
 
 <% end -%>
 <% if param[:isnamevar] -%>
@@ -109,7 +109,7 @@ namevar
 
 <% end -%>
 <% if param[:aliases] -%>
-Aliases: <%= param[:aliases].to_s.delete('{').delete('}') %>
+Aliases: `<%= param[:aliases].to_s.delete('{').delete('}') %>`
 
 <% end -%>
 <% if param[:data_type] -%>
@@ -135,7 +135,7 @@ Options:
 
 <% end -%>
 <% if param[:default] -%>
-Default value: <%= value_string(param[:default]) %>
+Default value: `<%= value_string(param[:default]) %>`
 
 <% end -%>
 <% if param[:required_features] -%>
