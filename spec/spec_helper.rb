@@ -1,13 +1,17 @@
 if ENV['COVERAGE'] == 'yes'
   require 'simplecov'
   require 'simplecov-console'
-  require 'codecov'
 
   SimpleCov.formatters = [
     SimpleCov::Formatter::HTMLFormatter,
     SimpleCov::Formatter::Console,
-    SimpleCov::Formatter::Codecov,
   ]
+
+  unless Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.3.0')
+    require 'codecov'
+    SimpleCov.formatters << SimpleCov::Formatter::Codecov
+  end
+
   SimpleCov.start do
     track_files 'lib/**/*.rb'
 
