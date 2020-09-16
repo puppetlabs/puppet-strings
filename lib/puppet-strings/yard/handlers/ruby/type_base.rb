@@ -128,20 +128,16 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
     return unless object.properties || object.parameters
 
     default = nil
-    if object.properties
-      object.properties.each do |property|
+    object.properties&.each do |property|
         return nil if property.isnamevar
 
         default = property if property.name == 'name'
       end
-    end
-    if object.parameters
-      object.parameters.each do |parameter|
+    object.parameters&.each do |parameter|
         return nil if parameter.isnamevar
 
         default ||= parameter if parameter.name == 'name'
       end
-    end
     default.isnamevar = true if default
   end
 end

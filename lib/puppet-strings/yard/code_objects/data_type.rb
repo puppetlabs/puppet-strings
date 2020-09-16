@@ -89,7 +89,7 @@ class PuppetStrings::Yard::CodeObjects::DataType < PuppetStrings::Yard::CodeObje
     hash[:line] = line
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example])
     hash[:defaults] = defaults unless defaults.empty?
-    hash[:source] = source unless source && source.empty?
+    hash[:source] = source unless source&.empty?
     hash[:functions] = functions.map do |func|
       {
         name: func.name,

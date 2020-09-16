@@ -222,8 +222,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
 
     # Populate the required parameters
     params = parameters.unnamed_required_params
-    if params
-      params.each do |parameter|
+    params&.each do |parameter|
         add_param_tag(
           overload_tag,
           param_tags,
@@ -232,12 +231,10 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
           parameter.line
         )
       end
-    end
 
     # Populate the optional parameters
     params = parameters.unnamed_optional_params
-    if params
-      params.each do |parameter|
+    params&.each do |parameter|
         add_param_tag(
           overload_tag,
           param_tags,
@@ -249,7 +246,6 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
           true
         )
       end
-    end
 
     # Populate the splat parameter
     param = parameters.splat_param
@@ -304,7 +300,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
       name = '&' + name
     end
 
-    type ||= tag && tag.types ? tag.type : 'Any'
+    type ||= tag&.types ? tag.type : 'Any'
     type = optional ? "Optional[#{type}]" : type
 
     object.parameters << [name, to_puppet_literal(default)]

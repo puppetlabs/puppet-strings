@@ -52,7 +52,7 @@ class PuppetStrings::Yard::CodeObjects::Plan < PuppetStrings::Yard::CodeObjects:
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
     defaults = Hash[*parameters.reject{ |p| p[1].nil? }.flatten]
     hash[:defaults] = defaults unless defaults.empty?
-    hash[:source] = source unless source && source.empty?
+    hash[:source] = source unless source&.empty?
     hash
   end
 end

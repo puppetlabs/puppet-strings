@@ -68,7 +68,7 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
     args = @parameters.map do |parameter|
       name, default = parameter
       tag = tags.find { |t| t.name == name } if tags
-      type = tag && tag.types ? "#{tag.type} " : 'Any '
+      type = tag&.types ? "#{tag.type} " : 'Any '
       prefix = "#{name[0]}" if name.start_with?('*', '&')
       name = name[1..-1] if prefix
       default = " = #{default}" if default
@@ -100,7 +100,7 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
     defaults = Hash[*parameters.reject{ |p| p[1].nil? }.flatten]
     hash[:defaults] = defaults unless defaults.empty?
-    hash[:source] = source unless source && source.empty?
+    hash[:source] = source unless source&.empty?
     hash
   end
 end
