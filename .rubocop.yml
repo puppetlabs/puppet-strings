@@ -1,3 +1,4 @@
+require: rubocop-performance
 inherit_from: .rubocop_todo.yml
 
 AllCops:
@@ -34,7 +35,7 @@ Lint/EnsureReturn:
   Enabled: false
 
 # MAYBE useful - errors when rescue {} happens.
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Enabled: false
 
 # MAYBE useful - but too many instances
@@ -119,7 +120,7 @@ Lint/ParenthesesAsGroupedExpression:
 Lint/RescueException:
   Enabled: false
 
-Lint/StringConversionInInterpolation:
+Lint/RedundantStringCoercion:
   Enabled: false
 
 Lint/UnusedBlockArgument:
@@ -143,13 +144,13 @@ Naming/AccessorMethodName:
 Style/Alias:
   Enabled: false
 
-Layout/AlignArray:
+Layout/ArrayAlignment:
   Enabled: false
 
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Enabled: false
 
 Metrics/BlockNesting:
@@ -159,9 +160,6 @@ Style/AsciiComments:
   Enabled: false
 
 Style/Attr:
-  Enabled: false
-
-Style/BracesAroundHashParameters:
   Enabled: false
 
 Style/CaseEquality:
@@ -198,7 +196,7 @@ Style/WhenThen:
 Style/WordArray:
   Enabled: false
 
-Style/UnneededPercentQ:
+Style/RedundantPercentQ:
   Enabled: false
 
 Layout/Tab:
@@ -207,7 +205,7 @@ Layout/Tab:
 Layout/SpaceBeforeSemicolon:
   Enabled: false
 
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Enabled: false
 
 Layout/SpaceInsideBlockBraces:
@@ -292,10 +290,10 @@ Style/EachWithObject:
 Layout/EmptyLineBetweenDefs:
   Enabled: false
 
-Layout/IndentArray:
+Layout/FirstArrayElementIndentation:
   Enabled: false
 
-Layout/IndentHash:
+Layout/FirstHashElementIndentation:
   Enabled: false
 
 Layout/IndentationConsistency:
@@ -313,7 +311,7 @@ Layout/EmptyLinesAroundAccessModifier:
 Style/EmptyLiteral:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Style/MethodCallWithoutArgsParentheses:
@@ -526,7 +524,7 @@ Layout/EmptyLinesAroundBlockBody:
 Layout/EmptyLinesAroundClassBody:
   Enabled: false
 
-Style/UnneededInterpolation:
+Style/RedundantInterpolation:
   Enabled: false
 
 Style/SymbolProc:
@@ -575,5 +573,21 @@ Naming/VariableNumber:
 Layout/EndOfLine:
   EnforcedStyle: lf
 
-Layout/IndentHeredoc: # Not appicable on Ruby 2.1
+Layout/HeredocIndentation: # Not appicable on Ruby 2.1
   Enabled: false
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: false # requires Ruby 2.5
+
+Style/HashTransformValues:
+  Enabled: false # requires Ruby 2.4
+
