@@ -32,12 +32,12 @@ module PuppetStrings::Markdown
       end
     end
 
-    def error_type(r) # rubocop:disable Naming/UncommunicativeMethodParamName
-      "`#{r.split(' ')[0]}`"
+    def error_type(type)
+      "`#{type.split(' ')[0]}`"
     end
 
-    def error_text(r) # rubocop:disable Naming/UncommunicativeMethodParamName
-      "#{r.split(' ').drop(1).join(' ')}"
+    def error_text(text)
+      "#{text.split(' ').drop(1).join(' ')}"
     end
   end
 

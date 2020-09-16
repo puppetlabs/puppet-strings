@@ -596,3 +596,6 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: false # requires Ruby 2.4
 
+Naming/MethodParameterName:
+  Enabled: true
+  AllowedNames: [ o ]

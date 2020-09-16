@@ -144,72 +144,72 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     end
 
     # ----- The following methods are different/additions from the original Literal_evaluator
-    def literal_Object(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_Object(o)
       # Ignore any other object types
     end
 
-    def literal_AccessExpression(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_AccessExpression(o)
       # Extract the raw text of the Access Expression
       ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(o).extract_text
     end
 
-    def literal_QualifiedReference(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_QualifiedReference(o)
       # Extract the raw text of the Qualified Reference
       ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(o).extract_text
     end
 
     # ----- The following methods are the same as the original Literal_evaluator
-    def literal_Factory(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_Factory(o)
       literal(o.model)
     end
 
-    def literal_Program(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_Program(o)
       literal(o.body)
     end
 
-    def literal_LiteralString(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralString(o)
       o.value
     end
 
-    def literal_QualifiedName(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_QualifiedName(o)
       o.value
     end
 
-    def literal_LiteralNumber(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralNumber(o)
       o.value
     end
 
-    def literal_UnaryMinusExpression(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_UnaryMinusExpression(o)
       -1 * literal(o.expr)
     end
 
-    def literal_LiteralBoolean(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralBoolean(o)
       o.value
     end
 
-    def literal_LiteralUndef(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralUndef(o)
       nil
     end
 
-    def literal_LiteralDefault(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralDefault(o)
       :default
     end
 
-    def literal_LiteralRegularExpression(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralRegularExpression(o)
       o.value
     end
 
-    def literal_ConcatenatedString(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_ConcatenatedString(o)
       # use double quoted string value if there is no interpolation
       throw :not_literal unless o.segments.size == 1 && o.segments[0].is_a?(Model::LiteralString)
       o.segments[0].value
     end
 
-    def literal_LiteralList(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralList(o)
       o.values.map { |v| literal(v) }
     end
 
-    def literal_LiteralHash(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralHash(o)
       o.entries.reduce({}) do |result, entry|
         result[literal(entry.key)] = literal(entry.value)
         result
