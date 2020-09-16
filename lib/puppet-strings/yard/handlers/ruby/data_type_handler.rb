@@ -136,7 +136,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
   # Anything else is ignored
   class LazyLiteralEvaluator
     def initialize
-      @literal_visitor ||= ::Puppet::Pops::Visitor.new(self, "literal", 0, 0)
+      @literal_visitor = ::Puppet::Pops::Visitor.new(self, "literal", 0, 0)
     end
 
     def literal(ast)

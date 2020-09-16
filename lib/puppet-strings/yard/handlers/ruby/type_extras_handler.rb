@@ -36,7 +36,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Ya
 
     module_name = statement[0].children[0].source
     method1_name = statement[0].children.drop(1).find{ |c| c.type == :ident }.source
-    return unless (module_name == 'Puppet::Type' || module_name == 'Type') && method1_name == 'type'
+    return unless ['Type', 'Puppet::Type'].include?(module_name) && method1_name == 'type'
 
     typename = get_name(statement[0], 'Puppet::Type.type')
     method2_name = caller_method
