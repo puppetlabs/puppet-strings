@@ -8,7 +8,7 @@ require 'puppet-strings/yard/util'
 # Implements the handler for Puppet resource type newparam/newproperty calls written in Ruby.
 class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Yard::Handlers::Ruby::TypeBase
   # The default docstring when ensurable is used without given a docstring.
-  DEFAULT_ENSURABLE_DOCSTRING = 'The basic property that the resource should be in.'.freeze
+  DEFAULT_ENSURABLE_DOCSTRING = 'The basic property that the resource should be in.'
 
   namespace_only
   handles method_call(:newparam)

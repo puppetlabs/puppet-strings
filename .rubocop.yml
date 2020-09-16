@@ -430,6 +430,9 @@ Style/Not:
 Style/NumericLiterals:
   Enabled: false
 
+Style/NumericPredicate:
+  Enabled: false
+
 Style/OneLineConditional:
   Enabled: false
 
