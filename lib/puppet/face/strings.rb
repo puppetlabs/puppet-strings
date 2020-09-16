@@ -148,7 +148,7 @@ Puppet::Face.define(:strings, '0.0.1') do
   def check_required_features
     raise RuntimeError, "The 'yard' gem must be installed in order to use this face." unless Puppet.features.yard?
     raise RuntimeError, "The 'rgen' gem must be installed in order to use this face." unless Puppet.features.rgen?
-    raise RuntimeError, 'This face requires Ruby 1.9 or greater.' if RUBY_VERSION =~ /^1\.8/
+    raise RuntimeError, 'This face requires Ruby 1.9 or greater.' if RUBY_VERSION.match?(/^1\.8/)
   end
 
   # Builds the options to PuppetStrings.generate.

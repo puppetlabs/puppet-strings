@@ -21,11 +21,11 @@ module PuppetStrings::Markdown
 
     def type
       t = @registry[:type]
-      if t =~ /ruby4x/
+      if /ruby4x/.match?(t)
         "Ruby 4.x API"
-      elsif t =~ /ruby3/
+      elsif /ruby3/.match?(t)
         "Ruby 3.x API"
-      elsif t =~ /ruby/
+      elsif /ruby/.match?(t)
         "Ruby"
       else
         "Puppet Language"

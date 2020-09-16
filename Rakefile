@@ -56,7 +56,7 @@ PuppetLint.configuration.ignore_paths = %w(acceptance/**/*.pp spec/**/*.pp pkg/*
 desc 'Validate Ruby source files and ERB templates.'
 task :validate do
   Dir['spec/**/*.rb','lib/**/*.rb'].each do |ruby_file|
-    sh "ruby -c #{ruby_file}" unless ruby_file =~ /spec\/fixtures/
+    sh "ruby -c #{ruby_file}" unless /spec\/fixtures/.match?(ruby_file)
   end
   Dir['lib/puppet-strings/yard/templates/**/*.erb'].each do |template|
     sh "erb -P -x -T '-' #{template} | ruby -c"
