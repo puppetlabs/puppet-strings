@@ -21,7 +21,7 @@ module PuppetStrings::Markdown
     def self.render
       final = in_dtypes.length > 0 ? "## Defined types\n\n" : ""
       in_dtypes.each do |type|
-        final << type.render unless type.private?
+        final += type.render unless type.private?
       end
       final
     end

@@ -21,7 +21,7 @@ module PuppetStrings::Markdown
     def self.render
       final = in_rtypes.length > 0 ? "## Resource types\n\n" : ""
       in_rtypes.each do |type|
-        final << type.render unless type.private?
+        final += type.render unless type.private?
       end
       final
     end

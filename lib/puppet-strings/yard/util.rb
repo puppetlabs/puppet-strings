@@ -26,8 +26,9 @@ module PuppetStrings::Yard::Util
   # @return [String] HTML document with links converted
   def self.github_to_yard_links(data)
     data.scan(/href\=\"\#(.+)\"/).each do |bad_link|
-      data.gsub!("=\"##{bad_link.first}\"", "=\"#label-#{bad_link.first.capitalize.gsub('-', '+')}\"")
+      data = data.gsub("=\"##{bad_link.first}\"", "=\"#label-#{bad_link.first.capitalize.gsub('-', '+')}\"")
     end
+
     data
   end
 

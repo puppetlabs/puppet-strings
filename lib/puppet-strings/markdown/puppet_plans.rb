@@ -21,7 +21,7 @@ module PuppetStrings::Markdown
     def self.render
       final = in_plans.length > 0 ? "## Plans\n\n" : ""
       in_plans.each do |plan|
-        final << plan.render unless plan.private?
+        final += plan.render unless plan.private?
       end
       final
     end
