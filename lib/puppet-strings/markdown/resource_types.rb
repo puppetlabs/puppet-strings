@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'resource_type'
 
 module PuppetStrings::Markdown

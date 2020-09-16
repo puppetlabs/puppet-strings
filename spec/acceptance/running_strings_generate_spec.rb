@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 include PuppetLitmus # rubocop:disable Style/MixinUsage This is fine
 

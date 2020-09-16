@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The root module for Puppet Strings.
 module PuppetStrings
   # The glob patterns used to search for files to document.

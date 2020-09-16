@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.type(:database).provide :linux do
   confine 'osfamily' => 'linux'
   defaultfor 'osfamily' => 'linux'

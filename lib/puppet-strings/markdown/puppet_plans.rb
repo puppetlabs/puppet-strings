@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'puppet_plan'
 
 module PuppetStrings::Markdown

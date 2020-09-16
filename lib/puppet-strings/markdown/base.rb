@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings'
 require 'puppet-strings/json'
 require 'puppet-strings/yard'

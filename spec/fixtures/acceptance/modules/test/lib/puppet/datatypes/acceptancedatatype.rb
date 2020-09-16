@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # An example Acceptance Puppet Data Type in Ruby.
 #
 # @param param1 A variant parameter called param1.

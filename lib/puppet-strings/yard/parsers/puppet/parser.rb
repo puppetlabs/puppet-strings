@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet'
 require 'puppet/pops'
 require 'puppet-strings/yard/parsers/puppet/statement'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/parsers/json/task_statement'
 
 class PuppetStrings::Yard::Parsers::JSON::Parser < YARD::Parser::Base

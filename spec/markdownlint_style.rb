@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 all
 
 # Update line length to 120 chars.

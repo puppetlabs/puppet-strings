@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/json'
 
 # module for parsing Yard Registries and generating markdown

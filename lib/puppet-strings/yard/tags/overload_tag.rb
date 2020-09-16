@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Implements an overload tag for Puppet functions
 #
 # This differs from Yard's overload tag in that the signatures are formatted according to Puppet language rules.

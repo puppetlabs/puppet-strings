@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PuppetStrings::Markdown
   module TableOfContents
     def self.render

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yard/tags/option_tag'
 
 # Implements an enum tag for describing enumerated value data types

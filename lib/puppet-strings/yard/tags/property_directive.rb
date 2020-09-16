@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/code_objects'
 
 # Implements a parameter directive (e.g. #@!puppet.type.property) for documenting Puppet resource types.

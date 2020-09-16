@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yard'
 
 # Module for YARD related functionality.

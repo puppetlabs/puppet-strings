@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # function 4x
 #
 # This is a function which is used to test puppet strings

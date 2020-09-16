@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Implements the base handler for Puppet language handlers.
 class PuppetStrings::Yard::Handlers::Puppet::Base < YARD::Handlers::Base
   # Determine sif the handler handles the given statement.

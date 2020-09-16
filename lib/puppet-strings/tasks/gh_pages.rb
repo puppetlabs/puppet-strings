@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/tasks'
 
 namespace :strings do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/code_objects/group'
 
 # Implements the group for Puppet functions.

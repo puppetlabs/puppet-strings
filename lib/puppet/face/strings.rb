@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet/face'
 
 # Implements the 'puppet strings' interface.

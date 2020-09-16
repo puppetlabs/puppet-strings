@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The module for custom YARD parsers.
 module PuppetStrings::Yard::Parsers
   # The module for custom YARD parsers for JSON.

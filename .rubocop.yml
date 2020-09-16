@@ -2,6 +2,7 @@ require: rubocop-performance
 inherit_from: .rubocop_todo.yml
 
 AllCops:
+  TargetRubyVersion: 2.3
   Exclude:
     # Ignore HTML related things
     - '**/*.erb'
@@ -9,6 +10,7 @@ AllCops:
     # Ignore fixtures we do not control
     - spec/fixtures/modules/**/*
     - spec/fixtures/ruby/**/*
+
 
 # DISABLED - not useful
 Bundler/OrderedGems:

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/handlers/ruby/base'
 
 class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handlers::Ruby::Base

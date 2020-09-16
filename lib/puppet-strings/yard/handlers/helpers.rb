@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PuppetStrings::Yard::Handlers::Helpers
   # Logs a warning if a summary tag has more than 140 characters
   def self.validate_summary_tag(object)

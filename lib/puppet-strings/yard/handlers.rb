@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The module for custom YARD handlers.
 module PuppetStrings::Yard::Handlers
   # The module for custom Ruby YARD handlers.

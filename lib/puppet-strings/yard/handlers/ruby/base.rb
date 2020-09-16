@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ripper'
 
 # Implements the base handler for Ruby language handlers.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/code_objects/group'
 
 class PuppetStrings::Yard::CodeObjects::Plans < PuppetStrings::Yard::CodeObjects::Group
