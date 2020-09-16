@@ -16,6 +16,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
   process do
     # Only accept calls to Puppet::ResourceApi
     return unless statement.count > 1
+
     module_name = statement[0].source
     return unless ['Puppet::ResourceApi'].include? module_name
 

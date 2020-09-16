@@ -169,6 +169,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
   def providers
     providers = YARD::Registry.all("puppet_providers_#{name}".intern)
     return providers if providers.empty?
+
     providers.first.children
   end
 

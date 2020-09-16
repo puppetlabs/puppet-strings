@@ -60,6 +60,7 @@ end
 
 def lint_markdown(content)
   return [] unless mdl_available
+
   require 'mdl'
 
   # Load default mdl ruleset
@@ -76,6 +77,7 @@ def lint_markdown(content)
   ruleset.rules.each do |id, rule|
     error_lines = rule.check.call(doc)
     next if error_lines.nil? or error_lines.empty?
+
     # record the error
     error_lines.each do |line|
       line += doc.offset # Correct line numbers for any yaml front matter

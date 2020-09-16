@@ -31,6 +31,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     # newline, YARD ignores the namespace and uses `newfunction` as the source of the
     # first statement.
     return unless statement.count > 1
+
     module_name = statement[0].source
     return unless module_name == 'Puppet::Functions' || module_name == 'Puppet::Parser::Functions' || module_name == 'newfunction'
 
@@ -330,6 +331,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     # Validate that tags have matching parameters
     overload.tags(:param).each do |tag|
       next if overload.parameters.find { |p| tag.name == p[0] }
+
       log.warn "The @param tag for parameter '#{tag.name}' has no matching parameter at #{file}:#{line}."
     end
   end
@@ -340,9 +342,11 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
       parameters[1].each do |kvp|
         next unless kvp.count == 2
         next unless node_as_string(kvp[0]) == 'doc'
+
         docstring = node_as_string(kvp[1])
 
         log.error "Failed to parse docstring for 3.x Puppet function '#{name}' near #{statement.file}:#{statement.line}." and return nil unless docstring
+
         return PuppetStrings::Yard::Util.scrub_string(docstring)
       end
     end

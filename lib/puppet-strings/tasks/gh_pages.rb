@@ -7,6 +7,7 @@ namespace :strings do
     task :checkout do
       if Dir.exist?('doc')
         fail "The 'doc' directory (#{File.expand_path('doc')}) is not a Git repository! Remove it and run the Rake task again." unless Dir.exist?('doc/.git')
+
         Dir.chdir('doc') do
           system 'git checkout gh-pages'
           system 'git pull --rebase origin gh-pages'

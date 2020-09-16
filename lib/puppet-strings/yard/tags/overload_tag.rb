@@ -77,6 +77,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   # @return Returns what the method call on the object would return.
   def method_missing(method_name, *args, &block)
     return object.send(method_name, *args, &block) if object.respond_to? method_name
+
     super
   end
 

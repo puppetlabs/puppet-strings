@@ -12,6 +12,7 @@ class PuppetStrings::Yard::CodeObjects::Group < PuppetStrings::Yard::CodeObjects
   def self.instance(key)
     instance = P(:root, key)
     return instance unless instance.is_a?(YARD::CodeObjects::Proxy)
+
     instance = self.new(:root, key)
     instance.visibility = :hidden
     P(:root).children << instance

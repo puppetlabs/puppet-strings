@@ -33,6 +33,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Ya
     #   propertyname: "content"
 
     return unless (statement.count > 1) && (statement[0].children.count > 2)
+
     module_name = statement[0].children[0].source
     method1_name = statement[0].children.drop(1).find{ |c| c.type == :ident }.source
     return unless (module_name == 'Puppet::Type' || module_name == 'Type') && method1_name == 'type'

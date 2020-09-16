@@ -95,10 +95,12 @@ namespace :litmus do
     `gem build puppet-strings.gemspec --quiet`
     result = $CHILD_STATUS
     raise "Unable to build the puppet-strings gem. Returned exit code #{result.exitstatus}" unless result.exitstatus.zero?
+
     puts 'Built'
     # Find the gem build artifact
     gem_tar = Dir.glob('puppet-strings-*.gem').max_by { |f| File.mtime(f) }
     raise "Unable to find package in 'puppet-strings-*.gem'" if gem_tar.nil?
+
     gem_tar = File.expand_path(gem_tar)
 
     target_string = if args[:target_node_name].nil?

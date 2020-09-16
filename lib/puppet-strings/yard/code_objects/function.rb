@@ -63,6 +63,7 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
   # @return [String] Returns the Puppet signature of the function.
   def signature
     return '' if self.has_tag? :overload
+
     tags = self.tags(:param)
     args = @parameters.map do |parameter|
       name, default = parameter

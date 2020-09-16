@@ -8,6 +8,7 @@ class PuppetStrings::Yard::Tags::PropertyDirective < YARD::Tags::Directive
   # @return [void]
   def call
     return unless object && object.respond_to?(:add_property)
+
     # Add a property to the resource
     property = PuppetStrings::Yard::CodeObjects::Type::Property.new(tag.name, tag.text)
     if tag.types

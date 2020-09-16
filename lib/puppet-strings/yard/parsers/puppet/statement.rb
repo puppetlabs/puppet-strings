@@ -34,11 +34,13 @@ module PuppetStrings::Yard::Parsers::Puppet
       comment = []
       (0..@line-2).reverse_each do |index|
         break unless index <= lines.count
+
         line = lines[index].strip
         count = line.size
         line.gsub!(COMMENT_REGEX, '')
         # Break out if nothing was removed (wasn't a comment line)
         break unless line.size < count
+
         comment << line
       end
       @comments_range = (@line - comment.size - 1..@line - 1)

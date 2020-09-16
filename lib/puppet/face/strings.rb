@@ -59,6 +59,7 @@ Puppet::Face.define(:strings, '0.0.1') do
       environment = Puppet.lookup(:current_environment)
       environment.modules.each do |mod|
         next unless modules.empty? || modules.include?(mod.name)
+
         db = File.join(mod.path, '.yardoc')
         patterns = PuppetStrings::DEFAULT_SEARCH_PATTERNS.map do |p|
           File.join(mod.path, p)

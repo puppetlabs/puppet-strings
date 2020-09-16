@@ -8,6 +8,7 @@ class PuppetStrings::Yard::Tags::ParameterDirective < YARD::Tags::Directive
   # @return [void]
   def call
     return unless object && object.respond_to?(:add_parameter)
+
     # Add a parameter to the resource
     parameter = PuppetStrings::Yard::CodeObjects::Type::Parameter.new(tag.name, tag.text)
     if tag.types
