@@ -51,7 +51,11 @@ Alias of `<%= alias_of %>`
 <% if params -%>
 #### Parameters
 
-The following parameters are available in the `<%= name %>` <%= @type %>.
+The following parameters are available in the `<%= name %>` <%= @type %>:
+
+<% params.each do |param| -%>
+* [`<%= param[:name] %>`](#<%= param[:name] %>)
+<% end -%>
 
 <% params.each do |param| -%>
 ##### <a name="<%= param[:name] %>"></a>`<%= param[:name] %>`

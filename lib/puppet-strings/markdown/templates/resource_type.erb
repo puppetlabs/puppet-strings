@@ -98,6 +98,10 @@ Default value: `<%= prop[:default] %>`
 The following parameters are available in the `<%= name %>` <%= @type %>.
 
 <% parameters.each do |param| -%>
+* [`<%= param[:name] %>`](#<%= param[:name] %>)
+<% end -%>
+
+<% parameters.each do |param| -%>
 ##### <a name="<%= param[:name] %>"></a>`<%= param[:name] %>`
 
 <% if param[:values] -%>
