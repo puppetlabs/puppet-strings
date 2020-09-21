@@ -1,4 +1,4 @@
-### `<%= name %>`
+### <a name="<%= link %>"></a>`<%= name %>`
 
 <% if text -%>
 <%= text %>
@@ -98,7 +98,7 @@ Default value: `<%= prop[:default] %>`
 The following parameters are available in the `<%= name %>` <%= @type %>.
 
 <% parameters.each do |param| -%>
-##### `<%= param[:name] %>`
+##### <a name="<%= param[:name] %>"></a>`<%= param[:name] %>`
 
 <% if param[:values] -%>
 Valid values: `<%= param[:values].map { |value| value_string(value) }.join('`, `') %>`

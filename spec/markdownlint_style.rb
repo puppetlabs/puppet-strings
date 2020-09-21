@@ -8,3 +8,6 @@ exclude_rule 'MD024'
 
 # Allow trailing punctuation in headings.
 exclude_rule 'MD026'
+
+# Allow html tags
+exclude_rule 'MD033'

@@ -1,4 +1,4 @@
-### `<%= name %>`
+### <a name="<%= link %>"></a>`<%= name %>`
 
 <% if text -%>
 <%= text %>
@@ -54,7 +54,7 @@ Alias of `<%= alias_of %>`
 The following parameters are available in the `<%= name %>` <%= @type %>.
 
 <% params.each do |param| -%>
-##### `<%= param[:name] %>`
+##### <a name="<%= param[:name] %>"></a>`<%= param[:name] %>`
 
 <% if param[:types] -%>
 Data type: `<%= param[:types].join(', ') -%>`
