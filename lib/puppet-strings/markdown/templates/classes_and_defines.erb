@@ -1,4 +1,4 @@
-### `<%= name %>`
+### <a name="<%= link %>"></a>`<%= name %>`
 
 <% if text -%>
 <%= text %>
@@ -47,10 +47,14 @@
 <% if params -%>
 #### Parameters
 
-The following parameters are available in the `<%= name %>` <%= @type %>.
+The following parameters are available in the `<%= name %>` <%= @type %>:
 
 <% params.each do |param| -%>
-##### `<%= param[:name] %>`
+* [`<%= param[:name] %>`](#<%= param[:name] %>)
+<% end -%>
+
+<% params.each do |param| -%>
+##### <a name="<%= param[:name] %>"></a>`<%= param[:name] %>`
 
 <% if param[:types] -%>
 Data type: `<%= param[:types].join(', ') -%>`
