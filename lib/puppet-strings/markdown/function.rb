@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/markdown/base'
 
 module PuppetStrings::Markdown
@@ -19,23 +21,23 @@ module PuppetStrings::Markdown
 
     def type
       t = @registry[:type]
-      if t =~ /ruby4x/
+      if /ruby4x/.match?(t)
         "Ruby 4.x API"
-      elsif t =~ /ruby3/
+      elsif /ruby3/.match?(t)
         "Ruby 3.x API"
-      elsif t =~ /ruby/
+      elsif /ruby/.match?(t)
         "Ruby"
       else
         "Puppet Language"
       end
     end
 
-    def error_type(r) # rubocop:disable Naming/UncommunicativeMethodParamName
-      "`#{r.split(' ')[0]}`"
+    def error_type(type)
+      "`#{type.split(' ')[0]}`"
     end
 
-    def error_text(r) # rubocop:disable Naming/UncommunicativeMethodParamName
-      "#{r.split(' ').drop(1).join(' ')}"
+    def error_text(text)
+      "#{text.split(' ').drop(1).join(' ')}"
     end
   end
 

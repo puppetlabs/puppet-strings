@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/code_objects/group'
 
 # Implements the group for Puppet defined types.
@@ -51,8 +53,8 @@ class PuppetStrings::Yard::CodeObjects::DefinedType < PuppetStrings::Yard::CodeO
     hash[:line] = line
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
     defaults = Hash[*parameters.reject{ |p| p[1].nil? }.flatten]
-    hash[:defaults] = defaults unless defaults.empty?
-    hash[:source] = source unless source && source.empty?
+    hash[:defaults] = defaults unless defaults.nil? || defaults.empty?
+    hash[:source] = source unless source.nil? || source.empty?
     hash
   end
 end

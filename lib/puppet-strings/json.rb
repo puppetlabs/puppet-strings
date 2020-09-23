@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 # The module for JSON related functionality.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet'
 require 'puppet/pops'
 require 'puppet-strings/yard/parsers/puppet/statement'
@@ -26,8 +28,8 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
         return
       end
       @statements ||= (@visitor.visit(::Puppet::Pops::Parser::Parser.new.parse_string(source)) || []).compact
-    rescue ::Puppet::ParseError => ex
-      log.error "Failed to parse #{@file}: #{ex.message}"
+    rescue ::Puppet::ParseError => e
+      log.error "Failed to parse #{@file}: #{e.message}"
       @statements = []
     end
     @statements.freeze
@@ -42,47 +44,47 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
 
   private
 
-  def transform_Program(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+  def transform_Program(o)
     # Cache the lines of the source text; we'll use this to locate comments
     @lines = o.source_text.lines.to_a
     o.definitions.map { |d| @visitor.visit(d) }
   end
 
-  def transform_Factory(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+  def transform_Factory(o)
     @visitor.visit(o.current)
   end
 
-  def transform_HostClassDefinition(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+  def transform_HostClassDefinition(o)
     statement = PuppetStrings::Yard::Parsers::Puppet::ClassStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end
 
-  def transform_ResourceTypeDefinition(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+  def transform_ResourceTypeDefinition(o)
     statement = PuppetStrings::Yard::Parsers::Puppet::DefinedTypeStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end
 
-  def transform_FunctionDefinition(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+  def transform_FunctionDefinition(o)
     statement = PuppetStrings::Yard::Parsers::Puppet::FunctionStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end
 
-  def transform_PlanDefinition(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+  def transform_PlanDefinition(o)
     statement = PuppetStrings::Yard::Parsers::Puppet::PlanStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end
 
-  def transform_TypeAlias(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+  def transform_TypeAlias(o)
     statement = PuppetStrings::Yard::Parsers::Puppet::DataTypeAliasStatement.new(o, @file)
     statement.extract_docstring(@lines)
     statement
   end
 
-  def transform_Object(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+  def transform_Object(o)
     # Ignore anything else (will be compacted out of the resulting array)
   end
 end

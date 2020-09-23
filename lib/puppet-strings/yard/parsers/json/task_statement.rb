@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PuppetStrings::Yard::Parsers::JSON
   # Represents the Puppet Task statement.
   class TaskStatement

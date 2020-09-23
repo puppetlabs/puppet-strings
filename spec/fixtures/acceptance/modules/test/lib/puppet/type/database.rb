@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # @!puppet.type.param [value1, value2, value3] my_param Documentation for a dynamic parameter.
 # @!puppet.type.property [foo, bar, baz] my_prop Documentation for a dynamic property.
 Puppet::Type.newtype(:database) do

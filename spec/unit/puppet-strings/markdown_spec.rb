@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'puppet-strings/markdown'
 require 'puppet-strings/markdown/table_of_contents'

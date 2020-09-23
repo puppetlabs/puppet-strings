@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'Emitting JSON' do
@@ -17,7 +19,7 @@ describe 'Emitting JSON' do
       "puppet_functions" => [
         "name" => "function3x",
         "file" => "#{@test_module_path}/lib/puppet/parser/functions/function3x.rb",
-        "line" => 1,
+        "line" => 3,
         "type" => "ruby3x",
         "signatures" => [
           {

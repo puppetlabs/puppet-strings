@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/code_objects/group'
 
 # Implements the group for Puppet providers.
@@ -42,6 +44,7 @@ class PuppetStrings::Yard::CodeObjects::Provider < PuppetStrings::Yard::CodeObje
   # @return [void]
   def add_confine(key, value)
     return unless key && value
+
     @confines ||= {}
     @confines[key] = value
   end
@@ -51,6 +54,7 @@ class PuppetStrings::Yard::CodeObjects::Provider < PuppetStrings::Yard::CodeObje
   # @return [void]
   def add_feature(feature)
     return unless feature
+
     @features ||= []
     @features << feature
   end
@@ -60,6 +64,7 @@ class PuppetStrings::Yard::CodeObjects::Provider < PuppetStrings::Yard::CodeObje
   # @return [void]
   def add_default(constraints)
     return unless constraints
+
     @defaults ||= []
     @defaults << constraints
   end
@@ -70,6 +75,7 @@ class PuppetStrings::Yard::CodeObjects::Provider < PuppetStrings::Yard::CodeObje
   # @return [void]
   def add_command(key, value)
     return unless key && value
+
     @commands ||= {}
     @commands[key] = value
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Implements the base code object.
 class PuppetStrings::Yard::CodeObjects::Base < YARD::CodeObjects::NamespaceObject
   # Allocates a new code object.

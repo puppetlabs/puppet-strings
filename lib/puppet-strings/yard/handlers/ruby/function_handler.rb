@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
@@ -29,6 +31,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     # newline, YARD ignores the namespace and uses `newfunction` as the source of the
     # first statement.
     return unless statement.count > 1
+
     module_name = statement[0].source
     return unless module_name == 'Puppet::Functions' || module_name == 'Puppet::Parser::Functions' || module_name == 'newfunction'
 
@@ -219,8 +222,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
 
     # Populate the required parameters
     params = parameters.unnamed_required_params
-    if params
-      params.each do |parameter|
+    params&.each do |parameter|
         add_param_tag(
           overload_tag,
           param_tags,
@@ -229,12 +231,10 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
           parameter.line
         )
       end
-    end
 
     # Populate the optional parameters
     params = parameters.unnamed_optional_params
-    if params
-      params.each do |parameter|
+    params&.each do |parameter|
         add_param_tag(
           overload_tag,
           param_tags,
@@ -246,7 +246,6 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
           true
         )
       end
-    end
 
     # Populate the splat parameter
     param = parameters.splat_param
@@ -301,7 +300,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
       name = '&' + name
     end
 
-    type ||= tag && tag.types ? tag.type : 'Any'
+    type ||= tag&.types ? tag.type : 'Any'
     type = optional ? "Optional[#{type}]" : type
 
     object.parameters << [name, to_puppet_literal(default)]
@@ -328,6 +327,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     # Validate that tags have matching parameters
     overload.tags(:param).each do |tag|
       next if overload.parameters.find { |p| tag.name == p[0] }
+
       log.warn "The @param tag for parameter '#{tag.name}' has no matching parameter at #{file}:#{line}."
     end
   end
@@ -338,9 +338,11 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
       parameters[1].each do |kvp|
         next unless kvp.count == 2
         next unless node_as_string(kvp[0]) == 'doc'
+
         docstring = node_as_string(kvp[1])
 
         log.error "Failed to parse docstring for 3.x Puppet function '#{name}' near #{statement.file}:#{statement.line}." and return nil unless docstring
+
         return PuppetStrings::Yard::Util.scrub_string(docstring)
       end
     end

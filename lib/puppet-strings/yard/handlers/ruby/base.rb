@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ripper'
 
 # Implements the base handler for Ruby language handlers.
@@ -12,6 +14,7 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
   # @return [String] Returns a string representation of the node or nil if a string representation was not possible.
   def node_as_string(node)
     return nil unless node
+
     case node.type
     when :symbol, :symbol_literal
       node.source[1..-1]
@@ -42,8 +45,10 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
   def get_name(statementobject, statementtype)
     parameters = statementobject.parameters(false)
     raise YARD::Parser::UndocumentableError, "Expected at least one parameter to #{statementtype} at #{statementobject.file}:#{statementobject.line}." if parameters.empty?
+
     name = node_as_string(parameters.first)
     raise YARD::Parser::UndocumentableError, "Expected a symbol or string literal for first parameter but found '#{parameters.first.type}' at #{statement.file}:#{statement.line}." unless name
+
     name
   end
 end

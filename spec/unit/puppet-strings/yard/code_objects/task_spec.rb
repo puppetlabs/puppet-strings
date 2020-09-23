@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'puppet-strings/yard/code_objects/task'
 require 'puppet-strings/yard/parsers/json/task_statement'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Monkey patch URL decoding in object displays. Usually :: is interpreted as a
 # namespace, but this is disabled in our base object, and so instead gets
 # URL-encoded.

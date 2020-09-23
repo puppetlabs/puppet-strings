@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/puppet/base'
 require 'puppet-strings/yard/parsers'

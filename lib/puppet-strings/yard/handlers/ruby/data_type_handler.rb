@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
@@ -10,8 +12,10 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
 
   process do
     return unless statement.count > 1
+
     ruby_module_name = statement[0].source
     return unless ruby_module_name == 'Puppet::DataTypes' || ruby_module_name == 'DataTypes' # rubocop:disable Style/MultipleComparison This reads better
+
     object = get_datatype_yard_object(get_name(statement, 'Puppet::DataTypes.create_type'))
     # Extract the interface definition
     type_interface = extract_data_type_interface
@@ -65,8 +69,10 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
       next false unless node.is_a?(YARD::Parser::Ruby::MethodCallNode) &&
                         node.method_name &&
                         node.method_name.source == 'interface'
+
       parameters = node.parameters(false)
       next false unless parameters.count >= 1
+
       interface_string = node_as_string(parameters[0])
       next false unless interface_string
 
@@ -97,8 +103,10 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
   # @return [YARD::Parser::Ruby::AstNode, nil]
   def find_ruby_ast_node(ast_node, recurse = false, &block)
     raise ArgumentError, 'find_ruby_ast_node requires a block' unless block_given?
+
     is_found = yield ast_node
     return ast_node if is_found
+
     if ast_node.respond_to?(:children)
       ast_node.children.each do |child_node|
         child_found = find_ruby_ast_node(child_node, recurse, &block)
@@ -128,7 +136,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
   # Anything else is ignored
   class LazyLiteralEvaluator
     def initialize
-      @literal_visitor ||= ::Puppet::Pops::Visitor.new(self, "literal", 0, 0)
+      @literal_visitor = ::Puppet::Pops::Visitor.new(self, "literal", 0, 0)
     end
 
     def literal(ast)
@@ -136,72 +144,72 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     end
 
     # ----- The following methods are different/additions from the original Literal_evaluator
-    def literal_Object(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_Object(o)
       # Ignore any other object types
     end
 
-    def literal_AccessExpression(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_AccessExpression(o)
       # Extract the raw text of the Access Expression
       ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(o).extract_text
     end
 
-    def literal_QualifiedReference(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_QualifiedReference(o)
       # Extract the raw text of the Qualified Reference
       ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(o).extract_text
     end
 
     # ----- The following methods are the same as the original Literal_evaluator
-    def literal_Factory(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_Factory(o)
       literal(o.model)
     end
 
-    def literal_Program(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_Program(o)
       literal(o.body)
     end
 
-    def literal_LiteralString(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralString(o)
       o.value
     end
 
-    def literal_QualifiedName(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_QualifiedName(o)
       o.value
     end
 
-    def literal_LiteralNumber(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralNumber(o)
       o.value
     end
 
-    def literal_UnaryMinusExpression(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_UnaryMinusExpression(o)
       -1 * literal(o.expr)
     end
 
-    def literal_LiteralBoolean(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralBoolean(o)
       o.value
     end
 
-    def literal_LiteralUndef(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralUndef(o)
       nil
     end
 
-    def literal_LiteralDefault(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralDefault(o)
       :default
     end
 
-    def literal_LiteralRegularExpression(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralRegularExpression(o)
       o.value
     end
 
-    def literal_ConcatenatedString(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_ConcatenatedString(o)
       # use double quoted string value if there is no interpolation
       throw :not_literal unless o.segments.size == 1 && o.segments[0].is_a?(Model::LiteralString)
       o.segments[0].value
     end
 
-    def literal_LiteralList(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralList(o)
       o.values.map { |v| literal(v) }
     end
 
-    def literal_LiteralHash(o) # rubocop:disable Naming/UncommunicativeMethodParamName
+    def literal_LiteralHash(o)
       o.entries.reduce({}) do |result, entry|
         result[literal(entry.key)] = literal(entry.value)
         result
@@ -275,8 +283,10 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     # Find param tags with a type that is different from the actual definition
     object.tags(:param).reject { |tag| tag.types.nil? }.each do |tag|
       next if actual_params_hash[tag.name].nil?
+
       actual_data_type = actual_params_hash[tag.name][:types]
       next if actual_data_type.nil?
+
       log.warn "The @param tag for '#{tag.name}' has a different type definition than the actual attribute near #{object.file}:#{object.line}." if tag.types != actual_data_type
     end
 
@@ -290,6 +300,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     # Set the type in the param tag
     object.tags(:param).each do |tag|
       next if actual_params_hash[tag.name].nil?
+
       tag.types = actual_params_hash[tag.name][:types]
     end
   end
@@ -311,10 +322,13 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     # Functions with the wrong return type
     object.meths.each do |meth|
       next unless actual_func_names.include?(meth.name.to_s)
+
       return_tag = meth.docstring.tag(:return)
       next if return_tag.nil?
+
       actual_return_types = [actual_functions_hash[meth.name.to_s][:return_type]]
       next if return_tag.types == actual_return_types
+
       log.warn "The @return tag for '#{meth.name}' has a different type definition than the actual function near #{object.file}:#{object.line}. Expected #{actual_return_types}"
       return_tag.types = actual_return_types
     end
@@ -329,6 +343,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     # Add the return type for the methods if missing
     object.meths.each do |meth|
       next unless meth.docstring.tag(:return).nil?
+
       meth.docstring.add_tag(YARD::Tags::Tag.new(:return, '', actual_functions_hash[meth.name.to_s][:return_type]))
     end
 
@@ -336,6 +351,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     object.meths.each do |meth|
       validate_function_method!(object, meth, actual_functions_hash[meth.name.to_s])
       next unless meth.docstring.tag(:return).nil?
+
       meth.docstring.add_tag(YARD::Tags::Tag.new(:return, '', actual_functions_hash[meth.name.to_s][:return_type]))
     end
 

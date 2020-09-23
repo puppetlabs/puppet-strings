@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'puppet_class'
 
 module PuppetStrings::Markdown
@@ -19,7 +21,7 @@ module PuppetStrings::Markdown
     def self.render
       final = in_classes.length > 0 ? "## Classes\n\n" : ""
       in_classes.each do |klass|
-        final << klass.render unless klass.private?
+        final += klass.render unless klass.private?
       end
       final
     end

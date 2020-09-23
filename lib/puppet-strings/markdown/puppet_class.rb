@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/markdown/base'
 
 module PuppetStrings::Markdown

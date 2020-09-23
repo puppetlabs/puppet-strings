@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/ruby/type_base'
 require 'puppet-strings/yard/code_objects'
@@ -6,7 +8,7 @@ require 'puppet-strings/yard/util'
 # Implements the handler for Puppet resource type newparam/newproperty calls written in Ruby.
 class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Yard::Handlers::Ruby::TypeBase
   # The default docstring when ensurable is used without given a docstring.
-  DEFAULT_ENSURABLE_DOCSTRING = 'The basic property that the resource should be in.'.freeze
+  DEFAULT_ENSURABLE_DOCSTRING = 'The basic property that the resource should be in.'
 
   namespace_only
   handles method_call(:newparam)
@@ -31,9 +33,10 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Ya
     #   propertyname: "content"
 
     return unless (statement.count > 1) && (statement[0].children.count > 2)
+
     module_name = statement[0].children[0].source
     method1_name = statement[0].children.drop(1).find{ |c| c.type == :ident }.source
-    return unless (module_name == 'Puppet::Type' || module_name == 'Type') && method1_name == 'type'
+    return unless ['Type', 'Puppet::Type'].include?(module_name) && method1_name == 'type'
 
     typename = get_name(statement[0], 'Puppet::Type.type')
     method2_name = caller_method

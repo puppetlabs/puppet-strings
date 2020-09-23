@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yard/tags/default_factory'
 require 'puppet-strings/yard/tags/enum_tag'
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/code_objects/group'
 require 'puppet-strings/yard/util'
 

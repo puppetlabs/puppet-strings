@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yard'
 
 # Module for YARD related functionality.
@@ -102,6 +104,7 @@ class YARD::CLI::Stats
 
   def stats_for_puppet_plans
     return unless PuppetStrings.puppet_5?
+
     output 'Puppet Plans', *type_statistics_all(:puppet_plan)
   end
 

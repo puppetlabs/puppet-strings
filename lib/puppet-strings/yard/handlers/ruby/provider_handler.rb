@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
@@ -20,6 +22,7 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
     # Extract the type name
     type_call_parameters = type_call.parameters(false)
     return unless type_call_parameters.count >= 1
+
     type_name = node_as_string(type_call_parameters.first)
     raise YARD::Parser::UndocumentableError, "Could not determine the resource type name for the provider defined at #{statement.file}:#{statement.line}." unless type_name
 
@@ -47,8 +50,10 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
       if child.type == :assign
         ivar = child.jump(:ivar)
         next unless ivar != child && ivar.source == '@doc'
+
         docstring = node_as_string(child[1])
         log.error "Failed to parse docstring for Puppet provider '#{object.name}' (resource type '#{object.type_name}') near #{child.file}:#{child.line}." and return nil unless docstring
+
         register_docstring(object, PuppetStrings::Yard::Util.scrub_string(docstring), nil)
         return nil
       elsif child.is_a?(YARD::Parser::Ruby::MethodCallNode)
@@ -60,6 +65,7 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
 
         docstring = node_as_string(child.parameters[0])
         log.error "Failed to parse docstring for Puppet provider '#{object.name}' (resource type '#{object.type_name}') near #{child.file}:#{child.line}." and return nil unless docstring
+
         register_docstring(object, PuppetStrings::Yard::Util.scrub_string(docstring), nil)
         return nil
       end
@@ -71,6 +77,7 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
     # Traverse the block looking for confines/defaults/commands
     block = statement.block
     return unless block && block.count >= 2
+
     block[1].children.each do |node|
       next unless node.is_a?(YARD::Parser::Ruby::MethodCallNode) && node.method_name
 
@@ -80,8 +87,10 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
       if method_name == 'confine'
         # Add a confine to the object
         next unless parameters.count >= 1
+
         parameters[0].each do |kvp|
           next unless kvp.count == 2
+
           object.add_confine(node_as_string(kvp[0]) || kvp[0].source, node_as_string(kvp[1]) || kvp[1].source)
         end
       elsif method_name == 'has_feature' || method_name == 'has_features'
@@ -92,9 +101,11 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
       elsif method_name == 'defaultfor'
         # Add a default to the object
         next unless parameters.count >= 1
+
         # Some defaultfor statements contain multiple constraints.
         parameters.each do |kvps|
           next unless kvps.count >= 1
+
           defaultfor = []
           kvps.each do |kvp|
             defaultfor << [node_as_string(kvp[0]) || kvp[0].source, node_as_string(kvp[1]) || kvp[1].source]
@@ -104,8 +115,10 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
       elsif method_name == 'commands'
         # Add the commands to the object
         next unless parameters.count >= 1
+
         parameters[0].each do |kvp|
           next unless kvp.count == 2
+
           object.add_command(node_as_string(kvp[0]) || kvp[0].source, node_as_string(kvp[1]) || kvp[1].source)
         end
       end

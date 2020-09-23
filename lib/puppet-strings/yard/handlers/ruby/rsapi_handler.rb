@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
@@ -6,7 +8,7 @@ require 'puppet-strings/yard/util'
 # Implements the handler for Puppet resource types written in Ruby.
 class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::Handlers::Ruby::Base
   # The default docstring when ensurable is used without given a docstring.
-  DEFAULT_ENSURABLE_DOCSTRING = 'The basic property that the resource should be in.'.freeze
+  DEFAULT_ENSURABLE_DOCSTRING = 'The basic property that the resource should be in.'
 
   namespace_only
   handles method_call(:register_type)
@@ -14,6 +16,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
   process do
     # Only accept calls to Puppet::ResourceApi
     return unless statement.count > 1
+
     module_name = statement[0].source
     return unless ['Puppet::ResourceApi'].include? module_name
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Implements the base handler for Puppet language handlers.
 class PuppetStrings::Yard::Handlers::Puppet::Base < YARD::Handlers::Base
   # Determine sif the handler handles the given statement.
@@ -17,6 +19,7 @@ class PuppetStrings::Yard::Handlers::Puppet::Base < YARD::Handlers::Base
     tags = object.tags(:param)
     tags.each do |tag|
       next if statement.parameters.find { |p| tag.name == p.name }
+
       log.warn "The @param tag for parameter '#{tag.name}' has no matching parameter at #{statement.file}:#{statement.line}." unless tag.name == 'name' || tag.name == 'title'
     end
 

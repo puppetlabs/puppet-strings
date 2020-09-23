@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PuppetStrings::Markdown
   module TableOfContents
     def self.render
@@ -16,7 +18,7 @@ module PuppetStrings::Markdown
         priv = r.contains_private?
 
         template = File.join(File.dirname(__FILE__),"templates/table_of_contents.erb")
-        final << ERB.new(File.read(template), nil, '-').result(binding)
+        final += ERB.new(File.read(template), nil, '-').result(binding)
       end
       final
     end

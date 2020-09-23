@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/code_objects/group'
 require 'puppet-strings/yard/util'
 
@@ -86,8 +88,8 @@ class PuppetStrings::Yard::CodeObjects::DataType < PuppetStrings::Yard::CodeObje
     hash[:file] = file
     hash[:line] = line
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example])
-    hash[:defaults] = defaults unless defaults.empty?
-    hash[:source] = source unless source && source.empty?
+    hash[:defaults] = defaults unless defaults.nil? || defaults.empty?
+    hash[:source] = source unless source.nil? || source.empty?
     hash[:functions] = functions.map do |func|
       {
         name: func.name,

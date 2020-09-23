@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings/yard/handlers/ruby/base'
 
 class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handlers::Ruby::Base
@@ -22,8 +24,10 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
       if child.type == :assign
         ivar = child.jump(:ivar)
         next unless ivar != child && ivar.source == '@doc'
+
         docstring = node_as_string(child[1])
         log.error "Failed to parse docstring for #{kind} near #{child.file}:#{child.line}." and return nil unless docstring
+
         return PuppetStrings::Yard::Util.scrub_string(docstring)
       elsif child.is_a?(YARD::Parser::Ruby::MethodCallNode)
         # Look for a call to a dispatch method with a block
@@ -33,6 +37,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
 
         docstring = node_as_string(child.parameters[0])
         log.error "Failed to parse docstring for #{kind} near #{child.file}:#{child.line}." and return nil unless docstring
+
         return PuppetStrings::Yard::Util.scrub_string(docstring)
       end
     end
@@ -69,6 +74,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
 
       if method_name == 'newvalue'
         next unless parameters.count >= 1
+
         object.add(node_as_string(parameters[0]) || parameters[0].source)
       elsif method_name == 'newvalues'
         parameters.each do |p|
@@ -76,9 +82,11 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
         end
       elsif method_name == 'aliasvalue'
         next unless parameters.count >= 2
+
         object.alias(node_as_string(parameters[0]) || parameters[0].source, node_as_string(parameters[1]) || parameters[1].source)
       elsif method_name == 'defaultto'
         next unless parameters.count >= 1
+
         object.default = node_as_string(parameters[0]) || parameters[0].source
       elsif method_name == 'isnamevar'
         object.isnamevar = true
@@ -103,6 +111,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
         parameters[1].each do |kvp|
           next unless kvp.count == 2
           next unless node_as_string(kvp[0]) == 'parent'
+
           if kvp[1].source == 'Puppet::Parameter::Boolean'
             object.add('true') unless object.values.include? 'true' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
             object.add('false') unless object.values.include? 'false' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
@@ -117,19 +126,18 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
 
   def set_default_namevar(object)
     return unless object.properties || object.parameters
+
     default = nil
-    if object.properties
-      object.properties.each do |property|
+    object.properties&.each do |property|
         return nil if property.isnamevar
+
         default = property if property.name == 'name'
       end
-    end
-    if object.parameters
-      object.parameters.each do |parameter|
+    object.parameters&.each do |parameter|
         return nil if parameter.isnamevar
+
         default ||= parameter if parameter.name == 'name'
       end
-    end
     default.isnamevar = true if default
   end
 end

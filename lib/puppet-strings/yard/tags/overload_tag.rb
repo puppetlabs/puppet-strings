@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Implements an overload tag for Puppet functions
 #
 # This differs from Yard's overload tag in that the signatures are formatted according to Puppet language rules.
@@ -22,7 +24,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
     args = @parameters.map do |parameter|
       name, default = parameter
       tag = tags.find { |t| t.name == name } if tags
-      type = tag && tag.types ? "#{tag.type} " : 'Any '
+      type = tag&.types ? "#{tag.type} " : 'Any '
       prefix = "#{name[0]}" if name.start_with?('*', '&')
       name = name[1..-1] if prefix
       default = " = #{default}" if default
@@ -75,6 +77,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   # @return Returns what the method call on the object would return.
   def method_missing(method_name, *args, &block)
     return object.send(method_name, *args, &block) if object.respond_to? method_name
+
     super
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'function'
 
 module PuppetStrings::Markdown
@@ -19,7 +21,7 @@ module PuppetStrings::Markdown
     def self.render
       final = in_functions.length > 0 ? "## Functions\n\n" : ""
       in_functions.each do |func|
-        final << func.render unless func.private?
+        final += func.render unless func.private?
       end
       final
     end

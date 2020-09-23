@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet-strings'
 require 'puppet-strings/json'
 require 'puppet-strings/yard'
@@ -68,7 +70,7 @@ module PuppetStrings::Markdown
 
     # @return [String] top-level name
     def name
-      @registry[:name].to_s unless @registry[:name].nil?
+      @registry[:name]&.to_s
     end
 
     # @return [String] 'Overview' text (untagged text)

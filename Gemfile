@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
 gemspec
@@ -37,8 +39,9 @@ group :development do
   gem 'pry-byebug'
 end
 
+gem 'rubocop', '~> 0.81.0' # last release that supports Ruby 2.3.0
 gem 'rubocop-rspec'
-gem 'rubocop', '~> 0.57.2'
+gem 'rubocop-performance'
 
 # Evaluate Gemfile.local if it exists
 if File.exists? "#{__FILE__}.local"

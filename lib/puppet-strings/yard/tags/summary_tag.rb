@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Implements a summary tag for general purpose short descriptions
 
 class PuppetStrings::Yard::Tags::SummaryTag < YARD::Tags::Tag
