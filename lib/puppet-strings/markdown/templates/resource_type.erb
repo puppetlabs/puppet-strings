@@ -120,7 +120,9 @@ Aliases: `<%= param[:aliases].to_s.delete('{').delete('}') %>`
 Data type: `<%= param[:data_type] %>`<%= "\n_\*this data type contains a regex that may not be accurately reflected in generated documentation_" if regex_in_data_type?(param[:data_type]) %>
 
 <% end -%>
+<% if param[:description] -%>
 <%= word_wrap(param[:description]) %>
+<% end -%>
 
 <% if options_for_param(param[:name]) -%>
 Options:
