@@ -182,7 +182,7 @@ module PuppetStrings::Markdown
       begin
         file = File.join(File.dirname(__FILE__),"templates/#{template}")
         ERB.new(File.read(file), nil, '-').result(binding)
-      rescue => e
+      rescue StandardError => e
         fail "Processing #{@registry[:file]}:#{@registry[:line]} with #{file} => #{e}"
       end
     end
