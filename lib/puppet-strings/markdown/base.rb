@@ -179,8 +179,12 @@ module PuppetStrings::Markdown
 
     # @return [String] full markdown rendering of a component
     def render(template)
-      file = File.join(File.dirname(__FILE__),"templates/#{template}")
-      ERB.new(File.read(file), nil, '-').result(binding)
+      begin
+        file = File.join(File.dirname(__FILE__),"templates/#{template}")
+        ERB.new(File.read(file), nil, '-').result(binding)
+      rescue StandardError => e
+        fail "Processing #{@registry[:file]}:#{@registry[:line]} with #{file} => #{e}"
+      end
     end
 
     private
