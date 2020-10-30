@@ -244,7 +244,7 @@ path this type will autorequire that file.
       expect(json_output).to include_json(defined_types_json)
     end
 
-    it 'should include data for Puppet Resouce Types' do
+    it 'should include data for Puppet Resource Types' do
       resource_types_json = YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash).to_json
 
       expect(json_output).to include_json(resource_types_json)
