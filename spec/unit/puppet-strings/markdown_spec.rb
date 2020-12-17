@@ -33,7 +33,9 @@ describe PuppetStrings::Markdown do
   end
 
   def parse_plan_content
-    YARD::Parser::SourceParser.parse_string(fixture_content("puppet/plan.pp"), :puppet)
+    # the parser behaves differently when parsing puppet files in the the plans directory,
+    # so we have to parse directly from the filesystem to correctly pick up the name
+    YARD::Parser::SourceParser.parse(File.join(fixture_path, "plans/plan.pp"))
   end
 
   def parse_data_type_content
