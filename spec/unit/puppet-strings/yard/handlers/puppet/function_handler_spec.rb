@@ -256,6 +256,29 @@ function foo() >> Struct[{'a' => Integer[1, 10]}] {
     end
   end
 
+  describe 'parsing a function with return tag without type', if: TEST_FUNCTION_RETURN_TYPE do
+    let(:source) { <<-SOURCE
+# A simple foo function.
+# @return This is something.
+function foo() >> Struct[{'a' => Integer[1, 10]}] {
+  notice 'hello world'
+}
+    SOURCE
+    }
+
+    it 'should get the return type from the function definition' do
+      expect{ subject }.to output('').to_stdout_from_any_process
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
+      tags = object.docstring.tags(:return)
+      expect(tags.size).to eq(1)
+      expect(tags[0].tag_name).to eq('return')
+      expect(tags[0].text).to eq('This is something.')
+      expect(tags[0].types).to eq(["Struct[{'a' => Integer[1, 10]}]"])
+    end
+  end
+
   describe 'parsing a function without a return tag or return type in the function definition' do
     let(:source) { <<-SOURCE
 # A simple foo function.
