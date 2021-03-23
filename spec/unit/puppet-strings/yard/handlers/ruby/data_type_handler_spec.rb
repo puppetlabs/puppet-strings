@@ -261,7 +261,7 @@ SOURCE
 
   describe 'parsing a valid data type definition' do
     # TODO: What about testing for `type_parameters => {}`
-    # e.g. https://github.com/puppetlabs/puppet/blob/master/lib/puppet/datatypes/error.rb
+    # e.g. https://github.com/puppetlabs/puppet/blob/main/lib/puppet/datatypes/error.rb
     let(:source) { <<-SOURCE
 # An example Puppet Data Type in Ruby.
 #

@@ -233,7 +233,7 @@ All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with t
   - Note: this means Markdown text in YARD comments and tags, not a change in the output of strings
 - New commandline options: --emit-json and --emit-json-stdout to generate JSON documentation **(PDOC-84)**
 - Runtime dependency on Puppet has been removed, allowing strings to function in Puppet Enterprise 3.8 **(PDOC-80)**
-  - Note that the gem still requires puppet. We recommend that the strings gem be installed with puppet, as suggested in the  [README](https://github.com/puppetlabs/puppet-strings/blob/master/README.md#installing-puppet-strings)
+  - Note that the gem still requires puppet. We recommend that the strings gem be installed with puppet, as suggested in the  [README](https://github.com/puppetlabs/puppet-strings/blob/main/README.md#installing-puppet-strings)
 - New gemspec requirement on Ruby version 1.9.3, the oldest supported Ruby version
 
 ### BugFixes
@@ -253,8 +253,8 @@ All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with t
 ### Features
 - Support for JSON output **(PDOC-23)**
   - Strings now has the ability to produce a JSON representation of a given puppet module
-  - The details of the JSON schema can be found [here](https://github.com/puppetlabs/puppet-strings/blob/master/json_dom.md)
-  - For details on how to generate JSON, see the [README](https://github.com/puppetlabs/puppet-strings/blob/master/README.md#running-puppet-strings)
+  - The details of the JSON schema can be found [here](https://github.com/puppetlabs/puppet-strings/blob/main/json_dom.md)
+  - For details on how to generate JSON, see the [README](https://github.com/puppetlabs/puppet-strings/blob/main/README.md#running-puppet-strings)
 - Migrate to ruby gems as a distribution method **(PDOC-28)**
   - This is the last release of strings that will be available as a puppet module
   - The 0.4.0 release will be released concurrently as a ruby gem

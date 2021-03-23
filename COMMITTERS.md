@@ -4,7 +4,7 @@ Committing changes to Strings
 We would like to make it easier for community members to contribute to strings
 using pull requests, even if it makes the task of reviewing and committing
 these changes a little harder.  Pull requests are only ever based on a single
-branch. As a result contributors should target their changes at the master branch.
+branch. As a result contributors should target their changes at the main branch.
 This makes the process of contributing a little easier for the contributor since 
 they don't need to concern themselves with the question, "What branch do I base my changes
 on?"  This is already called out in the [CONTRIBUTING.md](http://goo.gl/XRH2J).
@@ -17,7 +17,7 @@ effort to make sure the end users must opt-in to new behavior that is
 incompatible with previous behavior.  We employ the use of [feature
 flags](http://stackoverflow.com/questions/7707383/what-is-a-feature-flag) as
 the primary way to achieve this user opt-in behavior.  Finally, it is the
-responsibility of the committer to make sure the `master` branch
+responsibility of the committer to make sure the `main` branch
 is clean and working at all times.  Clean means that dead code is not
 allowed, everything needs to be usable in some manner at all points in time.
 
@@ -45,9 +45,9 @@ making the decision what base branch to merge the change set into.
 
 **base branch** - A branch in Git that contains an active history of changes
 and will eventually be released using semantic version guidelines.  The branch
-named `master` will always exist as a base branch.
+named `main` will always exist as a base branch.
 
-**master branch** - The branch where new functionality that and bug fixes are
+**main branch** - The branch where new functionality that and bug fixes are
 merged.
 
 **security** - Where critical security fixes are merged.  These change sets
@@ -70,7 +70,7 @@ This section provides a guide to help a committer decide the specific base
 branch that a change set should be merged into.
 
 The latest minor release of a major release is the only base branch that should
-be patched.  These patches will be merged into `master` if they contain new
+be patched.  These patches will be merged into `main` if they contain new
 functionality and  if they fix a critical bug.  Older minor releases in a major release 
 do not get patched.
 
@@ -87,7 +87,7 @@ security branch as the base branch.  Please send all security related
 information or patches to security@puppet.com as per our [Security
 Policy](https://puppet.com/security/).
 
-The CI systems are configured to run against `master`.  Over time, this branch 
+The CI systems are configured to run against `main`.  Over time, this branch 
 will refer to different versions, but its name will remain fixed to avoid having 
 to update CI jobs and tasks as new versions are released.
 
@@ -108,7 +108,7 @@ branch:
    documentation being kept up to date?
  * Does the change set include clean code?  (software code that is formatted
    correctly and in an organized manner so that another coder can easily read
-   or modify it.)  HINT: `git diff master --check`
+   or modify it.)  HINT: `git diff main --check`
  * Does the change set conform to the contributing guide?
 
 Commit citizen guidelines:
@@ -118,13 +118,13 @@ This section aims to provide guidelines for being a good commit citizen by
 paying attention to our automated build tools.
 
  * Don’t push on a broken build.  (A broken build is defined as a failing job
-   in [Puppet Strings](https://jenkins.puppetlabs.com/job/platform_puppet-strings_unit-ruby_master/)
+   in [Puppet Strings](https://travis-ci.com/github/puppetlabs/puppet-strings)
    page.)
  * Watch the build until your changes have gone through green
  * Update the ticket status and target version.  The target version field in
    our issue tracker should be updated to be the next release of Puppet.  For
    example, if the most recent release of Puppet is 3.1.1 and you merge a
-   backwards compatible change set into master, then the target version should
+   backwards compatible change set into main, then the target version should
    be 3.2.0 in the issue tracker.)
  * Ensure the pull request is closed (Hint: amend your merge commit to contain
    the string `closes #123` where 123 is the pull request number and github
@@ -135,7 +135,7 @@ Example Procedure
 
 This section helps a committer rebase and merge a contribution into the base branch.
 
-Suppose a contributor submits a pull request based on master.  The change set
+Suppose a contributor submits a pull request based on main.  The change set
 fixes a bug reported against strings 0.1.0  which is the most recently released
 version of strings.
 
@@ -147,20 +147,20 @@ branch to track the remote branch.
     Branch jeffmccune-pdoc-34_fix_foo_error set up to track remote branch pdoc-34-fix_foo_error from jeffmccune.
     Switched to a new branch 'jeffmccune-pdoc-34_fix_foo_error'
 
-It's possible that more changes have been merged into master since the pull
+It's possible that more changes have been merged into main since the pull
 request was submitted. In this case it may be necessary to rebase the branch
 that contains the changes:
 
-    $ git rebase upstream/master
+    $ git rebase upstream/main
 
 After the branch has been checked out and rebased, the committer should ensure that
 the code review check list has been completed.
 
 Now that we have a topic branch containing the change set based on the most recent 
-`master` branch, the committer merges in:
+`main` branch, the committer merges in:
 
-    $ git checkout master
-    Switched to branch 'master'
+    $ git checkout main
+    Switched to branch 'main'
     $ git merge --no-ff --log jeffmccune-pdoc-34_fix_foo_error
     Merge made by the 'recursive' strategy.
      foo | 0
@@ -173,12 +173,12 @@ preserve the usefulness of `git branch --contains`.  If there are any merge
 conflicts, they are to be resolved in the merge commit itself and not by
 re-writing (rebasing) the patches for one base branch, but not another.
 
-Once the change set has been merged into `master`, the committer pushes.
+Once the change set has been merged into `main`, the committer pushes.
 Please note, the checklist should be complete at this point. It's helpful to make
 sure your local branches are up to date to avoid one of the branches failing to fast
 forward while the other succeeds.
 
-    $ git push origin master:master
+    $ git push origin main:main
 
 That's it!  The committer then updates the pull request, updates the issue in
 our issue tracker, and keeps an eye on the [build
