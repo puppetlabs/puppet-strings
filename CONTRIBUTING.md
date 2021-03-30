@@ -23,7 +23,7 @@ Before you submit your issue, take a minute to...
    reported.
 
 2. **Check if the issue has been fixed** &mdash; try to reproduce it using the
-   latest `master` or release tag.
+   latest `main` or release tag.
 
 A good bug report shouldn't leave others needing to chase you up for more
 information. Please try to be as **detailed as possible** in your issue. What is
@@ -48,12 +48,12 @@ Example:
 ## Making Changes
 
 * Create a topic branch from where you want to base your work.
-  * This is usually the master branch.
+  * This is usually the main branch.
   * Only target release branches if you are certain your fix must be on that
     branch.
-  * To quickly create a topic branch based on master; `git checkout -b
-    fix/master/my_contribution master`. Please avoid working directly on the
-    `master` branch.
+  * To quickly create a topic branch based on main; `git checkout -b
+    fix/main/my_contribution main`. Please avoid working directly on the
+    `main` branch.
 * Make commits of logical units.
 * Check for unnecessary whitespace with `git diff --check` before committing.
 * Make sure your commit messages are in the proper format.
@@ -109,7 +109,7 @@ a ticket number.
 
 ## Cutting a release
 
-To cut a new release, from a current `master` checkout:
+To cut a new release, from a current `main` checkout:
 
 * Start the release branch with `git checkout -b release-prep`
 * Update `lib/puppet-strings/version.rb` to the new version

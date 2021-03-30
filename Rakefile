@@ -18,7 +18,7 @@ if Bundler.rubygems.find_name('puppet_litmus').any?
           original_with_runner(deep_duplicate_object(config_data), deep_duplicate_object(inventory_data)) { |runner| yield runner }
         end
 
-        # From https://github.com/puppetlabs/pdk/blob/master/lib/pdk/util.rb
+        # From https://github.com/puppetlabs/pdk/blob/main/lib/pdk/util.rb
         # Workaround for https://github.com/puppetlabs/bolt/issues/1614
         def self.deep_duplicate_object(object)
           if object.is_a?(Array)
