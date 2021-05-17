@@ -22,10 +22,12 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
   # @return [void]
   def parse
     begin
-      Puppet[:tasks] = true if Puppet.settings.include?(:tasks)
-      if Puppet::Util::Package.versioncmp(Puppet.version, "5.0.0") < 0 && @file.to_s.match(/^plans\//)
-        log.warn "Skipping #{@file}: Puppet Plans require Puppet 5 or greater."
-        return
+      if @file.to_s.match(/^plans|\/plans\//)
+        if Puppet::Util::Package.versioncmp(Puppet.version, "5.0.0") < 0
+          log.warn "Skipping #{@file}: Puppet Plans require Puppet 5 or greater."
+          return
+        end
+        Puppet[:tasks] = true if Puppet.settings.include?(:tasks)
       end
       @statements ||= (@visitor.visit(::Puppet::Pops::Parser::Parser.new.parse_string(source)) || []).compact
     rescue ::Puppet::ParseError => e
