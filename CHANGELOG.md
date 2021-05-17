@@ -3,14 +3,39 @@
 All significant changes to this repo will be summarized in this file.
 
 
-## [v2.5.0](https://github.com/puppetlabs/puppet-strings/tree/v2.5.0) (2020-07-15)
+## [v2.6.0](https://github.com/puppetlabs/puppet-strings/tree/v2.6.0) (2021-01-18)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.5.0...v2.6.0)
+
+Added
+
+- Improved markdown templates [\#252](https://github.com/puppetlabs/puppet-strings/pull/252) ([kozl](https://github.com/kozl))
+
+Fixed
+
+- Do not fail in case return tag has no type specified [\#268](https://github.com/puppetlabs/puppet-strings/pull/268) ([tiandrey](https://github.com/tiandrey))
+- Handle a missing description gracefully [\#260](https://github.com/puppetlabs/puppet-strings/pull/260) ([scotje](https://github.com/scotje))
+- Fix ERB failure - parameters without descriptions [\#255](https://github.com/puppetlabs/puppet-strings/pull/255) ([trevor-vaughan](https://github.com/trevor-vaughan))
+- puppet\_function template: fix tags, source [\#249](https://github.com/puppetlabs/puppet-strings/pull/249) ([raemer](https://github.com/raemer))
+
+Changed
+
+- \(MAINT\) Drop Ruby 2.1.x and Puppet 4.x compatibility [\#253](https://github.com/puppetlabs/puppet-strings/pull/253) ([scotje](https://github.com/scotje))
+
+**Closed issues:**
+
+- Tags \(Parameter, Returns\) not generated in HTML output [\#248](https://github.com/puppetlabs/puppet-strings/issues/248)
+- Can we get 2.5.0 released please [\#244](https://github.com/puppetlabs/puppet-strings/issues/244)
+- Add supported\_features to puppet strings input/output for types [\#228](https://github.com/puppetlabs/puppet-strings/issues/228)
+- Provider attribute is missing in generated types documentation [\#227](https://github.com/puppetlabs/puppet-strings/issues/227)
+
+## [v2.5.0](https://github.com/puppetlabs/puppet-strings/tree/v2.5.0) (2020-07-16)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.4.0...v2.5.0)
 
 Added
 
 - \(GH-225\) Document functions in Puppet Datatypes [\#235](https://github.com/puppetlabs/puppet-strings/pull/235) ([glennsarti](https://github.com/glennsarti))
-- Add checks to resource\_type handler and code objects [\#232](https://github.com/puppetlabs/puppet-strings/pull/232) ([scotje](https://github.com/scotje))
 - \(\#227\) Inject `provider` into params list for types with providers [\#231](https://github.com/puppetlabs/puppet-strings/pull/231) ([scotje](https://github.com/scotje))
 
 Fixed
@@ -27,12 +52,17 @@ Fixed
 - Document usage [\#8](https://github.com/puppetlabs/puppet-strings/issues/8)
 - Need a search box on the main page [\#1](https://github.com/puppetlabs/puppet-strings/issues/1)
 
+**Merged pull requests:**
+
+- Release prep for v2.5.0 [\#245](https://github.com/puppetlabs/puppet-strings/pull/245) ([scotje](https://github.com/scotje))
+
 ## [v2.4.0](https://github.com/puppetlabs/puppet-strings/tree/v2.4.0) (2020-02-20)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.3.1...v2.4.0)
 
 Added
 
+- Add checks to resource\_type handler and code objects [\#232](https://github.com/puppetlabs/puppet-strings/pull/232) ([scotje](https://github.com/scotje))
 - Add missing HTML output support for enum tag [\#218](https://github.com/puppetlabs/puppet-strings/pull/218) ([seanmil](https://github.com/seanmil))
 - \(PDOC-295\) Add @enum tag support for Enum data types [\#215](https://github.com/puppetlabs/puppet-strings/pull/215) ([seanmil](https://github.com/seanmil))
 - Expanded default search glob for plans. [\#214](https://github.com/puppetlabs/puppet-strings/pull/214) ([Raskil](https://github.com/Raskil))
@@ -58,10 +88,6 @@ Added
 
 - Add Puppet Data Type documentation [\#199](https://github.com/puppetlabs/puppet-strings/pull/199) ([glennsarti](https://github.com/glennsarti))
 
-Fixed
-
-- \(PDOC-283\) Fix namespaced symbols [\#205](https://github.com/puppetlabs/puppet-strings/pull/205) ([glennsarti](https://github.com/glennsarti))
-
 ## [v2.2.0](https://github.com/puppetlabs/puppet-strings/tree/v2.2.0) (2019-04-05)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.1.0...v2.2.0)
@@ -75,6 +101,7 @@ Added
 
 Fixed
 
+- \(PDOC-283\) Fix namespaced symbols [\#205](https://github.com/puppetlabs/puppet-strings/pull/205) ([glennsarti](https://github.com/glennsarti))
 - \(PDOC-266\) Silence 'unexpected construct regexp\_literal' warning [\#189](https://github.com/puppetlabs/puppet-strings/pull/189) ([seanmil](https://github.com/seanmil))
 
 ## [v2.1.0](https://github.com/puppetlabs/puppet-strings/tree/v2.1.0) (2018-06-26)
@@ -206,7 +233,7 @@ All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with t
   - Note: this means Markdown text in YARD comments and tags, not a change in the output of strings
 - New commandline options: --emit-json and --emit-json-stdout to generate JSON documentation **(PDOC-84)**
 - Runtime dependency on Puppet has been removed, allowing strings to function in Puppet Enterprise 3.8 **(PDOC-80)**
-  - Note that the gem still requires puppet. We recommend that the strings gem be installed with puppet, as suggested in the  [README](https://github.com/puppetlabs/puppet-strings/blob/master/README.md#installing-puppet-strings)
+  - Note that the gem still requires puppet. We recommend that the strings gem be installed with puppet, as suggested in the  [README](https://github.com/puppetlabs/puppet-strings/blob/main/README.md#installing-puppet-strings)
 - New gemspec requirement on Ruby version 1.9.3, the oldest supported Ruby version
 
 ### BugFixes
@@ -226,8 +253,8 @@ All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with t
 ### Features
 - Support for JSON output **(PDOC-23)**
   - Strings now has the ability to produce a JSON representation of a given puppet module
-  - The details of the JSON schema can be found [here](https://github.com/puppetlabs/puppet-strings/blob/master/json_dom.md)
-  - For details on how to generate JSON, see the [README](https://github.com/puppetlabs/puppet-strings/blob/master/README.md#running-puppet-strings)
+  - The details of the JSON schema can be found [here](https://github.com/puppetlabs/puppet-strings/blob/main/json_dom.md)
+  - For details on how to generate JSON, see the [README](https://github.com/puppetlabs/puppet-strings/blob/main/README.md#running-puppet-strings)
 - Migrate to ruby gems as a distribution method **(PDOC-28)**
   - This is the last release of strings that will be available as a puppet module
   - The 0.4.0 release will be released concurrently as a ruby gem

@@ -1,6 +1,6 @@
 Puppet Strings
 ==============
-[![Build Status](https://travis-ci.org/puppetlabs/puppet-strings.png?branch=master)](https://travis-ci.org/puppetlabs/puppet-strings) [![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
+[![Build Status](https://travis-ci.org/puppetlabs/puppet-strings.png?branch=main)](https://travis-ci.org/puppetlabs/puppet-strings) [![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
 
 Puppet Strings generates documentation for Puppet code and extensions written in Puppet and Ruby. Strings processes code and YARD-style code comments to create documentation in HTML, Markdown, or JSON formats.
 
@@ -70,7 +70,7 @@ Here are a few other good resources for getting started with documentation:
 
 We love contributions from the community!
 
-If you'd like to contribute to `puppet-strings`, check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppet-strings/blob/master/CONTRIBUTING.md) to get information on the contribution process.
+If you'd like to contribute to `puppet-strings`, check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppet-strings/blob/main/CONTRIBUTING.md) to get information on the contribution process.
 
 ### Running Specs
 
@@ -141,9 +141,9 @@ Bug fixes and ongoing development will occur in minor releases for the current m
 
 [repo]: https://github.com/puppetlabs/puppet-strings
 [issues]: https://github.com/puppetlabs/puppet-strings/issues
-[LICENSE]: https://github.com/puppetlabs/puppet-strings/blob/master/LICENSE
-[changelog]: https://github.com/puppetlabs/puppet-strings/blob/master/CHANGELOG.md
-[contributing]: https://github.com/puppetlabs/puppet-strings/blob/master/CONTRIBUTING.md
-[committers]: https://github.com/puppetlabs/puppet-strings/blob/master/COMMITTERS.md
+[LICENSE]: https://github.com/puppetlabs/puppet-strings/blob/main/LICENSE
+[changelog]: https://github.com/puppetlabs/puppet-strings/blob/main/CHANGELOG.md
+[contributing]: https://github.com/puppetlabs/puppet-strings/blob/main/CONTRIBUTING.md
+[committers]: https://github.com/puppetlabs/puppet-strings/blob/main/COMMITTERS.md
 [Puppet community Slack]: https://slack.puppet.com
 

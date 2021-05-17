@@ -4,7 +4,7 @@ Before sending, do check that all links are still valid. Feel free to adjust the
 
 The github rendering of the markdown seems to copy&paste acceptably into Google Inbox.
 
-The [CHANGELOG](https://github.com/puppetlabs/puppet-strings/blob/master/CHANGELOG.md) is a good starting point for finding enhancements and bug-fixes.
+The [CHANGELOG](https://github.com/puppetlabs/puppet-strings/blob/main/CHANGELOG.md) is a good starting point for finding enhancements and bug-fixes.
 
 ---
 
@@ -29,7 +29,7 @@ The new release also contains the following notable bugfixes:
 * E
 * F
 
-See the [CHANGELOG](https://github.com/puppetlabs/puppet-strings/blob/master/CHANGELOG.md) for a full list of changes
+See the [CHANGELOG](https://github.com/puppetlabs/puppet-strings/blob/main/CHANGELOG.md) for a full list of changes
 
 We encourage all module developers to review puppet-strings and use it when creating modules.
 
