@@ -98,14 +98,14 @@ An example of running the acceptance tests locally with Docker:
 3. Provision a docker container, in this case CentOS 7
 
 ``` text
-    $ bundle exec rake litmus:provision[docker, centos:7]
+    $ bundle exec rake 'litmus:provision[docker, centos:7]'
 ```
 
 4. Install test items; Puppet Agent, our test module, and the puppet-strings gem built from this source code
 
 ``` text
-    $ bundle exec rake litmus:install_agent[puppet6]
-    $ bundle exec rake litmus:install_module_fixtures
+    $ bundle exec rake 'litmus:install_agent[puppet6]'
+    $ bundle exec rake 'litmus:install_modules_from_directory[./spec/fixtures/acceptance/modules]'
     $ bundle exec rake litmus:install_gems
 ```
 
