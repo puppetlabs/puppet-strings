@@ -62,7 +62,7 @@ See the [Puppet Strings documentation](https://puppet.com/docs/puppet/latest/pup
 
 Here are a few other good resources for getting started with documentation:
 
-  * [Module README Template](https://docs.puppet.com/puppet/latest/reference/modules_documentation.html)
+  * [Module README Template](https://puppet.com/docs/puppet/latest/puppet_strings.html)
   * [YARD Getting Started Guide](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
   * [YARD Tags Overview](http://www.rubydoc.info/gems/yard/file/docs/Tags.md)
 
