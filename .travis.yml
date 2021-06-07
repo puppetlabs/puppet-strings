@@ -16,14 +16,10 @@ script: 'SPEC_OPTS="--format documentation" COVERAGE="yes" bundle exec rake $CHE
 jobs:
   fast_finish: true
   include:
-    - rvm: 2.3
-      env: PUPPET_GEM_VERSION="~> 4" CHECK=rubocop
-    - rvm: 2.4
-      env: PUPPET_GEM_VERSION="~> 5" CHECK=spec
     - rvm: 2.5
       env: PUPPET_GEM_VERSION="~> 6" CHECK=spec
     - rvm: 2.7
-      env: PUPPET_GEM_VERSION="~> 6" CHECK=spec
+      env: PUPPET_GEM_VERSION="~> 7" CHECK=spec
     - bundler_args: ""
       rvm: 2.5
       before_script:
