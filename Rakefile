@@ -70,10 +70,23 @@ namespace :litmus do
     result = run_command(install_command, target_nodes, config: nil, inventory: inventory_hash)
     if result.is_a?(Array)
       result.each do |node|
-        puts "#{node['node']} failed #{node['result']}" if node['status'] != 'success'
+        puts "#{node['target']} failed: '#{node['value']}'" if node['status'] != 'success'
       end
     else
       raise "Failed trying to run '#{install_command}' against inventory."
+    end
+  end
+
+  def install_build_tools(target_nodes, inventory_hash)
+    puts 'Installing build tools...'
+    install_build_command = "yum -y group install 'Development Tools'"
+    result = run_command(install_build_command, target_nodes, config: nil, inventory: inventory_hash)
+    if result.is_a?(Array)
+      result.each do |node|
+        puts "#{node['target']} failed: '#{node['value']}'" if node['status'] != 'success'
+      end
+    else
+      raise "Failed trying to run '#{install_build_command}' against inventory."
     end
   end
 
@@ -92,11 +105,11 @@ namespace :litmus do
     include BoltSpec::Run
 
     # Build the gem
+    puts 'Building gem...'
     `gem build puppet-strings.gemspec --quiet`
     result = $CHILD_STATUS
     raise "Unable to build the puppet-strings gem. Returned exit code #{result.exitstatus}" unless result.exitstatus.zero?
 
-    puts 'Built'
     # Find the gem build artifact
     gem_tar = Dir.glob('puppet-strings-*.gem').max_by { |f| File.mtime(f) }
     raise "Unable to find package in 'puppet-strings-*.gem'" if gem_tar.nil?
@@ -110,6 +123,8 @@ namespace :litmus do
                     end
     puts 'Copying gem to targets...'
     upload_file(gem_tar, File.basename(gem_tar), target_string, inventory: inventory_hash)
+
+    install_build_tools(target_nodes, inventory_hash)
 
     # Install dependent gems
     puts 'Installing yard gem...'
