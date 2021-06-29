@@ -49,4 +49,24 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
       expect(object.parameters[0].isnamevar).to eq(true)
     end
   end
+
+  describe 'parsing source with ensurable' do
+    let(:source) { <<~SOURCE
+      Puppet::Type.newtype(:database) do
+        desc 'database'
+      end
+      Puppet::Type.type(:database).ensurable do
+        desc 'What state the database should be in.'
+      end
+    SOURCE
+    }
+
+    it 'generates a doc string for an ensurable' do
+      expect(subject.size).to eq(1)
+      object = subject.first
+      expect(object.properties.size).to eq(1)
+      expect(object.properties[0].name).to eq('ensure')
+      expect(object.properties[0].docstring).to eq('What state the database should be in.')
+    end
+  end
 end
