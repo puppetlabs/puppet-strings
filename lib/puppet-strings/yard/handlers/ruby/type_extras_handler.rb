@@ -5,7 +5,7 @@ require 'puppet-strings/yard/handlers/ruby/type_base'
 require 'puppet-strings/yard/code_objects'
 require 'puppet-strings/yard/util'
 
-# Implements the handler for Puppet resource type newparam/newproperty calls written in Ruby.
+# Implements the handler for Puppet resource type newparam/newproperty/ensurable calls written in Ruby.
 class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Yard::Handlers::Ruby::TypeBase
   # The default docstring when ensurable is used without given a docstring.
   DEFAULT_ENSURABLE_DOCSTRING = 'The basic property that the resource should be in.'
@@ -13,6 +13,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Ya
   namespace_only
   handles method_call(:newparam)
   handles method_call(:newproperty)
+  handles method_call(:ensurable)
 
   process do
 
@@ -38,9 +39,15 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Ya
     method1_name = statement[0].children.drop(1).find{ |c| c.type == :ident }.source
     return unless ['Type', 'Puppet::Type'].include?(module_name) && method1_name == 'type'
 
+    # ensurable is syntatic sugar for newproperty
     typename = get_name(statement[0], 'Puppet::Type.type')
-    method2_name = caller_method
-    propertyname = get_name(statement, "Puppet::Type.type().#{method2_name}")
+    if caller_method == 'ensurable'
+      method2_name = 'newproperty'
+      propertyname = 'ensure'
+    else
+      method2_name = caller_method
+      propertyname = get_name(statement, "Puppet::Type.type().#{method2_name}")
+    end
 
     typeobject = get_type_yard_object(typename)
 
