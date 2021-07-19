@@ -3,6 +3,19 @@
 All significant changes to this repo will be summarized in this file.
 
 
+## [v2.8.0](https://github.com/puppetlabs/puppet-strings/tree/v2.8.0) (2021-07-19)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.7.0...v2.8.0)
+
+Added
+
+- \(DOCUMENT-1232\) Add support for ensurable in types\_extras\_handler [\#281](https://github.com/puppetlabs/puppet-strings/pull/281) ([joshcooper](https://github.com/joshcooper))
+
+**Merged pull requests:**
+
+- \(FIXUP\) Check for nil before injecting provider param into Types [\#285](https://github.com/puppetlabs/puppet-strings/pull/285) ([scotje](https://github.com/scotje))
+- README.md: update link to docs [\#276](https://github.com/puppetlabs/puppet-strings/pull/276) ([kenyon](https://github.com/kenyon))
+
 ## [v2.7.0](https://github.com/puppetlabs/puppet-strings/tree/v2.7.0) (2021-05-17)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.6.0...v2.7.0)
