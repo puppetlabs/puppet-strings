@@ -152,7 +152,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     return @parameters if providers.empty?
 
     # return existing params if we have already added provider
-    return @parameters if @parameters.any? { |p| p.name == 'provider' }
+    return @parameters if @parameters&.any? { |p| p.name == 'provider' }
 
     provider_param = Parameter.new(
       'provider',
@@ -160,6 +160,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
       "to specify this --- Puppet will usually discover the appropriate provider for your platform."
     )
 
+    @parameters ||= []
     @parameters << provider_param
   end
 
