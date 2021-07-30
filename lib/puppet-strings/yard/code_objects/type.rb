@@ -148,6 +148,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
   end
 
   def parameters
+    @parameters ||= []  # guard against not filled parameters
     # just return params if there are no providers
     return @parameters if providers.empty?
 
