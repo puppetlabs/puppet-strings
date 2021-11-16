@@ -8,5 +8,6 @@ module PuppetStrings
   module Tasks
     require 'puppet-strings/tasks/generate.rb'
     require 'puppet-strings/tasks/gh_pages.rb'
+    require 'puppet-strings/tasks/validate.rb'
   end
 end
