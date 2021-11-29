@@ -3,6 +3,28 @@
 All significant changes to this repo will be summarized in this file.
 
 
+## [v2.9.0](https://github.com/puppetlabs/puppet-strings/tree/v2.9.0) (2021-11-29)
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.8.0...v2.9.0)
+
+Added
+
+- Add strings:validate:reference task [\#293](https://github.com/puppetlabs/puppet-strings/issues/293)
+
+Fixed
+
+- Fix rare undefined method `any?' for nil:NilClass error [\#289](https://github.com/puppetlabs/puppet-strings/pull/289) ([sanfrancrisko](https://github.com/sanfrancrisko))
+
+**Closed issues:**
+
+- Error: undefined method `any?' for nil:NilClass when generating documentation [\#287](https://github.com/puppetlabs/puppet-strings/issues/287)
+- Update changelog with recent commits [\#283](https://github.com/puppetlabs/puppet-strings/issues/283)
+- Please document the `author` tag [\#256](https://github.com/puppetlabs/puppet-strings/issues/256)
+
+**Merged pull requests:**
+
+- Implement a strings:validate:reference task [\#291](https://github.com/puppetlabs/puppet-strings/pull/291) ([ekohl](https://github.com/ekohl))
+
 ## [v2.8.0](https://github.com/puppetlabs/puppet-strings/tree/v2.8.0) (2021-07-19)
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.7.0...v2.8.0)
