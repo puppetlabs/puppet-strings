@@ -24,3 +24,4 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_GENERAL_KEY }}
         with:
           command: monitor
+
