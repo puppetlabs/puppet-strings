@@ -81,11 +81,6 @@ def create_menu_lists
       search_title: 'Puppet Classes'
     },
     {
-      type: 'puppet_data_type',
-      title: 'Data Types',
-      search_title: 'Data Types',
-    },
-    {
       type: 'puppet_defined_type',
       title: 'Defined Types',
       search_title: 'Defined Types',
@@ -128,6 +123,13 @@ def create_menu_lists
   ]
 
   menu_lists.delete_if { |e| YARD::Registry.all(e[:type].intern).empty? }
+
+  # This is a special group containing two types
+  menu_lists << {
+      type: 'puppet_data_type',
+      title: 'Data Types',
+      search_title: 'Data Types',
+  } if ! YARD::Registry.all(:puppet_data_type,:puppet_data_type_alias).empty?
 
   # We must always return at least one group, so always keep the files list
   menu_lists << {
