@@ -17,8 +17,8 @@ module PuppetStrings::Markdown
         group = toc
         priv = r.contains_private?
 
-        template = File.join(File.dirname(__FILE__),"templates/table_of_contents.erb")
-        final += ERB.new(File.read(template), nil, '-').result(binding)
+        template = File.join(File.dirname(__FILE__), 'templates/table_of_contents.erb')
+        final += PuppetStrings::Markdown.erb(template).result(binding)
       end
       final
     end
