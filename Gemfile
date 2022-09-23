@@ -22,24 +22,21 @@ group :test do
   gem 'simplecov-console'
   gem 'rspec', '~> 3.1'
   gem 'json_spec', '~> 1.1', '>= 1.1.5'
-  gem 'mdl', '~> 0.8.0' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.4.0')
+  gem 'mdl'
 end
 
 group :acceptance do
-  # Litmus has dependencies which require Ruby 2.5 (Puppet 6) or above.
-  if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.5.0')
-    gem 'puppet_litmus', '~> 0.18'
-    gem 'net-ssh', '~> 5.2'
-  end
+  gem 'puppet_litmus'
+  gem 'net-ssh'
 end
 
 group :development do
-  gem 'github_changelog_generator', '~> 1.15' if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.3.0')
+  gem 'github_changelog_generator'
   gem 'pry'
   gem 'pry-byebug'
 end
 
-gem 'rubocop', '~> 0.81.0' # last release that supports Ruby 2.3.0
+gem 'rubocop', '~> 0.81.0' # Requires work to upgrade
 gem 'rubocop-rspec'
 gem 'rubocop-performance'
 
