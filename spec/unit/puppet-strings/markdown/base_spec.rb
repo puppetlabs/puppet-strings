@@ -141,7 +141,7 @@ class klass::yeah(
 
     describe '#link' do
       it 'returns a valid link' do
-        expect(component.link).to eq 'klassyeah'
+        expect(component.link).to eq 'klass--yeah'
       end
     end
   end

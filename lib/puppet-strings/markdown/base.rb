@@ -95,7 +95,11 @@ module PuppetStrings::Markdown
 
     # @return [Array] parameter tag hashes
     def params
-      select_tags('param')
+      tags = @tags.select { |tag| tag[:tag_name] == 'param' }.map do |param|
+        param[:link] = clean_link("$#{name}::#{param[:name]}")
+        param
+      end
+      tags.empty? ? nil : tags
     end
 
     # @return [Array] example tag hashes
@@ -151,7 +155,7 @@ module PuppetStrings::Markdown
 
     # @return [String] makes the component name suitable for a GitHub markdown link
     def link
-      name.delete('::').strip.gsub(' ','-').downcase
+      clean_link(name)
     end
 
     # Some return, default, or valid values need to be in backticks. Instead of fu in the handler or code_object, this just does the change on the front.
@@ -194,6 +198,18 @@ module PuppetStrings::Markdown
     def select_tags(name)
       tags = @tags.select { |tag| tag[:tag_name] == name }
       tags.empty? ? nil : tags
+    end
+
+    # Convert an input into a string appropriate for an anchor name.
+    #
+    # This converts any character not suitable for an id attribute into a '-'. Generally we're running this on Puppet identifiers for types and
+    # variables, so we only need to worry about the special characters ':' and '$'. With namespaces Puppet variables this should always be produce a
+    # unique result from a unique input, since ':' only appears in pairs, '$' only appears at the beginning, and '-' never appears.
+    #
+    # @param [String] the input to convert
+    # @return [String] the anchor-safe string
+    def clean_link(input)
+      input.tr('^a-zA-Z0-9_-', '-')
     end
   end
 end

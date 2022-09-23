@@ -50,11 +50,11 @@
 The following parameters are available in the `<%= name %>` <%= @type %>:
 
 <% params.each do |param| -%>
-* [`<%= param[:name] %>`](#<%= param[:name] %>)
+* [`<%= param[:name] %>`](#<%= param[:link] %>)
 <% end -%>
 
 <% params.each do |param| -%>
-##### <a name="<%= param[:name] %>"></a>`<%= param[:name] %>`
+##### <a name="<%= param[:link] %>"></a>`<%= param[:name] %>`
 
 <% if param[:types] -%>
 Data type: `<%= param[:types].join(', ') -%>`
