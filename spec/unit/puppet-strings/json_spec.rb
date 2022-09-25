@@ -7,7 +7,7 @@ require 'tempfile'
 describe PuppetStrings::Json do
   before :each do
     # Populate the YARD registry with both Puppet and Ruby source
-    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
+    expect(YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet).enumerator.length).to eq(2)
 # A simple class.
 # @todo Do a thing
 # @note Some note
@@ -25,7 +25,7 @@ define dt(Integer $param1, $param2, String $param3 = hi) {
 }
     SOURCE
 
-    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_PLANS
+    expect(YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet).enumerator.length).to eq(1) if TEST_PUPPET_PLANS
 # A simple plan.
 # @param param1 First param.
 # @param param2 Second param.
@@ -35,7 +35,7 @@ plan plann(String $param1, $param2, Integer $param3 = 1) {
     SOURCE
 
     # Only include Puppet functions for 4.1+
-    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet) if TEST_PUPPET_FUNCTIONS
+    expect(YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet).enumerator.length).to eq(1) if TEST_PUPPET_FUNCTIONS
 # A simple function.
 # @param param1 First param.
 # @param param2 Second param.
@@ -46,7 +46,7 @@ function func(Integer $param1, $param2, String $param3 = hi) {
     SOURCE
 
     # Only include Puppet types for 5.0+
-    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby) if TEST_PUPPET_DATATYPES
+    expect(YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby).enumerator.length).to eq(1) if TEST_PUPPET_DATATYPES
 # Basic Puppet Data Type in Ruby
 #
 # @param msg A message parameter
@@ -67,7 +67,7 @@ Puppet::DataTypes.create_type('RubyDataType') do
 end
 SOURCE
 
-    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :json)
+    expect(YARD::Parser::SourceParser.parse_string(<<-SOURCE, :json).enumerator.length).to eq(1)
 {
   "description": "Allows you to backup your database to local file.",
   "input_method": "stdin",
@@ -92,7 +92,7 @@ SOURCE
 }
     SOURCE
 
-    YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
+    expect(YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby).enumerator.length).to eq(6)
 Puppet::Parser::Functions.newfunction(:func3x, doc: <<-DOC
 An example 3.x function.
 @param [String] first The first parameter.
