@@ -25,6 +25,8 @@ define dt(Integer $param1, $param2, String $param3 = hi) {
 }
     SOURCE
 
+    # Puppet will not parse plans if Puppet[:tasks] is not enabled.
+    Puppet[:tasks] = true if TEST_PUPPET_PLANS
     expect(YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet).enumerator.length).to eq(1) if TEST_PUPPET_PLANS
 # A simple plan.
 # @param param1 First param.
