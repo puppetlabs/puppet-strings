@@ -172,9 +172,9 @@ module PuppetStrings::Markdown
 
     # @return [String] full markdown rendering of a component
     def render(template)
+      file = File.join(File.dirname(__FILE__), 'templates', template)
       begin
-        file = File.join(File.dirname(__FILE__),"templates/#{template}")
-        ERB.new(File.read(file), nil, '-').result(binding)
+        PuppetStrings::Markdown.erb(file).result(binding)
       rescue StandardError => e
         fail "Processing #{@registry[:file]}:#{@registry[:line]} with #{file} => #{e}"
       end
@@ -197,6 +197,19 @@ module PuppetStrings::Markdown
     # @return [String] the anchor-safe string
     def clean_link(input)
       input.tr('^a-zA-Z0-9_-', '-')
+    end
+  end
+
+  # Helper function to load an ERB template.
+  #
+  # @param [String] path The full path to the template file.
+  # @return [ERB] Template
+  def self.erb(path)
+    if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.6.0')
+      ERB.new(File.read(path), trim_mode: '-')
+    else
+      # This outputs warnings in Ruby 2.6+.
+      ERB.new(File.read(path), nil, '-')
     end
   end
 end
