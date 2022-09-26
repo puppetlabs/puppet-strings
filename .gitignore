@@ -39,6 +39,7 @@ Gemfile.lock
 /log/
 /*.gem
 /spec/acceptance/nodesets/
+/spec/fixtures/litmus_inventory.yaml
 /spec/fixtures/modules/
 /spec/fixtures/manifests/
 /inventory.yaml
