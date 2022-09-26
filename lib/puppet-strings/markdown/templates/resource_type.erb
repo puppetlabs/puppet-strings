@@ -87,7 +87,7 @@ Options:
 
 <% end -%>
 <% if prop[:default] -%>
-Default value: `<%= prop[:default] %>`
+Default value:<%= code_maybe_block(prop[:default], type: :ruby) %>
 
 <% end -%>
 <% end -%>

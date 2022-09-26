@@ -57,7 +57,7 @@ The following parameters are available in the `<%= name %>` <%= @type %>:
 ##### <a name="<%= param[:link] %>"></a>`<%= param[:name] %>`
 
 <% if param[:types] -%>
-Data type: `<%= param[:types].join(', ') -%>`
+Data type:<%= code_maybe_block(param[:types].join(', ')) %>
 
 <% end -%>
 <%= param[:text] %>
@@ -79,7 +79,7 @@ Options:
 
 <% end -%>
 <% if defaults && defaults[param[:name]] -%>
-Default value: `<%= defaults[param[:name]] %>`
+Default value:<%= code_maybe_block(defaults[param[:name]]) %>
 
 <% end -%>
 <% end -%>

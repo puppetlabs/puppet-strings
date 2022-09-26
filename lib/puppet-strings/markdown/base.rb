@@ -3,6 +3,7 @@
 require 'puppet-strings'
 require 'puppet-strings/json'
 require 'puppet-strings/yard'
+require 'puppet-strings/markdown/helpers'
 
 # Implements classes that make elements in a YARD::Registry hash easily accessible for template.
 module PuppetStrings::Markdown
@@ -50,6 +51,9 @@ module PuppetStrings::Markdown
   #  ") inherits foo::bar {\n" +
   #  "}"}
   class Base
+    # Helpers for ERB templates
+    include PuppetStrings::Markdown::Helpers
+
     # Set or return the name of the group
     #
     # @param [Optional[String]] Name of the group to set

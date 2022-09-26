@@ -19,7 +19,7 @@
 ##### `<%= param[:name] %>`
 
 <% if param[:types] -%>
-Data type: `<%= param[:types].join(', ') -%>`
+Data type:<%= code_maybe_block(param[:types].join(', ')) %>
 
 <% end -%>
 <%= param[:text] %>
