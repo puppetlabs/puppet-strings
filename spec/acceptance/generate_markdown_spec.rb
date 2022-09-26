@@ -11,30 +11,30 @@ describe 'Generating Markdown' do
     sut_tmp_path
   end
 
-  expected = <<-EOF
-# Reference
+  expected = <<~'EOF'
+    # Reference
 
-## Classes
-* [`test`](#test): This class exists to serve as fixture data for testing the puppet strings face
+    ## Classes
+    * [`test`](#test): This class exists to serve as fixture data for testing the puppet strings face
 
-## Classes
+    ## Classes
 
-### test
+    ### test
 
-#### Examples
-```puppet
-class { "test": }
-```
+    #### Examples
+    ```puppet
+    class { "test": }
+    ```
 
-#### Parameters
+    #### Parameters
 
-##### `package_name`
+    ##### `package_name`
 
-The name of the package
+    The name of the package
 
-##### `service_name`
+    ##### `service_name`
 
-The name of the service
+    The name of the service
 
   EOF
 

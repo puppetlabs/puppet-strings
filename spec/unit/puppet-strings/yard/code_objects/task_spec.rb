@@ -7,32 +7,30 @@ require 'puppet-strings/yard/parsers/json/task_statement'
 describe PuppetStrings::Yard::CodeObjects::Task do
   subject(:spec_subject) { described_class.new(statement) }
 
-  let(:source) do
-    <<-SOURCE
-{
-  "description": "Allows you to backup your database to local file.",
-  "input_method": "stdin",
-  "parameters": {
-    "database": {
-      "description": "Database to connect to",
-      "type": "Optional[String[1]]"
-    },
-    "user": {
-      "description": "The user",
-      "type": "Optional[String[1]]"
-    },
-    "password": {
-      "description": "The password",
-      "type": "Optional[String[1]]"
-    },
-     "sql": {
-      "description": "Path to file you want backup to",
-      "type": "String[1]"
+  let(:source) { <<~'SOURCE' }
+    {
+      "description": "Allows you to backup your database to local file.",
+      "input_method": "stdin",
+      "parameters": {
+        "database": {
+          "description": "Database to connect to",
+          "type": "Optional[String[1]]"
+        },
+        "user": {
+          "description": "The user",
+          "type": "Optional[String[1]]"
+        },
+        "password": {
+          "description": "The password",
+          "type": "Optional[String[1]]"
+        },
+         "sql": {
+          "description": "Path to file you want backup to",
+          "type": "String[1]"
+        }
+      }
     }
-  }
-}
   SOURCE
-  end
   let(:json) { JSON.parse(source) }
   let(:statement) { PuppetStrings::Yard::Parsers::JSON::TaskStatement.new(json, source, 'test.json') }
 

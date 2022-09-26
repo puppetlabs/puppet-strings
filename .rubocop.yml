@@ -124,7 +124,7 @@ Layout/ArgumentAlignment:
 Layout/BeginEndAlignment:
   Enabled: false
 Layout/ClosingHeredocIndentation:
-  Enabled: false
+  Enabled: true
 Layout/EmptyComment:
   Enabled: false
 Layout/EmptyLineAfterGuardClause:
@@ -140,7 +140,7 @@ Layout/FirstArgumentIndentation:
 Layout/HashAlignment:
   Enabled: false
 Layout/HeredocIndentation:
-  Enabled: false
+  Enabled: true
 Layout/LeadingEmptyLines:
   Enabled: false
 Layout/SpaceAroundMethodCallOperator:

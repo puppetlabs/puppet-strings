@@ -18,9 +18,9 @@ describe PuppetStrings::Yard::Util do
     end
 
     it 'does not affect newlines when %Q notation is used' do
-      str = <<-STR
-%Q{this is
-a test string}
+      str = <<~'STR'
+        %Q{this is
+        a test string}
       STR
       expect(spec_subject.scrub_string(str)).to eq("this is\na test string")
     end

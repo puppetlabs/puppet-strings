@@ -36,13 +36,11 @@ describe PuppetStrings::Yard::Handlers::Puppet::DataTypeAliasHandler, if: TEST_P
 
   describe 'parsing a data type alias with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-  # A simple foo type.
-  # @summary A short summary.
-  type Testype = String[1]
-  SOURCE
-      end
+      let(:source) { <<~'SOURCE' }
+        # A simple foo type.
+        # @summary A short summary.
+        type Testype = String[1]
+      SOURCE
 
       it 'parses the summary' do
         expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -53,13 +51,11 @@ describe PuppetStrings::Yard::Handlers::Puppet::DataTypeAliasHandler, if: TEST_P
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-  # A simple foo type.
-  # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
-  type Testype = String[1]
-  SOURCE
-      end
+      let(:source) { <<~'SOURCE' }
+        # A simple foo type.
+        # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
+        type Testype = String[1]
+      SOURCE
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_data_type_alias 'Testype' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process

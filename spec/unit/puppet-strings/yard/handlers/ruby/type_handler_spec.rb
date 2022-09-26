@@ -18,12 +18,10 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeHandler do
   end
 
   describe 'parsing a type with a missing description' do
-    let(:source) do
-      <<-SOURCE
-Puppet::Type.newtype(:database) do
-end
+    let(:source) { <<~'SOURCE' }
+      Puppet::Type.newtype(:database) do
+      end
     SOURCE
-    end
 
     it 'logs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing a description for Puppet resource type 'database' at \(stdin\):1\.}).to_stdout_from_any_process
@@ -31,13 +29,11 @@ end
   end
 
   describe 'parsing a type with an invalid docstring assignment' do
-    let(:source) do
-      <<-SOURCE
-Puppet::Type.newtype(:database) do
-  @doc = 123
-end
+    let(:source) { <<~'SOURCE' }
+      Puppet::Type.newtype(:database) do
+        @doc = 123
+      end
     SOURCE
-    end
 
     it 'logs an error' do
       expect { spec_subject }.to output(%r{Failed to parse docstring}).to_stdout_from_any_process
@@ -45,13 +41,11 @@ end
   end
 
   describe 'parsing a type with a valid docstring assignment' do
-    let(:source) do
-      <<-SOURCE
-Puppet::Type.newtype(:database) do
-  @doc = 'An example database server resource type.'
-end
+    let(:source) { <<~'SOURCE' }
+      Puppet::Type.newtype(:database) do
+        @doc = 'An example database server resource type.'
+      end
     SOURCE
-    end
 
     it 'correctlies detect the docstring' do
       expect(spec_subject.size).to eq(1)
@@ -61,15 +55,13 @@ end
   end
 
   describe 'parsing a type with a docstring which uses ruby `%Q` notation' do
-    let(:source) do
-      <<-'SOURCE'
-Puppet::Type.newtype(:database) do
-  test = 'hello world!'
-  desc %Q{This is a multi-line
-  doc in %Q with #{test}}
-end
+    let(:source) { <<~'SOURCE' }
+      Puppet::Type.newtype(:database) do
+        test = 'hello world!'
+        desc %Q{This is a multi-line
+        doc in %Q with #{test}}
+      end
     SOURCE
-    end
 
     it 'strips the `%Q{}` and render the interpolation expression literally' do
       expect(spec_subject.size).to eq(1)
@@ -79,18 +71,16 @@ end
   end
 
   describe 'parsing a type with a param with arguments' do
-    let(:source) do
-      <<-SOURCE
-Puppet::Type.newtype(:database) do
-  feature :encryption, 'The provider supports encryption.', methods: [:encrypt]
+    let(:source) { <<~'SOURCE' }
+      Puppet::Type.newtype(:database) do
+        feature :encryption, 'The provider supports encryption.', methods: [:encrypt]
 
-  newparam(:encryption_key, :parent => Puppet::Parameter::Boolean, required_features: :encryption) do
-    desc 'The encryption key to use.'
-    defaultto false
-  end
-end
+        newparam(:encryption_key, :parent => Puppet::Parameter::Boolean, required_features: :encryption) do
+          desc 'The encryption key to use.'
+          defaultto false
+        end
+      end
     SOURCE
-    end
 
     it 'correctlies detect the required_feature' do
       expect(spec_subject.size).to eq(1)
@@ -106,60 +96,58 @@ end
   end
 
   describe 'parsing a type definition' do
-    let(:source) do
-      <<-SOURCE
-# @!puppet.type.param [value1, value2] dynamic_param Documentation for a dynamic parameter.
-# @!puppet.type.property [foo, bar] dynamic_prop Documentation for a dynamic property.
-Puppet::Type.newtype(:database) do
-  desc 'An example database server resource type.'
-  feature :encryption, 'The provider supports encryption.', methods: [:encrypt]
+    let(:source) { <<~'SOURCE' }
+      # @!puppet.type.param [value1, value2] dynamic_param Documentation for a dynamic parameter.
+      # @!puppet.type.property [foo, bar] dynamic_prop Documentation for a dynamic property.
+      Puppet::Type.newtype(:database) do
+        desc 'An example database server resource type.'
+        feature :encryption, 'The provider supports encryption.', methods: [:encrypt]
 
-  feature :magic,
-    'The feature docstring should have
-    whitespace and newlines stripped out.'
+        feature :magic,
+          'The feature docstring should have
+          whitespace and newlines stripped out.'
 
-  ensurable do
-    desc 'What state the database should be in.'
-    defaultvalues
-    aliasvalue(:up, :present)
-    aliasvalue(:down, :absent)
-    defaultto :up
-  end
+        ensurable do
+          desc 'What state the database should be in.'
+          defaultvalues
+          aliasvalue(:up, :present)
+          aliasvalue(:down, :absent)
+          defaultto :up
+        end
 
-  newparam(:address) do
-    isnamevar
-    desc 'The database server name.'
-  end
+        newparam(:address) do
+          isnamevar
+          desc 'The database server name.'
+        end
 
-  newparam(:encryption_key, required_features: :encryption) do
-    desc 'The encryption key to use.'
-  end
+        newparam(:encryption_key, required_features: :encryption) do
+          desc 'The encryption key to use.'
+        end
 
-  newparam(:encrypt, :parent => Puppet::Parameter::Boolean) do
-    desc 'Whether or not to encrypt the database.'
-    defaultto false
-  end
+        newparam(:encrypt, :parent => Puppet::Parameter::Boolean) do
+          desc 'Whether or not to encrypt the database.'
+          defaultto false
+        end
 
-  newparam(:backup) do
-      desc 'How often to backup the database.'
-      defaultto :never
-      newvalues(:daily, :monthly, :never)
-  end
+        newparam(:backup) do
+            desc 'How often to backup the database.'
+            defaultto :never
+            newvalues(:daily, :monthly, :never)
+        end
 
-  newproperty(:file) do
-    desc 'The database file to use.'
-  end
+        newproperty(:file) do
+          desc 'The database file to use.'
+        end
 
-  newproperty(:log_level) do
-    desc 'The log level to use.'
-    newvalue(:debug)
-    newvalue(:warn)
-    newvalue(:error)
-    defaultto 'warn'
-  end
-end
+        newproperty(:log_level) do
+          desc 'The log level to use.'
+          newvalue(:debug)
+          newvalue(:warn)
+          newvalue(:error)
+          defaultto 'warn'
+        end
+      end
     SOURCE
-    end
 
     it 'registers a type object' do
       expect(spec_subject.size).to eq(1)
@@ -232,14 +220,12 @@ end
   end
 
   describe 'parsing a valid type with string based name' do
-    let(:source) do
-      <<-SOURCE
-Puppet::Type.newtype(:'database') do
-  desc 'An example database server resource type.'
-  ensurable
-end
+    let(:source) { <<~'SOURCE' }
+      Puppet::Type.newtype(:'database') do
+        desc 'An example database server resource type.'
+        ensurable
+      end
     SOURCE
-    end
 
     it 'registers a type object with default ensure values' do
       expect(spec_subject.size).to eq(1)
@@ -249,14 +235,12 @@ end
   end
 
   describe 'parsing an ensurable type with default ensure values' do
-    let(:source) do
-      <<-SOURCE
-Puppet::Type.newtype(:database) do
-  desc 'An example database server resource type.'
-  ensurable
-end
+    let(:source) { <<~'SOURCE' }
+      Puppet::Type.newtype(:database) do
+        desc 'An example database server resource type.'
+        ensurable
+      end
     SOURCE
-    end
 
     it 'registers a type object with default ensure values' do
       expect(spec_subject.size).to eq(1)
@@ -269,16 +253,14 @@ end
   end
 
   describe 'parsing a type with a parameter with the name of "name"' do
-    let(:source) do
-      <<-SOURCE
-Puppet::Type.newtype(:database) do
-  desc 'An example database server resource type.'
-  newparam(:name) do
-    desc 'The database server name.'
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      Puppet::Type.newtype(:database) do
+        desc 'An example database server resource type.'
+        newparam(:name) do
+          desc 'The database server name.'
+        end
+      end
     SOURCE
-    end
 
     it 'registers a type object with the "name" parameter as the namevar' do
       expect(spec_subject.size).to eq(1)
@@ -290,16 +272,14 @@ end
   end
 
   describe 'parsing a type with a check with the name of "onlyif"' do
-    let(:source) do
-      <<-SOURCE
-Puppet::Type.newtype(:testexec) do
-  desc 'An example exec type with a check.'
-  newcheck(:onlyif) do
-    desc 'a test check param'
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      Puppet::Type.newtype(:testexec) do
+        desc 'An example exec type with a check.'
+        newcheck(:onlyif) do
+          desc 'a test check param'
+        end
+      end
     SOURCE
-    end
 
     it 'registers a check object on the parent type object' do
       expect(spec_subject.size).to eq(1)
@@ -311,13 +291,11 @@ end
 
   describe 'parsing a type with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-Puppet::Type.newtype(:database) do
-  @doc = '@summary A short summary.'
-end
+      let(:source) { <<~'SOURCE' }
+        Puppet::Type.newtype(:database) do
+          @doc = '@summary A short summary.'
+        end
       SOURCE
-      end
 
       it 'parses the summary' do
         expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -328,13 +306,11 @@ end
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-Puppet::Type.newtype(:database) do
-  @doc = '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!'
-end
+      let(:source) { <<~'SOURCE' }
+        Puppet::Type.newtype(:database) do
+          @doc = '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!'
+        end
       SOURCE
-      end
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_type 'database' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process

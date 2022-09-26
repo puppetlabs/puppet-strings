@@ -35,20 +35,18 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
   end
 
   describe 'parsing a defined type with a docstring' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo defined type.
-# @param name The type name.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-define foo(Integer $param1, $param2, String $param3 = hi) {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo defined type.
+      # @param name The type name.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      define foo(Integer $param1, $param2, String $param3 = hi) {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'does not output a warning for title/name' do
       expect { spec_subject }.not_to output(%r{\[warn\].*(name|title).*}).to_stdout_from_any_process
@@ -85,20 +83,18 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a defined type with a missing parameter' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo defined type.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-# @param param4 missing!
-define foo(Integer $param1, $param2, String $param3 = hi) {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo defined type.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      # @param param4 missing!
+      define foo(Integer $param1, $param2, String $param3 = hi) {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):6\.}).to_stdout_from_any_process
@@ -106,18 +102,16 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a defined type with a missing @param tag' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo defined type.
-# @param param1 First param.
-# @param param2 Second param.
-define foo(Integer $param1, $param2, String $param3 = hi) {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo defined type.
+      # @param param1 First param.
+      # @param param2 Second param.
+      define foo(Integer $param1, $param2, String $param3 = hi) {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):4\.}).to_stdout_from_any_process
@@ -125,19 +119,17 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a defined type with a typed parameter that also has a @param tag type which matches' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo defined type.
-# @param [Integer] param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-define foo(Integer $param1, $param2, String $param3 = hi) {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo defined type.
+      # @param [Integer] param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      define foo(Integer $param1, $param2, String $param3 = hi) {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'respects the type that was documented' do
       expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -149,19 +141,17 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a defined type with a typed parameter that also has a @param tag type which does not match' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo defined type.
-# @param [Boolean] param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-define foo(Integer $param1, $param2, String $param3 = hi) {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo defined type.
+      # @param [Boolean] param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      define foo(Integer $param1, $param2, String $param3 = hi) {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }
@@ -171,19 +161,17 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a defined type with a untyped parameter that also has a @param tag type' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo defined type.
-# @param param1 First param.
-# @param [Boolean] param2 Second param.
-# @param param3 Third param.
-define foo(Integer $param1, $param2, String $param3 = hi) {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo defined type.
+      # @param param1 First param.
+      # @param [Boolean] param2 Second param.
+      # @param param3 Third param.
+      define foo(Integer $param1, $param2, String $param3 = hi) {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'respects the type that was documented' do
       expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -196,20 +184,18 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
 
   describe 'parsing a defined type with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-# A simple foo defined type.
-# @summary A short summary.
-# @param param1 First param.
-# @param [Boolean] param2 Second param.
-# @param param3 Third param.
-define foo(Integer $param1, $param2, String $param3 = hi) {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+      let(:source) { <<~'SOURCE' }
+        # A simple foo defined type.
+        # @summary A short summary.
+        # @param param1 First param.
+        # @param [Boolean] param2 Second param.
+        # @param param3 Third param.
+        define foo(Integer $param1, $param2, String $param3 = hi) {
+          file { '/tmp/foo':
+            ensure => present
+          }
+        }
       SOURCE
-      end
 
       it 'parses the summary' do
         expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -220,20 +206,18 @@ define foo(Integer $param1, $param2, String $param3 = hi) {
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-# A simple foo defined type.
-# @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
-# @param param1 First param.
-# @param [Boolean] param2 Second param.
-# @param param3 Third param.
-define foo(Integer $param1, $param2, String $param3 = hi) {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+      let(:source) { <<~'SOURCE' }
+        # A simple foo defined type.
+        # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
+        # @param param1 First param.
+        # @param [Boolean] param2 Second param.
+        # @param param3 Third param.
+        define foo(Integer $param1, $param2, String $param3 = hi) {
+          file { '/tmp/foo':
+            ensure => present
+          }
+        }
       SOURCE
-      end
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_defined_type 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process

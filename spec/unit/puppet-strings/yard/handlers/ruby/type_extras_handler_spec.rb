@@ -10,8 +10,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
   end
 
   describe 'parsing source with newproperty' do
-    let(:source) do
-      <<~SOURCE
+    let(:source) { <<~'SOURCE' }
       Puppet::Type.newtype(:database) do
         desc 'database'
       end
@@ -19,7 +18,6 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
         desc 'The database file to use.'
       end
     SOURCE
-    end
 
     it 'generates a doc string for a property' do
       expect(spec_subject.size).to eq(1)
@@ -31,8 +29,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
   end
 
   describe 'parsing source with newparam' do
-    let(:source) do
-      <<~SOURCE
+    let(:source) { <<~'SOURCE' }
       Puppet::Type.newtype(:database) do
         desc 'database'
       end
@@ -40,7 +37,6 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
         desc 'The database server name.'
       end
     SOURCE
-    end
 
     it 'generates a doc string for a parameter that is also a namevar' do
       expect(spec_subject.size).to eq(1)
@@ -53,8 +49,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
   end
 
   describe 'parsing source with ensurable' do
-    let(:source) do
-      <<~SOURCE
+    let(:source) { <<~'SOURCE' }
       Puppet::Type.newtype(:database) do
         desc 'database'
       end
@@ -62,7 +57,6 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
         desc 'What state the database should be in.'
       end
     SOURCE
-    end
 
     it 'generates a doc string for an ensurable' do
       expect(spec_subject.size).to eq(1)

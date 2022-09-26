@@ -35,19 +35,17 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
   end
 
   describe 'parsing a class with a docstring' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo class.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo class.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'registers a class object' do
       expect(spec_subject.size).to eq(1)
@@ -77,20 +75,18 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
   end
 
   describe 'parsing a class with a missing parameter' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo class.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-# @param param4 missing!
-class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo class.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      # @param param4 missing!
+      class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):6\.}).to_stdout_from_any_process
@@ -98,18 +94,16 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
   end
 
   describe 'parsing a class with a missing @param tag' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo class.
-# @param param1 First param.
-# @param param2 Second param.
-class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo class.
+      # @param param1 First param.
+      # @param param2 Second param.
+      class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):4\.}).to_stdout_from_any_process
@@ -117,19 +111,17 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
   end
 
   describe 'parsing a class with a typed parameter that also has a @param tag type which matches' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo class.
-# @param [Integer] param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo class.
+      # @param [Integer] param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'respects the type that was documented' do
       expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -141,19 +133,17 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
   end
 
   describe 'parsing a class with a typed parameter that also has a @param tag type which does not match' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo class.
-# @param [Boolean] param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo class.
+      # @param [Boolean] param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }
@@ -165,19 +155,17 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
   end
 
   describe 'parsing a class with a untyped parameter that also has a @param tag type' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo class.
-# @param param1 First param.
-# @param [Boolean] param2 Second param.
-# @param param3 Third param.
-class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo class.
+      # @param param1 First param.
+      # @param [Boolean] param2 Second param.
+      # @param param3 Third param.
+      class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
     SOURCE
-    end
 
     it 'respects the type that was documented' do
       expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -190,17 +178,15 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
 
   describe 'parsing a class with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-  # A simple foo class.
-  # @summary A short summary.
-  class foo() {
-    file { '/tmp/foo':
-      ensure => present
-    }
-  }
+      let(:source) { <<~'SOURCE' }
+        # A simple foo class.
+        # @summary A short summary.
+        class foo() {
+          file { '/tmp/foo':
+            ensure => present
+          }
+        }
       SOURCE
-      end
 
       it 'parses the summary' do
         expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -211,17 +197,15 @@ class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-  # A simple foo class.
-  # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
-  class foo() {
-    file { '/tmp/foo':
-      ensure => present
-    }
-  }
+      let(:source) { <<~'SOURCE' }
+        # A simple foo class.
+        # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
+        class foo() {
+          file { '/tmp/foo':
+            ensure => present
+          }
+        }
       SOURCE
-      end
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_class 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process

@@ -26,11 +26,9 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing invalid Puppet source code' do
-    let(:source) do
-      <<SOURCE
-class foo {
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      class foo {
+    SOURCE
 
     it 'raises an exception' do
       expect { spec_subject.parse }.to output(%r{\[error\]: Failed to parse test.pp: Syntax error at end of (file|input)}).to_stdout_from_any_process
@@ -38,20 +36,18 @@ SOURCE
   end
 
   describe 'parsing class definitions' do
-    let(:source) do
-      <<SOURCE
-notice hello
-# A simple foo class.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      notice hello
+      # A simple foo class.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      class foo(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
+    SOURCE
 
     it 'onlies return the class statement' do
       spec_subject.parse
@@ -78,14 +74,12 @@ SOURCE
   end
 
   describe 'parsing nested class definitions' do
-    let(:source) do
-      <<SOURCE
-class foo {
-  class bar {
-  }
-}
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      class foo {
+        class bar {
+        }
+      }
+    SOURCE
 
     it 'parses both class statements' do
       spec_subject.parse
@@ -102,20 +96,18 @@ SOURCE
   end
 
   describe 'parsing defined types' do
-    let(:source) do
-      <<SOURCE
-notice hello
-# A simple foo defined type.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-define foo(Integer $param1, $param2, String $param3 = hi) {
-  file { '/tmp/foo':
-    ensure => present
-  }
-}
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      notice hello
+      # A simple foo defined type.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      define foo(Integer $param1, $param2, String $param3 = hi) {
+        file { '/tmp/foo':
+          ensure => present
+        }
+      }
+    SOURCE
 
     it 'parses the defined type statement' do
       spec_subject.parse
@@ -177,18 +169,16 @@ SOURCE
   end
 
   describe 'parsing puppet functions', if: TEST_PUPPET_FUNCTIONS do
-    let(:source) do
-      <<SOURCE
-notice hello
-# A simple foo function.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-function foo(Integer $param1, $param2, String $param3 = hi) {
-  notice world
-}
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      notice hello
+      # A simple foo function.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      function foo(Integer $param1, $param2, String $param3 = hi) {
+        notice world
+      }
+    SOURCE
 
     it 'parses the puppet function statement' do
       spec_subject.parse
@@ -214,15 +204,13 @@ SOURCE
   end
 
   describe 'parsing puppet functions with return type in defintion', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) do
-      <<SOURCE
-  # A simple foo function.
-  # @return Returns a string
-  function foo() >> String {
-    notice world
-  }
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @return Returns a string
+      function foo() >> String {
+        notice world
+      }
+    SOURCE
 
     it 'parses the puppet function statement' do
       spec_subject.parse
@@ -234,15 +222,13 @@ SOURCE
   end
 
   describe 'parsing puppet functions with complex return types in defintion', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) do
-      <<SOURCE
-  # A simple foo function.
-  # @return Returns a struct with a hash including one key which must be an integer between 1 and 10.
-  function foo() >> Struct[{'a' => Integer[1, 10]}] {
-    notice world
-  }
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @return Returns a struct with a hash including one key which must be an integer between 1 and 10.
+      function foo() >> Struct[{'a' => Integer[1, 10]}] {
+        notice world
+      }
+    SOURCE
 
     it 'parses the puppet function statement' do
       spec_subject.parse
@@ -255,12 +241,10 @@ SOURCE
 
   describe 'parsing type alias definitions', if: TEST_PUPPET_DATATYPES do
     context 'given a type alias on a single line' do
-      let(:source) do
-        <<-SOURCE
-# A simple foo type.
-type Module::Typename = Variant[Stdlib::Windowspath, Stdlib::Unixpath]
-SOURCE
-      end
+      let(:source) { <<~'SOURCE' }
+        # A simple foo type.
+        type Module::Typename = Variant[Stdlib::Windowspath, Stdlib::Unixpath]
+      SOURCE
 
       it 'parses the puppet type statement' do
         spec_subject.parse
@@ -274,16 +258,14 @@ SOURCE
     end
 
     context 'given a type alias over multiple lines' do
-      let(:source) do
-        <<-SOURCE
-# A multiline foo type
-# with long docs
-type OptionsWithoutName = Struct[{
-  value_type => Optional[ValueType],
-  merge      => Optional[MergeType]
-}]
-SOURCE
-      end
+      let(:source) { <<~'SOURCE' }
+        # A multiline foo type
+        # with long docs
+        type OptionsWithoutName = Struct[{
+          value_type => Optional[ValueType],
+          merge      => Optional[MergeType]
+        }]
+      SOURCE
 
       it 'parses the puppet type statement' do
         spec_subject.parse

@@ -10,7 +10,7 @@
 #   @param [Integer] param2 param2 func1 documentation
 #   @return [Optional[String]]
 Puppet::DataTypes.create_type('AcceptanceDataType') do
-  interface <<-PUPPET
+  interface <<~'PUPPET'
     attributes => {
       param1 => Variant[Numeric, String[1,2]],
       param2 => { type => Optional[String[1]], value => "param2" }
@@ -18,5 +18,5 @@ Puppet::DataTypes.create_type('AcceptanceDataType') do
     functions => {
       func1 => Callable[[String, Integer], Optional[String]]
     }
-    PUPPET
+  PUPPET
 end

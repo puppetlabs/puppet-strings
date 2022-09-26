@@ -36,19 +36,17 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a docstring' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-# @return [Undef] Returns nothing.
-function foo(Integer $param1, $param2, String $param3 = hi) {
-  notice 'hello world'
-  undef
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      # @return [Undef] Returns nothing.
+      function foo(Integer $param1, $param2, String $param3 = hi) {
+        notice 'hello world'
+        undef
+      }
     SOURCE
-    end
 
     it 'registers a function object' do
       expect(spec_subject.size).to eq(1)
@@ -83,19 +81,17 @@ function foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a function with a missing parameter' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-# @param param4 missing!
-# @return [Undef] Returns nothing.
-function foo(Integer $param1, $param2, String $param3 = hi) {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      # @param param4 missing!
+      # @return [Undef] Returns nothing.
+      function foo(Integer $param1, $param2, String $param3 = hi) {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }
@@ -105,17 +101,15 @@ function foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a function with a missing @param tag' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-# @param param1 First param.
-# @param param2 Second param.
-# @return [Undef] Returns nothing.
-function foo(Integer $param1, $param2, String $param3 = hi) {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @return [Undef] Returns nothing.
+      function foo(Integer $param1, $param2, String $param3 = hi) {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):5\.}).to_stdout_from_any_process
@@ -123,18 +117,16 @@ function foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a function with a typed parameter that also has a @param tag type which matches' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-# @param [Integer] param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-# @return [Undef] Returns nothing.
-function foo(Integer $param1, $param2, String $param3 = hi) {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @param [Integer] param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      # @return [Undef] Returns nothing.
+      function foo(Integer $param1, $param2, String $param3 = hi) {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'respects the type that was documented' do
       expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -146,18 +138,16 @@ function foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a function with a typed parameter that also has a @param tag type which does not match' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-# @param [Boolean] param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-# @return [Undef] Returns nothing.
-function foo(Integer $param1, $param2, String $param3 = hi) {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @param [Boolean] param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      # @return [Undef] Returns nothing.
+      function foo(Integer $param1, $param2, String $param3 = hi) {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }
@@ -169,18 +159,16 @@ function foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a function with a untyped parameter that also has a @param tag type' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-# @param param1 First param.
-# @param [Boolean] param2 Second param.
-# @param param3 Third param.
-# @return [Undef] Returns nothing.
-function foo(Integer $param1, $param2, String $param3 = hi) {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @param param1 First param.
+      # @param [Boolean] param2 Second param.
+      # @param param3 Third param.
+      # @return [Undef] Returns nothing.
+      function foo(Integer $param1, $param2, String $param3 = hi) {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'respects the type that was documented' do
       expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -192,17 +180,15 @@ function foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a function with a missing @return tag' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-function foo(Integer $param1, $param2, String $param3 = hi) {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      function foo(Integer $param1, $param2, String $param3 = hi) {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):5\.}).to_stdout_from_any_process
@@ -210,14 +196,12 @@ function foo(Integer $param1, $param2, String $param3 = hi) {
   end
 
   describe 'parsing a function with a missing @return tag and return type specified in the function definition', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-function foo() >> String {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      function foo() >> String {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'registers a function object with the correct return type' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):2\.}).to_stdout_from_any_process
@@ -233,15 +217,13 @@ function foo() >> String {
   end
 
   describe 'parsing a function with a non-conflicting return tag and type in function definition', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function
-# @return [String] Hi there
-function foo() >> String {
-  notice 'hi there'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function
+      # @return [String] Hi there
+      function foo() >> String {
+        notice 'hi there'
+      }
     SOURCE
-    end
 
     it 'does not output a warning if return types match' do
       expect { spec_subject }.not_to output(%r{Documented return type does not match return type in function definition}).to_stdout_from_any_process
@@ -249,15 +231,13 @@ function foo() >> String {
   end
 
   describe 'parsing a function with a conflicting return tag and type in function definition', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-# @return [Integer] this is a lie.
-function foo() >> Struct[{'a' => Integer[1, 10]}] {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @return [Integer] this is a lie.
+      function foo() >> Struct[{'a' => Integer[1, 10]}] {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'prefers the return type from the function definition' do
       expect { spec_subject }.to output(%r{\[warn\]: Documented return type does not match return type in function definition near \(stdin\):3\.}).to_stdout_from_any_process
@@ -273,15 +253,13 @@ function foo() >> Struct[{'a' => Integer[1, 10]}] {
   end
 
   describe 'parsing a function with return tag without type', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-# @return This is something.
-function foo() >> Struct[{'a' => Integer[1, 10]}] {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      # @return This is something.
+      function foo() >> Struct[{'a' => Integer[1, 10]}] {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'gets the return type from the function definition' do
       expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -297,14 +275,12 @@ function foo() >> Struct[{'a' => Integer[1, 10]}] {
   end
 
   describe 'parsing a function without a return tag or return type in the function definition' do
-    let(:source) do
-      <<-SOURCE
-# A simple foo function.
-function foo() {
-  notice 'hello world'
-}
+    let(:source) { <<~'SOURCE' }
+      # A simple foo function.
+      function foo() {
+        notice 'hello world'
+      }
     SOURCE
-    end
 
     it 'adds a return tag with a default type value of Any' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):2\.}).to_stdout_from_any_process
@@ -321,16 +297,14 @@ function foo() {
 
   describe 'parsing a function with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-# A simple foo function.
-# @summary A short summary.
-# @return [String] foo
-function foo() {
-  notice 'hello world'
-}
+      let(:source) { <<~'SOURCE' }
+        # A simple foo function.
+        # @summary A short summary.
+        # @return [String] foo
+        function foo() {
+          notice 'hello world'
+        }
       SOURCE
-      end
 
       it 'parses the summary' do
         expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -341,16 +315,14 @@ function foo() {
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-# A simple foo function.
-# @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
-function foo() {
-  notice 'hello world'
-}
+      let(:source) { <<~'SOURCE' }
+        # A simple foo function.
+        # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
+        function foo() {
+          notice 'hello world'
+        }
 
       SOURCE
-      end
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
