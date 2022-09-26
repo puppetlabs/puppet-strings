@@ -98,11 +98,11 @@ Default value: `<%= prop[:default] %>`
 The following parameters are available in the `<%= name %>` <%= @type %>.
 
 <% parameters.each do |param| -%>
-* [`<%= param[:name] %>`](#<%= param[:name] %>)
+* [`<%= param[:name] %>`](#<%= param[:link] %>)
 <% end -%>
 
 <% parameters.each do |param| -%>
-##### <a name="<%= param[:name] %>"></a>`<%= param[:name] %>`
+##### <a name="<%= param[:link] %>"></a>`<%= param[:name] %>`
 
 <% if param[:values] -%>
 Valid values: `<%= param[:values].map { |value| value_string(value) }.join('`, `') %>`

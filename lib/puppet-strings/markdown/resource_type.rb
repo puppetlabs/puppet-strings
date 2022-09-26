@@ -29,13 +29,19 @@ module PuppetStrings::Markdown
     def properties_and_checks
       return nil if properties.nil? && checks.nil?
 
-      ((properties || []) + (checks || [])).sort_by { |p| p[:name] }
+      ((properties || []) + (checks || [])).sort_by { |p| p[:name] }.map do |prop|
+        prop[:link] = clean_link("$#{name}::#{prop[:name]}")
+        prop
+      end
     end
 
     def parameters
       return nil unless @registry[:parameters]
 
-      @registry[:parameters].sort_by { |p| p[:name] }
+      @registry[:parameters].sort_by { |p| p[:name] }.map do |param|
+        param[:link] = clean_link("$#{name}::#{param[:name]}")
+        param
+      end
     end
 
     def regex_in_data_type?(data_type)
