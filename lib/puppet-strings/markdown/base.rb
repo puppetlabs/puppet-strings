@@ -158,19 +158,6 @@ module PuppetStrings::Markdown
       clean_link(name)
     end
 
-    # Some return, default, or valid values need to be in backticks. Instead of fu in the handler or code_object, this just does the change on the front.
-    # @param value
-    #  any string
-    # @return [String] value or value in backticks if it is in a list
-    def value_string(value)
-      to_symbol = %w[undef true false]
-      if to_symbol.include? value
-        return "`#{value}`"
-      else
-        return value
-      end
-    end
-
     def private?
       @tags.any? { |tag| tag[:tag_name] == 'api' && tag[:text] == 'private' }
     end
