@@ -29,7 +29,7 @@ Lint/ElseLayout:
 Lint/UnreachableCode:
   Enabled: true
 
-Lint/UselessComparison:
+Lint/BinaryOperatorWithIdenticalOperands:
   Enabled: true
 
 # MAYBE useful - no return inside ensure block.
@@ -201,7 +201,7 @@ Style/WordArray:
 Style/RedundantPercentQ:
   Enabled: false
 
-Layout/Tab:
+Layout/IndentationStyle:
   Enabled: false
 
 Layout/SpaceBeforeSemicolon:
@@ -511,7 +511,7 @@ Layout/MultilineMethodCallBraceLayout:
 Layout/MultilineBlockLayout:
   Enabled: false
 
-Lint/UselessAssignment:
+Lint/BinaryOperatorWithIdenticalOperands:
   Enabled: false
 
 Lint/DuplicateMethods:

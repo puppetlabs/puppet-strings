@@ -36,7 +36,7 @@ group :development do
   gem 'pry-byebug'
 end
 
-gem 'rubocop', '~> 0.81.0' # Requires work to upgrade
+gem 'rubocop'
 gem 'rubocop-rspec'
 gem 'rubocop-performance'
 
