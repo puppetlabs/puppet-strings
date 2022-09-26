@@ -8,6 +8,9 @@ module PuppetStrings::Markdown
     attr_reader :alias_of
     attr_reader :functions
 
+    group_name 'Data types'
+    yard_types [:puppet_data_type, :puppet_data_type_alias]
+
     def initialize(registry)
       @template = 'data_type.erb'
       super(registry, 'data type')

@@ -5,6 +5,9 @@ require 'puppet-strings/markdown/base'
 module PuppetStrings::Markdown
   # Generates Markdown for a Puppet Task.
   class PuppetTask < Base
+    group_name 'Tasks'
+    yard_types [:puppet_task]
+
     def initialize(registry)
       @template = 'puppet_task.erb'
       @registry = registry

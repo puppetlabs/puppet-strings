@@ -7,6 +7,9 @@ module PuppetStrings::Markdown
   class Function < Base
     attr_reader :signatures
 
+    group_name 'Functions'
+    yard_types [:puppet_function]
+
     def initialize(registry)
       @template = 'function.erb'
       super(registry, 'function')

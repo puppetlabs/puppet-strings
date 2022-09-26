@@ -1,25 +1,25 @@
-<% if group.length > 0 -%>
+<% unless items.empty? -%>
 ### <%= group_name %>
+<% if has_public -%>
+<% if has_private # only display public heading if we have both -%>
 
-<% if priv -%>
 #### Public <%= group_name %>
+<% end -%>
 
-<% group.each do |item| -%>
+<% items.each do |item| -%>
 <% unless item[:private] -%>
 * [`<%= item[:name] %>`](#<%= item[:link] %>)<% unless item[:desc].nil? || item[:desc].empty? %>: <%= item[:desc] %><% end %>
 <% end -%>
 <% end -%>
+<% end -%>
+<% if has_private -%>
 
 #### Private <%= group_name %>
 
-<% group.each do |item| -%>
+<% items.each do |item| -%>
 <% if item[:private] -%>
 * `<%= item[:name] %>`<% unless item[:desc].nil? || item[:desc].empty? %>: <%= item[:desc] %><% end %>
 <% end -%>
-<% end -%>
-<% else -%>
-<% group.each do |item| -%>
-* [`<%= item[:name] %>`](#<%= item[:link] %>)<% unless item[:desc].nil? || item[:desc].empty? %>: <%= item[:desc] %><% end %>
 <% end -%>
 <% end -%>
 
