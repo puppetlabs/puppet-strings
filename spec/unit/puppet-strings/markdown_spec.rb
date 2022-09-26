@@ -46,7 +46,7 @@ describe PuppetStrings::Markdown do
   let(:output) { PuppetStrings::Markdown.generate }
 
   RSpec.shared_examples 'markdown lint checker' do |parameter|
-    it 'should not generate markdown lint errors from the rendered markdown', if: mdl_available do
+    it 'should not generate markdown lint errors from the rendered markdown' do
       expect(output).to have_no_markdown_lint_errors
     end
   end

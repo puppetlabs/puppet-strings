@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
 if ENV['COVERAGE'] == 'yes'
+  require 'codecov'
   require 'simplecov'
   require 'simplecov-console'
 
   SimpleCov.formatters = [
     SimpleCov::Formatter::HTMLFormatter,
     SimpleCov::Formatter::Console,
+    SimpleCov::Formatter::Codecov,
   ]
-
-  unless Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.3.0')
-    require 'codecov'
-    SimpleCov.formatters << SimpleCov::Formatter::Codecov
-  end
 
   SimpleCov.start do
     track_files 'lib/**/*.rb'
@@ -22,6 +19,7 @@ if ENV['COVERAGE'] == 'yes'
 end
 
 require 'mocha'
+require 'mdl'
 require 'rspec'
 require 'json_spec'
 require 'puppet/version'
@@ -54,15 +52,7 @@ RSpec.configure do |config|
   end
 end
 
-def mdl_available
-  @mdl_available ||= !Gem::Specification.select { |item| item.name.casecmp('mdl').zero? }.empty?
-end
-
 def lint_markdown(content)
-  return [] unless mdl_available
-
-  require 'mdl'
-
   # Load default mdl ruleset
   ruleset = MarkdownLint::RuleSet.new.tap { |r| r.load_default }
 
