@@ -3,6 +3,7 @@
 require 'puppet-strings/markdown/base'
 
 module PuppetStrings::Markdown
+  # Generates Markdown for a Puppet Class.
   class PuppetClass < Base
     def initialize(registry)
       @template = 'classes_and_defines.erb'

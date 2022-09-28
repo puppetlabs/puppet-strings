@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
 module PuppetStrings::Markdown
+  # Generates a table of contents.
   module TableOfContents
     def self.render
       final = "## Table of Contents\n\n"
 
       [PuppetStrings::Markdown::PuppetClasses,
-      PuppetStrings::Markdown::DefinedTypes,
-      PuppetStrings::Markdown::ResourceTypes,
-      PuppetStrings::Markdown::Functions,
-      PuppetStrings::Markdown::DataTypes,
-      PuppetStrings::Markdown::PuppetTasks,
-      PuppetStrings::Markdown::PuppetPlans].each do |r|
+       PuppetStrings::Markdown::DefinedTypes,
+       PuppetStrings::Markdown::ResourceTypes,
+       PuppetStrings::Markdown::Functions,
+       PuppetStrings::Markdown::DataTypes,
+       PuppetStrings::Markdown::PuppetTasks,
+       PuppetStrings::Markdown::PuppetPlans].each do |r|
         toc = r.toc_info
         group_name = toc.shift
         group = toc

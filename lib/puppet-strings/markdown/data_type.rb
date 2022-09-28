@@ -20,6 +20,7 @@ module PuppetStrings::Markdown
     end
   end
 
+  # Generates Markdown for a Puppet Function.
   class DataType::Function < Base
     def initialize(registry)
       super(registry, 'data_type_function')

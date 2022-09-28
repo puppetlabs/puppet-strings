@@ -3,6 +3,7 @@
 require 'puppet-strings/markdown/base'
 
 module PuppetStrings::Markdown
+  # Generates Markdown for a Puppet Function.
   class Function < Base
     attr_reader :signatures
 
@@ -21,14 +22,14 @@ module PuppetStrings::Markdown
 
     def type
       t = @registry[:type]
-      if /ruby4x/.match?(t)
-        "Ruby 4.x API"
-      elsif /ruby3/.match?(t)
-        "Ruby 3.x API"
-      elsif /ruby/.match?(t)
-        "Ruby"
+      if %r{ruby4x}.match?(t)
+        'Ruby 4.x API'
+      elsif %r{ruby3}.match?(t)
+        'Ruby 3.x API'
+      elsif %r{ruby}.match?(t)
+        'Ruby'
       else
-        "Puppet Language"
+        'Puppet Language'
       end
     end
 
@@ -37,10 +38,11 @@ module PuppetStrings::Markdown
     end
 
     def error_text(text)
-      "#{text.split(' ').drop(1).join(' ')}"
+      text.split(' ').drop(1).join(' ').to_s
     end
   end
 
+  # Implements methods to retrieve information about a function signature.
   class Function::Signature < Base
     def initialize(registry)
       @registry = registry
