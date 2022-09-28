@@ -8,13 +8,13 @@ class PuppetStrings::Yard::CodeObjects::Functions < PuppetStrings::Yard::CodeObj
   # @param [Symbol] type The function type to get the group for.
   # @return Returns the singleton instance of the group.
   def self.instance(type)
-    super("puppet_functions_#{type}".intern)
+    super("puppet_functions_#{type}".to_sym)
   end
 
   # Gets the display name of the group.
   # @param [Boolean] prefix whether to show a prefix. Ignored for Puppet group namespaces.
   # @return [String] Returns the display name of the group.
-  def name(prefix = false)
+  def name(_prefix = false)
     'Puppet Functions'
   end
 end
@@ -62,18 +62,18 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
   # Gets the Puppet signature of the function (single overload only).
   # @return [String] Returns the Puppet signature of the function.
   def signature
-    return '' if self.has_tag? :overload
+    return '' if has_tag? :overload
 
     tags = self.tags(:param)
-    args = @parameters.map do |parameter|
+    args = @parameters.map { |parameter|
       name, default = parameter
       tag = tags.find { |t| t.name == name } if tags
       type = tag&.types ? "#{tag.type} " : 'Any '
-      prefix = "#{name[0]}" if name.start_with?('*', '&')
+      prefix = (name[0]).to_s if name.start_with?('*', '&')
       name = name[1..-1] if prefix
       default = " = #{default}" if default
       "#{type}#{prefix}$#{name}#{default}"
-    end.join(', ')
+    }.join(', ')
     @name.to_s + '(' + args + ')'
   end
 
@@ -88,17 +88,17 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
     hash[:type] = @function_type.to_s
     hash[:signatures] = []
 
-    if self.has_tag? :overload
+    if has_tag? :overload
       # loop over overloads and append onto the signatures array
-      self.tags(:overload).each do |o|
-        hash[:signatures] << { :signature => o.signature, :docstring => PuppetStrings::Yard::Util.docstring_to_hash(o.docstring, %i[param option enum return example]) }
+      tags(:overload).each do |o|
+        hash[:signatures] << { signature: o.signature, docstring: PuppetStrings::Yard::Util.docstring_to_hash(o.docstring, [:param, :option, :enum, :return, :example]) }
       end
     else
-      hash[:signatures] << { :signature => self.signature, :docstring =>  PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example]) }
+      hash[:signatures] << { signature: signature, docstring: PuppetStrings::Yard::Util.docstring_to_hash(docstring, [:param, :option, :enum, :return, :example]) }
     end
 
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
-    defaults = Hash[*parameters.reject{ |p| p[1].nil? }.flatten]
+    defaults = Hash[*parameters.reject { |p| p[1].nil? }.flatten]
     hash[:defaults] = defaults unless defaults.nil? || defaults.empty?
     hash[:source] = source unless source.nil? || source.empty?
     hash

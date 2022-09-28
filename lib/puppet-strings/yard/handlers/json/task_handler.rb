@@ -4,6 +4,7 @@ require 'puppet-strings/yard/handlers/json/base'
 require 'puppet-strings/yard/parsers'
 require 'puppet-strings/yard/parsers/json/parser'
 
+# Implements the handler for JSON task metadata.
 class PuppetStrings::Yard::Handlers::JSON::TaskHandler < PuppetStrings::Yard::Handlers::JSON::Base
   handles PuppetStrings::Yard::Parsers::JSON::TaskStatement
   namespace_only
@@ -24,10 +25,9 @@ class PuppetStrings::Yard::Handlers::JSON::TaskHandler < PuppetStrings::Yard::Ha
   end
 
   def validate_params
-    unless @statement.parameters.empty?
-      @statement.parameters.each do |param, val|
-        log.warn "Missing description for param '#{param}' in #{@kind}" if val['description'].nil?
-      end
+    return if @statement.parameters.empty?
+    @statement.parameters.each do |param, val|
+      log.warn "Missing description for param '#{param}' in #{@kind}" if val['description'].nil?
     end
   end
 end

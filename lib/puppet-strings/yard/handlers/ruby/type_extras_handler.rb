@@ -16,7 +16,6 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Ya
   handles method_call(:ensurable)
 
   process do
-
     # Our entry point is a type newproperty/newparam compound statement like this:
     #  "Puppet::Type.type(:file).newparam(:content) do"
     # We want to
@@ -36,7 +35,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Ya
     return unless (statement.count > 1) && (statement[0].children.count > 2)
 
     module_name = statement[0].children[0].source
-    method1_name = statement[0].children.drop(1).find{ |c| c.type == :ident }.source
+    method1_name = statement[0].children.drop(1).find { |c| c.type == :ident }.source
     return unless ['Type', 'Puppet::Type'].include?(module_name) && method1_name == 'type'
 
     # ensurable is syntatic sugar for newproperty
@@ -52,7 +51,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler < PuppetStrings::Ya
     typeobject = get_type_yard_object(typename)
 
     # node - what should it be here?
-    node = statement #?? not sure... test...
+    node = statement # ?? not sure... test...
 
     if method2_name == 'newproperty'
       typeobject.add_property(create_property(propertyname, node))

@@ -2,17 +2,19 @@
 
 require 'puppet-strings/yard/handlers/ruby/base'
 
+# Base class for all Puppet resource type handlers.
 class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handlers::Ruby::Base
   protected
+
   def get_type_yard_object(name)
-    #Have to guess the path - if we create the object to get the true path from the code,
-    #it also shows up in the .at call - self registering?
+    # Have to guess the path - if we create the object to get the true path from the code,
+    # it also shows up in the .at call - self registering?
     guess_path = "puppet_types::#{name}"
     object = YARD::Registry.at(guess_path)
 
     return object unless object.nil?
 
-    #Didn't find, create instead
+    # Didn't find, create instead
     object = PuppetStrings::Yard::CodeObjects::Type.new(name)
     register object
     object
@@ -32,8 +34,8 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
       elsif child.is_a?(YARD::Parser::Ruby::MethodCallNode)
         # Look for a call to a dispatch method with a block
         next unless child.method_name &&
-                (child.method_name.source == 'desc' || child.method_name.source == 'doc=') &&
-                child.parameters(false).count == 1
+                    (child.method_name.source == 'desc' || child.method_name.source == 'doc=') &&
+                    child.parameters(false).count == 1
 
         docstring = node_as_string(child.parameters[0])
         log.error "Failed to parse docstring for #{kind} near #{child.file}:#{child.line}." and return nil unless docstring
@@ -100,27 +102,25 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
     parameters = node.parameters(false)
 
     if parameters.count >= 2
-      kvps = parameters[1].find_all { |kvp| kvp.count == 2 }
+      kvps = parameters[1].select { |kvp| kvp.count == 2 }
       required_features_kvp = kvps.find { |kvp| node_as_string(kvp[0]) == 'required_features' }
       object.required_features = node_as_string(required_features_kvp[1]) unless required_features_kvp.nil?
     end
 
-    if object.is_a? PuppetStrings::Yard::CodeObjects::Type::Parameter
-      # Process the options for parameter base types
-      if parameters.count >= 2
-        parameters[1].each do |kvp|
-          next unless kvp.count == 2
-          next unless node_as_string(kvp[0]) == 'parent'
+    return unless object.is_a? PuppetStrings::Yard::CodeObjects::Type::Parameter
+    # Process the options for parameter base types
+    return unless parameters.count >= 2
+    parameters[1].each do |kvp|
+      next unless kvp.count == 2
+      next unless node_as_string(kvp[0]) == 'parent'
 
-          if kvp[1].source == 'Puppet::Parameter::Boolean'
-            object.add('true') unless object.values.include? 'true' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
-            object.add('false') unless object.values.include? 'false' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
-            object.add('yes') unless object.values.include? 'yes' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
-            object.add('no') unless object.values.include? 'no' # rubocop:disable Performance/InefficientHashSearch Not supported on Ruby 2.1
-          end
-          break
-        end
+      if kvp[1].source == 'Puppet::Parameter::Boolean'
+        object.add('true') unless object.values.include? 'true'
+        object.add('false') unless object.values.include? 'false'
+        object.add('yes') unless object.values.include? 'yes'
+        object.add('no') unless object.values.include? 'no'
       end
+      break
     end
   end
 
@@ -129,15 +129,15 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
 
     default = nil
     object.properties&.each do |property|
-        return nil if property.isnamevar
+      return nil if property.isnamevar
 
-        default = property if property.name == 'name'
-      end
+      default = property if property.name == 'name'
+    end
     object.parameters&.each do |parameter|
-        return nil if parameter.isnamevar
+      return nil if parameter.isnamevar
 
-        default ||= parameter if parameter.name == 'name'
-      end
+      default ||= parameter if parameter.name == 'name'
+    end
     default.isnamevar = true if default
   end
 end

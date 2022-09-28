@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Naming/MethodName
+
 require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
@@ -65,7 +67,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     parsed_interface = nil
 
     # Recursively traverse the block looking for the first valid 'interface' call
-    interface_node = find_ruby_ast_node(block, true) do |node|
+    find_ruby_ast_node(block, true) do |node|
       next false unless node.is_a?(YARD::Parser::Ruby::MethodCallNode) &&
                         node.method_name &&
                         node.method_name.source == 'interface'
@@ -102,7 +104,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
   # @yieldreturn [Boolean] Whether the node was what was searched for
   # @return [YARD::Parser::Ruby::AstNode, nil]
   def find_ruby_ast_node(ast_node, recurse = false, &block)
-    raise ArgumentError, 'find_ruby_ast_node requires a block' unless block_given?
+    raise ArgumentError, 'find_ruby_ast_node requires a block' unless block
 
     is_found = yield ast_node
     return ast_node if is_found
@@ -136,7 +138,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
   # Anything else is ignored
   class LazyLiteralEvaluator
     def initialize
-      @literal_visitor = ::Puppet::Pops::Visitor.new(self, "literal", 0, 0)
+      @literal_visitor = ::Puppet::Pops::Visitor.new(self, 'literal', 0, 0)
     end
 
     def literal(ast)
@@ -187,11 +189,11 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
       o.value
     end
 
-    def literal_LiteralUndef(o)
+    def literal_LiteralUndef(_o)
       nil
     end
 
-    def literal_LiteralDefault(o)
+    def literal_LiteralDefault(_o)
       :default
     end
 
@@ -210,9 +212,8 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     end
 
     def literal_LiteralHash(o)
-      o.entries.reduce({}) do |result, entry|
+      o.entries.each_with_object({}) do |entry, result|
         result[literal(entry.key)] = literal(entry.value)
-        result
       end
     end
   end
@@ -235,7 +236,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
         default   = value['value'] unless value['value'].nil?
       end
       data_type = [data_type] unless data_type.nil? || data_type.is_a?(Array)
-      params_hash[key] = { :types => data_type, :default => default }
+      params_hash[key] = { types: data_type, default: default }
     end
 
     params_hash
@@ -250,7 +251,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     return funcs_hash if hash.nil? || hash['functions'].nil? || hash['functions'].empty?
 
     hash['functions'].each do |key, func_type|
-      func_hash = { :param_types => [], :return_type => nil }
+      func_hash = { param_types: [], return_type: nil }
       begin
         callable_type = Puppet::Pops::Types::TypeParser.singleton.parse(func_type)
         if callable_type.is_a?(Puppet::Pops::Types::PCallableType)
@@ -378,7 +379,9 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
         if tag.tag_name == 'param'
           index += 1
           if index > actual_function[:param_types].count
-            log.warn "The @param tag for '#{tag.name}' should not exist for function '#{meth.name}' that is defined near #{object.file}:#{object.line}. Expected only #{actual_function[:param_types].count} parameter/s"
+            log.warn "The @param tag for '#{tag.name}' should not exist for function "\
+            "'#{meth.name}' that is defined near #{object.file}:#{object.line}. "\
+            "Expected only #{actual_function[:param_types].count} parameter/s"
             true
           else
             false
@@ -392,14 +395,14 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     # Add missing params
     if meth.docstring.tags(:param).count < actual_function[:param_types].count
       start = meth.docstring.tags(:param).count + 1
-      (start..actual_function[:param_types].count).each do |index| # Using 1-based index here instead of usual zero
-        meth.add_tag(YARD::Tags::Tag.new(:param, '', actual_function[:param_types][index - 1], "param#{index}"))
+      (start..actual_function[:param_types].count).each do |param_type_index| # Using 1-based index here instead of usual zero
+        meth.add_tag(YARD::Tags::Tag.new(:param, '', actual_function[:param_types][param_type_index - 1], "param#{param_type_index}"))
       end
     end
 
     # Ensure the parameter types are correct
-    meth.docstring.tags(:param).each_with_index do |tag, index|
-      actual_types = [actual_function[:param_types][index]]
+    meth.docstring.tags(:param).each_with_index do |tag, actual_type_index|
+      actual_types = [actual_function[:param_types][actual_type_index]]
       if tag.types != actual_types
         log.warn "The @param tag for '#{tag.name}' for function '#{meth.name}' has a different type definition than the actual function near #{object.file}:#{object.line}. Expected #{actual_types}"
         tag.types = actual_types

@@ -44,6 +44,7 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
   end
 
   private
+
   def register_provider_docstring(object)
     # Walk the tree searching for assignments or calls to desc/doc=
     statement.traverse do |child|
@@ -93,7 +94,7 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
 
           object.add_confine(node_as_string(kvp[0]) || kvp[0].source, node_as_string(kvp[1]) || kvp[1].source)
         end
-      elsif method_name == 'has_feature' || method_name == 'has_features'
+      elsif ['has_feature', 'has_features'].include?(method_name)
         # Add the features to the object
         parameters.each do |parameter|
           object.add_feature(node_as_string(parameter) || parameter.source)

@@ -14,7 +14,7 @@ class PuppetStrings::Yard::CodeObjects::DataTypeAliases < PuppetStrings::Yard::C
   # Gets the display name of the group.
   # @param [Boolean] prefix whether to show a prefix. Ignored for Puppet group namespaces.
   # @return [String] Returns the display name of the group.
-  def name(prefix = false)
+  def name(_prefix = false)
     'Puppet Data Type Aliases'
   end
 end

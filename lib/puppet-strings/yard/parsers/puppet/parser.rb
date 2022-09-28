@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Naming/MethodName
+
 require 'puppet'
 require 'puppet/pops'
 require 'puppet-strings/yard/parsers/puppet/statement'
@@ -12,7 +14,7 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
   # @param [String] source The source being parsed.
   # @param [String] filename The file name of the file being parsed.
   # @return [void]
-  def initialize(source, filename)
+  def initialize(source, filename) # rubocop:disable Lint/MissingSuper
     @source = source
     @file = filename
     @visitor = ::Puppet::Pops::Visitor.new(self, 'transform')
@@ -22,8 +24,8 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
   # @return [void]
   def parse
     begin
-      if @file.to_s.match(/^plans|\/plans\//)
-        if Puppet::Util::Package.versioncmp(Puppet.version, "5.0.0") < 0
+      if @file.to_s.match?(%r{^plans|/plans/})
+        if Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0') < 0
           log.warn "Skipping #{@file}: Puppet Plans require Puppet 5 or greater."
           return
         end

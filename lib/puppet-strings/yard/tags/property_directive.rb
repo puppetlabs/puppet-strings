@@ -12,8 +12,8 @@ class PuppetStrings::Yard::Tags::PropertyDirective < YARD::Tags::Directive
     # Add a property to the resource
     property = PuppetStrings::Yard::CodeObjects::Type::Property.new(tag.name, tag.text)
     tag.types&.each do |value|
-        property.add(value)
-      end
+      property.add(value)
+    end
     object.add_property property
   end
 

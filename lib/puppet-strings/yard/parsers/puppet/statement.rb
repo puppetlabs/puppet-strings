@@ -7,7 +7,7 @@ module PuppetStrings::Yard::Parsers::Puppet
   # Represents the base Puppet language statement.
   class Statement
     # The pattern for parsing docstring comments.
-    COMMENT_REGEX = /^\s*#+\s?/
+    COMMENT_REGEX = %r{^\s*#+\s?}.freeze
 
     attr_reader :source
     attr_reader :file
@@ -32,7 +32,7 @@ module PuppetStrings::Yard::Parsers::Puppet
     # @return [void]
     def extract_docstring(lines)
       comment = []
-      (0..@line-2).reverse_each do |index|
+      (0..@line - 2).reverse_each do |index|
         break unless index <= lines.count
 
         line = lines[index].strip
@@ -66,8 +66,9 @@ module PuppetStrings::Yard::Parsers::Puppet
     end
 
     private
+
     def first_line
-      @source.split(/\r?\n/).first.strip
+      @source.split(%r{\r?\n}).first.strip
     end
   end
 
@@ -89,10 +90,9 @@ module PuppetStrings::Yard::Parsers::Puppet
           @type = adapter.extract_text
         end
         # Take the exact text for the default value expression
-        if parameter.value
-          adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(parameter.value)
-          @value = adapter.extract_text
-        end
+        return unless parameter.value
+        adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(parameter.value)
+        @value = adapter.extract_text
       end
     end
 
@@ -146,13 +146,11 @@ module PuppetStrings::Yard::Parsers::Puppet
     def initialize(object, file)
       super(object, file)
       @name = object.name
-      if object.respond_to? :return_type
-        type = object.return_type
-        if type
-          adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(type)
-          @type = adapter.extract_text.gsub('>> ', '')
-        end
-      end
+      return unless object.respond_to? :return_type
+      type = object.return_type
+      return unless type
+      adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(type)
+      @type = adapter.extract_text.gsub('>> ', '')
     end
   end
 

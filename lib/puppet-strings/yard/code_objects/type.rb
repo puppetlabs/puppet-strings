@@ -14,7 +14,7 @@ class PuppetStrings::Yard::CodeObjects::Types < PuppetStrings::Yard::CodeObjects
   # Gets the display name of the group.
   # @param [Boolean] prefix whether to show a prefix. Ignored for Puppet group namespaces.
   # @return [String] Returns the display name of the group.
-  def name(prefix = false)
+  def name(_prefix = false)
     'Resource Types'
   end
 end
@@ -87,7 +87,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     # @param [String] docstring The docstring of the feature.
     def initialize(name, docstring)
       @name = name
-      @docstring = PuppetStrings::Yard::Util.scrub_string(docstring).gsub("\n", ' ')
+      @docstring = PuppetStrings::Yard::Util.scrub_string(docstring).tr("\n", ' ')
     end
 
     # Converts the feature to a hash representation.
@@ -148,7 +148,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
   end
 
   def parameters
-    @parameters ||= []  # guard against not filled parameters
+    @parameters ||= [] # guard against not filled parameters
     # just return params if there are no providers
     return @parameters if providers.empty?
 
@@ -157,8 +157,8 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
 
     provider_param = Parameter.new(
       'provider',
-      "The specific backend to use for this `#{self.name.to_s}` resource. You will seldom need " + \
-      "to specify this --- Puppet will usually discover the appropriate provider for your platform."
+      "The specific backend to use for this `#{name}` resource. You will seldom need " \
+      'to specify this --- Puppet will usually discover the appropriate provider for your platform.',
     )
 
     @parameters ||= []
@@ -169,7 +169,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
   # render-time. For now, this should re-resolve on every call.
   # may be able to memoize this
   def providers
-    providers = YARD::Registry.all("puppet_providers_#{name}".intern)
+    providers = YARD::Registry.all("puppet_providers_#{name}".to_sym)
     return providers if providers.empty?
 
     providers.first.children

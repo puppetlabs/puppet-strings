@@ -52,11 +52,15 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
 
   # check that the params of the register_type call are key/value pairs.
   def kv_arg_list?(params)
-    params.type == :list && params.children.count > 0 && params.children.first.type == :list && params.children.first.children.count > 0 && statement.parameters.children.first.children.first.type == :assoc
+    params.type == :list &&
+      params.children.count > 0 &&
+      params.children.first.type == :list &&
+      params.children.first.children.count > 0 &&
+      statement.parameters.children.first.children.first.type == :assoc
   end
 
   def extract_schema
-    raise_parse_error("Expected list of key/value pairs as argument") unless kv_arg_list?(statement.parameters)
+    raise_parse_error('Expected list of key/value pairs as argument') unless kv_arg_list?(statement.parameters)
     hash_from_node(statement.parameters.children.first)
   end
 
@@ -84,7 +88,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
   def array_from_node(node)
     return nil unless node
 
-    arr = node.children.collect do |assoc|
+    node.children.map do |assoc|
       value_from_node(assoc.children[0])
     end
   end
@@ -94,7 +98,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
 
     # puts "hash from #{node.inspect}"
 
-    kv_pairs = node.children.collect do |assoc|
+    kv_pairs = node.children.map do |assoc|
       [value_from_node(assoc.children[0]), value_from_node(assoc.children[1])]
     end
     Hash[kv_pairs]
@@ -107,19 +111,18 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
 
     if node.children.first.type == :kw
       case node.children.first.source
-      when "false"
+      when 'false'
         return false
-      when "true"
+      when 'true'
         return true
-      when "nil"
+      when 'nil'
         return nil
       else
         raise_parse_error("unexpected keyword '#{node.children.first.source}'")
       end
     end
-    raise_parse_error("unexpected variable")
+    raise_parse_error('unexpected variable')
   end
-
 
   def populate_type_data(object, schema)
     return if schema['attributes'].nil?

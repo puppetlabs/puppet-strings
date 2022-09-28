@@ -13,7 +13,7 @@ class PuppetStrings::Yard::CodeObjects::DefinedTypes < PuppetStrings::Yard::Code
   # Gets the display name of the group.
   # @param [Boolean] prefix whether to show a prefix. Ignored for Puppet group namespaces.
   # @return [String] Returns the display name of the group.
-  def name(prefix = false)
+  def name(_prefix = false)
     'Defined Types'
   end
 end
@@ -52,7 +52,7 @@ class PuppetStrings::Yard::CodeObjects::DefinedType < PuppetStrings::Yard::CodeO
     hash[:file] = file
     hash[:line] = line
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
-    defaults = Hash[*parameters.reject{ |p| p[1].nil? }.flatten]
+    defaults = Hash[*parameters.reject { |p| p[1].nil? }.flatten]
     hash[:defaults] = defaults unless defaults.nil? || defaults.empty?
     hash[:source] = source unless source.nil? || source.empty?
     hash
