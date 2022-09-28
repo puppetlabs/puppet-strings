@@ -226,49 +226,49 @@ path this type will autorequire that file.
     SOURCE
   end
 
-  RSpec.shared_examples "correct JSON" do
-    it 'should include data for Puppet Classes' do
+  RSpec.shared_examples 'correct JSON' do
+    it 'includes data for Puppet Classes' do
       puppet_class_json = YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash).to_json
 
       expect(json_output).to include_json(puppet_class_json)
     end
 
-    it 'should include data for Puppet Data Types' do
+    it 'includes data for Puppet Data Types' do
       data_types_json = YARD::Registry.all(:puppet_data_type).sort_by!(&:name).map!(&:to_hash).to_json
       expect(json_output).to include_json(data_types_json)
     end
 
-    it 'should include data for Puppet Defined Types' do
+    it 'includes data for Puppet Defined Types' do
       defined_types_json = YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash).to_json
 
       expect(json_output).to include_json(defined_types_json)
     end
 
-    it 'should include data for Puppet Resource Types' do
+    it 'includes data for Puppet Resource Types' do
       resource_types_json = YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash).to_json
 
       expect(json_output).to include_json(resource_types_json)
     end
 
-    it 'should include data for Puppet Providers' do
+    it 'includes data for Puppet Providers' do
       providers_json = YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash).to_json
 
       expect(json_output).to include_json(providers_json)
     end
 
-    it 'should include data for Puppet Functions', if: TEST_PUPPET_FUNCTIONS do
+    it 'includes data for Puppet Functions', if: TEST_PUPPET_FUNCTIONS do
       puppet_functions_json = YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash).to_json
 
       expect(json_output).to include_json(puppet_functions_json)
     end
 
-    it 'should include data for Puppet Tasks' do
+    it 'includes data for Puppet Tasks' do
       puppet_tasks_json = YARD::Registry.all(:puppet_task).sort_by!(&:name).map!(&:to_hash).to_json
 
       expect(json_output).to include_json(puppet_tasks_json)
     end
 
-    it 'should include data for Puppet Plans', if: TEST_PUPPET_PLANS do
+    it 'includes data for Puppet Plans', if: TEST_PUPPET_PLANS do
       puppet_plans_json = YARD::Registry.all(:puppet_plan).sort_by!(&:name).map!(&:to_hash).to_json
 
       expect(json_output).to include_json(puppet_plans_json)
@@ -280,7 +280,7 @@ path this type will autorequire that file.
       json_output = nil
 
       Tempfile.open('json') do |file|
-        PuppetStrings::Json.render(file.path)
+        described_class.render(file.path)
 
         json_output = File.read(file.path)
       end
@@ -288,7 +288,7 @@ path this type will autorequire that file.
       json_output
     end
 
-    include_examples "correct JSON"
+    include_examples 'correct JSON'
   end
 
   describe 'rendering JSON to stdout' do
@@ -300,13 +300,13 @@ path this type will autorequire that file.
       old_stdout = $stdout
       $stdout = output
 
-      PuppetStrings::Json.render(nil)
+      described_class.render(nil)
 
       $stdout = old_stdout
 
       @json_output = output.string
     end
 
-    include_examples "correct JSON"
+    include_examples 'correct JSON'
   end
 end

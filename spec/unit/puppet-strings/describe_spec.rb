@@ -4,18 +4,16 @@ require 'spec_helper'
 require 'puppet-strings/describe'
 require 'tempfile'
 
-#TODO:
-#basic describe
-#params from other files (e.g. file content)
+# TODO: basic describe
+# params from other files (e.g. file content)
 #--providers - list providers in detail
-#X--list - list all providers summary
+# X--list - list all providers summary
 #--meta - List all metaparameters
 #--short - only list params
 
 describe PuppetStrings::Describe do
   before :each do
     # Populate the YARD registry with both Puppet and Ruby source
-
 
     YARD::Parser::SourceParser.parse_string(<<-SOURCE, :ruby)
 Puppet::Type.newtype(:database) do
@@ -98,16 +96,16 @@ end
   end
 
   describe 'rendering DESCRIBE to stdout' do
-    it 'should output the expected describe content for the list of types' do
+    it 'outputs the expected describe content for the list of types' do
       output = <<-DATA
 These are the types known to puppet:
 apt_key         - This type provides Puppet with the capabiliti ...
 database        - An example database server resource type.
 file            - Manages files, including their content, owner ...
       DATA
-      expect{ PuppetStrings::Describe.render(nil, true) }.to output(output).to_stdout
+      expect { described_class.render(nil, true) }.to output(output).to_stdout
     end
-    it 'should output the expected describe content for a type' do
+    it 'outputs the expected describe content for a type' do
       output = <<-DATA
 
 file
@@ -137,7 +135,7 @@ exclusive with `source` and `target`.
 Providers
 ---------
       DATA
-      expect{ PuppetStrings::Describe.render(['file']) }.to output(output).to_stdout
+      expect { described_class.render(['file']) }.to output(output).to_stdout
     end
   end
 end
