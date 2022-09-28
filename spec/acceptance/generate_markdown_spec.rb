@@ -3,9 +3,12 @@
 require 'spec_helper_acceptance'
 
 describe 'Generating Markdown' do
-  before(:all) do
-    @test_module_path = sut_module_path(/Module test/)
-    @remote_tmp_path = sut_tmp_path
+  let(:test_module_path) do
+    sut_module_path(%r{Module test})
+  end
+
+  let(:remote_tmp_path) do
+    sut_tmp_path
   end
 
   expected = <<-EOF
@@ -35,15 +38,15 @@ The name of the service
 
   EOF
 
-  it 'should render Markdown to stdout when using --format markdown' do
+  it 'renders Markdown to stdout when using --format markdown' do
     skip('This test is broken. Does not output to STDOUT by default.')
-    output = PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate --format markdown \"#{@test_module_path}/manifests/init.pp\"").stdout.chomp
+    output = PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate --format markdown \"#{test_module_path}/manifests/init.pp\"").stdout.chomp
     expect(output).to eq(expected)
   end
 
-  it 'should write Markdown to a file when using --format markdown and --out' do
-    tmpfile = File.join(@remote_tmp_path, 'md_output.md')
-    remote = PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate --format markdown --out \"#{tmpfile}\" \"#{@test_module_path}/manifests/init.pp\"")
+  it 'writes Markdown to a file when using --format markdown and --out' do
+    tmpfile = File.join(remote_tmp_path, 'md_output.md')
+    PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate --format markdown --out \"#{tmpfile}\" \"#{test_module_path}/manifests/init.pp\"")
     expect(file(tmpfile)).to contain expected
   end
 end
