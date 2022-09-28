@@ -228,50 +228,59 @@ path this type will autorequire that file.
 
   RSpec.shared_examples 'correct JSON' do
     it 'includes data for Puppet Classes' do
-      puppet_class_json = YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash).to_json
+      expected = YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash).to_json
 
-      expect(json_output).to include_json(puppet_class_json)
+      actual = capture_output { described_class.render(nil) }
+      expect(actual[:stdout]).to include_json(expected)
     end
 
     it 'includes data for Puppet Data Types' do
-      data_types_json = YARD::Registry.all(:puppet_data_type).sort_by!(&:name).map!(&:to_hash).to_json
-      expect(json_output).to include_json(data_types_json)
+      expected = YARD::Registry.all(:puppet_data_type).sort_by!(&:name).map!(&:to_hash).to_json
+
+      actual = capture_output { described_class.render(nil) }
+      expect(actual[:stdout]).to include_json(expected)
     end
 
     it 'includes data for Puppet Defined Types' do
-      defined_types_json = YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash).to_json
+      expected = YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash).to_json
 
-      expect(json_output).to include_json(defined_types_json)
+      actual = capture_output { described_class.render(nil) }
+      expect(actual[:stdout]).to include_json(expected)
     end
 
     it 'includes data for Puppet Resource Types' do
-      resource_types_json = YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash).to_json
+      expected = YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash).to_json
 
-      expect(json_output).to include_json(resource_types_json)
+      actual = capture_output { described_class.render(nil) }
+      expect(actual[:stdout]).to include_json(expected)
     end
 
     it 'includes data for Puppet Providers' do
-      providers_json = YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash).to_json
+      expected = YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash).to_json
 
-      expect(json_output).to include_json(providers_json)
+      actual = capture_output { described_class.render(nil) }
+      expect(actual[:stdout]).to include_json(expected)
     end
 
     it 'includes data for Puppet Functions', if: TEST_PUPPET_FUNCTIONS do
-      puppet_functions_json = YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash).to_json
+      expected = YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash).to_json
 
-      expect(json_output).to include_json(puppet_functions_json)
+      actual = capture_output { described_class.render(nil) }
+      expect(actual[:stdout]).to include_json(expected)
     end
 
     it 'includes data for Puppet Tasks' do
-      puppet_tasks_json = YARD::Registry.all(:puppet_task).sort_by!(&:name).map!(&:to_hash).to_json
+      expected = YARD::Registry.all(:puppet_task).sort_by!(&:name).map!(&:to_hash).to_json
 
-      expect(json_output).to include_json(puppet_tasks_json)
+      actual = capture_output { described_class.render(nil) }
+      expect(actual[:stdout]).to include_json(expected)
     end
 
     it 'includes data for Puppet Plans', if: TEST_PUPPET_PLANS do
-      puppet_plans_json = YARD::Registry.all(:puppet_plan).sort_by!(&:name).map!(&:to_hash).to_json
+      expected = YARD::Registry.all(:puppet_plan).sort_by!(&:name).map!(&:to_hash).to_json
 
-      expect(json_output).to include_json(puppet_plans_json)
+      actual = capture_output { described_class.render(nil) }
+      expect(actual[:stdout]).to include_json(expected)
     end
   end
 
@@ -292,21 +301,26 @@ path this type will autorequire that file.
   end
 
   describe 'rendering JSON to stdout' do
-    let(:json_output) { @json_output }
-
-    before(:each) do
-      output = StringIO.new
-
-      old_stdout = $stdout
-      $stdout = output
-
-      described_class.render(nil)
-
-      $stdout = old_stdout
-
-      @json_output = output.string
-    end
-
     include_examples 'correct JSON'
   end
+end
+
+# Helper method to capture stdout and stderr from a block
+# Source: https://gist.github.com/herrphon/2d2ebbf23c86a10aa955
+#
+# @param [Proc] block The block to capture output from
+# @return [Hash] A hash containing the captured output
+def capture_output(&_block)
+  begin
+    $stdout = StringIO.new
+    $stderr = StringIO.new
+    yield
+    result = {}
+    result[:stdout] = $stdout.string
+    result[:stderr] = $stderr.string
+  ensure
+    $stdout = STDOUT
+    $stderr = STDERR
+  end
+  result
 end
