@@ -4,50 +4,53 @@ require 'spec_helper'
 require 'puppet-strings/yard'
 
 describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
-  subject {
+  subject(:spec_subject) do
     YARD::Parser::SourceParser.parse_string(source, :ruby)
     YARD::Registry.all(:puppet_type)
-  }
+  end
 
   describe 'parsing source without a type definition' do
     let(:source) { 'puts "hi"' }
 
     it 'no types should be in the registry' do
-      expect(subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to eq(true)
     end
   end
 
   describe 'parsing a type with a missing description' do
-    let(:source) { <<-SOURCE
+    let(:source) do
+      <<-SOURCE
 Puppet::ResourceApi.register_type(
   name: 'database'
 )
     SOURCE
-    }
+    end
 
-    it 'should log a warning' do
-      expect{ subject }.to output(/\[warn\]: Missing a description for Puppet resource type 'database' at \(stdin\):1\./).to_stdout_from_any_process
+    it 'logs a warning' do
+      expect { spec_subject }.to output(%r{\[warn\]: Missing a description for Puppet resource type 'database' at \(stdin\):1\.}).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a type with a valid docstring assignment' do
-    let(:source) { <<-SOURCE
+    let(:source) do
+      <<-SOURCE
 Puppet::ResourceApi.register_type(
   name: 'database',
   docs: 'An example database server resource type.',
 )
     SOURCE
-    }
+    end
 
-    it 'should correctly detect the docstring' do
-      expect(subject.size).to eq(1)
-      object = subject.first
+    it 'correctlies detect the docstring' do
+      expect(spec_subject.size).to eq(1)
+      object = spec_subject.first
       expect(object.docstring).to eq('An example database server resource type.')
     end
   end
 
   describe 'parsing a type with a docstring which uses ruby `%Q` notation' do
-    let(:source) { <<-'SOURCE'
+    let(:source) do
+      <<-'SOURCE'
 test = 'hello world!'
 
 Puppet::ResourceApi.register_type(
@@ -56,17 +59,18 @@ Puppet::ResourceApi.register_type(
 doc in %Q with #{test}},
 )
     SOURCE
-    }
+    end
 
-    it 'should strip the `%Q{}` and render the interpolation expression literally' do
-      expect(subject.size).to eq(1)
-      object = subject.first
+    it 'strips the `%Q{}` and render the interpolation expression literally' do
+      expect(spec_subject.size).to eq(1)
+      object = spec_subject.first
       expect(object.docstring).to eq("This is a multi-line\ndoc in %Q with \#{test}")
     end
   end
 
   describe 'parsing a type definition' do
-    let(:source) { <<-SOURCE
+    let(:source) do
+      <<-SOURCE
 # @!puppet.type.param [value1, value2] dynamic_param Documentation for a dynamic parameter.
 # @!puppet.type.property [foo, bar] dynamic_prop Documentation for a dynamic property.
 Puppet::ResourceApi.register_type(
@@ -113,11 +117,11 @@ Puppet::ResourceApi.register_type(
   },
 )
     SOURCE
-    }
+    end
 
-    it 'should register a type object' do
-      expect(subject.size).to eq(1)
-      object = subject.first
+    it 'registers a type object' do
+      expect(spec_subject.size).to eq(1)
+      object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Type)
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::Types.instance)
       expect(object.name).to eq(:database)
@@ -131,7 +135,7 @@ Puppet::ResourceApi.register_type(
       expect(object.properties[0].name).to eq('dynamic_prop')
       expect(object.properties[0].docstring).to eq('Documentation for a dynamic property.')
       expect(object.properties[0].isnamevar).to eq(false)
-      expect(object.properties[0].values).to eq(%w(foo bar))
+      expect(object.properties[0].values).to eq(['foo', 'bar'])
       expect(object.properties[1].name).to eq('ensure')
       expect(object.properties[1].docstring).to eq('What state the database should be in.')
       expect(object.properties[1].isnamevar).to eq(false)
@@ -154,7 +158,7 @@ Puppet::ResourceApi.register_type(
       expect(object.parameters[0].name).to eq('dynamic_param')
       expect(object.parameters[0].docstring).to eq('Documentation for a dynamic parameter.')
       expect(object.parameters[0].isnamevar).to eq(false)
-      expect(object.parameters[0].values).to eq(%w(value1 value2))
+      expect(object.parameters[0].values).to eq(['value1', 'value2'])
       expect(object.parameters[1].name).to eq('address')
       expect(object.parameters[1].docstring).to eq('The database server name.')
       expect(object.parameters[1].isnamevar).to eq(true)
@@ -165,57 +169,60 @@ Puppet::ResourceApi.register_type(
       expect(object.parameters[2].docstring).to eq('Whether or not to encrypt the database.')
       expect(object.parameters[2].isnamevar).to eq(false)
       expect(object.parameters[2].default).to eq(false)
-      expect(object.parameters[2].data_type).to eq("Boolean")
+      expect(object.parameters[2].data_type).to eq('Boolean')
       expect(object.parameters[2].aliases).to eq({})
       expect(object.parameters[3].name).to eq('encryption_key')
       expect(object.parameters[3].docstring).to eq('The encryption key to use.')
       expect(object.parameters[3].isnamevar).to eq(false)
       expect(object.parameters[3].default).to be_nil
-      expect(object.parameters[3].data_type).to eq("Optional[String]")
+      expect(object.parameters[3].data_type).to eq('Optional[String]')
       expect(object.parameters[3].aliases).to eq({})
       expect(object.parameters[4].name).to eq('backup')
       expect(object.parameters[4].docstring).to eq('How often to backup the database.')
       expect(object.parameters[4].isnamevar).to eq(false)
       expect(object.parameters[4].default).to eq('never')
-      expect(object.parameters[4].data_type).to eq("Enum[daily, monthly, never]")
+      expect(object.parameters[4].data_type).to eq('Enum[daily, monthly, never]')
     end
   end
 
   describe 'parsing a type with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<-SOURCE
+      let(:source) do
+        <<-SOURCE
 Puppet::ResourceApi.register_type(
   name: 'database',
   docs: '@summary A short summary.',
 )
       SOURCE
-      }
+      end
 
-      it 'should parse the summary' do
-        expect{ subject }.to output('').to_stdout_from_any_process
-        expect(subject.size).to eq(1)
-        summary = subject.first.tags(:summary)
+      it 'parses the summary' do
+        expect { spec_subject }.to output('').to_stdout_from_any_process
+        expect(spec_subject.size).to eq(1)
+        summary = spec_subject.first.tags(:summary)
         expect(summary.first.text).to eq('A short summary.')
       end
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<-SOURCE
+      let(:source) do
+        <<-SOURCE
 Puppet::ResourceApi.register_type(
   name: 'database',
   docs: '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!',
 )
       SOURCE
-      }
+      end
 
-      it 'should log a warning' do
-        expect{ subject }.to output(/\[warn\]: The length of the summary for puppet_type 'database' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
+      it 'logs a warning' do
+        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_type 'database' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
       end
     end
   end
 
   describe 'parsing a type with title_patterns' do
-    let(:source) { <<-SOURCE
+    let(:source) do
+      <<-SOURCE
 Puppet::ResourceApi.register_type(
   name: 'database',
   docs: 'An example database server resource type.',
@@ -227,11 +234,10 @@ Puppet::ResourceApi.register_type(
   ]
 )
     SOURCE
-    }
+    end
 
-    it 'should not emit a warning' do
-      expect{ subject }.not_to output(/\[warn\].*unexpected construct regexp_literal/).to_stdout_from_any_process
+    it 'does not emit a warning' do
+      expect { spec_subject }.not_to output(%r{\[warn\].*unexpected construct regexp_literal}).to_stdout_from_any_process
     end
   end
-
 end

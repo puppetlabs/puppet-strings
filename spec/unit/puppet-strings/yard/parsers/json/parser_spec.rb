@@ -4,41 +4,43 @@ require 'spec_helper'
 require 'puppet-strings/yard'
 
 describe PuppetStrings::Yard::Parsers::JSON::Parser do
-  subject { PuppetStrings::Yard::Parsers::JSON::Parser.new(source, file) }
+  subject(:spec_subject) { described_class.new(source, file) }
+
   let(:file) { 'test.json' }
 
   describe 'initialization of the parser' do
     let(:source) { '{}' }
 
-    it 'should store the original source' do
-      expect(subject.source).to eq(source)
+    it 'stores the original source' do
+      expect(spec_subject.source).to eq(source)
     end
 
-    it 'should store the original file name' do
-      expect(subject.file).to eq(file)
+    it 'stores the original file name' do
+      expect(spec_subject.file).to eq(file)
     end
 
-    it 'should have no relevant statements' do
-      subject.parse
+    it 'has no relevant statements' do
+      spec_subject.parse
 
-      expect(subject.enumerator.empty?).to be_truthy
+      expect(spec_subject.enumerator.empty?).to be_truthy
     end
   end
 
   describe 'parsing invalid JSON' do
-    let(:source) { <<SOURCE
+    let(:source) do
+      <<SOURCE
 class foo {
 SOURCE
-    }
+    end
 
-    it 'should raise an exception' do
-      expect{ subject.parse }.to output(/\[error\]: Failed to parse test.json/).to_stdout_from_any_process
+    it 'raises an exception' do
+      expect { spec_subject.parse }.to output(%r{\[error\]: Failed to parse test.json}).to_stdout_from_any_process
     end
   end
 
-
   describe 'parsing valid task metadata JSON' do
-    let(:source) { <<SOURCE
+    let(:source) do
+      <<SOURCE
 {
   "description": "Allows you to backup your database to local file.",
   "input_method": "stdin",
@@ -62,12 +64,13 @@ SOURCE
   }
 }
 SOURCE
-    }
-    it 'should parse the JSON and extract a TaskStatement' do
-      subject.parse
+    end
 
-      expect(subject.enumerator.size).to eq(1)
-      statement = subject.enumerator.first
+    it 'parses the JSON and extract a TaskStatement' do
+      spec_subject.parse
+
+      expect(spec_subject.enumerator.size).to eq(1)
+      statement = spec_subject.enumerator.first
       expect(statement).to be_instance_of(PuppetStrings::Yard::Parsers::JSON::TaskStatement)
     end
   end

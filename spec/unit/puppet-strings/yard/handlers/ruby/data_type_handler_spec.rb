@@ -4,20 +4,18 @@ require 'spec_helper'
 require 'puppet-strings/yard'
 
 describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_DATATYPES do
-  subject {
+  subject(:spec_subject) do
     YARD::Parser::SourceParser.parse_string(source, :ruby)
     YARD::Registry.all(:puppet_data_type)
-  }
-
-  before(:each) do
-    # Tests may suppress logging to make it easier to read results,
-    # so remember the logging object prior to running the test
-    @original_yard_logging_object = YARD::Logger.instance.io
   end
+
+  # Tests may suppress logging to make it easier to read results,
+  # so remember the logging object prior to running the test.
+  original_yard_logging_object = YARD::Logger.instance.io
 
   after(:each) do
     # Restore the original logging IO object
-    YARD::Logger.instance.io = @original_yard_logging_object
+    YARD::Logger.instance.io = original_yard_logging_object
   end
 
   def suppress_yard_logging
@@ -28,20 +26,21 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
     let(:source) { 'puts "hi"' }
 
     it 'no data types should be in the registry' do
-      expect(subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to eq(true)
     end
   end
 
   describe 'parsing an empty data type definition' do
-    let(:source) { <<-SOURCE
+    let(:source) do
+      <<-SOURCE
 Puppet::DataTypes.create_type('RubyDataType') do
 end
 SOURCE
-    }
+    end
 
-    it 'should register a data type object with no param tags or functions' do
-      expect(subject.size).to eq(1)
-      object = subject.first
+    it 'registers a data type object with no param tags or functions' do
+      expect(spec_subject.size).to eq(1)
+      object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::DataTypes.instance)
       expect(object.name).to eq(:RubyDataType)
@@ -57,7 +56,8 @@ SOURCE
   end
 
   describe 'parsing a data type definition with missing param tags' do
-    let(:source) { <<-SOURCE
+    let(:source) do
+      <<-SOURCE
 # An example Puppet Data Type in Ruby.
 Puppet::DataTypes.create_type('RubyDataType') do
   interface <<-PUPPET
@@ -67,17 +67,17 @@ Puppet::DataTypes.create_type('RubyDataType') do
     PUPPET
 end
 SOURCE
-    }
-
-    it 'should output a warning' do
-      expect{ subject }.to output(/\[warn\]: Missing @param tag for attribute 'msg' near \(stdin\):2/).to_stdout_from_any_process
     end
 
-    it 'should register a data type object with all param tags' do
+    it 'outputs a warning' do
+      expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for attribute 'msg' near \(stdin\):2}).to_stdout_from_any_process
+    end
+
+    it 'registers a data type object with all param tags' do
       suppress_yard_logging
 
-      expect(subject.size).to eq(1)
-      object = subject.first
+      expect(spec_subject.size).to eq(1)
+      object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::DataTypes.instance)
       expect(object.name).to eq(:RubyDataType)
@@ -102,7 +102,8 @@ SOURCE
 
   describe 'parsing a data type definition with missing function' do
     context 'which has parameters' do
-      let(:source) do <<-SOURCE
+      let(:source) do
+        <<-SOURCE
 # An example Puppet Data Type in Ruby.
 Puppet::DataTypes.create_type('RubyDataType') do
   interface <<-PUPPET
@@ -114,15 +115,15 @@ end
 SOURCE
       end
 
-      it 'should output a warning about the missing functions' do
-        expect { subject }.to output(/\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2/m).to_stdout_from_any_process
+      it 'outputs a warning about the missing functions' do
+        expect { spec_subject }.to output(%r{\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2}m).to_stdout_from_any_process
       end
 
-      it 'should register a data type object with all functions' do
+      it 'registers a data type object with all functions' do
         suppress_yard_logging
 
-        expect(subject.size).to eq(1)
-        object = subject.first
+        expect(spec_subject.size).to eq(1)
+        object = spec_subject.first
         expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
         expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::DataTypes.instance)
         expect(object.name).to eq(:RubyDataType)
@@ -137,7 +138,7 @@ SOURCE
         func = object.functions.first
         expect(func.docstring).to eq('')
         expect(func.signature).to eq('RubyDataType.func1(param1, param2)')
-        expect(func.tag(:return)).to_not be_nil
+        expect(func.tag(:return)).not_to be_nil
         expect(func.tag(:return).types).to eq(['String'])
         param_tags = func.docstring.tags(:param)
         expect(param_tags.size).to eq(2)
@@ -150,7 +151,8 @@ SOURCE
       end
 
       context 'which has multiple functions' do
-        let(:source) do <<-SOURCE
+        let(:source) do
+          <<-SOURCE
 # An example Puppet Data Type in Ruby.
 Puppet::DataTypes.create_type('RubyDataType') do
   interface <<-PUPPET
@@ -163,19 +165,19 @@ end
 SOURCE
         end
 
-        it 'should output a warning about the first missing function' do
-          expect { subject }.to output(/\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2/m).to_stdout_from_any_process
+        it 'outputs a warning about the first missing function' do
+          expect { spec_subject }.to output(%r{\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2}m).to_stdout_from_any_process
         end
 
-        it 'should output a warning about the second missing function' do
-          expect { subject }.to output(/\[warn\]: Missing @!method tag for function 'func2' near \(stdin\):2/m).to_stdout_from_any_process
+        it 'outputs a warning about the second missing function' do
+          expect { spec_subject }.to output(%r{\[warn\]: Missing @!method tag for function 'func2' near \(stdin\):2}m).to_stdout_from_any_process
         end
 
-        it 'should register a data type object with all functions' do
+        it 'registers a data type object with all functions' do
           suppress_yard_logging
 
-          expect(subject.size).to eq(1)
-          object = subject.first
+          expect(spec_subject.size).to eq(1)
+          object = spec_subject.first
           expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
 
           # Check for functions
@@ -199,7 +201,8 @@ SOURCE
   end
 
   describe 'parsing a data type definition with extra tags' do
-    let(:source) { <<-SOURCE
+    let(:source) do
+      <<-SOURCE
 # An example Puppet Data Type in Ruby.
 # @param msg A message parameter.
 # @param arg1 Optional String parameter. Defaults to 'param'.
@@ -217,21 +220,21 @@ Puppet::DataTypes.create_type('RubyDataType') do
     PUPPET
 end
 SOURCE
-    }
-
-    it 'should output a warning about the extra attribute' do
-      expect{ subject }.to output(/\[warn\]: The @param tag for 'arg1' has no matching attribute near \(stdin\):7/m).to_stdout_from_any_process
     end
 
-    it 'should output a warning about the extra function' do
-      expect{ subject }.to output(/\[warn\]: The @!method tag for 'does_not_exist' has no matching function definition near \(stdin\):7/m).to_stdout_from_any_process
+    it 'outputs a warning about the extra attribute' do
+      expect { spec_subject }.to output(%r{\[warn\]: The @param tag for 'arg1' has no matching attribute near \(stdin\):7}m).to_stdout_from_any_process
     end
 
-    it 'should register a data type object with extra information removed' do
+    it 'outputs a warning about the extra function' do
+      expect { spec_subject }.to output(%r{\[warn\]: The @!method tag for 'does_not_exist' has no matching function definition near \(stdin\):7}m).to_stdout_from_any_process
+    end
+
+    it 'registers a data type object with extra information removed' do
       suppress_yard_logging
 
-      expect(subject.size).to eq(1)
-      object = subject.first
+      expect(spec_subject.size).to eq(1)
+      object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::DataTypes.instance)
       expect(object.name).to eq(:RubyDataType)
@@ -262,7 +265,8 @@ SOURCE
   describe 'parsing a valid data type definition' do
     # TODO: What about testing for `type_parameters => {}`
     # e.g. https://github.com/puppetlabs/puppet/blob/main/lib/puppet/datatypes/error.rb
-    let(:source) { <<-SOURCE
+    let(:source) do
+      <<-SOURCE
 # An example Puppet Data Type in Ruby.
 #
 # @param msg A message parameter5.
@@ -286,11 +290,11 @@ Puppet::DataTypes.create_type('RubyDataType') do
     PUPPET
 end
 SOURCE
-    }
+    end
 
-    it 'should register a data type object' do
-      expect(subject.size).to eq(1)
-      object = subject.first
+    it 'registers a data type object' do
+      expect(spec_subject.size).to eq(1)
+      object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::DataTypes.instance)
       expect(object.name).to eq(:RubyDataType)
@@ -320,7 +324,7 @@ SOURCE
       func = object.functions.first
       expect(func.name).to eq(:func1)
       expect(func.docstring).to eq('func1 documentation')
-      expect(func.tag(:return)).to_not be_nil
+      expect(func.tag(:return)).not_to be_nil
       expect(func.tag(:return).types).to eq(['Optional[String]'])
       param_tags = func.docstring.tags(:param)
       expect(param_tags.size).to eq(2)
@@ -333,7 +337,8 @@ SOURCE
     end
 
     context 'with multiple interfaces' do
-      let(:source) do <<-SOURCE
+      let(:source) do
+        <<-SOURCE
         # An example Puppet Data Type in Ruby.
         #
         # @param msg A message parameter5.
@@ -379,11 +384,11 @@ SOURCE
         SOURCE
       end
 
-      it 'should register only the first valid interface' do
+      it 'registers only the first valid interface' do
         suppress_yard_logging
 
-        expect(subject.size).to eq(1)
-        object = subject.first
+        expect(spec_subject.size).to eq(1)
+        object = spec_subject.first
         expect(object.name).to eq(:RubyDataType)
 
         # Check that the param tags are set
@@ -398,7 +403,8 @@ SOURCE
     end
 
     context 'with missing, partial and addition function parameters' do
-      let(:source) do <<-SOURCE
+      let(:source) do
+        <<-SOURCE
 # An example Puppet Data Type in Ruby.
 #
 # @!method func1(foo1, foo2)
@@ -425,27 +431,31 @@ end
 SOURCE
       end
 
-      it 'should output a warning about the incorrect return type' do
-        expect{ subject }.to output(/\[warn\]: The @return tag for 'func1' has a different type definition .+ Expected \["Optional\[String\]"\]/m).to_stdout_from_any_process
+      it 'outputs a warning about the incorrect return type' do
+        expect { spec_subject }.to output(%r{\[warn\]: The @return tag for 'func1' has a different type definition .+ Expected \["Optional\[String\]"\]}m).to_stdout_from_any_process
       end
 
-      it 'should output a warning about the additional parameter' do
-        expect{ subject }.to output(/\[warn\]: The @param tag for 'extra' should not exist for function 'func1' that is defined near/m).to_stdout_from_any_process
+      it 'outputs a warning about the additional parameter' do
+        expect { spec_subject }.to output(%r{\[warn\]: The @param tag for 'extra' should not exist for function 'func1' that is defined near}m).to_stdout_from_any_process
       end
 
-      it 'should output a warning about the wrong parameter type (func1)' do
-        expect{ subject }.to output(/\[warn\]: The @param tag for 'foo1' for function 'func1' has a different type definition than the actual function near .+ Expected \["Integer"\]/m).to_stdout_from_any_process
+      it 'outputs a warning about the wrong parameter type (func1)' do
+        expect {
+          spec_subject
+        } .to output(%r{\[warn\]: The @param tag for 'foo1' for function 'func1' has a different type definition than the actual function near .+ Expected \["Integer"\]}m).to_stdout_from_any_process
       end
 
-      it 'should output a warning about the wrong parameter type (func2)' do
-        expect{ subject }.to output(/\[warn\]: The @param tag for 'param1' for function 'func2' has a different type definition than the actual function near .+ Expected \["Integer"\]/m).to_stdout_from_any_process
+      it 'outputs a warning about the wrong parameter type (func2)' do
+        expect {
+          spec_subject
+        } .to output(%r{\[warn\]: The @param tag for 'param1' for function 'func2' has a different type definition than the actual function near .+ Expected \["Integer"\]}m).to_stdout_from_any_process
       end
 
       it 'automatically fixes function parameters, except for differring types' do
         suppress_yard_logging
 
-        expect(subject.size).to eq(1)
-        object = subject.first
+        expect(spec_subject.size).to eq(1)
+        object = spec_subject.first
         expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
 
         # Check for functions
@@ -453,7 +463,7 @@ SOURCE
 
         func = object.functions.first
         expect(func.docstring).to eq('func1 docs')
-        expect(func.tag(:return)).to_not be_nil
+        expect(func.tag(:return)).not_to be_nil
         expect(func.tag(:return).types).to eq(['Optional[String]'])
         param_tags = func.docstring.tags(:param)
         expect(param_tags.size).to eq(2)
@@ -478,18 +488,19 @@ SOURCE
     end
   end
 
-  testcases = [
-    { :value => '-1', :expected => -1 },
-    { :value => '0', :expected => 0 },
-    { :value => '10', :expected => 10 },
-    { :value => '0777', :expected => 511 },
-    { :value => '0xFF', :expected => 255 },
-    { :value => '0.1', :expected => 0.1 },
-    { :value => '31.415e-1', :expected => 3.1415 },
-    { :value => '0.31415e1', :expected => 3.1415 }
+  [
+    { value: '-1', expected: -1 },
+    { value: '0', expected: 0 },
+    { value: '10', expected: 10 },
+    { value: '0777', expected: 511 },
+    { value: '0xFF', expected: 255 },
+    { value: '0.1', expected: 0.1 },
+    { value: '31.415e-1', expected: 3.1415 },
+    { value: '0.31415e1', expected: 3.1415 },
   ].each do |testcase|
     describe "parsing a valid data type definition with numeric default #{testcase[:value]}" do
-      let(:source) { <<-SOURCE
+      let(:source) do
+        <<-SOURCE
 # An example Puppet Data Type in Ruby.
 # @param num1 A numeric parameter
 Puppet::DataTypes.create_type('RubyDataType') do
@@ -500,11 +511,11 @@ Puppet::DataTypes.create_type('RubyDataType') do
     PUPPET
 end
 SOURCE
-      }
+      end
 
-      it 'should register a data type object' do
-        expect(subject.size).to eq(1)
-        object = subject.first
+      it 'registers a data type object' do
+        expect(spec_subject.size).to eq(1)
+        object = spec_subject.first
         expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
         expect(object.parameters.size).to eq(1)
         expect(object.parameters[0]).to eq(['num1', testcase[:expected]])
@@ -513,7 +524,8 @@ SOURCE
   end
 
   describe 'parsing an invalid data type definition' do
-    let(:source) { <<-SOURCE
+    let(:source) do
+      <<-SOURCE
 # The msg attribute is missing a comma.
 #
 # @param msg A message parameter5.
@@ -530,13 +542,13 @@ Puppet::DataTypes.create_type('RubyDataType') do
     PUPPET
 end
 SOURCE
-    }
+    end
 
-    it 'should register a partial data type object' do
+    it 'registers a partial data type object' do
       suppress_yard_logging
 
-      expect(subject.size).to eq(1)
-      object = subject.first
+      expect(spec_subject.size).to eq(1)
+      object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DataType)
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::DataTypes.instance)
       expect(object.name).to eq(:RubyDataType)
@@ -558,14 +570,15 @@ SOURCE
       expect(object.functions.size).to eq(0)
     end
 
-    it 'should log a warning' do
-      expect{ subject }.to output(/\[warn\]: Invalid datatype definition at (.+):[0-9]+: Syntax error at 'arg1'/).to_stdout_from_any_process
+    it 'logs a warning' do
+      expect { spec_subject }.to output(%r{\[warn\]: Invalid datatype definition at (.+):[0-9]+: Syntax error at 'arg1'}).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a data type with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<-SOURCE
+      let(:source) do
+        <<-SOURCE
 # An example Puppet Data Type in Ruby.
 #
 # @summary A short summary.
@@ -575,18 +588,19 @@ Puppet::DataTypes.create_type('RubyDataType') do
     PUPPET
 end
 SOURCE
-      }
+      end
 
-      it 'should parse the summary' do
-        expect{ subject }.to output('').to_stdout_from_any_process
-        expect(subject.size).to eq(1)
-        summary = subject.first.tags(:summary)
+      it 'parses the summary' do
+        expect { spec_subject }.to output('').to_stdout_from_any_process
+        expect(spec_subject.size).to eq(1)
+        summary = spec_subject.first.tags(:summary)
         expect(summary.first.text).to eq('A short summary.')
       end
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<-SOURCE
+      let(:source) do
+        <<-SOURCE
 # An example Puppet Data Type in Ruby.
 #
 # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
@@ -596,10 +610,10 @@ Puppet::DataTypes.create_type('RubyDataType') do
     PUPPET
 end
 SOURCE
-      }
+      end
 
-      it 'should log a warning' do
-        expect{ subject }.to output(/\[warn\]: The length of the summary for puppet_data_type 'RubyDataType' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
+      it 'logs a warning' do
+        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_data_type 'RubyDataType' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
       end
     end
   end
