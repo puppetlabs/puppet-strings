@@ -21,9 +21,8 @@ module PuppetStrings::Yard::Parsers::Puppet
     def initialize(object, file)
       @file = file
 
-      adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(object)
-      @source = adapter.extract_text
-      @line = adapter.line
+      @source = PuppetStrings::Yard::Util.ast_to_text(object)
+      @line = object.line
       @comments_range = nil
     end
 
@@ -86,13 +85,11 @@ module PuppetStrings::Yard::Parsers::Puppet
         @name = parameter.name
         # Take the exact text for the type expression
         if parameter.type_expr
-          adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(parameter.type_expr)
-          @type = adapter.extract_text
+          @type = PuppetStrings::Yard::Util.ast_to_text(parameter.type_expr)
         end
         # Take the exact text for the default value expression
         return unless parameter.value
-        adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(parameter.value)
-        @value = adapter.extract_text
+        @value = PuppetStrings::Yard::Util.ast_to_text(parameter.value)
       end
     end
 
@@ -149,8 +146,7 @@ module PuppetStrings::Yard::Parsers::Puppet
       return unless object.respond_to? :return_type
       type = object.return_type
       return unless type
-      adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(type)
-      @type = adapter.extract_text.gsub('>> ', '')
+      @type = PuppetStrings::Yard::Util.ast_to_text(type).gsub('>> ', '')
     end
   end
 
@@ -182,12 +178,11 @@ module PuppetStrings::Yard::Parsers::Puppet
       case type_expr
       when Puppet::Pops::Model::AccessExpression
         # TODO: I don't like rebuilding the source from the AST, but AccessExpressions don't expose the original source
-        @alias_of = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(type_expr.left_expr).extract_text + '['
-        @alias_of << type_expr.keys.map { |key| ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(key).extract_text }.join(', ')
+        @alias_of = PuppetStrings::Yard::Util.ast_to_text(type_expr.left_expr) + '['
+        @alias_of << type_expr.keys.map { |key| PuppetStrings::Yard::Util.ast_to_text(key) }.join(', ')
         @alias_of << ']'
       else
-        adapter = ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(type_expr)
-        @alias_of = adapter.extract_text
+        @alias_of = PuppetStrings::Yard::Util.ast_to_text(type_expr)
       end
       @name = object.name
     end

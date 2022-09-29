@@ -79,4 +79,11 @@ module PuppetStrings::Yard::Util
 
     hash
   end
+
+  # Convert Puppet AST to text.
+  # @param [Puppet::Pops::Model::PopsObject] ast The Puppet AST to convert to text.
+  # @return [String] Returns a string of Puppet code.
+  def self.ast_to_text(ast)
+    ast.locator.extract_tree_text(ast)
+  end
 end

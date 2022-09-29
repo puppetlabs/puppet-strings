@@ -152,12 +152,12 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
 
     def literal_AccessExpression(o)
       # Extract the raw text of the Access Expression
-      ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(o).extract_text
+      PuppetStrings::Yard::Util.ast_to_text(o)
     end
 
     def literal_QualifiedReference(o)
       # Extract the raw text of the Qualified Reference
-      ::Puppet::Pops::Adapters::SourcePosAdapter.adapt(o).extract_text
+      PuppetStrings::Yard::Util.ast_to_text(o)
     end
 
     # ----- The following methods are the same as the original Literal_evaluator

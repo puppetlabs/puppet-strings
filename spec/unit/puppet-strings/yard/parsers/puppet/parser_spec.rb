@@ -296,4 +296,63 @@ SOURCE
       end
     end
   end
+
+  [
+    'undef',
+    'true',
+    '-1',
+    '0.34',
+    'bareword',
+    "'single quotes'",
+    '"double quotes"',
+    '[]',
+    '[1]',
+    '{}',
+    '{ a => 1 }',
+    '$param1',
+    '1 + 1',
+    'func()',
+    '$param1.foo(1)',
+    '$param1.foo($param2 + $param3.bar())',
+  ].each do |value|
+    describe "parsing parameter with #{value} default value" do
+      let(:source) { <<~PUPPET }
+        class foo (
+          $param1 = #{value},
+        ) {}
+      PUPPET
+
+      it 'finds correct value' do
+        spec_subject.parse
+        statement = spec_subject.enumerator.first
+        expect(statement.parameters.size).to eq(1)
+        expect(statement.parameters[0].value).to eq(value)
+      end
+    end
+  end
+
+  [
+    '$param1.foo()',
+    "$facts['kernel'] ? {
+        'Linux'  => 'linux',
+        'Darwin' => 'darwin',
+        default  => $facts['kernel'],
+      }",
+  ].each do |value|
+    describe "parsing parameter with #{value} default value" do
+      let(:source) { <<~PUPPET }
+        class foo (
+          $param1 = #{value},
+        ) {}
+      PUPPET
+
+      it 'finds correct value' do
+        skip('Broken by https://tickets.puppetlabs.com/browse/PUP-11632')
+        spec_subject.parse
+        statement = spec_subject.enumerator.first
+        expect(statement.parameters.size).to eq(1)
+        expect(statement.parameters[0].value).to eq(value)
+      end
+    end
+  end
 end

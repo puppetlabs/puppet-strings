@@ -47,4 +47,11 @@ a test string}
       expect(spec_subject.github_to_yard_links(str)).to eq('<a href="#label-Module+description"> module-description')
     end
   end
+
+  describe 'ast_to_text' do
+    it 'converts a simple AST correctly' do
+      model = Puppet::Pops::Parser::Parser.new.parse_string('class test {}').model
+      expect(described_class.ast_to_text(model.body)).to eq('class test {}')
+    end
+  end
 end
