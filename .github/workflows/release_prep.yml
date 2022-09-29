@@ -1,0 +1,67 @@
+name: "Release Prep"
+
+on:
+  workflow_dispatch:
+   inputs:
+    target:
+      description: 'The target for the release. This can be a commit sha or a branch.'
+      required: false
+      default: 'main'
+
+jobs:
+  release_prep:
+    name: "Release Prep"
+    runs-on: "ubuntu-latest"
+
+    steps:
+
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          ref: ${{ github.event.inputs.target }}
+          clean: true
+          fetch-depth: 0
+
+      - name: "setup ruby"
+        uses: "ruby/setup-ruby@v1"
+        with:
+          ruby-version: "2.7"
+          bundler-cache: "true"
+
+      - name: "bundle environment"
+        run: |
+          echo ::group::bundler environment
+          bundle env
+          echo ::endgroup::
+
+      - name: "Get version"
+        id: "get_version"
+        run: |
+          echo "::set-output name=version::$(ruby -e "require 'rubygems'; puts Gem::Specification::load(Dir.glob('*.gemspec').first).version.to_s")"
+
+      - name: "Generate changelog"
+        run: |
+          export GH_HOST=github.com
+          gh extension install chelnak/gh-changelog
+          gh changelog new --next-version v${{ steps.get_version.outputs.version }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Commit changes"
+        run: |
+          git config --local user.email "${{ github.repository_owner }}@users.noreply.github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Release prep v${{ steps.get_version.outputs.version }}"
+
+      - name: "Create pull request"
+        uses: "peter-evans/create-pull-request@v4"
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Release prep v${{ steps.get_version.outputs.version }}"
+          branch: "release-prep"
+          delete-branch: true
+          title: "Release prep v${{ steps.get_version.outputs.version }}"
+          body: |
+            Automated release-prep through from commit ${{ github.sha }}.
+          labels: "maintenance"
