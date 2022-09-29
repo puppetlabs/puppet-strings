@@ -258,4 +258,86 @@ describe PuppetStrings::Markdown do
 
     MARKDOWN
   end
+
+  it 'renders single-line data types with inline code' do
+    expect(YARD::Parser::SourceParser.parse_string(<<~'PUPPET', :puppet).enumerator.length).to eq(1)
+      # @summary it’s for testing
+      type MyEnum = Enum[a, b]
+    PUPPET
+
+    expect(described_class.generate).to match(%r{^Alias of `Enum\[a, b\]`$})
+  end
+
+  it 'renders multi-line data types with inline code' do
+    expect(YARD::Parser::SourceParser.parse_string(<<~'PUPPET', :puppet).enumerator.length).to eq(1)
+      # summary Test Type
+      #
+      type Test_module::Test_type = Hash[
+        Pattern[/^[a-z][a-z0-9_-]*$/],
+        Struct[
+          {
+            param1 => String[1],
+            param2 => Stdlib::Absolutepath,
+            paramX => Boolean,
+          }
+        ]
+      ]
+    PUPPET
+
+    expect(described_class.generate).to include(<<~'MARKDOWN')
+      Alias of
+
+      ```puppet
+      Hash[Pattern[/^[a-z][a-z0-9_-]*$/], Struct[
+          {
+            param1 => String[1],
+            param2 => Stdlib::Absolutepath,
+            paramX => Boolean,
+          }
+        ]]
+      ```
+    MARKDOWN
+  end
+
+  it 'renders single-line default values with inline code' do
+    expect(YARD::Parser::SourceParser.parse_string(<<~'PUPPET', :puppet).enumerator.length).to eq(1)
+      # @summary Test
+      class myclass (
+        String $os = 'linux',
+      ) {
+      }
+    PUPPET
+
+    expect(described_class.generate).to include(<<~'MARKDOWN')
+      Default value: `'linux'`
+    MARKDOWN
+  end
+
+  it 'renders multi-line default values with a code block' do
+    skip('Broken by https://tickets.puppetlabs.com/browse/PUP-11632')
+
+    expect(YARD::Parser::SourceParser.parse_string(<<~'PUPPET', :puppet).enumerator.length).to eq(1)
+      # @summary Test
+      class myclass (
+        String $os = $facts['kernel'] ? {
+          'Linux'  => 'linux',
+          'Darwin' => 'darwin',
+          default  => $facts['kernel'],
+        },
+      ) {
+      }
+    PUPPET
+
+    expect(described_class.generate).to include(<<~'MARKDOWN')
+      Default value:
+
+      ```puppet
+      $facts['kernel'] ? {
+          'Linux'  => 'linux',
+          'Darwin' => 'darwin',
+          default  => $facts['kernel']
+        }
+      ```
+    MARKDOWN
+  end
 end

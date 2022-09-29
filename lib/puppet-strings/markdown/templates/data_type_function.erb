@@ -43,7 +43,7 @@ Raises:
 <% params.each do |param| -%>
 ##### `<%= param[:name]  %>`
 
-Data type: `<%= param[:types][0] %>`
+Data type:<%= code_maybe_block(param[:types][0]) %>
 
 <%= param[:text] %>
 
