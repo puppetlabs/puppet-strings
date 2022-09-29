@@ -140,6 +140,42 @@ SOURCE
     end
   end
 
+  describe 'parsing puppet plans', if: TEST_PUPPET_PLANS do
+    # The parsing code actually checks this and sets a global (Puppet[:tasks]).
+    # Plan parsing will fail if it hasn't yet encountered a file under plans/.
+    let(:file) { 'plans/test.pp' }
+    let(:source) { <<~'SOURCE' }
+      # A simple plan.
+      # @param param1 First param.
+      # @param param2 Second param.
+      # @param param3 Third param.
+      plan plann(String $param1, $param2, Integer $param3 = 1) {
+      }
+    SOURCE
+
+    it 'parses the puppet plan statement' do
+      spec_subject.parse
+      expect(spec_subject.enumerator.size).to eq(1)
+      statement = spec_subject.enumerator.first
+      expect(statement).to be_a(PuppetStrings::Yard::Parsers::Puppet::PlanStatement)
+      expect(statement.name).to eq('plann')
+      expect(statement.source).to eq(source.sub(%r{\A.*?\n([^#])}m, '\1').chomp)
+      expect(statement.file).to eq(file)
+      expect(statement.line).to eq(5)
+      expect(statement.docstring).to eq('A simple plan.')
+      expect(statement.parameters.size).to eq(3)
+      expect(statement.parameters[0].name).to eq('param1')
+      expect(statement.parameters[0].type).to eq('String')
+      expect(statement.parameters[0].value).to be_nil
+      expect(statement.parameters[1].name).to eq('param2')
+      expect(statement.parameters[1].type).to be_nil
+      expect(statement.parameters[1].value).to be_nil
+      expect(statement.parameters[2].name).to eq('param3')
+      expect(statement.parameters[2].type).to eq('Integer')
+      expect(statement.parameters[2].value).to eq('1')
+    end
+  end
+
   describe 'parsing puppet functions', if: TEST_PUPPET_FUNCTIONS do
     let(:source) do
       <<SOURCE
