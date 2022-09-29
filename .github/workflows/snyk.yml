@@ -1,27 +1,31 @@
-name: Snyk Scan
+name: "Snyk Scan"
+
 on:
  workflow_dispatch:
+
  push:
     branches:
-      - main
+      - "main"
 jobs:
   security:
-    runs-on: ubuntu-latest
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: twingate/github-action@v1
-        with:
-          service-key: ${{ secrets.TWINGATE_PUBLIC_REPO_KEY }}
-      - uses: actions/checkout@master
-      - name: setup ruby
-        uses: ruby/setup-ruby@v1
+
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Setup ruby"
+        uses: "ruby/setup-ruby@v1"
         with:
           ruby-version: 2.7
-      - name: create lock
+
+      - name: "Create lock"
         run: bundle lock
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/ruby@master
+
+      - name: "Check for vulnerabilities"
+        uses: "snyk/actions/ruby@master"
+        with:
+          command: "monitor"
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_GENERAL_KEY }}
-        with:
-          command: monitor
 
