@@ -9,7 +9,7 @@ module PuppetStrings::Yard::Util
   # @param [String] str The string to scrub.
   # @return [String] A scrubbed string.
   def self.scrub_string(str)
-    match = str.match(/^%[Qq]{(.*)}$/m)
+    match = str.match(%r{^%[Qq]{(.*)}$}m)
     if match
       return Puppet::Util::Docs.scrub(match[1])
     end
@@ -25,8 +25,8 @@ module PuppetStrings::Yard::Util
   # @param [String] data HTML document to convert
   # @return [String] HTML document with links converted
   def self.github_to_yard_links(data)
-    data.scan(/href\=\"\#(.+)\"/).each do |bad_link|
-      data = data.gsub("=\"##{bad_link.first}\"", "=\"#label-#{bad_link.first.capitalize.gsub('-', '+')}\"")
+    data.scan(%r{href\=\"\#(.+)\"}).each do |bad_link|
+      data = data.gsub("=\"##{bad_link.first}\"", "=\"#label-#{bad_link.first.capitalize.tr('-', '+')}\"")
     end
 
     data
@@ -59,7 +59,7 @@ module PuppetStrings::Yard::Util
   # @param [YARD::Docstring, String] docstring The docstring to convert to a hash.
   # @param [Array] select_tags List of tags to select. Other tags will be filtered out.
   # @return [Hash] Returns a hash representation of the given docstring.
-  def self.docstring_to_hash(docstring, select_tags=nil)
+  def self.docstring_to_hash(docstring, select_tags = nil)
     hash = {}
     hash[:text] = docstring
 

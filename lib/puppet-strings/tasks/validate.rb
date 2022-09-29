@@ -6,7 +6,7 @@ require 'tempfile'
 namespace :strings do
   namespace :validate do
     desc 'Validate the reference is up to date'
-    task :reference, [:patterns, :debug, :backtrace] do |t, args|
+    task :reference, [:patterns, :debug, :backtrace] do |_t, args|
       filename = 'REFERENCE.md'
 
       unless File.exist?(filename)

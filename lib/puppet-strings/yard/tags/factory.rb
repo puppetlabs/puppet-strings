@@ -3,8 +3,8 @@
 require 'yard/tags/default_factory'
 require 'puppet-strings/yard/tags/enum_tag'
 
+# Factory for creating tags.
 class PuppetStrings::Yard::Tags::Factory < YARD::Tags::DefaultFactory
-
   # Parses tag text and creates a new enum tag type. Modeled after
   # the parse_tag_with_options method in YARD::Tags::DefaultFactory.
   #

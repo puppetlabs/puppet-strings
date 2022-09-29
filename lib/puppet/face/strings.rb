@@ -32,9 +32,9 @@ Puppet::Face.define(:strings, '0.0.1') do
       check_required_features
       require 'puppet-strings'
 
-      PuppetStrings::generate(
+      PuppetStrings.generate(
         args.count > 1 ? args[0..-2] : PuppetStrings::DEFAULT_SEARCH_PATTERNS,
-        build_generate_options(args.last)
+        build_generate_options(args.last),
       )
       nil
     end
@@ -79,35 +79,34 @@ Puppet::Face.define(:strings, '0.0.1') do
         return
       end
       puts 'Starting YARD documentation server.'
-      PuppetStrings::run_server('-m', *module_docs)
+      PuppetStrings.run_server('-m', *module_docs)
       nil
     end
   end
 
-  action(:describe) do #This is Kris' experiment with string based describe
-    option "--list" do
-      summary "list types"
+  action(:describe) do # This is Kris' experiment with string based describe
+    option '--list' do
+      summary 'list types'
     end
-    option "--providers" do
-      summary "provide details on providers"
+    option '--providers' do
+      summary 'provide details on providers'
     end
 
-#TODO: Implement the rest of describe behavior
-#     * --help:
-#   Print this help text
+    # TODO: Implement the rest of describe behavior
+    #     * --help:
+    #   Print this help text
 
-# * --providers:
-#   Describe providers in detail for each type
+    # * --providers:
+    #   Describe providers in detail for each type
 
-# * --list:
-#   List all types
+    # * --list:
+    #   List all types
 
-# * --meta:
-#   List all metaparameters
+    # * --meta:
+    #   List all metaparameters
 
-# * --short:
-#   List only parameters without detail
-
+    # * --short:
+    #   List only parameters without detail
 
     when_invoked do |*args|
       check_required_features
@@ -117,27 +116,24 @@ Puppet::Face.define(:strings, '0.0.1') do
       options[:describe] = true
       options[:stdout] = true
       options[:format] = 'json'
-      
+
       if args.length > 1
         if options[:list]
-          warn "WARNING: ignoring types when listing all types."
+          warn 'WARNING: ignoring types when listing all types.'
         else
           options[:describe_types] = args[0..-2]
         end
       end
 
-      #TODO: Set up search_patterns and whatever else needed to collect data for describe - currently missing some
+      # TODO: Set up search_patterns and whatever else needed to collect data for describe - currently missing some
       #          manifests/**/*.pp
       #          functions/**/*.pp
       #          tasks/*.json
       #          plans/*.pp
-      search_patterns = %w(
-        types/**/*.pp
-        lib/**/*.rb
-      )
-      PuppetStrings::generate(
+      search_patterns = ['types/**/*.pp', 'lib/**/*.rb']
+      PuppetStrings.generate(
         search_patterns,
-        build_generate_options(options)
+        build_generate_options(options),
       )
       nil
     end
@@ -146,9 +142,9 @@ Puppet::Face.define(:strings, '0.0.1') do
   # Checks that the required features are installed.
   # @return [void]
   def check_required_features
-    raise RuntimeError, "The 'yard' gem must be installed in order to use this face." unless Puppet.features.yard?
-    raise RuntimeError, "The 'rgen' gem must be installed in order to use this face." unless Puppet.features.rgen?
-    raise RuntimeError, 'This face requires Ruby 1.9 or greater.' if RUBY_VERSION.match?(/^1\.8/)
+    raise "The 'yard' gem must be installed in order to use this face." unless Puppet.features.yard?
+    raise "The 'rgen' gem must be installed in order to use this face." unless Puppet.features.rgen?
+    raise 'This face requires Ruby 1.9 or greater.' if RUBY_VERSION.match?(%r{^1\.8})
   end
 
   # Builds the options to PuppetStrings.generate.
@@ -186,7 +182,7 @@ Puppet::Face.define(:strings, '0.0.1') do
           generate_options[:json] = true
           generate_options[:path] ||= options[:emit_json] if options[:emit_json]
         else
-          raise RuntimeError, "Invalid format #{options[:format]}. Please select 'json' or 'markdown'."
+          raise "Invalid format #{options[:format]}. Please select 'json' or 'markdown'."
         end
       elsif options[:emit_json] || options[:emit_json_stdout]
         generate_options[:json] = true

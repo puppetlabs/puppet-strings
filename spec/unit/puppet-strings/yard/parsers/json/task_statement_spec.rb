@@ -3,7 +3,10 @@
 require 'spec_helper'
 
 describe PuppetStrings::Yard::Parsers::JSON::TaskStatement do
-  let(:source) { <<-SOURCE
+  subject(:spec_subject) { described_class.new(json, source, 'test.json') }
+
+  let(:source) do
+    <<-SOURCE
 {
   "description": "Allows you to backup your database to local file.",
   "input_method": "stdin",
@@ -27,32 +30,33 @@ describe PuppetStrings::Yard::Parsers::JSON::TaskStatement do
   }
 }
   SOURCE
-  }
+  end
   let(:json) { JSON.parse(source) }
-  subject { PuppetStrings::Yard::Parsers::JSON::TaskStatement.new(json, source, "test.json") }
+
   describe '#comments' do
     it 'returns docstring' do
-      expect(subject.comments).to eq "Allows you to backup your database to local file."
+      expect(spec_subject.comments).to eq 'Allows you to backup your database to local file.'
     end
   end
   describe '#parameters' do
     context 'with params' do
       it 'returns params' do
-        expect(subject.parameters.size > 0).to be true
+        expect(!spec_subject.parameters.empty?).to be true
       end
     end
     context 'no params' do
-      let(:source) { <<-SOURCE
+      let(:source) do
+        <<-SOURCE
 {
   "description": "Allows you to backup your database to local file.",
   "input_method": "stdin"
 }
       SOURCE
-      }
+      end
+
       it 'returns an empty hash' do
-        expect(subject.parameters).to eq({})
+        expect(spec_subject.parameters).to eq({})
       end
     end
   end
-
 end

@@ -3,8 +3,8 @@
 require_relative 'puppet_task'
 
 module PuppetStrings::Markdown
+  # Generates Markdown for Puppet Tasks.
   module PuppetTasks
-
     # @return [Array] list of classes
     def self.in_tasks
       arr = YARD::Registry.all(:puppet_task).sort_by!(&:name).map!(&:to_hash)
@@ -16,7 +16,7 @@ module PuppetStrings::Markdown
     end
 
     def self.render
-      final = in_tasks.length > 0 ? "## Tasks\n\n" : ""
+      final = !in_tasks.empty? ? "## Tasks\n\n" : ''
       in_tasks.each do |task|
         final += task.render unless task.private?
       end
@@ -24,7 +24,7 @@ module PuppetStrings::Markdown
     end
 
     def self.toc_info
-      final = ["Tasks"]
+      final = ['Tasks']
 
       in_tasks.each do |task|
         final.push(task.toc_info)

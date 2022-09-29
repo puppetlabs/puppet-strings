@@ -4,11 +4,12 @@ require 'puppet-strings'
 require 'puppet-strings/json'
 require 'puppet-strings/yard'
 
+# Implements classes that make elements in a YARD::Registry hash easily accessible for template.
 module PuppetStrings::Markdown
   # This class makes elements in a YARD::Registry hash easily accessible for templates.
   #
   # Here's an example hash:
-  #{:name=>:klass,
+  # {:name=>:klass,
   # :file=>"(stdin)",
   # :line=>16,
   # :inherits=>"foo::bar",
@@ -57,11 +58,11 @@ module PuppetStrings::Markdown
 
     # generate 1:1 tag methods
     # e.g. {:tag_name=>"author", :text=>"eputnam"}
-    { :return_val => 'return',
-      :since => 'since',
-      :summary => 'summary',
-      :note => 'note',
-      :todo => 'todo' }.each do |method_name, tag_name|
+    { return_val: 'return',
+      since: 'since',
+      summary: 'summary',
+      note: 'note',
+      todo: 'todo' }.each do |method_name, tag_name|
       # @return [String] unless the tag is nil or the string.empty?
       define_method method_name do
         @tags.find { |tag| tag[:tag_name] == tag_name && !tag[:text].empty? }[:text] if @tags.any? { |tag| tag[:tag_name] == tag_name && !tag[:text].empty? }
@@ -148,7 +149,7 @@ module PuppetStrings::Markdown
       {
         name: name.to_s,
         link: link,
-        desc: summary || @registry[:docstring][:text][0..140].gsub("\n",' '),
+        desc: summary || @registry[:docstring][:text][0..140].tr("\n", ' '),
         private: private?
       }
     end
@@ -165,9 +166,9 @@ module PuppetStrings::Markdown
     def word_wrap(text, line_width: 120, break_sequence: "\n")
       return unless text
 
-      text.split("\n").collect! do |line|
-        line.length > line_width ? line.gsub(/(.{1,#{line_width}})(\s+|$)/, "\\1#{break_sequence}").strip : line
-      end * break_sequence
+      text.split("\n").map! { |line|
+        line.length > line_width ? line.gsub(%r{(.{1,#{line_width}})(\s+|$)}, "\\1#{break_sequence}").strip : line
+      } * break_sequence
     end
 
     # @return [String] full markdown rendering of a component
@@ -176,7 +177,7 @@ module PuppetStrings::Markdown
       begin
         PuppetStrings::Markdown.erb(file).result(binding)
       rescue StandardError => e
-        fail "Processing #{@registry[:file]}:#{@registry[:line]} with #{file} => #{e}"
+        raise "Processing #{@registry[:file]}:#{@registry[:line]} with #{file} => #{e}"
       end
     end
 

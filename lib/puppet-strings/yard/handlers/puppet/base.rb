@@ -6,10 +6,11 @@ class PuppetStrings::Yard::Handlers::Puppet::Base < YARD::Handlers::Base
   # @param statement The statement that was parsed.
   # @return [Boolean] Returns true if the statement is handled by this handler or false if not.
   def self.handles?(statement)
-    handlers.any? {|handler| statement.is_a?(handler)}
+    handlers.any? { |handler| statement.is_a?(handler) }
   end
 
   protected
+
   # Sets the parameter tag types for the given code object.
   # This also performs some validation on the parameter tags.
   # @param object The code object to set the parameter tag types for.
@@ -35,7 +36,11 @@ class PuppetStrings::Yard::Handlers::Puppet::Base < YARD::Handlers::Base
       end
 
       # Warn if the parameter type and tag types don't match
-      log.warn "The type of the @param tag for parameter '#{parameter.name}' does not match the parameter type specification near #{statement.file}:#{statement.line}: ignoring in favor of parameter type information." if parameter.type && tag.types && !tag.types.empty? && parameter.type != tag.types[0]
+      if parameter.type && tag.types && !tag.types.empty? && parameter.type != tag.types[0]
+        log.warn "The type of the @param tag for parameter '#{parameter.name}' "\
+          "does not match the parameter type specification near #{statement.file}:#{statement.line}: "\
+          'ignoring in favor of parameter type information.'
+      end
 
       if parameter.type
         tag.types = [parameter.type]

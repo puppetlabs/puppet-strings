@@ -21,15 +21,15 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   # @return [String] Returns the signature of the overload.
   def signature
     tags = self.tags(:param)
-    args = @parameters.map do |parameter|
+    args = @parameters.map { |parameter|
       name, default = parameter
       tag = tags.find { |t| t.name == name } if tags
       type = tag&.types ? "#{tag.type} " : 'Any '
-      prefix = "#{name[0]}" if name.start_with?('*', '&')
+      prefix = (name[0]).to_s if name.start_with?('*', '&')
       name = name[1..-1] if prefix
       default = " = #{default}" if default
       "#{type}#{prefix}$#{name}#{default}"
-    end.join(', ')
+    }.join(', ')
     @name + '(' + args + ')'
   end
 
@@ -57,7 +57,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   # Determines if a tag with the given name is present.
   # @param [String, Symbol] name The tag name.
   # @return [Boolean] Returns true if there is at least one tag with the given name or false if not.
-  def has_tag?(name)
+  def has_tag?(name) # rubocop:disable Naming/PredicateName
     @docstring.has_tag?(name)
   end
 
@@ -67,7 +67,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   def object=(value)
     super(value)
     @docstring.object = value
-    @docstring.tags.each {|tag| tag.object = value }
+    @docstring.tags.each { |tag| tag.object = value }
   end
 
   # Responsible for forwarding method calls to the associated object.
@@ -102,8 +102,8 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
     hash[:tag_name] = tag_name
     hash[:text] = text if text
     hash[:signature] = signature
-    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring) if !docstring.blank?
-    defaults = Hash[*parameters.reject{ |p| p[1].nil? }.flatten]
+    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring) unless docstring.blank?
+    defaults = Hash[*parameters.reject { |p| p[1].nil? }.flatten]
     hash[:defaults] = defaults unless defaults.empty?
     hash[:types] = types if types
     hash[:name] = name if name

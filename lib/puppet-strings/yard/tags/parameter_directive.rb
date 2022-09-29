@@ -12,8 +12,8 @@ class PuppetStrings::Yard::Tags::ParameterDirective < YARD::Tags::Directive
     # Add a parameter to the resource
     parameter = PuppetStrings::Yard::CodeObjects::Type::Parameter.new(tag.name, tag.text)
     tag.types&.each do |value|
-        parameter.add(value)
-      end
+      parameter.add(value)
+    end
     object.add_parameter parameter
   end
 

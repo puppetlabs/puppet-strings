@@ -3,6 +3,7 @@
 require 'puppet-strings/markdown/base'
 
 module PuppetStrings::Markdown
+  # Generates Markdown for a Puppet Resource Type.
   class ResourceType < Base
     def initialize(registry)
       @template = 'resource_type.erb'
@@ -45,7 +46,7 @@ module PuppetStrings::Markdown
     end
 
     def regex_in_data_type?(data_type)
-      m = data_type.match(/\w+\[\/.*\/\]/)
+      m = data_type.match(%r{\w+\[/.*/\]})
       m unless m.nil? || m.length.zero?
     end
   end

@@ -6,6 +6,7 @@ module PuppetStrings::Yard::Parsers
   module JSON
     require 'puppet-strings/yard/parsers/json/parser'
   end
+
   # The module for custom YARD parsers for the Puppet language.
   module Puppet
     require 'puppet-strings/yard/parsers/puppet/parser'

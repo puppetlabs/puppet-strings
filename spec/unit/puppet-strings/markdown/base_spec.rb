@@ -18,7 +18,7 @@ class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
     end
 
     let(:reg) { YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash)[0] }
-    let(:component) { PuppetStrings::Markdown::Base.new(reg, 'class') }
+    let(:component) { described_class.new(reg, 'class') }
 
     describe '#name' do
       it 'returns the expected name' do
@@ -27,16 +27,15 @@ class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
     end
 
     ['examples',
-      'see',
-      'since',
-      'return_val',
-      'return_type',].each do |method|
+     'see',
+     'since',
+     'return_val',
+     'return_type'].each do |method|
       describe "##{method}" do
         it 'returns nil' do
           expect(component.method(method.to_sym).call).to be_nil
         end
       end
-
     end
 
     describe '#private?' do
@@ -59,6 +58,7 @@ class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
 
     describe '#toc_info' do
       let(:toc) { component.toc_info }
+
       it 'returns a hash' do
         expect(toc).to be_instance_of Hash
       end
@@ -91,7 +91,7 @@ class klass::yeah(
     end
 
     let(:reg) { YARD::Registry.all(:puppet_class).sort_by!(&:name).map!(&:to_hash)[0] }
-    let(:component) { PuppetStrings::Markdown::Base.new(reg, 'class') }
+    let(:component) { described_class.new(reg, 'class') }
 
     describe '#name' do
       it 'returns the expected name' do
@@ -100,10 +100,10 @@ class klass::yeah(
     end
 
     ['summary',
-      'see',
-      'since',
-      'return_val',
-      'return_type'].each do |method|
+     'see',
+     'since',
+     'return_val',
+     'return_type'].each do |method|
       describe "##{method}" do
         it 'returns nil' do
           expect(component.method(method.to_sym).call).to be_nil
@@ -112,7 +112,7 @@ class klass::yeah(
     end
 
     describe '#examples' do
-      it 'should return one example' do
+      it 'returns one example' do
         expect(component.examples.size).to eq 1
       end
     end
@@ -131,6 +131,7 @@ class klass::yeah(
 
     describe '#toc_info' do
       let(:toc) { component.toc_info }
+
       it 'returns a hash' do
         expect(toc).to be_instance_of Hash
       end

@@ -36,7 +36,8 @@ class PuppetStrings::Yard::Handlers::Puppet::FunctionHandler < PuppetStrings::Ya
   end
 
   private
-  def add_return_tag(object, type=nil)
+
+  def add_return_tag(object, type = nil)
     tag = object.tag(:return)
     if tag
       if (type && tag.types && tag.types.first) && (type != tag.types.first)
@@ -47,7 +48,7 @@ class PuppetStrings::Yard::Handlers::Puppet::FunctionHandler < PuppetStrings::Ya
       return
     end
     log.warn "Missing @return tag near #{statement.file}:#{statement.line}."
-    type = type || 'Any'
+    type ||= 'Any'
     object.add_tag YARD::Tags::Tag.new(:return, '', type)
   end
 end

@@ -1,16 +1,11 @@
+# rubocop:disable Naming/FileName
+
 # frozen_string_literal: true
 
 # The root module for Puppet Strings.
 module PuppetStrings
   # The glob patterns used to search for files to document.
-  DEFAULT_SEARCH_PATTERNS = %w(
-    manifests/**/*.pp
-    functions/**/*.pp
-    types/**/*.pp
-    lib/**/*.rb
-    tasks/*.json
-    plans/**/*.pp
-  ).freeze
+  DEFAULT_SEARCH_PATTERNS = ['manifests/**/*.pp', 'functions/**/*.pp', 'types/**/*.pp', 'lib/**/*.rb', 'tasks/*.json', 'plans/**/*.pp'].freeze
 
   # Generates documentation.
   # @param [Array<String>] search_patterns The search patterns (e.g. manifests/**/*.pp) to look for files.
@@ -39,7 +34,7 @@ module PuppetStrings
       file = if options[:json]
                options[:path]
              elsif options[:markdown]
-               options[:path] || "REFERENCE.md"
+               options[:path] || 'REFERENCE.md'
              end
       # Disable output and prevent stats/progress when writing to STDOUT
       args << '-n'
@@ -64,13 +59,12 @@ module PuppetStrings
       render_markdown(file)
     end
 
-    if options[:describe]
-      render_describe(options[:describe_types], options[:describe_list], options[:providers])
-    end
+    return unless options[:describe]
+    render_describe(options[:describe_types], options[:describe_list], options[:providers])
   end
 
   def self.puppet_5?
-    Puppet::Util::Package.versioncmp(Puppet.version, "5.0.0") >= 0
+    Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0') >= 0
   end
 
   def self.render_json(path)

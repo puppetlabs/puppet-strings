@@ -13,7 +13,7 @@ class PuppetStrings::Yard::CodeObjects::Classes < PuppetStrings::Yard::CodeObjec
   # Gets the display name of the group.
   # @param [Boolean] prefix whether to show a prefix. Ignored for Puppet group namespaces.
   # @return [String] Returns the display name of the group.
-  def name(prefix = false)
+  def name(_prefix = false)
     'Puppet Classes'
   end
 end
@@ -53,7 +53,7 @@ class PuppetStrings::Yard::CodeObjects::Class < PuppetStrings::Yard::CodeObjects
     hash[:line] = line
     hash[:inherits] = statement.parent_class if statement.parent_class
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
-    defaults = Hash[*parameters.reject{ |p| p[1].nil? }.flatten]
+    defaults = Hash[*parameters.reject { |p| p[1].nil? }.flatten]
     hash[:defaults] = defaults unless defaults.nil? || defaults.empty?
     hash[:source] = source unless source.nil? || source.empty?
     hash

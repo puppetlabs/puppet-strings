@@ -6,9 +6,10 @@ require 'ripper'
 class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
   # A regular expression for detecting the start of a Ruby heredoc.
   # Note: the first character of the heredoc start may have been cut off by YARD.
-  HEREDOC_START = /^<?<[\-~]?['"]?(\w+)['"]?[^\n]*[\n]?/
+  HEREDOC_START = %r{^<?<[\-~]?['"]?(\w+)['"]?[^\n]*[\n]?}.freeze
 
   protected
+
   # Converts the given Ruby AST node to a string representation.
   # @param node The Ruby AST node to convert.
   # @return [String] Returns a string representation of the node or nil if a string representation was not possible.
@@ -33,7 +34,7 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
       source = node.source
       if source =~ HEREDOC_START
         lines = source.split("\n")
-        source = lines[1..(lines.last.include?($1[0..-2]) ? -2 : -1)].join("\n") if lines.size > 1
+        source = lines[1..(lines.last.include?(Regexp.last_match(1)[0..-2]) ? -2 : -1)].join("\n") if lines.size > 1
       end
 
       source

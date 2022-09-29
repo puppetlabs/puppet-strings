@@ -14,7 +14,7 @@ class PuppetStrings::Yard::CodeObjects::DataTypes < PuppetStrings::Yard::CodeObj
   # Gets the display name of the group.
   # @param [Boolean] prefix whether to show a prefix. Ignored for Puppet group namespaces.
   # @return [String] Returns the display name of the group.
-  def name(prefix = false)
+  def name(_prefix = false)
     'Puppet Data Types'
   end
 end
@@ -73,7 +73,7 @@ class PuppetStrings::Yard::CodeObjects::DataType < PuppetStrings::Yard::CodeObje
       meth_obj.add_tag(YARD::Tags::Tag.new(:param, '', [param_type], "param#{index + 1}"))
     end
 
-    self.meths << meth_obj
+    meths << meth_obj
   end
 
   def functions
@@ -87,14 +87,14 @@ class PuppetStrings::Yard::CodeObjects::DataType < PuppetStrings::Yard::CodeObje
     hash[:name] = name
     hash[:file] = file
     hash[:line] = line
-    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example])
+    hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring, [:param, :option, :enum, :return, :example])
     hash[:defaults] = defaults unless defaults.nil? || defaults.empty?
     hash[:source] = source unless source.nil? || source.empty?
     hash[:functions] = functions.map do |func|
       {
         name: func.name,
         signature: func.signature,
-        docstring: PuppetStrings::Yard::Util.docstring_to_hash(func.docstring, %i[param option enum return example])
+        docstring: PuppetStrings::Yard::Util.docstring_to_hash(func.docstring, [:param, :option, :enum, :return, :example])
       }
     end
     hash

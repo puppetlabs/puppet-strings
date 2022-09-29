@@ -61,7 +61,7 @@ class YARD::CLI::Yardoc
       :puppet_provider,
       :puppet_function,
       :puppet_task,
-      :puppet_plan
+      :puppet_plan,
     )
   end
 end
@@ -114,18 +114,18 @@ class YARD::CLI::Stats
     @undocumented += undoc if undoc.is_a?(Integer)
     data =
       if undoc
-        ('%5s (% 5d undocumented)' % [data, undoc])
+        "#{data} (#{undoc} undocumented)"
       else
-        '%5s' % data
+        data.to_s
       end
-    log.puts('%-21s %s' % [name + ':', data])
+    log.puts("#{name.ljust(25)} #{data}")
   end
 
   # This differs from the YARD implementation in that it considers
   # a docstring without text but with tags to be undocumented.
   def type_statistics_all(type)
-    objs = all_objects.select {|m| m.type == type }
-    undoc = objs.find_all {|m| m.docstring.all.empty? }
+    objs = all_objects.select { |m| m.type == type }
+    undoc = objs.select { |m| m.docstring.all.empty? }
     @undoc_list |= undoc if @undoc_list
     [objs.size, undoc.size]
   end

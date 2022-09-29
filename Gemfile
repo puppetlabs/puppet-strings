@@ -36,9 +36,9 @@ group :development do
   gem 'pry-byebug'
 end
 
-gem 'rubocop', '~> 0.81.0' # Requires work to upgrade
-gem 'rubocop-rspec'
-gem 'rubocop-performance'
+gem 'rubocop', '~> 1.6.1'
+gem 'rubocop-rspec', '~> 2.0.1'
+gem 'rubocop-performance', '~> 1.9.1'
 
 # Evaluate Gemfile.local if it exists
 if File.exists? "#{__FILE__}.local"

@@ -3,8 +3,8 @@
 require_relative 'function'
 
 module PuppetStrings::Markdown
+  # Generates Markdown for Puppet Functions.
   module Functions
-
     # @return [Array] list of functions
     def self.in_functions
       arr = YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash)
@@ -12,14 +12,12 @@ module PuppetStrings::Markdown
     end
 
     def self.contains_private?
-      result = false
-      unless in_functions.nil?
-        in_functions.find { |func| func.private? }.nil? ? false : true
-      end
+      return if in_functions.nil?
+      in_functions.find { |func| func.private? }.nil? ? false : true
     end
 
     def self.render
-      final = in_functions.length > 0 ? "## Functions\n\n" : ""
+      final = !in_functions.empty? ? "## Functions\n\n" : ''
       in_functions.each do |func|
         final += func.render unless func.private?
       end
@@ -27,7 +25,7 @@ module PuppetStrings::Markdown
     end
 
     def self.toc_info
-      final = ["Functions"]
+      final = ['Functions']
 
       in_functions.each do |func|
         final.push(func.toc_info)
@@ -37,4 +35,3 @@ module PuppetStrings::Markdown
     end
   end
 end
-

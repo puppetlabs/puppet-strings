@@ -3,6 +3,7 @@
 require 'puppet-strings/markdown/base'
 
 module PuppetStrings::Markdown
+  # Generates Markdown for a Puppet Task.
   class PuppetTask < Base
     def initialize(registry)
       @template = 'puppet_task.erb'
@@ -21,6 +22,5 @@ module PuppetStrings::Markdown
     def input_method
       @registry[:input_method]
     end
-
   end
 end

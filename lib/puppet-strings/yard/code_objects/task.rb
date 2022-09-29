@@ -11,9 +11,9 @@ class PuppetStrings::Yard::CodeObjects::Tasks < PuppetStrings::Yard::CodeObjects
   end
 
   # Gets the display name of the group.
-  # @param [Boolean] prefix whether to show a prefix.
+  # @param [Boolean] prefix whether to show a prefix. Ignored for Puppet group namespaces.
   # @return [String] Returns the display name of the group.
-  def name(prefix = false)
+  def name(_prefix = false)
     'Puppet Tasks'
   end
 end
@@ -45,11 +45,11 @@ class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects:
 
   def parameters
     parameters = []
-    statement.parameters.each do |name,props|
+    statement.parameters.each do |name, props|
       parameters.push({ name: name.to_s,
                         tag_name: 'param',
-                        text: props['description'] || "",
-                        types: [props['type']] || "" })
+                        text: props['description'] || '',
+                        types: [props['type']] || '' })
     end
     parameters
   end
@@ -66,7 +66,6 @@ class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects:
       },
       source: statement.source,
       supports_noop: statement.json['supports_noop'] || false,
-      input_method: statement.json['input_method']
-    }
+      input_method: statement.json['input_method'] }
   end
 end

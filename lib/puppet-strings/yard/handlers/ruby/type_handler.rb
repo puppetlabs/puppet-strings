@@ -18,7 +18,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
     return unless statement.count > 1
 
     module_name = statement[0].source
-    return unless module_name == 'Puppet::Type' || module_name == 'Type'
+    return unless ['Puppet::Type', 'Type'].include?(module_name)
 
     object = get_type_yard_object(get_name(statement, 'Puppet::Type.newtype'))
 
@@ -39,6 +39,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
   end
 
   private
+
   def populate_type_data(object)
     # Traverse the block looking for properties/parameters/features
     block = statement.block
