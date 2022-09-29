@@ -1,399 +1,533 @@
 # Changelog
 
-All significant changes to this repo will be summarized in this file.
+All notable changes to this project will be documented in this file.
 
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
+## [v3.0.0](https://github.com/puppetlabs/puppet-strings/tree/v3.0.0) - 2022-09-29
 
-## [v2.9.0](https://github.com/puppetlabs/puppet-strings/tree/v2.9.0) (2021-11-29)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.8.0...v2.9.0)
-
-Added
-
-- Add strings:validate:reference task [\#293](https://github.com/puppetlabs/puppet-strings/issues/293)
-
-Fixed
-
-- Fix rare undefined method `any?' for nil:NilClass error [\#289](https://github.com/puppetlabs/puppet-strings/pull/289) ([sanfrancrisko](https://github.com/sanfrancrisko))
-
-**Closed issues:**
-
-- Error: undefined method `any?' for nil:NilClass when generating documentation [\#287](https://github.com/puppetlabs/puppet-strings/issues/287)
-- Update changelog with recent commits [\#283](https://github.com/puppetlabs/puppet-strings/issues/283)
-- Please document the `author` tag [\#256](https://github.com/puppetlabs/puppet-strings/issues/256)
-
-**Merged pull requests:**
-
-- Implement a strings:validate:reference task [\#291](https://github.com/puppetlabs/puppet-strings/pull/291) ([ekohl](https://github.com/ekohl))
-
-## [v2.8.0](https://github.com/puppetlabs/puppet-strings/tree/v2.8.0) (2021-07-19)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.7.0...v2.8.0)
-
-Added
-
-- \(DOCUMENT-1232\) Add support for ensurable in types\_extras\_handler [\#281](https://github.com/puppetlabs/puppet-strings/pull/281) ([joshcooper](https://github.com/joshcooper))
-
-**Merged pull requests:**
-
-- \(FIXUP\) Check for nil before injecting provider param into Types [\#285](https://github.com/puppetlabs/puppet-strings/pull/285) ([scotje](https://github.com/scotje))
-- README.md: update link to docs [\#276](https://github.com/puppetlabs/puppet-strings/pull/276) ([kenyon](https://github.com/kenyon))
-
-## [v2.7.0](https://github.com/puppetlabs/puppet-strings/tree/v2.7.0) (2021-05-17)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.6.0...v2.7.0)
-
-Added
-
-- Add supported\_features to puppet strings input/output for types [\#228](https://github.com/puppetlabs/puppet-strings/issues/228)
-
-Fixed
-
-- `file` type is missing `ensure` in generated reference docs [\#230](https://github.com/puppetlabs/puppet-strings/issues/230)
-
-**Closed issues:**
-
-- class with "apply" attribute causes parser error [\#251](https://github.com/puppetlabs/puppet-strings/issues/251)
-
-**Merged pull requests:**
-
-- Update CODEOWNERS [\#272](https://github.com/puppetlabs/puppet-strings/pull/272) ([binford2k](https://github.com/binford2k))
-- Only set tasks = true when parsing plans. [\#266](https://github.com/puppetlabs/puppet-strings/pull/266) ([binford2k](https://github.com/binford2k))
-
-## [v2.6.0](https://github.com/puppetlabs/puppet-strings/tree/v2.6.0) (2021-01-18)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.5.0...v2.6.0)
-
-Added
-
-- Improved markdown templates [\#252](https://github.com/puppetlabs/puppet-strings/pull/252) ([kozl](https://github.com/kozl))
-
-Fixed
-
-- Do not fail in case return tag has no type specified [\#268](https://github.com/puppetlabs/puppet-strings/pull/268) ([tiandrey](https://github.com/tiandrey))
-- Handle a missing description gracefully [\#260](https://github.com/puppetlabs/puppet-strings/pull/260) ([scotje](https://github.com/scotje))
-- Fix ERB failure - parameters without descriptions [\#255](https://github.com/puppetlabs/puppet-strings/pull/255) ([trevor-vaughan](https://github.com/trevor-vaughan))
-- puppet\_function template: fix tags, source [\#249](https://github.com/puppetlabs/puppet-strings/pull/249) ([raemer](https://github.com/raemer))
-- Handle a missing description gracefully [\#246](https://github.com/puppetlabs/puppet-strings/pull/246) ([ekohl](https://github.com/ekohl))
-
-Changed
-
-- \(MAINT\) Drop Ruby 2.1.x and Puppet 4.x compatibility [\#253](https://github.com/puppetlabs/puppet-strings/pull/253) ([scotje](https://github.com/scotje))
-
-**Closed issues:**
-
-- Tags \(Parameter, Returns\) not generated in HTML output [\#248](https://github.com/puppetlabs/puppet-strings/issues/248)
-- Can we get 2.5.0 released please [\#244](https://github.com/puppetlabs/puppet-strings/issues/244)
-- Provider attribute is missing in generated types documentation [\#227](https://github.com/puppetlabs/puppet-strings/issues/227)
-
-## [v2.5.0](https://github.com/puppetlabs/puppet-strings/tree/v2.5.0) (2020-07-16)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.4.0...v2.5.0)
-
-Added
-
-- \(GH-225\) Document functions in Puppet Datatypes [\#235](https://github.com/puppetlabs/puppet-strings/pull/235) ([glennsarti](https://github.com/glennsarti))
-- Add checks to resource\_type handler and code objects [\#232](https://github.com/puppetlabs/puppet-strings/pull/232) ([scotje](https://github.com/scotje))
-- \(\#227\) Inject `provider` into params list for types with providers [\#231](https://github.com/puppetlabs/puppet-strings/pull/231) ([scotje](https://github.com/scotje))
-
-Fixed
-
-- \(\#242\) Wrap names in backticks when rendering to markdown [\#243](https://github.com/puppetlabs/puppet-strings/pull/243) ([scotje](https://github.com/scotje))
-- Eliminate trailing spaces w/o descriptions [\#224](https://github.com/puppetlabs/puppet-strings/pull/224) ([binford2k](https://github.com/binford2k))
-
-**Closed issues:**
-
-- text rendering as emojis in strings generated docs [\#242](https://github.com/puppetlabs/puppet-strings/issues/242)
-- Puppet Classes not Listed in Left Frame Contents [\#241](https://github.com/puppetlabs/puppet-strings/issues/241)
-- exec type in generated docs missing attributes `creates`, `onlyif` [\#229](https://github.com/puppetlabs/puppet-strings/issues/229)
-- \[Feature\] Document functions in Puppet Datatypes [\#225](https://github.com/puppetlabs/puppet-strings/issues/225)
-- Document usage [\#8](https://github.com/puppetlabs/puppet-strings/issues/8)
-- Need a search box on the main page [\#1](https://github.com/puppetlabs/puppet-strings/issues/1)
-
-**Merged pull requests:**
-
-- Release prep for v2.5.0 [\#245](https://github.com/puppetlabs/puppet-strings/pull/245) ([scotje](https://github.com/scotje))
-
-## [v2.4.0](https://github.com/puppetlabs/puppet-strings/tree/v2.4.0) (2020-02-20)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.3.1...v2.4.0)
-
-Added
-
-- Add missing HTML output support for enum tag [\#218](https://github.com/puppetlabs/puppet-strings/pull/218) ([seanmil](https://github.com/seanmil))
-- \(PDOC-295\) Add @enum tag support for Enum data types [\#215](https://github.com/puppetlabs/puppet-strings/pull/215) ([seanmil](https://github.com/seanmil))
-- Expanded default search glob for plans. [\#214](https://github.com/puppetlabs/puppet-strings/pull/214) ([Raskil](https://github.com/Raskil))
-
-**Merged pull requests:**
-
-- \(MAINT\) Release prep for 2.4.0 [\#221](https://github.com/puppetlabs/puppet-strings/pull/221) ([scotje](https://github.com/scotje))
-
-## [v2.3.1](https://github.com/puppetlabs/puppet-strings/tree/v2.3.1) (2019-09-23)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.3.0...v2.3.1)
-
-Fixed
-
-- \(maint\) Use parameters method instead of json\['parameters'\] [\#211](https://github.com/puppetlabs/puppet-strings/pull/211) ([lucywyman](https://github.com/lucywyman))
-- \(PDOC-285\) Fix data\_type\_handler for errors and numbers [\#209](https://github.com/puppetlabs/puppet-strings/pull/209) ([glennsarti](https://github.com/glennsarti))
-
-## [v2.3.0](https://github.com/puppetlabs/puppet-strings/tree/v2.3.0) (2019-07-17)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.2.0...v2.3.0)
-
-Added
-
-- Add Puppet Data Type documentation [\#199](https://github.com/puppetlabs/puppet-strings/pull/199) ([glennsarti](https://github.com/glennsarti))
-
-Fixed
-
-- \(PDOC-283\) Fix namespaced symbols [\#205](https://github.com/puppetlabs/puppet-strings/pull/205) ([glennsarti](https://github.com/glennsarti))
-
-## [v2.2.0](https://github.com/puppetlabs/puppet-strings/tree/v2.2.0) (2019-04-05)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.1.0...v2.2.0)
-
-Added
-
-- \(PDOC-272\) Add required features attribute [\#194](https://github.com/puppetlabs/puppet-strings/pull/194) ([kris-bosland](https://github.com/kris-bosland))
-- \(maint\) Implement a strings:generate:reference task [\#192](https://github.com/puppetlabs/puppet-strings/pull/192) ([ekohl](https://github.com/ekohl))
-- \(PDOC-265\) Add examples to function reference docs [\#188](https://github.com/puppetlabs/puppet-strings/pull/188) ([ekohl](https://github.com/ekohl))
-- \(PDOC-252\) Add describe features to puppet-strings face [\#183](https://github.com/puppetlabs/puppet-strings/pull/183) ([kris-bosland](https://github.com/kris-bosland))
-
-Fixed
-
-- \(PDOC-266\) Silence 'unexpected construct regexp\_literal' warning [\#189](https://github.com/puppetlabs/puppet-strings/pull/189) ([seanmil](https://github.com/seanmil))
-
-## [v2.1.0](https://github.com/puppetlabs/puppet-strings/tree/v2.1.0) (2018-06-26)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/2.0.0...v2.1.0)
-
-Added
-
-- \(PDOC-212, PDOC-213\) add support for @note and @todo [\#182](https://github.com/puppetlabs/puppet-strings/pull/182) ([eputnam](https://github.com/eputnam))
-- \(PDOC-255\) markdown table of contents update [\#181](https://github.com/puppetlabs/puppet-strings/pull/181) ([eputnam](https://github.com/eputnam))
-
-Fixed
-
-- \(PDOC-259\) relax ruby requirement to 2.1.0 from 2.1.9 [\#184](https://github.com/puppetlabs/puppet-strings/pull/184) ([DavidS](https://github.com/DavidS))
-
-# Previous Changes
-
-## [2.0.0](https://github.com/puppetlabs/puppet-strings/tree/2.0.0) (2018-05-11)
-
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.2.1...2.0.0)
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.9.0...v3.0.0)
 
 ### Changed
-
-- bump required ruby and puppet versions [\#178](https://github.com/puppetlabs/puppet-strings/pull/178) ([eputnam](https://github.com/eputnam))
-
-### Added
-
-- \(PDOC-238\) add generated message to markdown [\#175](https://github.com/puppetlabs/puppet-strings/pull/175) ([eputnam](https://github.com/eputnam))
-- \(PDOC-228\) puppet plan support [\#168](https://github.com/puppetlabs/puppet-strings/pull/168) ([eputnam](https://github.com/eputnam))
-- \(PDOC-206\) support for tasks [\#161](https://github.com/puppetlabs/puppet-strings/pull/161) ([eputnam](https://github.com/eputnam))
+- (#301) Update minimum Ruby version to 2.5.0 [#313](https://github.com/puppetlabs/puppet-strings/pull/313) ([danielparks](https://github.com/danielparks))
 
 ### Fixed
 
-- \(PDOC-36\) fix hack for README urls [\#176](https://github.com/puppetlabs/puppet-strings/pull/176) ([eputnam](https://github.com/eputnam))
-- \(PDOC-240\) add handling for :array node type in rsapi\_handler [\#174](https://github.com/puppetlabs/puppet-strings/pull/174) ([eputnam](https://github.com/eputnam))
-- \(PDOC-159\) server urls fix [\#173](https://github.com/puppetlabs/puppet-strings/pull/173) ([eputnam](https://github.com/eputnam))
-- \(maint\) display Plans in markdown table of contents [\#171](https://github.com/puppetlabs/puppet-strings/pull/171) ([eputnam](https://github.com/eputnam))
-- \(PDOC-233\) markdown whitespace fixes [\#170](https://github.com/puppetlabs/puppet-strings/pull/170) ([JohnLyman](https://github.com/JohnLyman))
-- \(PDOC-229\) fix error with return\_type and @return [\#169](https://github.com/puppetlabs/puppet-strings/pull/169) ([eputnam](https://github.com/eputnam))
-- \(PDOC-36\) hack to fix README links in generated HTML [\#167](https://github.com/puppetlabs/puppet-strings/pull/167) ([eputnam](https://github.com/eputnam))
-- \(PDOC-192\) remove warning for title/name [\#166](https://github.com/puppetlabs/puppet-strings/pull/166) ([eputnam](https://github.com/eputnam))
-- \(maint\) add condition for misleading warning [\#155](https://github.com/puppetlabs/puppet-strings/pull/155) ([eputnam](https://github.com/eputnam))
+- (#240) Fix output of default values that are expressions [#315](https://github.com/puppetlabs/puppet-strings/pull/315) ([danielparks](https://github.com/danielparks))
 
-## [1.2.1](https://github.com/puppetlabs/puppet-strings/tree/1.2.1) (2018-03-01)
+- (#307) Always enable plan parsing [#312](https://github.com/puppetlabs/puppet-strings/pull/312) ([danielparks](https://github.com/danielparks))
+
+- (#302) Fix warnings generated by ERB.new [#308](https://github.com/puppetlabs/puppet-strings/pull/308) ([danielparks](https://github.com/danielparks))
+
+- (#304) Fix double backticks in Markdown [#305](https://github.com/puppetlabs/puppet-strings/pull/305) ([danielparks](https://github.com/danielparks))
+
+- (#300) Fix anchor links in Markdown docs [#303](https://github.com/puppetlabs/puppet-strings/pull/303) ([danielparks](https://github.com/danielparks))
+
+## [v2.9.0](https://github.com/puppetlabs/puppet-strings/tree/v2.9.0) - 2021-11-29
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.8.0...v2.9.0)
+
+### Added
+
+- Implement a strings:validate:reference task [#291](https://github.com/puppetlabs/puppet-strings/pull/291) ([ekohl](https://github.com/ekohl))
+
+### Fixed
+
+- Fix rare undefined method `any?' for nil:NilClass error [#289](https://github.com/puppetlabs/puppet-strings/pull/289) ([sanfrancrisko](https://github.com/sanfrancrisko))
+
+## [v2.8.0](https://github.com/puppetlabs/puppet-strings/tree/v2.8.0) - 2021-07-19
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.7.0...v2.8.0)
+
+### Added
+
+- (DOCUMENT-1232) Add support for ensurable in types_extras_handler [#281](https://github.com/puppetlabs/puppet-strings/pull/281) ([joshcooper](https://github.com/joshcooper))
+
+### Other
+
+- (FIXUP) Check for nil before injecting provider param into Types [#285](https://github.com/puppetlabs/puppet-strings/pull/285) ([scotje](https://github.com/scotje))
+
+- README.md: update link to docs [#276](https://github.com/puppetlabs/puppet-strings/pull/276) ([kenyon](https://github.com/kenyon))
+
+## [v2.7.0](https://github.com/puppetlabs/puppet-strings/tree/v2.7.0) - 2021-05-17
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.6.0...v2.7.0)
+
+### Other
+
+- Update CODEOWNERS [#272](https://github.com/puppetlabs/puppet-strings/pull/272) ([binford2k](https://github.com/binford2k))
+
+- Only set tasks = true when parsing plans. [#266](https://github.com/puppetlabs/puppet-strings/pull/266) ([binford2k](https://github.com/binford2k))
+
+## [v2.6.0](https://github.com/puppetlabs/puppet-strings/tree/v2.6.0) - 2021-01-18
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.5.0...v2.6.0)
+
+### Added
+
+- Improved markdown templates [#252](https://github.com/puppetlabs/puppet-strings/pull/252) ([kozl](https://github.com/kozl))
+
+### Changed
+- (MAINT) Drop Ruby 2.1.x and Puppet 4.x compatibility [#253](https://github.com/puppetlabs/puppet-strings/pull/253) ([scotje](https://github.com/scotje))
+
+### Fixed
+
+- Do not fail in case return tag has no type specified [#268](https://github.com/puppetlabs/puppet-strings/pull/268) ([tiandrey](https://github.com/tiandrey))
+
+- Handle a missing description gracefully [#260](https://github.com/puppetlabs/puppet-strings/pull/260) ([scotje](https://github.com/scotje))
+
+- Fix ERB failure - parameters without descriptions [#255](https://github.com/puppetlabs/puppet-strings/pull/255) ([trevor-vaughan](https://github.com/trevor-vaughan))
+
+- puppet_function template: fix tags, source [#249](https://github.com/puppetlabs/puppet-strings/pull/249) ([raemer](https://github.com/raemer))
+
+- Handle a missing description gracefully [#246](https://github.com/puppetlabs/puppet-strings/pull/246) ([ekohl](https://github.com/ekohl))
+
+## [v2.5.0](https://github.com/puppetlabs/puppet-strings/tree/v2.5.0) - 2020-07-15
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.4.0...v2.5.0)
+
+### Added
+
+- (GH-225) Document functions in Puppet Datatypes [#235](https://github.com/puppetlabs/puppet-strings/pull/235) ([glennsarti](https://github.com/glennsarti))
+
+- Add checks to resource_type handler and code objects [#232](https://github.com/puppetlabs/puppet-strings/pull/232) ([scotje](https://github.com/scotje))
+
+- (#227) Inject `provider` into params list for types with providers [#231](https://github.com/puppetlabs/puppet-strings/pull/231) ([scotje](https://github.com/scotje))
+
+### Fixed
+
+- (#242) Wrap names in backticks when rendering to markdown [#243](https://github.com/puppetlabs/puppet-strings/pull/243) ([scotje](https://github.com/scotje))
+
+- Eliminate trailing spaces w/o descriptions [#224](https://github.com/puppetlabs/puppet-strings/pull/224) ([binford2k](https://github.com/binford2k))
+
+### Other
+
+- Release prep for v2.5.0 [#245](https://github.com/puppetlabs/puppet-strings/pull/245) ([scotje](https://github.com/scotje))
+
+## [v2.4.0](https://github.com/puppetlabs/puppet-strings/tree/v2.4.0) - 2020-02-20
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.3.1...v2.4.0)
+
+### Added
+
+- Add missing HTML output support for enum tag [#218](https://github.com/puppetlabs/puppet-strings/pull/218) ([seanmil](https://github.com/seanmil))
+
+- (PDOC-295) Add @enum tag support for Enum data types [#215](https://github.com/puppetlabs/puppet-strings/pull/215) ([seanmil](https://github.com/seanmil))
+
+- Expanded default search glob for plans. [#214](https://github.com/puppetlabs/puppet-strings/pull/214) ([Raskil](https://github.com/Raskil))
+
+### Other
+
+- (MAINT) Release prep for 2.4.0 [#221](https://github.com/puppetlabs/puppet-strings/pull/221) ([scotje](https://github.com/scotje))
+
+## [v2.3.1](https://github.com/puppetlabs/puppet-strings/tree/v2.3.1) - 2019-09-23
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.3.0...v2.3.1)
+
+### Fixed
+
+- (maint) Use parameters method instead of json['parameters'] [#211](https://github.com/puppetlabs/puppet-strings/pull/211) ([lucywyman](https://github.com/lucywyman))
+
+- (PDOC-285) Fix data_type_handler for errors and numbers [#209](https://github.com/puppetlabs/puppet-strings/pull/209) ([glennsarti](https://github.com/glennsarti))
+
+### Other
+
+- Release prep [#212](https://github.com/puppetlabs/puppet-strings/pull/212) ([lucywyman](https://github.com/lucywyman))
+
+## [v2.3.0](https://github.com/puppetlabs/puppet-strings/tree/v2.3.0) - 2019-07-17
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.2.0...v2.3.0)
+
+### Added
+
+- Add Puppet Data Type documentation [#199](https://github.com/puppetlabs/puppet-strings/pull/199) ([glennsarti](https://github.com/glennsarti))
+
+### Fixed
+
+- (PDOC-283) Fix namespaced symbols [#205](https://github.com/puppetlabs/puppet-strings/pull/205) ([glennsarti](https://github.com/glennsarti))
+
+## [v2.2.0](https://github.com/puppetlabs/puppet-strings/tree/v2.2.0) - 2019-04-05
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.1.0...v2.2.0)
+
+### Added
+
+- (PDOC-272) Add required features attribute [#194](https://github.com/puppetlabs/puppet-strings/pull/194) ([kris-bosland](https://github.com/kris-bosland))
+
+- (maint) Implement a strings:generate:reference task [#192](https://github.com/puppetlabs/puppet-strings/pull/192) ([ekohl](https://github.com/ekohl))
+
+- (PDOC-265) Add examples to function reference docs [#188](https://github.com/puppetlabs/puppet-strings/pull/188) ([ekohl](https://github.com/ekohl))
+
+- (PDOC-252) Add describe features to puppet-strings face [#183](https://github.com/puppetlabs/puppet-strings/pull/183) ([kris-bosland](https://github.com/kris-bosland))
+
+### Fixed
+
+- (PDOC-266) Silence 'unexpected construct regexp_literal' warning [#189](https://github.com/puppetlabs/puppet-strings/pull/189) ([seanmil](https://github.com/seanmil))
+
+## [v2.1.0](https://github.com/puppetlabs/puppet-strings/tree/v2.1.0) - 2018-06-26
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/2.0.0...v2.1.0)
+
+### Added
+
+- (PDOC-212, PDOC-213) add support for @note and @todo [#182](https://github.com/puppetlabs/puppet-strings/pull/182) ([eputnam](https://github.com/eputnam))
+
+- (PDOC-255) markdown table of contents update [#181](https://github.com/puppetlabs/puppet-strings/pull/181) ([eputnam](https://github.com/eputnam))
+
+### Fixed
+
+- (PDOC-259) relax ruby requirement to 2.1.0 from 2.1.9 [#184](https://github.com/puppetlabs/puppet-strings/pull/184) ([DavidS](https://github.com/DavidS))
+
+## [2.0.0](https://github.com/puppetlabs/puppet-strings/tree/2.0.0) - 2018-05-11
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.2.1...2.0.0)
+
+### Added
+
+- (PDOC-238) add generated message to markdown [#175](https://github.com/puppetlabs/puppet-strings/pull/175) ([eputnam](https://github.com/eputnam))
+
+- (PDOC-228) puppet plan support [#168](https://github.com/puppetlabs/puppet-strings/pull/168) ([eputnam](https://github.com/eputnam))
+
+- (PDOC-206) support for tasks [#161](https://github.com/puppetlabs/puppet-strings/pull/161) ([eputnam](https://github.com/eputnam))
+
+### Changed
+- bump required ruby and puppet versions [#178](https://github.com/puppetlabs/puppet-strings/pull/178) ([eputnam](https://github.com/eputnam))
+
+### Fixed
+
+- (PDOC-36) fix hack for README urls [#176](https://github.com/puppetlabs/puppet-strings/pull/176) ([eputnam](https://github.com/eputnam))
+
+- (PDOC-240) add handling for :array node type in rsapi_handler [#174](https://github.com/puppetlabs/puppet-strings/pull/174) ([eputnam](https://github.com/eputnam))
+
+- (PDOC-159) server urls fix [#173](https://github.com/puppetlabs/puppet-strings/pull/173) ([eputnam](https://github.com/eputnam))
+
+- (maint) display Plans in markdown table of contents [#171](https://github.com/puppetlabs/puppet-strings/pull/171) ([eputnam](https://github.com/eputnam))
+
+- (PDOC-233) markdown whitespace fixes [#170](https://github.com/puppetlabs/puppet-strings/pull/170) ([JohnLyman](https://github.com/JohnLyman))
+
+- (PDOC-229) fix error with return_type and @return [#169](https://github.com/puppetlabs/puppet-strings/pull/169) ([eputnam](https://github.com/eputnam))
+
+- (PDOC-36) hack to fix README links in generated HTML [#167](https://github.com/puppetlabs/puppet-strings/pull/167) ([eputnam](https://github.com/eputnam))
+
+- (PDOC-192) remove warning for title/name [#166](https://github.com/puppetlabs/puppet-strings/pull/166) ([eputnam](https://github.com/eputnam))
+
+- (maint) add condition for misleading warning [#155](https://github.com/puppetlabs/puppet-strings/pull/155) ([eputnam](https://github.com/eputnam))
+
+## [1.2.1](https://github.com/puppetlabs/puppet-strings/tree/1.2.1) - 2018-03-01
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.2.0...1.2.1)
 
 ### Fixed
 
-- (PDOC-224) Handle --emit-json(-stdout) again [\#162](https://github.com/puppetlabs/puppet-strings/pull/162) ([ekohl](https://github.com/ekohl))
+- (PDOC-224) Handle --emit-json(-stdout) again [#162](https://github.com/puppetlabs/puppet-strings/pull/162) ([ekohl](https://github.com/ekohl))
 
-## [1.2.0](https://github.com/puppetlabs/puppet-strings/tree/1.2.0) (2018-02-26)
+### Other
+
+- release 1.2.1 [#163](https://github.com/puppetlabs/puppet-strings/pull/163) ([eputnam](https://github.com/eputnam))
+
+## [1.2.0](https://github.com/puppetlabs/puppet-strings/tree/1.2.0) - 2018-02-28
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.1.1...1.2.0)
 
 ### Added
 
-- \(PDOC-184\) generate markdown [\#156](https://github.com/puppetlabs/puppet-strings/pull/156) ([eputnam](https://github.com/eputnam))
-- \(PDK-437\) Add support for Resource API types [\#153](https://github.com/puppetlabs/puppet-strings/pull/153) ([DavidS](https://github.com/DavidS))
+- (PDOC-184) generate markdown [#156](https://github.com/puppetlabs/puppet-strings/pull/156) ([eputnam](https://github.com/eputnam))
+
+- (PDK-437) Add support for Resource API types [#153](https://github.com/puppetlabs/puppet-strings/pull/153) ([DavidS](https://github.com/DavidS))
 
 ### Fixed
 
-- Fix return type matching for Puppet functions [\#159](https://github.com/puppetlabs/puppet-strings/pull/159) ([pegasd](https://github.com/pegasd))
-- Add rgen as a runtime dependency [\#149](https://github.com/puppetlabs/puppet-strings/pull/149) ([rnelson0](https://github.com/rnelson0))
+- Fix return type matching for Puppet functions [#159](https://github.com/puppetlabs/puppet-strings/pull/159) ([pegasd](https://github.com/pegasd))
 
-## 2017-10-20 - Release 1.1.1
-
-### BugFixes
-- Remove timestamps from footer of generated HTML pages ([GeoffWilliams](https://github.com/GeoffWilliams))
-- Fix argument handling for `rake strings::generate` ([hashar](https://github.com/hashar))
+- Add rgen as a runtime dependency [#149](https://github.com/puppetlabs/puppet-strings/pull/149) ([rnelson0](https://github.com/rnelson0))
 
 ### Other
-- Fixed Markdown formatting issues in CHANGELOG ([maju6406](https://github.com/maju6406))
-- Fixed typo in README ([hfm](https://github.com/hfm))
-- Fixed Markdown formatting issues in README ([gguillotte](https://github.com/gguillotte))
-- Update Travis CI configurations for Ruby and Puppet versions ([ghoneycutt](https://github.com/ghoneycutt))
 
-## 2017-03-20 - Release 1.1.0
+- (PDOC-222) Release 1.2.0 prep and sundries [#160](https://github.com/puppetlabs/puppet-strings/pull/160) ([eputnam](https://github.com/eputnam))
 
-### Summary
+## [1.1.1](https://github.com/puppetlabs/puppet-strings/tree/1.1.1) - 2017-10-20
 
-This release adds a new `summary` tag which can be used to add a short description to classes, functions, types, and providers. In addition, `@param` tags can now include type information in Puppet 4 code without warnings being issued.
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.1.0...1.1.1)
 
-All related tickets can be found under the [PDOC](https://tickets.puppetlabs.com/browse/PDOC) JIRA project with the fix version of [1.1.0](https://tickets.puppetlabs.com/issues/?filter=25603).
+### Fixed
 
-### Features
-- The `summary` tag can be added to any code that puppet-strings supports. The recommended length limit for a summary is 140 characters. Warnings will be issued for strings longer than this limit.
-- Puppet 4 parameter types can now be explicitly documented. Previously, this was not allowed because Puppet 4 parameter types can be automatically determined without extra documentation. However, users may desire to do so anyway for consistency. Strings will emit a warning if the documented type does not match the actual type. In such an event, the incorrect documented type will be ignored in favor of the real one.
+- (PDOC-160) Remove the timestamp from output [#137](https://github.com/puppetlabs/puppet-strings/pull/137) ([GeoffWilliams](https://github.com/GeoffWilliams))
 
-## 2016-11-28 - Release 1.0.0
+- Fix args handling for rake strings::generate [#136](https://github.com/puppetlabs/puppet-strings/pull/136) ([hashar](https://github.com/hashar))
 
-### Summary
+## [1.1.0](https://github.com/puppetlabs/puppet-strings/tree/1.1.0) - 2017-03-20
 
-This release fixes up minor bugs from the 0.99.0 release and modifies the JSON schema for Puppet functions.
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.0.0...1.1.0)
 
-All related tickets can be found under the [PDOC](https://tickets.puppetlabs.com/browse/PDOC) JIRA project with the fix version of [1.0.0](https://tickets.puppetlabs.com/issues/?filter=23607).
+### Added
 
-### Features
-- The JSON schema for Puppet functions has been altered to include a new 'signatures' top-level key **(PDOC-125)**
-  - Includes information about all function signatures (overloads). Existing overload key format has been preserved.
-- Reworked README for enhanced clarity **(PDOC-133)**
+- (PDOC-161) Add `summary` tag for short descriptions [#138](https://github.com/puppetlabs/puppet-strings/pull/138) ([whopper](https://github.com/whopper))
 
-### BugFixes
-- Fixed an issue where the search box in the code navigator overlapped list items below it **(PDOC-93)**
-- Strings can now handle multiple `defaultfor` calls in Puppet providers **(PDOC-95)**
-- Fixed an issue preventing the generated \_index.html file from being uploaded to GitHub pages via the gh_pages task **(PDOC-120)**
-- Fixed several issues with String's handling of Puppet 3.x and 4.x function return types **(PDOC-135)**, **(PDOC-136)**
-- Fixed an issue where String's didn't properly parse overloads if no summary description was provided **(PDOC-129)**
-- Strings now correctly handles Puppet 3.x functions when the `newfunction` call is on a newline **(PDOC-122)**
-- Fixed an issue where certain Ruby string constructs were incompletely stripped from some docstrings **(PDOC-126)**
-- Hanging indents from type feature descriptions are now properly stripped **(PDOC-127)**
+- (PDOC-155) Allow type documentation in Puppet 4 code [#132](https://github.com/puppetlabs/puppet-strings/pull/132) ([whopper](https://github.com/whopper))
 
-## 2016-10-10 - Release 0.99.0
+## [1.0.0](https://github.com/puppetlabs/puppet-strings/tree/1.0.0) - 2016-11-28
 
-### Summary
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/0.99.0...1.0.0)
 
-This release includes a complete rewrite of strings, fixing many bugs from previous versions and generally improving the user experience. This release is intended to be the last stop before the strings major version 1.0 is released, and nearly all of the functionality of the major release is included.
+### Added
 
-All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with the fix version of [0.99.0](https://tickets.puppetlabs.com/issues/?filter=22705).
+- (PDOC-136) Detect return type syntax in Puppet Language functions [#126](https://github.com/puppetlabs/puppet-strings/pull/126) ([whopper](https://github.com/whopper))
 
-### Features
-- Complete overhaul, including code cleanup, bug fixes and new functionality **(PDOC-63)**
-  - Documentation has been split into sections based on type: puppet 3x API functions, puppet 4x API functions, ruby classes, puppet language functions, types, and providers
-  - New JSON schema organized to reflect the separation of types
-  - Support for custom functions written in the puppet language
-  - Support for puppet function overloads via the create_function 4.x API
-  - YARD bumped to latest version, 0.9.5
-- Markdown is now the default format for parsing docstring text **(PDOC-86)**
-  - Note: this means Markdown text in YARD comments and tags, not a change in the output of strings
-- New commandline options: --emit-json and --emit-json-stdout to generate JSON documentation **(PDOC-84)**
-- Runtime dependency on Puppet has been removed, allowing strings to function in Puppet Enterprise 3.8 **(PDOC-80)**
-  - Note that the gem still requires puppet. We recommend that the strings gem be installed with puppet, as suggested in the  [README](https://github.com/puppetlabs/puppet-strings/blob/main/README.md#installing-puppet-strings)
-- New gemspec requirement on Ruby version 1.9.3, the oldest supported Ruby version
+- (PDOC-135) Detect `return_type` calls in 4.x function dispatches [#125](https://github.com/puppetlabs/puppet-strings/pull/125) ([whopper](https://github.com/whopper))
 
-### BugFixes
+- (PDOC-121) Include tag or SHA in gh_pages task commit [#121](https://github.com/puppetlabs/puppet-strings/pull/121) ([whopper](https://github.com/whopper))
 
-- Prevents a blizzard of errors when documenting Puppet Core source and some puppet modules **(PDOC-63)**
-  - As this is a complete rewrite, many known and unknown bugs from the original code were fixed along the way
-- Allow strings to be installed in PE 3.8 without overwriting existing puppet and facter installations with newer gems
+- (PDOC-125) Display all puppet function signatures in top-level signature key [#119](https://github.com/puppetlabs/puppet-strings/pull/119) ([whopper](https://github.com/whopper))
 
-## 2016-03-30 - Release 0.4.0
+### Fixed
 
-### Summary
+- (PDOC-93) Ensure search bar doesn't overlap item list in nav bar [#123](https://github.com/puppetlabs/puppet-strings/pull/123) ([whopper](https://github.com/whopper))
 
-This release adds JSON output support for strings, fixes a major bug that prevented strings from working with the 4.4.0 release of puppet, and is the last version of strings that will be released as a module.
+- (PDOC-129) Include tags in overload objects when serialized as JSON [#122](https://github.com/puppetlabs/puppet-strings/pull/122) ([whopper](https://github.com/whopper))
 
-All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with the fix version of [0.4.0](https://tickets.puppetlabs.com/issues/?filter=18810).
+- (PDOC-126) Remove `%Q` ruby quotation syntax from parsed strings [#118](https://github.com/puppetlabs/puppet-strings/pull/118) ([whopper](https://github.com/whopper))
 
-### Features
-- Support for JSON output **(PDOC-23)**
-  - Strings now has the ability to produce a JSON representation of a given puppet module
-  - The details of the JSON schema can be found [here](https://github.com/puppetlabs/puppet-strings/blob/main/json_dom.md)
-  - For details on how to generate JSON, see the [README](https://github.com/puppetlabs/puppet-strings/blob/main/README.md#running-puppet-strings)
-- Migrate to ruby gems as a distribution method **(PDOC-28)**
-  - This is the last release of strings that will be available as a puppet module
-  - The 0.4.0 release will be released concurrently as a ruby gem
-  - After this release, all updates will only be available via the gem
+### Other
 
-### Bugfixes
+- (PDOC-130) Add example to README about multi-line tag descriptions [#117](https://github.com/puppetlabs/puppet-strings/pull/117) ([whopper](https://github.com/whopper))
 
-- Fix issue that prevented strings from running with Puppet 4.4.0 **(PDOC-75)**
+- Test against specific, supported versions of Puppet [#116](https://github.com/puppetlabs/puppet-strings/pull/116) ([ghoneycutt](https://github.com/ghoneycutt))
 
-## 2015-09-22 - Release 0.3.1
+- (PDOC-120) Update gh_pages task to allow publishing of _index.html [#115](https://github.com/puppetlabs/puppet-strings/pull/115) ([whopper](https://github.com/whopper))
 
-### Summary
+- (PDOC-128) Add explanation of @example tag usage in README [#114](https://github.com/puppetlabs/puppet-strings/pull/114) ([whopper](https://github.com/whopper))
 
-This is a minor bug fix release.
+- (maint) Update line number in fixture to fix specs [#113](https://github.com/puppetlabs/puppet-strings/pull/113) ([whopper](https://github.com/whopper))
 
-All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with the fix version of [0.3.1](https://tickets.puppetlabs.com/issues/?filter=15530).
+- (PDOC-127) Strip whitespace from type feature docstrings [#112](https://github.com/puppetlabs/puppet-strings/pull/112) ([whopper](https://github.com/whopper))
 
-### Bugfixes
+- (PDOC-95) Properly group and display multiple provider `defaultfor`s [#111](https://github.com/puppetlabs/puppet-strings/pull/111) ([whopper](https://github.com/whopper))
 
-- Prevent strings from printing unnecessary quotes in error messages **(PDOC-57)**
-- Issue correct type check warnings for defined types **(PDOC-56)**
-- Allow providers, types, and defines to have the same name **(PDOC-54)**
+- (PDOC-122) Properly parse `newfunction` calls with newlines [#110](https://github.com/puppetlabs/puppet-strings/pull/110) ([whopper](https://github.com/whopper))
 
-## 2015-09-21 - Release 0.3.0
+## [0.99.0](https://github.com/puppetlabs/puppet-strings/tree/0.99.0) - 2016-10-10
 
-### Summary
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/0.4.0...0.99.0)
 
-This release includes support for Puppet Types and Providers, as well as
-type checking Puppet 4x functions and defined types.
+### Other
 
-All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with
-the fix version of [0.3.0](https://tickets.puppetlabs.com/issues/?filter=15529).
+- (PDOC-108) Update CHANGELOG and gemspec for 0.99.0 release [#109](https://github.com/puppetlabs/puppet-strings/pull/109) ([whopper](https://github.com/whopper))
 
-#### Features
+- (PDOC-119) Add required ruby version to gemspec [#108](https://github.com/puppetlabs/puppet-strings/pull/108) ([whopper](https://github.com/whopper))
 
-- Support for Puppet Types and Providers **(PDOC-35)**
-- Type check Puppet 4x functions and defined types where possible and warn the user when types don't match.
-  - Type check defined types **(PDOC-21)**
-  - Type check Puppet 4x functions **(PDOC-38)** **(PDOC-19)** **(PDOC-37)**
-  - Output type info in generated HTML **(PDOC-19)**
-- Improved warnings and logging.
-  - Create a consistent style for warnings. **(PDOC-49)**
-  - All warnings get printed on stderr.
-  - Yard warnings are redirected to a log file **(PDOC-38)**
-  - Prevent duplicate warnings **(PDOC-38)**
-- Improved README installation and usage instructions.
-  - Installation instructions using Puppet **(PDOC-33)**
+- (PDOC-106) Add acceptance tests for --emit-json options [#106](https://github.com/puppetlabs/puppet-strings/pull/106) ([whopper](https://github.com/whopper))
 
+- (PDOC-88) Add additional spec and acceptance tests [#105](https://github.com/puppetlabs/puppet-strings/pull/105) ([whopper](https://github.com/whopper))
 
-#### Bugfixes
+- (maint) Pin beaker version to < 3.0 [#104](https://github.com/puppetlabs/puppet-strings/pull/104) ([whopper](https://github.com/whopper))
 
-- Fix markdown list processing **(PDOC-30)**
-- Fix namespacing for nested classes and defined types **(PDOC-20)**
+- (PDOC-80) Remove runtime dependency on puppet [#103](https://github.com/puppetlabs/puppet-strings/pull/103) ([whopper](https://github.com/whopper))
 
+- (PDOC-63) Restore acceptance test to the spec directory. [#102](https://github.com/puppetlabs/puppet-strings/pull/102) ([peterhuene](https://github.com/peterhuene))
 
-## 2015-03-17 - Release 0.2.0
+- (maint) Make GEM_SOURCE configurable in Gemfile [#101](https://github.com/puppetlabs/puppet-strings/pull/101) ([whopper](https://github.com/whopper))
 
-### Summary
+- (PDOC-63) Fix specs for Puppet versions less than 4.1. [#100](https://github.com/puppetlabs/puppet-strings/pull/100) ([peterhuene](https://github.com/peterhuene))
 
-This release includes improvements to the HTML output generated by strings and a few bug fixes.
-All related tickets can be found under the [PDOC][PDOC JIRA] JIRA project with the fix version of [0.2.0](https://tickets.puppetlabs.com/issues/?filter=13760).
+- (maint) Minor fixes to README. [#99](https://github.com/puppetlabs/puppet-strings/pull/99) ([peterhuene](https://github.com/peterhuene))
 
-[PDOC JIRA]: https://tickets.puppetlabs.com/browse/PDOC
+- (PDOC-63) Code refactoring, fix up, and lots of new functionality. [#98](https://github.com/puppetlabs/puppet-strings/pull/98) ([peterhuene](https://github.com/peterhuene))
 
-#### Features
-- Custom YARD templates for classes and defined types **(PDOC-17)**
-    - Improved HMTL output that is more appropriate for Puppet code (especially for parameters)
-    - Support for the explicit list of YARD tags we will be supporting initially (@param, @return, @since, @example)
-    - Our own custom YARD templates which can be easily extended and tweaked
+- (maint) Pin rubocop to enable spec support for ruby < 2.0 [#97](https://github.com/puppetlabs/puppet-strings/pull/97) ([kylog](https://github.com/kylog))
 
-- Custom YARD templates for 3.x and 4.x functions **(PDOC-24)**
-    - Improved HMTL output that is more appropriate for listing several functions on one webpage in addition to being more consistent with the HTML produced for classes and defined types.
-    - Support for the explicit list of YARD tags we will be supporting initially (@param, @return, @since, @example)
-    - Our own custom YARD templates which can be easily extended and tweaked
-- Addition of RubCop Travis CI job to ensure code quality and consistency **(PDOC-8)**
+- (maint) Tie YARD to version 0.8.7 [#91](https://github.com/puppetlabs/puppet-strings/pull/91) ([HAIL9000](https://github.com/HAIL9000))
 
-#### Bugfixes
-- Puppet namespaces are no longer mangled for nested classes and defined types **(PDOC-25)**
-- Strings is now compatible with the renaming of the Puppetx/puppetx namespace to PuppetX/puppet_x **(PDOC-26)**
-- Strings will no longer crash when documenting 3x functions with less than two arguments passed into newfunction **(PDOC-27)**
+- (PDOC-71) Workaround for spurious error failures [#90](https://github.com/puppetlabs/puppet-strings/pull/90) ([trevor-vaughan](https://github.com/trevor-vaughan))
 
+- (QENG-3888) Remove static nodeset, use beaker-hostgenerator [#89](https://github.com/puppetlabs/puppet-strings/pull/89) ([smcelmurry](https://github.com/smcelmurry))
 
-\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
+- (maint) Update hostfile for acceptance test [#88](https://github.com/puppetlabs/puppet-strings/pull/88) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-78) Include LICENSE, docs and specs in gem [#87](https://github.com/puppetlabs/puppet-strings/pull/87) ([domcleal](https://github.com/domcleal))
+
+- PDOC-77: configurable rake task  [#86](https://github.com/puppetlabs/puppet-strings/pull/86) ([vStone](https://github.com/vStone))
+
+- (maint) Update acceptance tests to use gem [#85](https://github.com/puppetlabs/puppet-strings/pull/85) ([HAIL9000](https://github.com/HAIL9000))
+
+- (doc) fix link to CONTRIBUTING / fix --emit-json option [#84](https://github.com/puppetlabs/puppet-strings/pull/84) ([hggh](https://github.com/hggh))
+
+- (maint) Require rspec 3 [#83](https://github.com/puppetlabs/puppet-strings/pull/83) ([HAIL9000](https://github.com/HAIL9000))
+
+- (maint) Remove module related content [#82](https://github.com/puppetlabs/puppet-strings/pull/82) ([HAIL9000](https://github.com/HAIL9000))
+
+- Adding tasks to automate building GitHub pages from strings docs [#81](https://github.com/puppetlabs/puppet-strings/pull/81) ([danzilio](https://github.com/danzilio))
+
+- Add Puppet type name in front of the provider name [#80](https://github.com/puppetlabs/puppet-strings/pull/80) ([dmitryilyin](https://github.com/dmitryilyin))
+
+## [0.4.0](https://github.com/puppetlabs/puppet-strings/tree/0.4.0) - 2016-03-30
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/0.3.1...0.4.0)
+
+### Other
+
+- (maint) update changelog and module metadata [#79](https://github.com/puppetlabs/puppet-strings/pull/79) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-70) Update rake task documentation [#78](https://github.com/puppetlabs/puppet-strings/pull/78) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-75) Work with both versions of 'interpret_any' [#77](https://github.com/puppetlabs/puppet-strings/pull/77) ([HAIL9000](https://github.com/HAIL9000))
+
+- (maint) Don't install beaker for spec tests in travis [#76](https://github.com/puppetlabs/puppet-strings/pull/76) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-74) Deprecate module in favor of gem [#74](https://github.com/puppetlabs/puppet-strings/pull/74) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-70) Always generate the JSON doc when running the rake task [#72](https://github.com/puppetlabs/puppet-strings/pull/72) ([garethr](https://github.com/garethr))
+
+- Fix issue running strings:generate without a yardopts file [#71](https://github.com/puppetlabs/puppet-strings/pull/71) ([garethr](https://github.com/garethr))
+
+- (MAINT) Correct the link and task names for the Rake task [#70](https://github.com/puppetlabs/puppet-strings/pull/70) ([garethr](https://github.com/garethr))
+
+- (maint) Fix ruby namespacing issue [#69](https://github.com/puppetlabs/puppet-strings/pull/69) ([HAIL9000](https://github.com/HAIL9000))
+
+- (maint) Delete .rb file that was probably commited by accident [#68](https://github.com/puppetlabs/puppet-strings/pull/68) ([roidelapluie](https://github.com/roidelapluie))
+
+- metadata.json: Use SPDX standardized short identifier for license [#67](https://github.com/puppetlabs/puppet-strings/pull/67) ([roidelapluie](https://github.com/roidelapluie))
+
+- (maint) Make some small updates to the README [#66](https://github.com/puppetlabs/puppet-strings/pull/66) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-23) Emit json [#55](https://github.com/puppetlabs/puppet-strings/pull/55) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-28) Make puppet strings available as a gem [#54](https://github.com/puppetlabs/puppet-strings/pull/54) ([danzilio](https://github.com/danzilio))
+
+## [0.3.1](https://github.com/puppetlabs/puppet-strings/tree/0.3.1) - 2015-09-22
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/0.3.0...0.3.1)
+
+### Other
+
+- make metadata match pmt output [#65](https://github.com/puppetlabs/puppet-strings/pull/65) ([underscorgan](https://github.com/underscorgan))
+
+- (maint) Update CHANGELOG and metadata for 0.3.1 [#64](https://github.com/puppetlabs/puppet-strings/pull/64) ([HAIL9000](https://github.com/HAIL9000))
+
+- Last PR for the Summer [#62](https://github.com/puppetlabs/puppet-strings/pull/62) ([iankronquist](https://github.com/iankronquist))
+
+- Same name type and provider [#61](https://github.com/puppetlabs/puppet-strings/pull/61) ([iankronquist](https://github.com/iankronquist))
+
+## [0.3.0](https://github.com/puppetlabs/puppet-strings/tree/0.3.0) - 2015-09-21
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/0.2.0...0.3.0)
+
+### Other
+
+- Back to Master: Release Prep 0.3.0 [#63](https://github.com/puppetlabs/puppet-strings/pull/63) ([jonnytdevops](https://github.com/jonnytdevops))
+
+- Types and providers fixes [#60](https://github.com/puppetlabs/puppet-strings/pull/60) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-35) Format generated html properly [#59](https://github.com/puppetlabs/puppet-strings/pull/59) ([iankronquist](https://github.com/iankronquist))
+
+- (maint) Update changelog for 0.3.0 release [#58](https://github.com/puppetlabs/puppet-strings/pull/58) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-49) Improve warnings [#57](https://github.com/puppetlabs/puppet-strings/pull/57) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-35) Clarify types and providers example [#56](https://github.com/puppetlabs/puppet-strings/pull/56) ([ferventcoder](https://github.com/ferventcoder))
+
+- (PDOC-45) Puppet 4x functions handle unusual names [#53](https://github.com/puppetlabs/puppet-strings/pull/53) ([iankronquist](https://github.com/iankronquist))
+
+- (MAINT) Add a space between a parameter name type and its description [#51](https://github.com/puppetlabs/puppet-strings/pull/51) ([roidelapluie](https://github.com/roidelapluie))
+
+- (PDOC-38) Prevent warnings from being issued twice [#50](https://github.com/puppetlabs/puppet-strings/pull/50) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-21) Duplicate warnings [#49](https://github.com/puppetlabs/puppet-strings/pull/49) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-21) Only create HostClass parameters once [#48](https://github.com/puppetlabs/puppet-strings/pull/48) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-35) Document documenting puppet providers [#47](https://github.com/puppetlabs/puppet-strings/pull/47) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-35) Support types and providers [#46](https://github.com/puppetlabs/puppet-strings/pull/46) ([iankronquist](https://github.com/iankronquist))
+
+- (maint) Don't print extraneous "true". [#45](https://github.com/puppetlabs/puppet-strings/pull/45) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-21) Check mismatched types in defined types [#44](https://github.com/puppetlabs/puppet-strings/pull/44) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-33) Inform reader how to install yard gem [#43](https://github.com/puppetlabs/puppet-strings/pull/43) ([iankronquist](https://github.com/iankronquist))
+
+- Forgot defined types [#42](https://github.com/puppetlabs/puppet-strings/pull/42) ([iankronquist](https://github.com/iankronquist))
+
+- Nested classes/pdoc 35 [#41](https://github.com/puppetlabs/puppet-strings/pull/41) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-33) Inform reader how to install yard gem [#39](https://github.com/puppetlabs/puppet-strings/pull/39) ([iankronquist](https://github.com/iankronquist))
+
+- (maint) Remove unused code path [#38](https://github.com/puppetlabs/puppet-strings/pull/38) ([iankronquist](https://github.com/iankronquist))
+
+- (PDOC-30) Fix Markdown parsing lists parsing [#37](https://github.com/puppetlabs/puppet-strings/pull/37) ([iankronquist](https://github.com/iankronquist))
+
+- Actually/pdoc 19 [#36](https://github.com/puppetlabs/puppet-strings/pull/36) ([iankronquist](https://github.com/iankronquist))
+
+- Type checking/pdoc 21 [#35](https://github.com/puppetlabs/puppet-strings/pull/35) ([iankronquist](https://github.com/iankronquist))
+
+- Dispatch params/pdoc 37 [#33](https://github.com/puppetlabs/puppet-strings/pull/33) ([iankronquist](https://github.com/iankronquist))
+
+- (maint) Remove html-matchers dependency [#32](https://github.com/puppetlabs/puppet-strings/pull/32) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-37) Warn when documented name does not match declared name [#31](https://github.com/puppetlabs/puppet-strings/pull/31) ([iankronquist](https://github.com/iankronquist))
+
+- Use different debuggers for ruby 2 and 1.9 [#30](https://github.com/puppetlabs/puppet-strings/pull/30) ([iankronquist](https://github.com/iankronquist))
+
+## [0.2.0](https://github.com/puppetlabs/puppet-strings/tree/0.2.0) - 2015-03-17
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/0.1.1...0.2.0)
+
+### Other
+
+- (maint) Add CHANGELOG and update for 0.2.0 release [#29](https://github.com/puppetlabs/puppet-strings/pull/29) ([HAIL9000](https://github.com/HAIL9000))
+
+- Make the metadata match what's generated by the PMT [#28](https://github.com/puppetlabs/puppet-strings/pull/28) ([underscorgan](https://github.com/underscorgan))
+
+- (PDOC-25) Fix mangled puppet namespaces [#27](https://github.com/puppetlabs/puppet-strings/pull/27) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-27) Don't require options for 3x functions [#26](https://github.com/puppetlabs/puppet-strings/pull/26) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-26) Rename Puppetx to PuppetX [#25](https://github.com/puppetlabs/puppet-strings/pull/25) ([HAIL9000](https://github.com/HAIL9000))
+
+- (maint) Enable docker containers for travis [#23](https://github.com/puppetlabs/puppet-strings/pull/23) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-24) Add basic templates for functions [#22](https://github.com/puppetlabs/puppet-strings/pull/22) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-17) Add support for YARD tags in puppet code [#21](https://github.com/puppetlabs/puppet-strings/pull/21) ([HAIL9000](https://github.com/HAIL9000))
+
+## [0.1.1](https://github.com/puppetlabs/puppet-strings/tree/0.1.1) - 2014-10-21
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/0.1.0...0.1.1)
+
+### Other
+
+- (PDOC-13) Update README with examples and resources [#20](https://github.com/puppetlabs/puppet-strings/pull/20) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-14) Fix strings to work with future parser [#19](https://github.com/puppetlabs/puppet-strings/pull/19) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-8) Add rubocop to ensure code quality [#18](https://github.com/puppetlabs/puppet-strings/pull/18) ([HAIL9000](https://github.com/HAIL9000))
+
+- "project_page" should point to the source. [#17](https://github.com/puppetlabs/puppet-strings/pull/17) ([adreyer](https://github.com/adreyer))
+
+- (maint) readme: Fix puppet server typo [#15](https://github.com/puppetlabs/puppet-strings/pull/15) ([sbadia](https://github.com/sbadia))
+
+## [0.1.0](https://github.com/puppetlabs/puppet-strings/tree/0.1.0) - 2014-10-07
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/a9408c792ba48ffc5e59d8641a538a83197b7064...0.1.0)
+
+### Other
+
+- Make metadata match file generated by pmt [#14](https://github.com/puppetlabs/puppet-strings/pull/14) ([underscorgan](https://github.com/underscorgan))
+
+- (PDOC-9) Add full system test [#13](https://github.com/puppetlabs/puppet-strings/pull/13) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-10) Update README.md and add LICENSE file [#12](https://github.com/puppetlabs/puppet-strings/pull/12) ([HAIL9000](https://github.com/HAIL9000))
+
+- (maint) Add COMMITTERS.md and CONTRIBUTING.md [#11](https://github.com/puppetlabs/puppet-strings/pull/11) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-7) Add .travis file for Travis CI support [#10](https://github.com/puppetlabs/puppet-strings/pull/10) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-6) Allow for different puppet gem versions [#9](https://github.com/puppetlabs/puppet-strings/pull/9) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-3) Refactor prototype code to make it more readable [#7](https://github.com/puppetlabs/puppet-strings/pull/7) ([HAIL9000](https://github.com/HAIL9000))
+
+- Add -q option to suppress warnings for server [#6](https://github.com/puppetlabs/puppet-strings/pull/6) ([petems](https://github.com/petems))
+
+- (PDOC-3) Rename face to strings instead of yardoc [#4](https://github.com/puppetlabs/puppet-strings/pull/4) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-2) Improve test coverage for puppet strings [#3](https://github.com/puppetlabs/puppet-strings/pull/3) ([HAIL9000](https://github.com/HAIL9000))
+
+- (PDOC-5) Add basic unit testing [#2](https://github.com/puppetlabs/puppet-strings/pull/2) ([HAIL9000](https://github.com/HAIL9000))
