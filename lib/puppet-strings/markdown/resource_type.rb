@@ -5,6 +5,9 @@ require 'puppet-strings/markdown/base'
 module PuppetStrings::Markdown
   # Generates Markdown for a Puppet Resource Type.
   class ResourceType < Base
+    group_name 'Resource types'
+    yard_types [:puppet_type]
+
     def initialize(registry)
       @template = 'resource_type.erb'
       super(registry, 'type')

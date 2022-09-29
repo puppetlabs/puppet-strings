@@ -50,6 +50,33 @@ module PuppetStrings::Markdown
   #  ") inherits foo::bar {\n" +
   #  "}"}
   class Base
+    # Set or return the name of the group
+    #
+    # @param [Optional[String]] Name of the group to set
+    # @return [String] Name of the group
+    def self.group_name(name = nil)
+      @group_name = name if name
+      @group_name
+    end
+
+    # Set or return the types registered with YARD
+    #
+    # @param [Optional[Array[Symbol]]] Array of symbols registered with YARD to set
+    # @return [Array[Symbol]] Array of symbols registered with YARD
+    def self.yard_types(types = nil)
+      @yard_types = types if types
+      @yard_types
+    end
+
+    # @return [Array] list of items
+    def self.items
+      yard_types
+        .flat_map { |type| YARD::Registry.all(type) }
+        .sort_by(&:name)
+        .map(&:to_hash)
+        .map { |i| new(i) }
+    end
+
     def initialize(registry, component_type)
       @type = component_type
       @registry = registry
@@ -198,19 +225,6 @@ module PuppetStrings::Markdown
     # @return [String] the anchor-safe string
     def clean_link(input)
       input.tr('^a-zA-Z0-9_-', '-')
-    end
-  end
-
-  # Helper function to load an ERB template.
-  #
-  # @param [String] path The full path to the template file.
-  # @return [ERB] Template
-  def self.erb(path)
-    if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.6.0')
-      ERB.new(File.read(path), trim_mode: '-')
-    else
-      # This outputs warnings in Ruby 2.6+.
-      ERB.new(File.read(path), nil, '-')
     end
   end
 end
