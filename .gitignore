@@ -49,3 +49,6 @@ Gemfile.lock
 
 ## local rspec config
 /.rspec-local
+
+## local ruby environment
+/vendor/
