@@ -3,7 +3,7 @@ name: "ci"
 on:
   push:
     branches:
-      - "maint"
+      - "main"
   pull_request:
     branches:
       - "main"
@@ -12,6 +12,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  ci:
+
+  spec:
     uses: "puppetlabs/cat-github-actions/.github/workflows/gem_ci.yml@main"
     secrets: "inherit"
+
+  acceptance:
+    needs: "spec"
+    strategy:
+      matrix:
+        puppet:
+          - "puppet6"
+          - "puppet7"
+    uses: "puppetlabs/cat-github-actions/.github/workflows/gem_acceptance.yml@main"
+    secrets: "inherit"
+    with:
+      target: ${{ matrix.target }}
