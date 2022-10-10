@@ -19,12 +19,10 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
 
   describe 'parsing 3.x API functions' do
     describe 'parsing a function with a missing docstring' do
-      let(:source) do
-        <<-SOURCE
-Puppet::Parser::Functions.newfunction(:foo) do |*args|
-end
+      let(:source) { <<~'SOURCE' }
+        Puppet::Parser::Functions.newfunction(:foo) do |*args|
+        end
       SOURCE
-      end
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
@@ -32,18 +30,26 @@ end
     end
 
     describe 'parsing a function with a doc parameter' do
-      let(:source) do
-        <<-SOURCE
-Puppet::Parser::Functions.newfunction(:foo, doc: <<-DOC
-An example 3.x function.
-@param [String] first The first parameter.
-@param second The second parameter.
-@return [Undef] Returns nothing.
-DOC
-) do |*args|
-end
+      # Bug: Putting `) do |*args|` on the first line rather than right after
+      # the end of the heredoc block causes the docstring to be trimmed. This is
+      # probably related to https://github.com/lsegal/yard/issues/779. The code
+      # in PuppetStrings::Yard::Handlers::Ruby::Base has a special work around
+      # for this, but it seems to be limited by how much data YARD provides, and
+      # it often isn’t enough.
+      #
+      # Given that this occurs only in old-style functions, it’s probably not
+      # worth pursuing.
+      let(:source) { <<~'SOURCE' }
+        Puppet::Parser::Functions.newfunction(:foo, doc: <<~'DOC'
+            An example 3.x function.
+            @param [String] first The first parameter.
+            @param second The second parameter.
+            @return [Undef] Returns nothing.
+          DOC
+          ) do |*args|
+          # ...
+        end
       SOURCE
-      end
 
       it 'registers a function object' do
         expect(spec_subject.size).to eq(1)
@@ -75,20 +81,28 @@ end
     end
 
     describe 'parsing a function with a doc parameter which has a newline between the namespace and the newfunction call' do
-      let(:source) do
-        <<-SOURCE
-module Puppet::Parser::Functions
-  newfunction(:foo, doc: <<-DOC
-An example 3.x function.
-@param [String] first The first parameter.
-@param second The second parameter.
-@return [Undef] Returns nothing.
-DOC
-) do |*args|
-  end
-end
+      # Bug: Putting `) do |*args|` on the first line rather than right after
+      # the end of the heredoc block causes the docstring to be trimmed. This is
+      # probably related to https://github.com/lsegal/yard/issues/779. The code
+      # in PuppetStrings::Yard::Handlers::Ruby::Base has a special work around
+      # for this, but it seems to be limited by how much data YARD provides, and
+      # it often isn’t enough.
+      #
+      # Given that this occurs only in old-style functions, it’s probably not
+      # worth pursuing.
+      let(:source) { <<~'SOURCE' }
+        module Puppet::Parser::Functions
+          newfunction(:foo, doc: <<~'DOC'
+              An example 3.x function.
+              @param [String] first The first parameter.
+              @param second The second parameter.
+              @return [Undef] Returns nothing.
+            DOC
+            ) do |*args|
+            # ...
+          end
+        end
       SOURCE
-      end
 
       it 'registers a function object' do
         expect(spec_subject.size).to eq(1)
@@ -120,16 +134,15 @@ end
     end
 
     describe 'parsing a function with a missing @return tag' do
-      let(:source) do
-        <<-SOURCE
-Puppet::Parser::Functions.newfunction(:foo, doc: <<-DOC) do |*args|
-An example 3.x function.
-@param [String] first The first parameter.
-@param second The second parameter.
-DOC
-end
+      let(:source) { <<~'SOURCE' }
+        Puppet::Parser::Functions.newfunction(:foo, doc: <<~'DOC') do |*args|
+            An example 3.x function.
+            @param [String] first The first parameter.
+            @param second The second parameter.
+          DOC
+          # ...
+        end
       SOURCE
-      end
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):1}).to_stdout_from_any_process
@@ -139,12 +152,10 @@ end
 
   describe 'parsing 4.x API functions' do
     describe 'parsing a function with a missing docstring' do
-      let(:source) do
-        <<-SOURCE
-Puppet::Functions.create_function(:foo) do
-end
+      let(:source) { <<~'SOURCE' }
+        Puppet::Functions.create_function(:foo) do
+        end
       SOURCE
-      end
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
@@ -152,13 +163,11 @@ end
     end
 
     describe 'parsing a function with a simple docstring' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        Puppet::Functions.create_function(:foo) do
+        end
       SOURCE
-      end
 
       it 'registers a function object' do
         expect(spec_subject.size).to eq(1)
@@ -177,19 +186,17 @@ end
     end
 
     describe 'parsing a function without any dispatches' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param [Integer] param1 The first parameter.
-  # @param param2 The second parameter.
-  # @param [String] param3 The third parameter.
-  # @return [Undef] Returns nothing.
-  def foo(param1, param2, param3 = nil)
-  end
-end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        Puppet::Functions.create_function(:foo) do
+          # @param [Integer] param1 The first parameter.
+          # @param param2 The second parameter.
+          # @param [String] param3 The third parameter.
+          # @return [Undef] Returns nothing.
+          def foo(param1, param2, param3 = nil)
+          end
+        end
       SOURCE
-      end
 
       it 'registers a function object' do
         expect(spec_subject.size).to eq(1)
@@ -224,25 +231,23 @@ end
     end
 
     describe 'parsing a function with a single dispatch' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param param1 The first parameter.
-  # @param param2 The second parameter.
-  # @param param3 The third parameter.
-  # @return [Undef] Returns nothing.
-  dispatch :foo do
-    param          'Integer',       :param1
-    param          'Any',           :param2
-    optional_param 'Array[String]', :param3
-  end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        Puppet::Functions.create_function(:foo) do
+          # @param param1 The first parameter.
+          # @param param2 The second parameter.
+          # @param param3 The third parameter.
+          # @return [Undef] Returns nothing.
+          dispatch :foo do
+            param          'Integer',       :param1
+            param          'Any',           :param2
+            optional_param 'Array[String]', :param3
+          end
 
-  def foo(param1, param2, param3 = nil)
-  end
-end
+          def foo(param1, param2, param3 = nil)
+          end
+        end
       SOURCE
-      end
 
       it 'registers a function object without any overload tags' do
         expect(spec_subject.size).to eq(1)
@@ -278,26 +283,24 @@ end
     end
 
     describe 'parsing a function using only return_type' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param param1 The first parameter.
-  # @param param2 The second parameter.
-  # @param param3 The third parameter.
-  dispatch :foo do
-    param          'Integer',       :param1
-    param          'Any',           :param2
-    optional_param 'Array[String]', :param3
-    return_type 'String'
-  end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        Puppet::Functions.create_function(:foo) do
+          # @param param1 The first parameter.
+          # @param param2 The second parameter.
+          # @param param3 The third parameter.
+          dispatch :foo do
+            param          'Integer',       :param1
+            param          'Any',           :param2
+            optional_param 'Array[String]', :param3
+            return_type 'String'
+          end
 
-  def foo(param1, param2, param3 = nil)
-    "Bar"
-  end
-end
+          def foo(param1, param2, param3 = nil)
+            "Bar"
+          end
+        end
       SOURCE
-      end
 
       it 'does not throw an error with no @return' do
         expect { spec_subject }.not_to raise_error
@@ -312,24 +315,22 @@ end
     end
 
     describe 'parsing a function with various dispatch parameters.' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param param1 The first parameter.
-  # @param param2 The second parameter.
-  # @param param3 The third parameter.
-  # @param param4 The fourth parameter.
-  # @return [Undef] Returns nothing.
-  dispatch :foo do
-    param          'String',  :param1
-    required_param 'Integer', :param2
-    optional_param 'Array',   :param3
-    repeated_param 'String',  :param4
-  end
-end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        Puppet::Functions.create_function(:foo) do
+          # @param param1 The first parameter.
+          # @param param2 The second parameter.
+          # @param param3 The third parameter.
+          # @param param4 The fourth parameter.
+          # @return [Undef] Returns nothing.
+          dispatch :foo do
+            param          'String',  :param1
+            required_param 'Integer', :param2
+            optional_param 'Array',   :param3
+            repeated_param 'String',  :param4
+          end
+        end
       SOURCE
-      end
 
       it 'registers a function object with the expected parameters' do
         expect(spec_subject.size).to eq(1)
@@ -368,18 +369,16 @@ end
     end
 
     describe 'parsing a function with an optional repeated param.' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param param The first parameter.
-  # @return [Undef] Returns nothing.
-  dispatch :foo do
-    optional_repeated_param 'String',  :param
-  end
-end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        Puppet::Functions.create_function(:foo) do
+          # @param param The first parameter.
+          # @return [Undef] Returns nothing.
+          dispatch :foo do
+            optional_repeated_param 'String',  :param
+          end
+        end
       SOURCE
-      end
 
       it 'registers a function object with the expected parameters' do
         expect(spec_subject.size).to eq(1)
@@ -409,18 +408,16 @@ end
     end
 
     describe 'parsing a function with a block param with one parameter' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param a_block The block parameter.
-  # @return [Undef] Returns nothing.
-  dispatch :foo do
-    block_param :a_block
-  end
-end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        Puppet::Functions.create_function(:foo) do
+          # @param a_block The block parameter.
+          # @return [Undef] Returns nothing.
+          dispatch :foo do
+            block_param :a_block
+          end
+        end
       SOURCE
-      end
 
       it 'registers a function object with the expected parameters' do
         expect(spec_subject.size).to eq(1)
@@ -450,18 +447,16 @@ end
     end
 
     describe 'parsing a function with a block param with two parameter' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param a_block The block parameter.
-  # @return [Undef] Returns nothing.
-  dispatch :foo do
-    optional_block_param 'Callable[String]', :a_block
-  end
-end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        Puppet::Functions.create_function(:foo) do
+          # @param a_block The block parameter.
+          # @return [Undef] Returns nothing.
+          dispatch :foo do
+            optional_block_param 'Callable[String]', :a_block
+          end
+        end
       SOURCE
-      end
 
       it 'registers a function object with the expected parameters' do
         expect(spec_subject.size).to eq(1)
@@ -492,39 +487,37 @@ end
   end
 
   describe 'parsing a function with a multiple dispatches' do
-    let(:source) do
-      <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # The first overload.
-  # @param param1 The first parameter.
-  # @param param2 The second parameter.
-  # @param param3 The third parameter.
-  # @return [Undef] Returns nothing.
-  dispatch :foo do
-    param          'Integer',       :param1
-    param          'Any',           :param2
-    optional_param 'Array[String]', :param3
-  end
+    let(:source) { <<~'SOURCE' }
+      # An example 4.x function.
+      Puppet::Functions.create_function(:foo) do
+        # The first overload.
+        # @param param1 The first parameter.
+        # @param param2 The second parameter.
+        # @param param3 The third parameter.
+        # @return [Undef] Returns nothing.
+        dispatch :foo do
+          param          'Integer',       :param1
+          param          'Any',           :param2
+          optional_param 'Array[String]', :param3
+        end
 
-  # The second overload.
-  # @param param The first parameter.
-  # @param block The block parameter.
-  # @return [String] Returns a string.
-  dispatch :other do
-    param 'Boolean', :param
-    block_param
-  end
+        # The second overload.
+        # @param param The first parameter.
+        # @param block The block parameter.
+        # @return [String] Returns a string.
+        dispatch :other do
+          param 'Boolean', :param
+          block_param
+        end
 
-  def foo(param1, param2, param3 = nil)
-  end
+        def foo(param1, param2, param3 = nil)
+        end
 
-  def other(b)
-    'lol'
-  end
-end
+        def other(b)
+          'lol'
+        end
+      end
     SOURCE
-    end
 
     it 'registers a function object with overload tags' do
       expect(spec_subject.size).to eq(1)
@@ -584,16 +577,14 @@ end
   end
 
   describe 'parsing a function with a namespaced name' do
-    let(:source) do
-      <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:'foo::bar::baz') do
-  # @return [Undef]
-  dispatch :foo do
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      # An example 4.x function.
+      Puppet::Functions.create_function(:'foo::bar::baz') do
+        # @return [Undef]
+        dispatch :foo do
+        end
+      end
     SOURCE
-    end
 
     it 'outputs the name correctly as a symbol' do
       expect(spec_subject.size).to eq(1)
@@ -602,17 +593,15 @@ end
   end
 
   describe 'parsing a function with a missing parameter' do
-    let(:source) do
-      <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param missing A missing parameter.
-  # @return [Undef] Returns nothing.
-  dispatch :foo do
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      # An example 4.x function.
+      Puppet::Functions.create_function(:foo) do
+        # @param missing A missing parameter.
+        # @return [Undef] Returns nothing.
+        dispatch :foo do
+        end
+      end
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: The @param tag for parameter 'missing' has no matching parameter at \(stdin\):5}).to_stdout_from_any_process
@@ -620,17 +609,15 @@ end
   end
 
   describe 'parsing a function with a missing @param tag' do
-    let(:source) do
-      <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @return [Undef] Returns nothing.
-  dispatch :foo do
-    param 'String', :param1
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      # An example 4.x function.
+      Puppet::Functions.create_function(:foo) do
+        # @return [Undef] Returns nothing.
+        dispatch :foo do
+          param 'String', :param1
+        end
+      end
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param1' near \(stdin\):5}).to_stdout_from_any_process
@@ -638,18 +625,16 @@ end
   end
 
   describe 'parsing a function with a typed @param tag' do
-    let(:source) do
-      <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param [Integer] param1 The first parameter.
-  # @return [Undef] Returns nothing.
-  dispatch :foo do
-    param 'String', :param1
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      # An example 4.x function.
+      Puppet::Functions.create_function(:foo) do
+        # @param [Integer] param1 The first parameter.
+        # @return [Undef] Returns nothing.
+        dispatch :foo do
+          param 'String', :param1
+        end
+      end
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }
@@ -661,17 +646,15 @@ end
   end
 
   describe 'parsing a function with a typed @param tag' do
-    let(:source) do
-      <<-SOURCE
-# An example 4.x function.
-Puppet::Functions.create_function(:foo) do
-  # @param param1 The first parameter.
-  dispatch :foo do
-    param 'String', :param1
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      # An example 4.x function.
+      Puppet::Functions.create_function(:foo) do
+        # @param param1 The first parameter.
+        dispatch :foo do
+          param 'String', :param1
+        end
+      end
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):4}).to_stdout_from_any_process
@@ -679,17 +662,15 @@ end
   end
 
   describe 'parsing a function with a root @param tag' do
-    let(:source) do
-      <<-SOURCE
-# An example 4.x function.
-# @param param Nope.
-Puppet::Functions.create_function(:foo) do
-  # @return [Undef]
-  dispatch :foo do
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      # An example 4.x function.
+      # @param param Nope.
+      Puppet::Functions.create_function(:foo) do
+        # @return [Undef]
+        dispatch :foo do
+        end
+      end
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }
@@ -701,17 +682,15 @@ end
   end
 
   describe 'parsing a function with a root @overload tag' do
-    let(:source) do
-      <<-SOURCE
-# An example 4.x function.
-# @overload foo
-Puppet::Functions.create_function(:foo) do
-  # @return [Undef]
-  dispatch :foo do
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      # An example 4.x function.
+      # @overload foo
+      Puppet::Functions.create_function(:foo) do
+        # @return [Undef]
+        dispatch :foo do
+        end
+      end
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }
@@ -723,17 +702,15 @@ end
   end
 
   describe 'parsing a function with a root @return tag' do
-    let(:source) do
-      <<-SOURCE
-# An example 4.x function.
-# @return [Undef] foo
-Puppet::Functions.create_function(:foo) do
-  # @return [Undef]
-  dispatch :foo do
-  end
-end
+    let(:source) { <<~'SOURCE' }
+      # An example 4.x function.
+      # @return [Undef] foo
+      Puppet::Functions.create_function(:foo) do
+        # @return [Undef]
+        dispatch :foo do
+        end
+      end
     SOURCE
-    end
 
     it 'outputs a warning' do
       expect { spec_subject }
@@ -746,17 +723,15 @@ end
 
   describe 'parsing a function with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-# @summary A short summary.
-Puppet::Functions.create_function(:foo) do
-  # @return [Undef]
-  dispatch :foo do
-  end
-end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        # @summary A short summary.
+        Puppet::Functions.create_function(:foo) do
+          # @return [Undef]
+          dispatch :foo do
+          end
+        end
       SOURCE
-      end
 
       it 'parses the summary' do
         expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -767,17 +742,15 @@ end
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-# An example 4.x function.
-# @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
-Puppet::Functions.create_function(:foo) do
-  # @return [Undef]
-  dispatch :foo do
-  end
-end
+      let(:source) { <<~'SOURCE' }
+        # An example 4.x function.
+        # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
+        Puppet::Functions.create_function(:foo) do
+          # @return [Undef]
+          dispatch :foo do
+          end
+        end
       SOURCE
-      end
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process

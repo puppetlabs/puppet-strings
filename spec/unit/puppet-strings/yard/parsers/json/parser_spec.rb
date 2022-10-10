@@ -27,11 +27,9 @@ describe PuppetStrings::Yard::Parsers::JSON::Parser do
   end
 
   describe 'parsing invalid JSON' do
-    let(:source) do
-      <<SOURCE
-class foo {
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      class foo {
+    SOURCE
 
     it 'raises an exception' do
       expect { spec_subject.parse }.to output(%r{\[error\]: Failed to parse test.json}).to_stdout_from_any_process
@@ -39,32 +37,30 @@ SOURCE
   end
 
   describe 'parsing valid task metadata JSON' do
-    let(:source) do
-      <<SOURCE
-{
-  "description": "Allows you to backup your database to local file.",
-  "input_method": "stdin",
-  "parameters": {
-    "database": {
-      "description": "Database to connect to",
-      "type": "Optional[String[1]]"
-    },
-    "user": {
-      "description": "The user",
-      "type": "Optional[String[1]]"
-    },
-    "password": {
-      "description": "The password",
-      "type": "Optional[String[1]]"
-    },
-     "sql": {
-      "description": "Path to file you want backup to",
-      "type": "String[1]"
-    }
-  }
-}
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      {
+        "description": "Allows you to backup your database to local file.",
+        "input_method": "stdin",
+        "parameters": {
+          "database": {
+            "description": "Database to connect to",
+            "type": "Optional[String[1]]"
+          },
+          "user": {
+            "description": "The user",
+            "type": "Optional[String[1]]"
+          },
+          "password": {
+            "description": "The password",
+            "type": "Optional[String[1]]"
+          },
+           "sql": {
+            "description": "Path to file you want backup to",
+            "type": "String[1]"
+          }
+        }
+      }
+    SOURCE
 
     it 'parses the JSON and extract a TaskStatement' do
       spec_subject.parse

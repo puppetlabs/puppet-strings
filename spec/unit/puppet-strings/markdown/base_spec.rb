@@ -5,15 +5,15 @@ require 'spec_helper'
 describe PuppetStrings::Markdown::Base do
   context 'basic class' do
     before :each do
-      YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
-# An overview
-# @api private
-# @summary A simple class.
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
-}
+      YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet)
+        # An overview
+        # @api private
+        # @summary A simple class.
+        # @param param1 First param.
+        # @param param2 Second param.
+        # @param param3 Third param.
+        class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
+        }
       SOURCE
     end
 
@@ -69,24 +69,24 @@ class klass(Integer $param1, $param2, String $param3 = hi) inherits foo::bar {
   end
   context 'less basic class' do
     before :each do
-      YARD::Parser::SourceParser.parse_string(<<-SOURCE, :puppet)
-# An overview
-# It's a longer overview
-# Ya know?
-# @example A simple example.
-#  class { 'klass::yeah':
-#    param1 => 1,
-#  }
-# @param param1 First param.
-# @param param2 Second param.
-# @param param3 Third param.
-class klass::yeah(
-  Integer $param1,
-  $param2,
-  String $param3 = hi
-) inherits foo::bar {
+      YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet)
+        # An overview
+        # It's a longer overview
+        # Ya know?
+        # @example A simple example.
+        #  class { 'klass::yeah':
+        #    param1 => 1,
+        #  }
+        # @param param1 First param.
+        # @param param2 Second param.
+        # @param param3 Third param.
+        class klass::yeah(
+          Integer $param1,
+          $param2,
+          String $param3 = hi
+        ) inherits foo::bar {
 
-}
+        }
       SOURCE
     end
 

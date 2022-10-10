@@ -31,12 +31,10 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
   end
 
   describe 'parsing an empty data type definition' do
-    let(:source) do
-      <<-SOURCE
-Puppet::DataTypes.create_type('RubyDataType') do
-end
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      Puppet::DataTypes.create_type('RubyDataType') do
+      end
+    SOURCE
 
     it 'registers a data type object with no param tags or functions' do
       expect(spec_subject.size).to eq(1)
@@ -56,18 +54,16 @@ SOURCE
   end
 
   describe 'parsing a data type definition with missing param tags' do
-    let(:source) do
-      <<-SOURCE
-# An example Puppet Data Type in Ruby.
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-    attributes => {
-      msg => String[1],
-    }
-    PUPPET
-end
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      # An example Puppet Data Type in Ruby.
+      Puppet::DataTypes.create_type('RubyDataType') do
+        interface <<~'PUPPET'
+          attributes => {
+            msg => String[1],
+          }
+        PUPPET
+      end
+    SOURCE
 
     it 'outputs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for attribute 'msg' near \(stdin\):2}).to_stdout_from_any_process
@@ -102,18 +98,16 @@ SOURCE
 
   describe 'parsing a data type definition with missing function' do
     context 'which has parameters' do
-      let(:source) do
-        <<-SOURCE
-# An example Puppet Data Type in Ruby.
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-  functions => {
-    func1 => Callable[[Integer, String], String]
-  }
-    PUPPET
-end
-SOURCE
-      end
+      let(:source) { <<~'SOURCE' }
+        # An example Puppet Data Type in Ruby.
+        Puppet::DataTypes.create_type('RubyDataType') do
+          interface <<~'PUPPET'
+            functions => {
+              func1 => Callable[[Integer, String], String]
+            }
+          PUPPET
+        end
+      SOURCE
 
       it 'outputs a warning about the missing functions' do
         expect { spec_subject }.to output(%r{\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2}m).to_stdout_from_any_process
@@ -151,19 +145,17 @@ SOURCE
       end
 
       context 'which has multiple functions' do
-        let(:source) do
-          <<-SOURCE
-# An example Puppet Data Type in Ruby.
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-  functions => {
-    func1 => Callable[[], String],
-    func2 => Callable[[Integer], String]
-  }
-    PUPPET
-end
-SOURCE
-        end
+        let(:source) { <<~'SOURCE' }
+          # An example Puppet Data Type in Ruby.
+          Puppet::DataTypes.create_type('RubyDataType') do
+            interface <<~'PUPPET'
+              functions => {
+                func1 => Callable[[], String],
+                func2 => Callable[[Integer], String]
+              }
+            PUPPET
+          end
+        SOURCE
 
         it 'outputs a warning about the first missing function' do
           expect { spec_subject }.to output(%r{\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2}m).to_stdout_from_any_process
@@ -201,26 +193,24 @@ SOURCE
   end
 
   describe 'parsing a data type definition with extra tags' do
-    let(:source) do
-      <<-SOURCE
-# An example Puppet Data Type in Ruby.
-# @param msg A message parameter.
-# @param arg1 Optional String parameter. Defaults to 'param'.
-#
-# @!method does_not_exist
-#
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-    attributes => {
-      msg => Numeric,
-    },
-    functions => {
-      func1 => Callable[[], Optional[String]]
-    }
-    PUPPET
-end
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      # An example Puppet Data Type in Ruby.
+      # @param msg A message parameter.
+      # @param arg1 Optional String parameter. Defaults to 'param'.
+      #
+      # @!method does_not_exist
+      #
+      Puppet::DataTypes.create_type('RubyDataType') do
+        interface <<~'PUPPET'
+          attributes => {
+            msg => Numeric,
+          },
+          functions => {
+            func1 => Callable[[], Optional[String]]
+          }
+        PUPPET
+      end
+    SOURCE
 
     it 'outputs a warning about the extra attribute' do
       expect { spec_subject }.to output(%r{\[warn\]: The @param tag for 'arg1' has no matching attribute near \(stdin\):7}m).to_stdout_from_any_process
@@ -265,32 +255,30 @@ SOURCE
   describe 'parsing a valid data type definition' do
     # TODO: What about testing for `type_parameters => {}`
     # e.g. https://github.com/puppetlabs/puppet/blob/main/lib/puppet/datatypes/error.rb
-    let(:source) do
-      <<-SOURCE
-# An example Puppet Data Type in Ruby.
-#
-# @param msg A message parameter5.
-# @param arg1 Optional String parameter5. Defaults to 'param'.
-#
-# @!method func1(foo, bar)
-#   func1 documentation
-#   @param [String] foo foo documentation
-#   @param [Integer] bar bar documentation
-#   @return [Optional[String]]
-#
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-    attributes => {
-      msg   => Variant[Numeric, String[1,2]],
-      arg1  => { type => Optional[String[1]], value => "param" }
-    },
-    functions => {
-      func1 => Callable[[String, Integer], Optional[String]]
-    }
-    PUPPET
-end
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      # An example Puppet Data Type in Ruby.
+      #
+      # @param msg A message parameter5.
+      # @param arg1 Optional String parameter5. Defaults to 'param'.
+      #
+      # @!method func1(foo, bar)
+      #   func1 documentation
+      #   @param [String] foo foo documentation
+      #   @param [Integer] bar bar documentation
+      #   @return [Optional[String]]
+      #
+      Puppet::DataTypes.create_type('RubyDataType') do
+        interface <<~'PUPPET'
+          attributes => {
+            msg   => Variant[Numeric, String[1,2]],
+            arg1  => { type => Optional[String[1]], value => "param" }
+          },
+          functions => {
+            func1 => Callable[[String, Integer], Optional[String]]
+          }
+        PUPPET
+      end
+    SOURCE
 
     it 'registers a data type object' do
       expect(spec_subject.size).to eq(1)
@@ -337,8 +325,7 @@ SOURCE
     end
 
     context 'with multiple interfaces' do
-      let(:source) do
-        <<-SOURCE
+      let(:source) { <<~'SOURCE' }
         # An example Puppet Data Type in Ruby.
         #
         # @param msg A message parameter5.
@@ -352,7 +339,7 @@ SOURCE
         #
         Puppet::DataTypes.create_type('RubyDataType') do
           if 1 == 2
-            interface <<-PUPPET
+            interface <<~'PUPPET'
               This interface is invalid because of this text!
               attributes => {
                 msg1 => Variant[Numeric, String[1,2]],
@@ -360,29 +347,28 @@ SOURCE
               functions => {
                 func1 => Callable[[String, Integer], Optional[String]]
               }
-              PUPPET
+            PUPPET
           elsif 1 == 3
-            interface <<-PUPPET
+            interface <<~'PUPPET'
               attributes => {
                 msg2 => Variant[Numeric, String[1,2]],
               },
               functions => {
                 func2 => Callable[[String, Integer], Optional[String]]
               }
-              PUPPET
+            PUPPET
           else
-            interface <<-PUPPET
+            interface <<~'PUPPET'
               attributes => {
                 msg3 => Variant[Numeric, String[1,2]],
               },
               functions => {
                 func3 => Callable[[String, Integer], Optional[String]]
               }
-              PUPPET
+            PUPPET
           end
         end
-        SOURCE
-      end
+      SOURCE
 
       it 'registers only the first valid interface' do
         suppress_yard_logging
@@ -403,33 +389,31 @@ SOURCE
     end
 
     context 'with missing, partial and addition function parameters' do
-      let(:source) do
-        <<-SOURCE
-# An example Puppet Data Type in Ruby.
-#
-# @!method func1(foo1, foo2)
-#   func1 docs
-#   @param [String] foo1 param1 documentation
-#   @param [Integer] missing docs should exist
-#   @param [String] extra Should not exist
-#   @return [Integer] This is wrong
-#
-# @!method func2(param1, param2)
-#   func2 docs - missing a parameter
-#   @param [String] param1 param1 documentation
-#
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-    attributes => {
-    },
-    functions => {
-      func1 => Callable[[Integer, Integer], Optional[String]],
-      func2 => Callable[[Integer, Integer], Optional[String]]
-    }
-    PUPPET
-end
-SOURCE
-      end
+      let(:source) { <<~'SOURCE' }
+        # An example Puppet Data Type in Ruby.
+        #
+        # @!method func1(foo1, foo2)
+        #   func1 docs
+        #   @param [String] foo1 param1 documentation
+        #   @param [Integer] missing docs should exist
+        #   @param [String] extra Should not exist
+        #   @return [Integer] This is wrong
+        #
+        # @!method func2(param1, param2)
+        #   func2 docs - missing a parameter
+        #   @param [String] param1 param1 documentation
+        #
+        Puppet::DataTypes.create_type('RubyDataType') do
+          interface <<~'PUPPET'
+            attributes => {
+            },
+            functions => {
+              func1 => Callable[[Integer, Integer], Optional[String]],
+              func2 => Callable[[Integer, Integer], Optional[String]]
+            }
+          PUPPET
+        end
+      SOURCE
 
       it 'outputs a warning about the incorrect return type' do
         expect { spec_subject }.to output(%r{\[warn\]: The @return tag for 'func1' has a different type definition .+ Expected \["Optional\[String\]"\]}m).to_stdout_from_any_process
@@ -499,19 +483,17 @@ SOURCE
     { value: '0.31415e1', expected: 3.1415 },
   ].each do |testcase|
     describe "parsing a valid data type definition with numeric default #{testcase[:value]}" do
-      let(:source) do
-        <<-SOURCE
-# An example Puppet Data Type in Ruby.
-# @param num1 A numeric parameter
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-    attributes => {
-      num1 => { type => Numeric, value => #{testcase[:value]} },
-    }
-    PUPPET
-end
-SOURCE
-      end
+      let(:source) { <<~SOURCE }
+        # An example Puppet Data Type in Ruby.
+        # @param num1 A numeric parameter
+        Puppet::DataTypes.create_type('RubyDataType') do
+          interface <<~'PUPPET'
+            attributes => {
+              num1 => { type => Numeric, value => #{testcase[:value]} },
+            }
+          PUPPET
+        end
+      SOURCE
 
       it 'registers a data type object' do
         expect(spec_subject.size).to eq(1)
@@ -524,25 +506,23 @@ SOURCE
   end
 
   describe 'parsing an invalid data type definition' do
-    let(:source) do
-      <<-SOURCE
-# The msg attribute is missing a comma.
-#
-# @param msg A message parameter5.
-# @param arg1 Optional String parameter5. Defaults to 'param'.
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-    attributes => {
-      msg   => Variant[Numeric, String[1,2]]
-      arg1  => { type => Optional[String[1]], value => "param" }
-    },
-    functions => {
-      func1 => Callable[[], Integer]
-    }
-    PUPPET
-end
-SOURCE
-    end
+    let(:source) { <<~'SOURCE' }
+      # The msg attribute is missing a comma.
+      #
+      # @param msg A message parameter5.
+      # @param arg1 Optional String parameter5. Defaults to 'param'.
+      Puppet::DataTypes.create_type('RubyDataType') do
+        interface <<~'PUPPET'
+          attributes => {
+            msg   => Variant[Numeric, String[1,2]]
+            arg1  => { type => Optional[String[1]], value => "param" }
+          },
+          functions => {
+            func1 => Callable[[], Integer]
+          }
+        PUPPET
+      end
+    SOURCE
 
     it 'registers a partial data type object' do
       suppress_yard_logging
@@ -577,18 +557,16 @@ SOURCE
 
   describe 'parsing a data type with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-# An example Puppet Data Type in Ruby.
-#
-# @summary A short summary.
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-    attributes => { }
-    PUPPET
-end
-SOURCE
-      end
+      let(:source) { <<~'SOURCE' }
+        # An example Puppet Data Type in Ruby.
+        #
+        # @summary A short summary.
+        Puppet::DataTypes.create_type('RubyDataType') do
+          interface <<~'PUPPET'
+            attributes => { }
+          PUPPET
+        end
+      SOURCE
 
       it 'parses the summary' do
         expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -599,18 +577,16 @@ SOURCE
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-# An example Puppet Data Type in Ruby.
-#
-# @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
-Puppet::DataTypes.create_type('RubyDataType') do
-  interface <<-PUPPET
-    attributes => { }
-    PUPPET
-end
-SOURCE
-      end
+      let(:source) { <<~'SOURCE' }
+        # An example Puppet Data Type in Ruby.
+        #
+        # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
+        Puppet::DataTypes.create_type('RubyDataType') do
+          interface <<~'PUPPET'
+            attributes => { }
+          PUPPET
+        end
+      SOURCE
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_data_type 'RubyDataType' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process

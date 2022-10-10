@@ -18,13 +18,11 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
   end
 
   describe 'parsing a type with a missing description' do
-    let(:source) do
-      <<-SOURCE
-Puppet::ResourceApi.register_type(
-  name: 'database'
-)
+    let(:source) { <<~'SOURCE' }
+      Puppet::ResourceApi.register_type(
+        name: 'database'
+      )
     SOURCE
-    end
 
     it 'logs a warning' do
       expect { spec_subject }.to output(%r{\[warn\]: Missing a description for Puppet resource type 'database' at \(stdin\):1\.}).to_stdout_from_any_process
@@ -32,14 +30,12 @@ Puppet::ResourceApi.register_type(
   end
 
   describe 'parsing a type with a valid docstring assignment' do
-    let(:source) do
-      <<-SOURCE
-Puppet::ResourceApi.register_type(
-  name: 'database',
-  docs: 'An example database server resource type.',
-)
+    let(:source) { <<~'SOURCE' }
+      Puppet::ResourceApi.register_type(
+        name: 'database',
+        docs: 'An example database server resource type.',
+      )
     SOURCE
-    end
 
     it 'correctlies detect the docstring' do
       expect(spec_subject.size).to eq(1)
@@ -49,17 +45,15 @@ Puppet::ResourceApi.register_type(
   end
 
   describe 'parsing a type with a docstring which uses ruby `%Q` notation' do
-    let(:source) do
-      <<-'SOURCE'
-test = 'hello world!'
+    let(:source) { <<~'SOURCE' }
+      test = 'hello world!'
 
-Puppet::ResourceApi.register_type(
-  name: 'database',
-  docs: %Q{This is a multi-line
-doc in %Q with #{test}},
-)
+      Puppet::ResourceApi.register_type(
+        name: 'database',
+        docs: %Q{This is a multi-line
+      doc in %Q with #{test}},
+      )
     SOURCE
-    end
 
     it 'strips the `%Q{}` and render the interpolation expression literally' do
       expect(spec_subject.size).to eq(1)
@@ -69,55 +63,53 @@ doc in %Q with #{test}},
   end
 
   describe 'parsing a type definition' do
-    let(:source) do
-      <<-SOURCE
-# @!puppet.type.param [value1, value2] dynamic_param Documentation for a dynamic parameter.
-# @!puppet.type.property [foo, bar] dynamic_prop Documentation for a dynamic property.
-Puppet::ResourceApi.register_type(
-  name: 'database',
-  docs: 'An example database server resource type.',
-  features: ['remote-resource'],
-  attributes: {
-    ensure: {
-      type: 'Enum[present, absent, up, down]',
-      desc: 'What state the database should be in.',
-      default: 'up',
-    },
-    address: {
-      type: 'String',
-      desc: 'The database server name.',
-      behaviour: :namevar,
-    },
-    encrypt: {
-      type: 'Boolean',
-      desc: 'Whether or not to encrypt the database.',
-      default: false,
-      behaviour: :parameter,
-    },
-    encryption_key: {
-      type: 'Optional[String]',
-      desc: 'The encryption key to use.',
-      behaviour: :parameter,
-    },
-    backup: {
-      type: 'Enum[daily, monthly, never]',
-      desc: 'How often to backup the database.',
-      default: 'never',
-      behaviour: :parameter,
-    },
-    file: {
-      type: 'String',
-      desc: 'The database file to use.',
-    },
-    log_level: {
-      type: 'Enum[debug, warn, error]',
-      desc: 'The log level to use.',
-      default: 'warn',
-    },
-  },
-)
+    let(:source) { <<~'SOURCE' }
+      # @!puppet.type.param [value1, value2] dynamic_param Documentation for a dynamic parameter.
+      # @!puppet.type.property [foo, bar] dynamic_prop Documentation for a dynamic property.
+      Puppet::ResourceApi.register_type(
+        name: 'database',
+        docs: 'An example database server resource type.',
+        features: ['remote-resource'],
+        attributes: {
+          ensure: {
+            type: 'Enum[present, absent, up, down]',
+            desc: 'What state the database should be in.',
+            default: 'up',
+          },
+          address: {
+            type: 'String',
+            desc: 'The database server name.',
+            behaviour: :namevar,
+          },
+          encrypt: {
+            type: 'Boolean',
+            desc: 'Whether or not to encrypt the database.',
+            default: false,
+            behaviour: :parameter,
+          },
+          encryption_key: {
+            type: 'Optional[String]',
+            desc: 'The encryption key to use.',
+            behaviour: :parameter,
+          },
+          backup: {
+            type: 'Enum[daily, monthly, never]',
+            desc: 'How often to backup the database.',
+            default: 'never',
+            behaviour: :parameter,
+          },
+          file: {
+            type: 'String',
+            desc: 'The database file to use.',
+          },
+          log_level: {
+            type: 'Enum[debug, warn, error]',
+            desc: 'The log level to use.',
+            default: 'warn',
+          },
+        },
+      )
     SOURCE
-    end
 
     it 'registers a type object' do
       expect(spec_subject.size).to eq(1)
@@ -187,14 +179,12 @@ Puppet::ResourceApi.register_type(
 
   describe 'parsing a type with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-Puppet::ResourceApi.register_type(
-  name: 'database',
-  docs: '@summary A short summary.',
-)
+      let(:source) { <<~'SOURCE' }
+        Puppet::ResourceApi.register_type(
+          name: 'database',
+          docs: '@summary A short summary.',
+        )
       SOURCE
-      end
 
       it 'parses the summary' do
         expect { spec_subject }.to output('').to_stdout_from_any_process
@@ -205,14 +195,12 @@ Puppet::ResourceApi.register_type(
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) do
-        <<-SOURCE
-Puppet::ResourceApi.register_type(
-  name: 'database',
-  docs: '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!',
-)
+      let(:source) { <<~'SOURCE' }
+        Puppet::ResourceApi.register_type(
+          name: 'database',
+          docs: '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!',
+        )
       SOURCE
-      end
 
       it 'logs a warning' do
         expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_type 'database' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
@@ -221,20 +209,18 @@ Puppet::ResourceApi.register_type(
   end
 
   describe 'parsing a type with title_patterns' do
-    let(:source) do
-      <<-SOURCE
-Puppet::ResourceApi.register_type(
-  name: 'database',
-  docs: 'An example database server resource type.',
-  title_patterns: [
-    {
-      pattern: %r{(?<name>.*)},
-      desc: 'Generic title match',
-    }
-  ]
-)
+    let(:source) { <<~'SOURCE' }
+      Puppet::ResourceApi.register_type(
+        name: 'database',
+        docs: 'An example database server resource type.',
+        title_patterns: [
+          {
+            pattern: %r{(?<name>.*)},
+            desc: 'Generic title match',
+          }
+        ]
+      )
     SOURCE
-    end
 
     it 'does not emit a warning' do
       expect { spec_subject }.not_to output(%r{\[warn\].*unexpected construct regexp_literal}).to_stdout_from_any_process
