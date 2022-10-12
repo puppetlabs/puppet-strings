@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.summary = 'Puppet documentation via YARD'
   s.email = 'info@puppet.com'
   s.homepage = 'https://github.com/puppetlabs/puppet-strings'
-  s.description = s.summary
   s.required_ruby_version = '>= 2.5.0'
 
   s.extra_rdoc_files = [
@@ -25,6 +24,6 @@ Gem::Specification.new do |s|
   s.files = Dir['CHANGELOG.md', 'README.md', 'LICENSE', 'lib/**/*', 'exe/**/*']
 
   s.add_runtime_dependency 'yard', '~> 0.9.5'
-  s.add_runtime_dependency 'rgen'
-  s.requirements << 'puppet, >= 5.0.0'
+  s.add_runtime_dependency 'rgen', '~> 0.9.0'
+  s.requirements << 'puppet, >= 6.0.0'
 end

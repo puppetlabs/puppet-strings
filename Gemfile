@@ -14,15 +14,29 @@ else
   gem 'puppet', :require => false
 end
 
-group :test do
+group :development do
   gem 'codecov'
-  gem 'mocha'
-  gem 'puppetlabs_spec_helper'
-  gem 'serverspec'
-  gem 'simplecov-console'
-  gem 'rspec', '~> 3.1'
+
   gem 'json_spec', '~> 1.1', '>= 1.1.5'
+
   gem 'mdl'
+  gem 'mocha'
+
+  gem 'pry', require: false
+  gem 'pry-byebug', require: false
+  gem 'pry-stack_explorer', require: false 
+  gem 'puppetlabs_spec_helper'
+  
+  gem 'rake', '~> 10.0'
+  gem 'rspec', '~> 3.1'
+  gem 'rspec-its', '~> 1.0'
+  gem 'rubocop', '~> 1.6.1', require: false
+  gem 'rubocop-rspec', '~> 2.0.1', require: false
+  gem 'rubocop-performance', '~> 1.9.1', require: false
+
+  gem 'serverspec'
+  gem 'simplecov-console', require: false if ENV['COVERAGE'] == 'yes'
+  gem 'simplecov', require: false if ENV['COVERAGE'] == 'yes'
 end
 
 group :acceptance do
@@ -30,15 +44,9 @@ group :acceptance do
   gem 'net-ssh'
 end
 
-group :development do
-  gem 'github_changelog_generator'
-  gem 'pry'
-  gem 'pry-byebug'
+group :release do
+  gem 'github_changelog_generator', require: false
 end
-
-gem 'rubocop', '~> 1.6.1'
-gem 'rubocop-rspec', '~> 2.0.1'
-gem 'rubocop-performance', '~> 1.9.1'
 
 # Evaluate Gemfile.local if it exists
 if File.exists? "#{__FILE__}.local"
