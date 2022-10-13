@@ -24,10 +24,10 @@ group :development do
 
   gem 'pry', require: false
   gem 'pry-byebug', require: false
-  gem 'pry-stack_explorer', require: false 
+  gem 'pry-stack_explorer', require: false
   gem 'puppetlabs_spec_helper'
-  
-  gem 'rake', '~> 10.0'
+
+  gem 'rake'
   gem 'rspec', '~> 3.1'
   gem 'rspec-its', '~> 1.0'
   gem 'rubocop', '~> 1.6.1', require: false
