@@ -20,6 +20,7 @@ AllCops:
   - "**/Guardfile"
   - '**/*.erb'
   - 'lib/puppet-strings/yard/templates/**/*'
+  SuggestExtensions: false
 Layout/LineLength:
   Description: People have wide screens, use them.
   Max: 200
