@@ -1,46 +1,16 @@
 # frozen_string_literal: true
 
-if Bundler.rubygems.find_name('puppet_litmus').any?
-  require 'puppet_litmus/rake_tasks'
-
-  # This is a _really_ horrible monkey-patch to fix up https://github.com/puppetlabs/bolt/issues/1614
-  # Based on resolution https://github.com/puppetlabs/bolt/pull/1620
-  # This can be removed once this is fixed, released into Bolt and into Litmus
-  require 'bolt_spec/run'
-  module BoltSpec
-    module Run
-      class BoltRunner
-        class << self
-          alias_method :original_with_runner, :with_runner
-        end
-
-        def self.with_runner(config_data, inventory_data)
-          original_with_runner(deep_duplicate_object(config_data), deep_duplicate_object(inventory_data)) { |runner| yield runner }
-        end
-
-        # From https://github.com/puppetlabs/pdk/blob/main/lib/pdk/util.rb
-        # Workaround for https://github.com/puppetlabs/bolt/issues/1614
-        def self.deep_duplicate_object(object)
-          if object.is_a?(Array)
-            object.map { |item| deep_duplicate_object(item) }
-          elsif object.is_a?(Hash)
-            hash = object.dup
-            hash.each_pair { |key, value| hash[key] = deep_duplicate_object(value) }
-            hash
-          else
-            object
-          end
-        end
-      end
-    end
-  end
-end
-
-require 'puppetlabs_spec_helper/tasks/fixtures'
 require 'bundler/gem_tasks'
 require 'puppet-lint/tasks/puppet-lint'
-
 require 'rspec/core/rake_task'
+require 'puppetlabs_spec_helper/tasks/fixtures'
+
+begin
+  require 'puppet_litmus/rake_tasks'
+rescue LoadError
+  # Gem not present
+end
+
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.exclude_pattern = "spec/acceptance/**/*.rb"
 end
@@ -138,13 +108,6 @@ namespace :litmus do
   end
 end
 
-task(:rubocop) do
-  require 'rubocop'
-  cli = RuboCop::CLI.new
-  result = cli.run(%w(-D -f s))
-  abort unless result == RuboCop::CLI::STATUS_SUCCESS
-end
-
 #### CHANGELOG ####
 begin
   require 'github_changelog_generator/task'
@@ -176,4 +139,31 @@ rescue LoadError
   task :changelog do
     raise 'Install github_changelog_generator to get access to automatic changelog generation'
   end
+end
+
+desc 'Run acceptance tests'
+task :acceptance do
+
+  begin
+    if ENV['MATRIX_TARGET']
+      agent_version = ENV['MATRIX_TARGET'].chomp
+    else
+      agent_version = 'puppet7'
+    end
+    
+    Rake::Task['litmus:provision'].invoke('docker', 'litmusimage/centos:7')
+
+    Rake::Task['litmus:install_agent'].invoke(agent_version.to_s)
+
+    Rake::Task['litmus:install_modules_from_directory'].invoke('./spec/fixtures/acceptance/modules')
+
+    Rake::Task['litmus:install_gems'].invoke
+
+    Rake::Task['litmus:acceptance:parallel'].invoke
+
+  rescue StandardError => e
+    puts e.message
+    raise e
+  end
+
 end
