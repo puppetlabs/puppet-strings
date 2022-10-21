@@ -9,7 +9,7 @@ Strings processes code and YARD-style code comments to create documentation in H
 
 ### Requirements
 
-* Ruby 2.5.0 or newer
+* Ruby 2.7.0 or newer
 * Puppet 6.0.0 or newer
 
 ### Install Puppet Strings
@@ -57,7 +57,7 @@ Markdown output is written to a REFERENCE.md file in the module's main directory
 
 See the [Puppet Strings documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) for complete instructions for generating documentation with Strings.
 
-For code comment style guidelines and examples, see the [Puppet Strings style guide](https://puppet.com/docs/puppet/5.5/puppet_strings_style.html).
+For code comment style guidelines and examples, see the [Puppet Strings style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html).
 
 ### Additional Resources
 
@@ -124,16 +124,10 @@ An example of running the acceptance tests locally with Docker:
     bundle exec rake litmus:tear_down
     ```
 
-The [Litmus Wiki](https://github.com/puppetlabs/puppet_litmus/wiki) contains more indepth information about Litmus.
-
-There is also a tutorial on using Litmus with an example [Puppet Module](https://github.com/puppetlabs/puppet_litmus/wiki/Tutorial:-use-Litmus-to-execute-acceptance-tests-with-a-sample-module-(MoTD)#install-the-necessary-gems-for-the-module)
-
 ## Support
 
 Please log issues in [GitHub issues](https://github.com/puppetlabs/puppet-strings/issues).
 Check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppet-strings/blob/main/CONTRIBUTING.md) for tips on writing _the best_ issues.
-
-A [mailing list](https://groups.google.com/forum/?fromgroups#!forum/puppet-users) is available for asking questions and getting help from others.
 
 There is also an active community on the [Puppet community Slack](https://slack.puppet.com) in the #forge-modules channel.
 
