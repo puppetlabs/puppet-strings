@@ -19,7 +19,7 @@ group :development do
 
   gem 'json_spec', '~> 1.1', '>= 1.1.5'
 
-  gem 'mdl'
+  gem 'mdl', '~> 0.11.0'
   gem 'mocha'
 
   gem 'pry', require: false
