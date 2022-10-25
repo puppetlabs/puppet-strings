@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
+## [v3.0.1](https://github.com/puppetlabs/puppet-strings/tree/v3.0.1) - 2022-10-25
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v3.0.0...v3.0.1)
+
+### Fixed
+
+- (GH-332) Ensure PuppetStrings is loaded for tasks [#333](https://github.com/puppetlabs/puppet-strings/pull/333) ([chelnak](https://github.com/chelnak))
+
 ## [v3.0.0](https://github.com/puppetlabs/puppet-strings/tree/v3.0.0) - 2022-10-21
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.9.0...v3.0.0)
@@ -33,10 +41,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - (#304) Fix double backticks in Markdown [#305](https://github.com/puppetlabs/puppet-strings/pull/305) ([danielparks](https://github.com/danielparks))
 
 - (#300) Fix anchor links in Markdown docs [#303](https://github.com/puppetlabs/puppet-strings/pull/303) ([danielparks](https://github.com/danielparks))
-
-### Other
-
-- (MAINT) Bump gem version [#327](https://github.com/puppetlabs/puppet-strings/pull/327) ([chelnak](https://github.com/chelnak))
 
 ## [v2.9.0](https://github.com/puppetlabs/puppet-strings/tree/v2.9.0) - 2021-11-29
 
