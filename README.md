@@ -10,7 +10,7 @@ Strings processes code and YARD-style code comments to create documentation in H
 ### Requirements
 
 * Ruby 2.7.0 or newer
-* Puppet 6.0.0 or newer
+* Puppet 7.0.0 or newer
 
 ### Install Puppet Strings
 
