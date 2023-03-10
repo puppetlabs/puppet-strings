@@ -1,7 +1,7 @@
 # Initializes the template.
 # @return [void]
 def init
-  sections :header, :box_info, :summary, :overview, :alias_of, :note, :todo, T('tags'), :source
+  sections :header, :box_info, :summary, :overview, :alias_of, :note, :todo, :deprecated, T('tags'), :source
 end
 
 # Renders the alias_of section.

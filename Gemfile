@@ -20,11 +20,12 @@ group :development do
   gem 'json_spec', '~> 1.1', '>= 1.1.5'
 
   gem 'mdl', '~> 0.11.0'
-  gem 'mocha'
 
   gem 'pry', require: false
   gem 'pry-byebug', require: false
   gem 'pry-stack_explorer', require: false
+  # Need the following otherwise we end up with puppetlabs_spec_helper 1.1.1
+  gem 'mocha', '~> 1.0'
   gem 'puppetlabs_spec_helper'
 
   gem 'rake'

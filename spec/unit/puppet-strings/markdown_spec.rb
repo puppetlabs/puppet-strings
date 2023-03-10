@@ -91,6 +91,12 @@ describe PuppetStrings::Markdown do
       end
     end
 
+    describe 'deprecated message' do
+      it 'includes deprecated message' do
+        expect(output).to match(%r{\*\*DEPRECATED\*\* No longer supported and will be removed in a future release})
+      end
+    end
+
     describe 'with Puppet Plans', if: TEST_PUPPET_PLANS do
       before(:each) do
         parse_plan_content

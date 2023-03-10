@@ -20,6 +20,7 @@ module PuppetStrings::Markdown
   #    [{:tag_name=>"summary", :text=>"A simple class."},
   #     {:tag_name=>"since", :text=>"1.0.0"},
   #     {:tag_name=>"see", :name=>"www.puppet.com"},
+  #     {:tag_name=>"deprecated", :text=>"No longer supported and will be removed in a future release"},
   #     {:tag_name=>"example",
   #      :text=>
   #       "class { 'klass':\n" +
@@ -93,7 +94,8 @@ module PuppetStrings::Markdown
       since: 'since',
       summary: 'summary',
       note: 'note',
-      todo: 'todo' }.each do |method_name, tag_name|
+      todo: 'todo',
+      deprecated: 'deprecated' }.each do |method_name, tag_name|
       # @return [String] unless the tag is nil or the string.empty?
       define_method method_name do
         @tags.find { |tag| tag[:tag_name] == tag_name && !tag[:text].empty? }[:text] if @tags.any? { |tag| tag[:tag_name] == tag_name && !tag[:text].empty? }

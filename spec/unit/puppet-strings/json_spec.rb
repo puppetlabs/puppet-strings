@@ -10,6 +10,7 @@ describe PuppetStrings::Json do
     expect(YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet).enumerator.length).to eq(2)
       # A simple class.
       # @todo Do a thing
+      # @deprecated No longer supported and will be removed in a future release
       # @note Some note
       # @param param1 First param.
       # @param param2 Second param.

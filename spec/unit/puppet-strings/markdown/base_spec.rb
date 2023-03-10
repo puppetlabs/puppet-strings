@@ -9,6 +9,7 @@ describe PuppetStrings::Markdown::Base do
         # An overview
         # @api private
         # @summary A simple class.
+        # @deprecated No longer supported and will be removed in a future release
         # @param param1 First param.
         # @param param2 Second param.
         # @param param3 Third param.
@@ -53,6 +54,12 @@ describe PuppetStrings::Markdown::Base do
     describe '#summary' do
       it 'returns the expected summary' do
         expect(component.summary).to eq 'A simple class.'
+      end
+    end
+
+    describe '#deprecated' do
+      it 'returns the expected deprecated warning' do
+        expect(component.deprecated).to eq 'No longer supported and will be removed in a future release'
       end
     end
 
