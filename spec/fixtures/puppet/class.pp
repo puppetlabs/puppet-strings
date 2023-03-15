@@ -1,6 +1,7 @@
 # An overview for a simple class.
 # @summary A simple class.
 # @todo Do a thing
+# @deprecated No longer supported and will be removed in a future release
 # @note some note
 # @since 1.0.0
 # @see www.puppet.com

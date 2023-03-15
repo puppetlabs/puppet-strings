@@ -8,6 +8,10 @@
 <%= "The #{name} class." %>
 <% end -%>
 
+<% if deprecated -%>
+* **DEPRECATED** <%= deprecated %>
+
+<% end -%>
 <% if todo -%>
 * **TODO** <%= todo %>
 
