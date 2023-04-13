@@ -3,4 +3,5 @@ fixtures:
     facts: 'https://github.com/puppetlabs/puppetlabs-facts.git'
     provision: 'https://github.com/puppetlabs/provision.git'
     puppet_agent: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
-  symlinks: []
+  symlinks:
+    test: "#{source_dir}/spec/fixtures/acceptance/modules/test"
