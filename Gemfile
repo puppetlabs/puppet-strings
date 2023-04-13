@@ -4,18 +4,21 @@ source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
 gemspec
 
-gem 'rgen'
-gem 'redcarpet'
-gem 'yard', '~> 0.9.11'
+def location_for(place_or_version, fake_version = nil)
+  git_url_regex = %r{\A(?<url>(https?|git)[:@][^#]*)(#(?<branch>.*))?}
+  file_url_regex = %r{\Afile:\/\/(?<path>.*)}
 
-if ENV['PUPPET_GEM_VERSION']
-  gem 'puppet', ENV['PUPPET_GEM_VERSION'], :require => false
-else
-  gem 'puppet', :require => false
+  if place_or_version && (git_url = place_or_version.match(git_url_regex))
+    [fake_version, { git: git_url[:url], branch: git_url[:branch], require: false }].compact
+  elsif place_or_version && (file_url = place_or_version.match(file_url_regex))
+    ['>= 0', { path: File.expand_path(file_url[:path]), require: false }]
+  else
+    [place_or_version, { require: false }]
+  end
 end
 
 group :development do
-  gem 'codecov'
+  gem 'puppet', *location_for(ENV['PUPPET_GEM_VERSION'])
 
   gem 'json_spec', '~> 1.1', '>= 1.1.5'
 
@@ -24,6 +27,7 @@ group :development do
   gem 'pry', require: false
   gem 'pry-byebug', require: false
   gem 'pry-stack_explorer', require: false
+
   # Need the following otherwise we end up with puppetlabs_spec_helper 1.1.1
   gem 'mocha', '~> 1.0'
   gem 'puppetlabs_spec_helper'
@@ -31,30 +35,19 @@ group :development do
   gem 'rake'
   gem 'rspec', '~> 3.1'
   gem 'rspec-its', '~> 1.0'
-  gem 'rubocop', '~> 1.6.1', require: false
-  gem 'rubocop-rspec', '~> 2.0.1', require: false
-  gem 'rubocop-performance', '~> 1.9.1', require: false
+
+  gem 'rubocop', '~> 1.48', require: false
+  gem 'rubocop-performance', '~> 1.16', require: false
+  gem 'rubocop-rspec', '~> 2.19', require: false
 
   gem 'serverspec'
-  gem 'simplecov-console', require: false if ENV['COVERAGE'] == 'yes'
-  gem 'simplecov', require: false if ENV['COVERAGE'] == 'yes'
+  gem 'simplecov', require: false
+  gem 'simplecov-console', require: false
+
+  gem 'redcarpet'
 end
 
 group :acceptance do
   gem 'puppet_litmus'
   gem 'net-ssh'
-end
-
-group :release do
-  gem 'github_changelog_generator', require: false
-end
-
-# Evaluate Gemfile.local if it exists
-if File.exists? "#{__FILE__}.local"
-  eval(File.read("#{__FILE__}.local"), binding)
-end
-
-# Evaluate ~/.gemfile if it exists
-if File.exists?(File.join(Dir.home, '.gemfile'))
-  eval(File.read(File.join(Dir.home, '.gemfile')), binding)
 end
