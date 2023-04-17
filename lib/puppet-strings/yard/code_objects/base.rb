@@ -7,7 +7,7 @@ class PuppetStrings::Yard::CodeObjects::Base < YARD::CodeObjects::NamespaceObjec
   # @return Returns the code object.
   def self.new(*args)
     # Skip the super class' implementation because it detects :: in names and this will cause namespaces in the output we don't want
-    object = Object.class.instance_method(:new).bind(self).call(*args)
+    object = Object.class.instance_method(:new).bind_call(self, *args)
     existing = YARD::Registry.at(object.path)
     object = existing if existing && existing.class == self
     yield(object) if block_given?
