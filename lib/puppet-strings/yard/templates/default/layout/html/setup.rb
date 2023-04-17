@@ -124,7 +124,7 @@ def create_menu_lists
       type: 'method',
       title: 'Ruby Methods',
       search_title: 'Method List'
-    },
+    }
   ]
 
   menu_lists.delete_if { |e| YARD::Registry.all(e[:type].intern).empty? }

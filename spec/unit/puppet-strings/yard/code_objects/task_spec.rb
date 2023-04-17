@@ -77,7 +77,7 @@ describe PuppetStrings::Yard::CodeObjects::Task do
               tag_name: 'param',
               text: 'Path to file you want backup to',
               types: ['String[1]']
-            },
+            }
           ]
         },
         file: 'test.json',

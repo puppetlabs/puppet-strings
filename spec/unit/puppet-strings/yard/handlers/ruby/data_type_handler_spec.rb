@@ -480,7 +480,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
     { value: '0xFF', expected: 255 },
     { value: '0.1', expected: 0.1 },
     { value: '31.415e-1', expected: 3.1415 },
-    { value: '0.31415e1', expected: 3.1415 },
+    { value: '0.31415e1', expected: 3.1415 }
   ].each do |testcase|
     describe "parsing a valid data type definition with numeric default #{testcase[:value]}" do
       let(:source) { <<~SOURCE }

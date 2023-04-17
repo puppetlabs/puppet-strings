@@ -18,7 +18,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     'block_param',
     'required_block_param',
     'optional_block_param',
-    'return_type',
+    'return_type'
   ].freeze
 
   namespace_only
