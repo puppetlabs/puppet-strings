@@ -49,7 +49,7 @@ describe PuppetStrings::Markdown do
       end
     end
 
-    before(:each) do
+    before do
       parse_shared_content
     end
 
@@ -98,7 +98,7 @@ describe PuppetStrings::Markdown do
     end
 
     describe 'with Puppet Plans', if: TEST_PUPPET_PLANS do
-      before(:each) do
+      before do
         parse_plan_content
       end
 
@@ -112,7 +112,7 @@ describe PuppetStrings::Markdown do
     end
 
     describe 'with Puppet Data Types', if: TEST_PUPPET_DATATYPES do
-      before(:each) do
+      before do
         parse_data_type_content
       end
 

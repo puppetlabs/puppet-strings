@@ -46,7 +46,7 @@ TEST_PUPPET_DATATYPES = Puppet::Util::Package.versioncmp(Puppet.version, '4.1.0'
 RSpec.configure do |config|
   config.mock_with :mocha
 
-  config.before(:each) do
+  config.before do
     # Always clear the YARD registry before each example
     YARD::Registry.clear
   end

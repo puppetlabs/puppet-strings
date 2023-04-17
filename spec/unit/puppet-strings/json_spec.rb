@@ -5,7 +5,7 @@ require 'puppet-strings/json'
 require 'tempfile'
 
 describe PuppetStrings::Json do
-  before :each do
+  before do
     # Populate the YARD registry with both Puppet and Ruby source
     expect(YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet).enumerator.length).to eq(2)
       # A simple class.

@@ -13,7 +13,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
   # so remember the logging object prior to running the test.
   original_yard_logging_object = YARD::Logger.instance.io
 
-  after(:each) do
+  after do
     # Restore the original logging IO object
     YARD::Logger.instance.io = original_yard_logging_object
   end

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe PuppetStrings::Markdown::Base do
   context 'basic class' do
-    before :each do
+    before do
       YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet)
         # An overview
         # @api private
@@ -77,7 +77,7 @@ describe PuppetStrings::Markdown::Base do
   end
 
   context 'less basic class' do
-    before :each do
+    before do
       YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet)
         # An overview
         # It's a longer overview

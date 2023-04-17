@@ -12,7 +12,7 @@ require 'tempfile'
 #--short - only list params
 
 describe PuppetStrings::Describe do
-  before :each do
+  before do
     # Populate the YARD registry with both Puppet and Ruby source
 
     YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :ruby)
