@@ -76,20 +76,20 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     log.warn "Missing documentation for Puppet function '#{object.name}' at #{statement.file}:#{statement.line}." if object.docstring.empty? && object.tags.empty?
 
     unless object.tags(:param).empty?
-      log.warn "The docstring for Puppet 4.x function '#{object.name}' "\
-        "contains @param tags near #{object.file}:#{object.line}: parameter "\
+      log.warn "The docstring for Puppet 4.x function '#{object.name}' " \
+        "contains @param tags near #{object.file}:#{object.line}: parameter " \
         'documentation should be made on the dispatch call.'
     end
 
     unless object.tags(:return).empty?
-      log.warn "The docstring for Puppet 4.x function '#{object.name}' "\
-      "contains @return tags near #{object.file}:#{object.line}: return "\
+      log.warn "The docstring for Puppet 4.x function '#{object.name}' " \
+      "contains @return tags near #{object.file}:#{object.line}: return " \
       'value documentation should be made on the dispatch call.'
     end
 
     unless object.tags(:overload).empty?
-      log.warn "The docstring for Puppet 4.x function '#{object.name}' "\
-      "contains @overload tags near #{object.file}:#{object.line}: overload "\
+      log.warn "The docstring for Puppet 4.x function '#{object.name}' " \
+      "contains @overload tags near #{object.file}:#{object.line}: overload " \
       'tags are automatically generated from the dispatch calls.'
     end
 
@@ -310,8 +310,8 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     log.warn "Missing @param tag for parameter '#{name}' near #{file}:#{line}." unless tag || object.docstring.all.empty?
 
     if type && tag && tag.types && !tag.types.empty?
-      log.warn "The @param tag for parameter '#{name}' should not contain a "\
-        "type specification near #{file}:#{line}: ignoring in favor of "\
+      log.warn "The @param tag for parameter '#{name}' should not contain a " \
+        "type specification near #{file}:#{line}: ignoring in favor of " \
         'dispatch type information.'
     end
 

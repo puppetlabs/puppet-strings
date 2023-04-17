@@ -379,8 +379,8 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
         if tag.tag_name == 'param'
           index += 1
           if index > actual_function[:param_types].count
-            log.warn "The @param tag for '#{tag.name}' should not exist for function "\
-            "'#{meth.name}' that is defined near #{object.file}:#{object.line}. "\
+            log.warn "The @param tag for '#{tag.name}' should not exist for function " \
+            "'#{meth.name}' that is defined near #{object.file}:#{object.line}. " \
             "Expected only #{actual_function[:param_types].count} parameter/s"
             true
           else
