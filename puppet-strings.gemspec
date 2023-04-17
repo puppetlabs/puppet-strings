@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'puppet-strings/version'
 
@@ -19,11 +19,11 @@ Gem::Specification.new do |s|
     'COMMITTERS.md',
     'CONTRIBUTING.md',
     'LICENSE',
-    'README.md',
+    'README.md'
   ]
   s.files = Dir['CHANGELOG.md', 'README.md', 'LICENSE', 'lib/**/*', 'exe/**/*']
 
-  s.add_runtime_dependency 'yard', '~> 0.9.5'
-  s.add_runtime_dependency 'rgen', '~> 0.9.0'
-  s.requirements << 'puppet, >= 6.0.0'
+  s.add_runtime_dependency 'rgen', '~> 0.9'
+  s.add_runtime_dependency 'yard', '~> 0.9'
+  s.requirements << 'puppet, >= 7.0.0'
 end

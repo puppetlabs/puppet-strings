@@ -13,7 +13,7 @@ module PuppetStrings::Describe
   def self.render(describe_types = [], list = false, _providers = false)
     document = {
       defined_types: YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash),
-      resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash),
+      resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash)
     }
 
     if list
@@ -32,7 +32,7 @@ module PuppetStrings::Describe
   end
 
   def self.show_one_type(resource_type)
-    puts "\n%{name}\n%{underscore}" % { name: resource_type[:name], underscore: '=' * resource_type[:name].length }
+    puts format("\n%<name>s\n%<underscore>s", name: resource_type[:name], underscore: '=' * resource_type[:name].length)
     puts resource_type[:docstring][:text]
 
     combined_list = (resource_type[:parameters].nil? ? [] : resource_type[:parameters]) +
@@ -47,10 +47,10 @@ module PuppetStrings::Describe
   end
 
   def self.show_one_parameter(parameter)
-    puts "\n- **%{name}**\n" % { name: parameter[:name] }
+    puts format("\n- **%<name>s**\n", name: parameter[:name])
     puts parameter[:description]
-    puts 'Valid values are `%{values}`.' % { values: parameter[:values].join('`, `') } unless parameter[:values].nil?
-    puts 'Requires features %{required_features}.' % { required_features: parameter[:required_features] } unless parameter[:required_features].nil?
+    puts format('Valid values are `%<values>s`.', values: parameter[:values].join('`, `')) unless parameter[:values].nil?
+    puts format('Requires features %<required_features>s.', required_features: parameter[:required_features]) unless parameter[:required_features].nil?
   end
 
   def self.list_one_type(type)
@@ -58,12 +58,8 @@ module PuppetStrings::Describe
     shortento = targetlength - 4
     contentstring = type[:docstring][:text]
     end_of_line = contentstring.index("\n")  # "." gives closer results to old describeb, but breaks for '.k5login'
-    unless end_of_line.nil?
-      contentstring = contentstring[0..end_of_line]
-    end
-    if contentstring.length > targetlength
-      contentstring = contentstring[0..shortento] + ' ...'
-    end
+    contentstring = contentstring[0..end_of_line] unless end_of_line.nil?
+    contentstring = "#{contentstring[0..shortento]} ..." if contentstring.length > targetlength
 
     puts "#{type[:name].to_s.ljust(15)} - #{contentstring}"
   end

@@ -10,7 +10,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
   end
 
   describe 'parsing source with newproperty' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.newtype(:database) do
         desc 'database'
       end
@@ -29,7 +29,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
   end
 
   describe 'parsing source with newparam' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.newtype(:database) do
         desc 'database'
       end
@@ -44,12 +44,12 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeExtrasHandler do
       expect(object.parameters.size).to eq(1)
       expect(object.parameters[0].name).to eq('name')
       expect(object.parameters[0].docstring).to eq('The database server name.')
-      expect(object.parameters[0].isnamevar).to eq(true)
+      expect(object.parameters[0].isnamevar).to be(true)
     end
   end
 
   describe 'parsing source with ensurable' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.newtype(:database) do
         desc 'database'
       end

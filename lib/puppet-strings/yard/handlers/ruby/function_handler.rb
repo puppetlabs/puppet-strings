@@ -8,17 +8,17 @@ require 'puppet-strings/yard/util'
 # Implements the handler for Puppet functions written in Ruby.
 class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard::Handlers::Ruby::Base
   # Represents the list of Puppet 4.x function API methods to support.
-  DISPATCH_METHOD_NAMES = [
-    'param',
-    'required_param',
-    'optional_param',
-    'repeated_param',
-    'optional_repeated_param',
-    'required_repeated_param',
-    'block_param',
-    'required_block_param',
-    'optional_block_param',
-    'return_type',
+  DISPATCH_METHOD_NAMES = %w[
+    param
+    required_param
+    optional_param
+    repeated_param
+    optional_repeated_param
+    required_repeated_param
+    block_param
+    required_block_param
+    optional_block_param
+    return_type
   ].freeze
 
   namespace_only
@@ -39,7 +39,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     is_3x = ['Puppet::Parser::Functions', 'newfunction'].include?(module_name)
     object = PuppetStrings::Yard::CodeObjects::Function.new(
       get_name(statement, 'Puppet::Functions.create_function'),
-      is_3x ? PuppetStrings::Yard::CodeObjects::Function::RUBY_3X : PuppetStrings::Yard::CodeObjects::Function::RUBY_4X,
+      is_3x ? PuppetStrings::Yard::CodeObjects::Function::RUBY_3X : PuppetStrings::Yard::CodeObjects::Function::RUBY_4X
     )
     object.source = statement
     register object
@@ -76,21 +76,21 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     log.warn "Missing documentation for Puppet function '#{object.name}' at #{statement.file}:#{statement.line}." if object.docstring.empty? && object.tags.empty?
 
     unless object.tags(:param).empty?
-      log.warn "The docstring for Puppet 4.x function '#{object.name}' "\
-        "contains @param tags near #{object.file}:#{object.line}: parameter "\
-        'documentation should be made on the dispatch call.'
+      log.warn "The docstring for Puppet 4.x function '#{object.name}' " \
+               "contains @param tags near #{object.file}:#{object.line}: parameter " \
+               'documentation should be made on the dispatch call.'
     end
 
     unless object.tags(:return).empty?
-      log.warn "The docstring for Puppet 4.x function '#{object.name}' "\
-      "contains @return tags near #{object.file}:#{object.line}: return "\
-      'value documentation should be made on the dispatch call.'
+      log.warn "The docstring for Puppet 4.x function '#{object.name}' " \
+               "contains @return tags near #{object.file}:#{object.line}: return " \
+               'value documentation should be made on the dispatch call.'
     end
 
     unless object.tags(:overload).empty?
-      log.warn "The docstring for Puppet 4.x function '#{object.name}' "\
-      "contains @overload tags near #{object.file}:#{object.line}: overload "\
-      'tags are automatically generated from the dispatch calls.'
+      log.warn "The docstring for Puppet 4.x function '#{object.name}' " \
+               "contains @overload tags near #{object.file}:#{object.line}: overload " \
+               'tags are automatically generated from the dispatch calls.'
     end
 
     # Delete any existing param/return/overload tags
@@ -123,6 +123,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
 
     # If there's only one overload, move the tags to the object itself
     return unless overloads.length == 1
+
     overload = overloads.first
     object.parameters = overload.parameters
     object.add_tag(*overload.tags)
@@ -184,7 +185,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         node_as_string(parameters[0]),
         nil, # TODO: determine default from corresponding Ruby method signature?
         method_name.include?('optional'),
-        method_name.include?('repeated'),
+        method_name.include?('repeated')
       )
     end
 
@@ -215,7 +216,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
           nil, # TODO: determine default from corresponding Ruby method signature?
           block.method_name.source.include?('optional'),
           false, # Not repeated
-          true, # Is block
+          true # Is block
         )
       end
     end
@@ -243,7 +244,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         param_tags,
         parameter.source,
         parameter.file,
-        parameter.line,
+        parameter.line
       )
     end
 
@@ -258,7 +259,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         parameter.line,
         nil,
         parameter[1].source,
-        true,
+        true
       )
     end
 
@@ -274,7 +275,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         nil,
         nil,
         false,
-        true,
+        true
       )
     end
 
@@ -291,7 +292,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         nil,
         false,
         false,
-        true,
+        true
       )
     end
 
@@ -309,15 +310,15 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     log.warn "Missing @param tag for parameter '#{name}' near #{file}:#{line}." unless tag || object.docstring.all.empty?
 
     if type && tag && tag.types && !tag.types.empty?
-      log.warn "The @param tag for parameter '#{name}' should not contain a "\
-        "type specification near #{file}:#{line}: ignoring in favor of "\
-        'dispatch type information.'
+      log.warn "The @param tag for parameter '#{name}' should not contain a " \
+               "type specification near #{file}:#{line}: ignoring in favor of " \
+               'dispatch type information.'
     end
 
     if repeated
-      name = '*' + name
+      name = "*#{name}"
     elsif block
-      name = '&' + name
+      name = "&#{name}"
     end
 
     type ||= tag&.types ? tag.type : 'Any'

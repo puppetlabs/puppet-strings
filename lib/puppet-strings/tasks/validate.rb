@@ -10,7 +10,7 @@ namespace :strings do
       filename = 'REFERENCE.md'
 
       unless File.exist?(filename)
-        STDERR.puts "#{filename} does not exist"
+        warn "#{filename} does not exist"
         exit 1
       end
 
@@ -24,7 +24,7 @@ namespace :strings do
           backtrace: args[:backtrace] == 'true',
           json: false,
           markdown: true,
-          path: file,
+          path: file
         }
         PuppetStrings.generate(patterns, options)
 
@@ -34,7 +34,7 @@ namespace :strings do
       existing = File.read(filename)
 
       if generated != existing
-        STDERR.puts "#{filename} is outdated"
+        warn "#{filename} is outdated"
         exit 1
       end
     end

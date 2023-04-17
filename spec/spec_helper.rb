@@ -8,7 +8,7 @@ if ENV['COVERAGE'] == 'yes'
   SimpleCov.formatters = [
     SimpleCov::Formatter::HTMLFormatter,
     SimpleCov::Formatter::Console,
-    SimpleCov::Formatter::Codecov,
+    SimpleCov::Formatter::Codecov
   ]
 
   SimpleCov.start do
@@ -46,7 +46,7 @@ TEST_PUPPET_DATATYPES = Puppet::Util::Package.versioncmp(Puppet.version, '4.1.0'
 RSpec.configure do |config|
   config.mock_with :mocha
 
-  config.before(:each) do
+  config.before do
     # Always clear the YARD registry before each example
     YARD::Registry.clear
   end
@@ -54,7 +54,7 @@ end
 
 def lint_markdown(content)
   # Load default mdl ruleset
-  ruleset = MarkdownLint::RuleSet.new.tap { |r| r.load_default }
+  ruleset = MarkdownLint::RuleSet.new.tap(&:load_default)
 
   # Apply custom style to ruleset rules
   MarkdownLint::Style.load(File.join(__dir__, 'markdownlint_style.rb'), ruleset.rules)
@@ -84,6 +84,6 @@ RSpec::Matchers.define :have_no_markdown_lint_errors do
   end
 
   failure_message do |actual|
-    "expected that #{actual.length > 80 ? actual.slice(0, 80).inspect + '...' : actual.inspect} would have no markdown lint errors but got #{@violations.join("\n")}"
+    "expected that #{actual.length > 80 ? "#{actual.slice(0, 80).inspect}..." : actual.inspect} would have no markdown lint errors but got #{@violations.join("\n")}"
   end
 end

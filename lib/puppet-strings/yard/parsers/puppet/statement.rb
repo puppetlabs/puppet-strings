@@ -7,13 +7,9 @@ module PuppetStrings::Yard::Parsers::Puppet
   # Represents the base Puppet language statement.
   class Statement
     # The pattern for parsing docstring comments.
-    COMMENT_REGEX = %r{^\s*#+\s?}.freeze
+    COMMENT_REGEX = /^\s*#+\s?/.freeze
 
-    attr_reader :source
-    attr_reader :file
-    attr_reader :line
-    attr_reader :docstring
-    attr_reader :comments_range
+    attr_reader :source, :file, :line, :docstring, :comments_range
 
     # Initializes the Puppet language statement.
     # @param object The Puppet parser model object for the statement.
@@ -67,7 +63,7 @@ module PuppetStrings::Yard::Parsers::Puppet
     private
 
     def first_line
-      @source.split(%r{\r?\n}).first.strip
+      @source.split(/\r?\n/).first.strip
     end
   end
 
@@ -75,20 +71,17 @@ module PuppetStrings::Yard::Parsers::Puppet
   class ParameterizedStatement < Statement
     # Implements a parameter for a parameterized statement.
     class Parameter
-      attr_reader :name
-      attr_reader :type
-      attr_reader :value
+      attr_reader :name, :type, :value
 
       # Initializes the parameter.
       # @param [Puppet::Pops::Model::Parameter] parameter The parameter model object.
       def initialize(parameter)
         @name = parameter.name
         # Take the exact text for the type expression
-        if parameter.type_expr
-          @type = PuppetStrings::Yard::Util.ast_to_text(parameter.type_expr)
-        end
+        @type = PuppetStrings::Yard::Util.ast_to_text(parameter.type_expr) if parameter.type_expr
         # Take the exact text for the default value expression
         return unless parameter.value
+
         @value = PuppetStrings::Yard::Util.ast_to_text(parameter.value)
       end
     end
@@ -106,8 +99,7 @@ module PuppetStrings::Yard::Parsers::Puppet
 
   # Implements the Puppet class statement.
   class ClassStatement < ParameterizedStatement
-    attr_reader :name
-    attr_reader :parent_class
+    attr_reader :name, :parent_class
 
     # Initializes the Puppet class statement.
     # @param [Puppet::Pops::Model::HostClassDefinition] object The model object for the class statement.
@@ -134,8 +126,7 @@ module PuppetStrings::Yard::Parsers::Puppet
 
   # Implements the Puppet function statement.
   class FunctionStatement < ParameterizedStatement
-    attr_reader :name
-    attr_reader :type
+    attr_reader :name, :type
 
     # Initializes the Puppet function statement.
     # @param [Puppet::Pops::Model::FunctionDefinition] object The model object for the function statement.
@@ -144,8 +135,10 @@ module PuppetStrings::Yard::Parsers::Puppet
       super(object, file)
       @name = object.name
       return unless object.respond_to? :return_type
+
       type = object.return_type
       return unless type
+
       @type = PuppetStrings::Yard::Util.ast_to_text(type).gsub('>> ', '')
     end
   end
@@ -165,8 +158,7 @@ module PuppetStrings::Yard::Parsers::Puppet
 
   # Implements the Puppet data type alias statement.
   class DataTypeAliasStatement < Statement
-    attr_reader :name
-    attr_reader :alias_of
+    attr_reader :name, :alias_of
 
     # Initializes the Puppet data type alias statement.
     # @param [Puppet::Pops::Model::TypeAlias] object The model object for the type statement.
@@ -178,7 +170,7 @@ module PuppetStrings::Yard::Parsers::Puppet
       case type_expr
       when Puppet::Pops::Model::AccessExpression
         # TODO: I don't like rebuilding the source from the AST, but AccessExpressions don't expose the original source
-        @alias_of = PuppetStrings::Yard::Util.ast_to_text(type_expr.left_expr) + '['
+        @alias_of = +"#{PuppetStrings::Yard::Util.ast_to_text(type_expr.left_expr)}[" # alias_of should be mutable so we add a + to the string.
         @alias_of << type_expr.keys.map { |key| PuppetStrings::Yard::Util.ast_to_text(key) }.join(', ')
         @alias_of << ']'
       else

@@ -4,14 +4,14 @@ require 'spec_helper_acceptance'
 
 describe 'Generating Markdown' do
   let(:test_module_path) do
-    sut_module_path(%r{Module test})
+    sut_module_path(/Module test/)
   end
 
   let(:remote_tmp_path) do
     sut_tmp_path
   end
 
-  expected = <<~'EOF'
+  expected = <<~EOF
     # Reference
 
     ## Classes

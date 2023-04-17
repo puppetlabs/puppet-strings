@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # Initializes the template.
 # @return [void]
 def init
   case object
   when '_index.html'
     @page_title = options.title
-    sections :layout, [:index, [:listing, [:classes, :data_types, :defined_types, :types, :providers, :functions, :tasks, :plans, :files, :objects]]]
+    sections :layout, [:index, [:listing, %i[classes data_types defined_types types providers functions tasks plans files objects]]]
   else
     super
   end
@@ -64,9 +66,7 @@ def layout
 
   final_layout = erb(:layout)
 
-  if @file && @file.name == 'README'
-    PuppetStrings::Yard::Util.github_to_yard_links(final_layout)
-  end
+  PuppetStrings::Yard::Util.github_to_yard_links(final_layout) if @file && @file.name == 'README'
 
   final_layout
 end
@@ -83,12 +83,12 @@ def create_menu_lists
     {
       type: 'puppet_data_type',
       title: 'Data Types',
-      search_title: 'Data Types',
+      search_title: 'Data Types'
     },
     {
       type: 'puppet_defined_type',
       title: 'Defined Types',
-      search_title: 'Defined Types',
+      search_title: 'Defined Types'
     },
     {
       type: 'puppet_type',
@@ -124,17 +124,19 @@ def create_menu_lists
       type: 'method',
       title: 'Ruby Methods',
       search_title: 'Method List'
-    },
+    }
   ]
 
   menu_lists.delete_if { |e| YARD::Registry.all(e[:type].intern).empty? }
 
   # We must always return at least one group, so always keep the files list
-  menu_lists << {
-    type: 'file',
-    title: 'Files',
-    search_title: 'File List'
-  } if menu_lists.empty? || !YARD::Registry.all(:file).empty?
+  if menu_lists.empty? || !YARD::Registry.all(:file).empty?
+    menu_lists << {
+      type: 'file',
+      title: 'Files',
+      search_title: 'File List'
+    }
+  end
 
   menu_lists
 end
@@ -150,9 +152,9 @@ end
 # @return [Hash] Returns a hash of first letter of the object name to list of objects.
 def objects_by_letter(*types)
   hash = {}
-  objects = Registry.all(*types).sort_by {|o| o.name.to_s }
+  objects = Registry.all(*types).sort_by { |o| o.name.to_s }
   objects = run_verifier(objects)
-  objects.each {|o| (hash[o.name.to_s[0,1].upcase] ||= []) << o }
+  objects.each { |o| (hash[o.name.to_s[0, 1].upcase] ||= []) << o }
   hash
 end
 

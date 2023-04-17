@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Naming/MethodName
-
 require 'puppet-strings/yard/handlers/helpers'
 require 'puppet-strings/yard/handlers/ruby/base'
 require 'puppet-strings/yard/code_objects'
@@ -255,7 +253,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
       begin
         callable_type = Puppet::Pops::Types::TypeParser.singleton.parse(func_type)
         if callable_type.is_a?(Puppet::Pops::Types::PCallableType)
-          func_hash[:param_types] = callable_type.param_types.map { |pt| pt.to_s }
+          func_hash[:param_types] = callable_type.param_types.map(&:to_s)
           func_hash[:return_type] = callable_type.return_type.to_s
         else
           log.warn "The function definition for '#{key}' near #{object.file}:#{object.line} is not a Callable type"
@@ -360,9 +358,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     # Puppet Data Type function invocation. So instead we derive a signature from the method definition.
     object.meths.each do |meth|
       params = ''
-      unless meth.docstring.tags(:param).empty?
-        params += '(' + meth.docstring.tags(:param).map { |t| t.name }.join(', ') + ')'
-      end
+      params += "(#{meth.docstring.tags(:param).map(&:name).join(', ')})" unless meth.docstring.tags(:param).empty?
       meth.signature = "#{object.name}.#{meth.name}" + params
     end
 
@@ -379,9 +375,9 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
         if tag.tag_name == 'param'
           index += 1
           if index > actual_function[:param_types].count
-            log.warn "The @param tag for '#{tag.name}' should not exist for function "\
-            "'#{meth.name}' that is defined near #{object.file}:#{object.line}. "\
-            "Expected only #{actual_function[:param_types].count} parameter/s"
+            log.warn "The @param tag for '#{tag.name}' should not exist for function " \
+                     "'#{meth.name}' that is defined near #{object.file}:#{object.line}. " \
+                     "Expected only #{actual_function[:param_types].count} parameter/s"
             true
           else
             false

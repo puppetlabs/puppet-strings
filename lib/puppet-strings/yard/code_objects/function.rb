@@ -65,16 +65,16 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
     return '' if has_tag? :overload
 
     tags = self.tags(:param)
-    args = @parameters.map { |parameter|
+    args = @parameters.map do |parameter|
       name, default = parameter
       tag = tags.find { |t| t.name == name } if tags
       type = tag&.types ? "#{tag.type} " : 'Any '
       prefix = (name[0]).to_s if name.start_with?('*', '&')
-      name = name[1..-1] if prefix
+      name = name[1..] if prefix
       default = " = #{default}" if default
       "#{type}#{prefix}$#{name}#{default}"
-    }.join(', ')
-    @name.to_s + '(' + args + ')'
+    end.join(', ')
+    "#{@name}(#{args})"
   end
 
   # Converts the code object to a hash representation.
@@ -91,10 +91,10 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
     if has_tag? :overload
       # loop over overloads and append onto the signatures array
       tags(:overload).each do |o|
-        hash[:signatures] << { signature: o.signature, docstring: PuppetStrings::Yard::Util.docstring_to_hash(o.docstring, [:param, :option, :enum, :return, :example]) }
+        hash[:signatures] << { signature: o.signature, docstring: PuppetStrings::Yard::Util.docstring_to_hash(o.docstring, %i[param option enum return example]) }
       end
     else
-      hash[:signatures] << { signature: signature, docstring: PuppetStrings::Yard::Util.docstring_to_hash(docstring, [:param, :option, :enum, :return, :example]) }
+      hash[:signatures] << { signature: signature, docstring: PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example]) }
     end
 
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)

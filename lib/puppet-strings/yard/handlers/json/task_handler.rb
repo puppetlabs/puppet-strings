@@ -26,6 +26,7 @@ class PuppetStrings::Yard::Handlers::JSON::TaskHandler < PuppetStrings::Yard::Ha
 
   def validate_params
     return if @statement.parameters.empty?
+
     @statement.parameters.each do |param, val|
       log.warn "Missing description for param '#{param}' in #{@kind}" if val['description'].nil?
     end

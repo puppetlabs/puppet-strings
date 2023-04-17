@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Naming/MethodName
-
 require 'puppet'
 require 'puppet/pops'
 require 'puppet-strings/yard/parsers/puppet/statement'
@@ -24,10 +22,6 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
   # @return [void]
   def parse
     begin
-      if @file.to_s.match?(%r{^plans|/plans/}) && Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0') < 0
-        log.warn "Skipping #{@file}: Puppet Plans require Puppet 5 or greater."
-        return
-      end
       Puppet[:tasks] = true if Puppet.settings.include?(:tasks)
       @statements ||= (@visitor.visit(::Puppet::Pops::Parser::Parser.new.parse_string(source)) || []).compact
     rescue ::Puppet::ParseError => e

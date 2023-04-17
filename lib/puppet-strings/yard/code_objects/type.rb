@@ -158,7 +158,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     provider_param = Parameter.new(
       'provider',
       "The specific backend to use for this `#{name}` resource. You will seldom need " \
-      'to specify this --- Puppet will usually discover the appropriate provider for your platform.',
+      'to specify this --- Puppet will usually discover the appropriate provider for your platform.'
     )
 
     @parameters ||= []
@@ -185,11 +185,11 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
     hash[:line] = line
 
     hash[:docstring]  = PuppetStrings::Yard::Util.docstring_to_hash(docstring)
-    hash[:properties] = properties.sort_by { |p| p.name }.map(&:to_hash) if properties && !properties.empty?
-    hash[:parameters] = parameters.sort_by { |p| p.name }.map(&:to_hash) if parameters && !parameters.empty?
-    hash[:checks]     = checks.sort_by { |c| c.name }.map(&:to_hash) if checks && !checks.empty?
-    hash[:features]   = features.sort_by { |f| f.name }.map(&:to_hash) if features && !features.empty?
-    hash[:providers]  = providers.sort_by { |p| p.name }.map(&:to_hash) if providers && !providers.empty?
+    hash[:properties] = properties.sort_by(&:name).map(&:to_hash) if properties && !properties.empty?
+    hash[:parameters] = parameters.sort_by(&:name).map(&:to_hash) if parameters && !parameters.empty?
+    hash[:checks]     = checks.sort_by(&:name).map(&:to_hash) if checks && !checks.empty?
+    hash[:features]   = features.sort_by(&:name).map(&:to_hash) if features && !features.empty?
+    hash[:providers]  = providers.sort_by(&:name).map(&:to_hash) if providers && !providers.empty?
 
     hash
   end

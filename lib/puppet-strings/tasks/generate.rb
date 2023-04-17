@@ -13,7 +13,7 @@ namespace :strings do
     options = {
       debug: args[:debug] == 'true',
       backtrace: args[:backtrace] == 'true',
-      markup: args[:markup] || 'markdown',
+      markup: args[:markup] || 'markdown'
     }
 
     raise('Error: Both JSON and Markdown output have been selected. Please select one.') if args[:json] == 'true' && args[:markdown] == 'true'
@@ -29,13 +29,15 @@ namespace :strings do
     # @return nil
     def parse_format_option(args, options, format)
       return unless args.has_key? format
-      options[format] = args[format] == 'false' || args[format].empty? ? false : true
+
+      options[format] = !(args[format] == 'false' || args[format].empty?)
       return unless options[format]
+
       options[:path] = args[format] == 'true' ? nil : args[format]
     end
     # rubocop:enable Style/PreferredHashMethods
 
-    [:json, :markdown].each { |format| parse_format_option(args, options, format) }
+    %i[json markdown].each { |format| parse_format_option(args, options, format) }
 
     warn('yard_args behavior is a little dodgy, use at your own risk') if args[:yard_args]
     options[:yard_args] = args[:yard_args].split if args.key? :yard_args

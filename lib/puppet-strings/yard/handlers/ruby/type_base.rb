@@ -110,15 +110,18 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
     return unless object.is_a? PuppetStrings::Yard::CodeObjects::Type::Parameter
     # Process the options for parameter base types
     return unless parameters.count >= 2
+
     parameters[1].each do |kvp|
       next unless kvp.count == 2
       next unless node_as_string(kvp[0]) == 'parent'
 
       if kvp[1].source == 'Puppet::Parameter::Boolean'
+        # rubocop:disable Performance/InefficientHashSearch
         object.add('true') unless object.values.include? 'true'
         object.add('false') unless object.values.include? 'false'
         object.add('yes') unless object.values.include? 'yes'
         object.add('no') unless object.values.include? 'no'
+        # rubocop:enable Performance/InefficientHashSearch
       end
       break
     end

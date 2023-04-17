@@ -5,9 +5,9 @@ require 'puppet-strings/json'
 require 'tempfile'
 
 describe PuppetStrings::Json do
-  before :each do
+  before do
     # Populate the YARD registry with both Puppet and Ruby source
-    expect(YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet).enumerator.length).to eq(2)
+    expect(YARD::Parser::SourceParser.parse_string(<<~SOURCE, :puppet).enumerator.length).to eq(2)
       # A simple class.
       # @todo Do a thing
       # @deprecated No longer supported and will be removed in a future release
@@ -26,7 +26,7 @@ describe PuppetStrings::Json do
       }
     SOURCE
 
-    expect(YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet).enumerator.length).to eq(1) if TEST_PUPPET_PLANS
+    expect(YARD::Parser::SourceParser.parse_string(<<~SOURCE, :puppet).enumerator.length).to eq(1) if TEST_PUPPET_PLANS
       # A simple plan.
       # @param param1 First param.
       # @param param2 Second param.
@@ -36,7 +36,7 @@ describe PuppetStrings::Json do
     SOURCE
 
     # Only include Puppet functions for 4.1+
-    expect(YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet).enumerator.length).to eq(1) if TEST_PUPPET_FUNCTIONS
+    expect(YARD::Parser::SourceParser.parse_string(<<~SOURCE, :puppet).enumerator.length).to eq(1) if TEST_PUPPET_FUNCTIONS
       # A simple function.
       # @param param1 First param.
       # @param param2 Second param.
@@ -47,7 +47,7 @@ describe PuppetStrings::Json do
     SOURCE
 
     # Only include Puppet types for 5.0+
-    expect(YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :ruby).enumerator.length).to eq(1) if TEST_PUPPET_DATATYPES
+    expect(YARD::Parser::SourceParser.parse_string(<<~SOURCE, :ruby).enumerator.length).to eq(1) if TEST_PUPPET_DATATYPES
       # Basic Puppet Data Type in Ruby
       #
       # @param msg A message parameter
@@ -68,7 +68,7 @@ describe PuppetStrings::Json do
       end
     SOURCE
 
-    expect(YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :json).enumerator.length).to eq(1)
+    expect(YARD::Parser::SourceParser.parse_string(<<~SOURCE, :json).enumerator.length).to eq(1)
       {
         "description": "Allows you to backup your database to local file.",
         "input_method": "stdin",

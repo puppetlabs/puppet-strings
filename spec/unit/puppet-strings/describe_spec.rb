@@ -12,16 +12,16 @@ require 'tempfile'
 #--short - only list params
 
 describe PuppetStrings::Describe do
-  before :each do
+  before do
     # Populate the YARD registry with both Puppet and Ruby source
 
-    YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :ruby)
+    YARD::Parser::SourceParser.parse_string(<<~SOURCE, :ruby)
       Puppet::Type.newtype(:database) do
         desc 'An example database server resource type.'
       end
     SOURCE
 
-    YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :ruby)
+    YARD::Parser::SourceParser.parse_string(<<~SOURCE, :ruby)
       Puppet::ResourceApi.register_type(
         name: 'apt_key',
         docs: <<~'EOS',
@@ -42,7 +42,7 @@ describe PuppetStrings::Describe do
       )
     SOURCE
 
-    YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :ruby)
+    YARD::Parser::SourceParser.parse_string(<<~SOURCE, :ruby)
       Puppet::Type.type(:file).newproperty(:content) do
         include Puppet::Util::Checksums
         include Puppet::DataSync
@@ -80,7 +80,7 @@ describe PuppetStrings::Describe do
       end
     SOURCE
 
-    YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :ruby)
+    YARD::Parser::SourceParser.parse_string(<<~SOURCE, :ruby)
       Puppet::Type.type(:file).newproperty(:source) do
         include Puppet::Util::Checksums
         include Puppet::DataSync
@@ -97,7 +97,7 @@ describe PuppetStrings::Describe do
 
   describe 'rendering DESCRIBE to stdout' do
     it 'outputs the expected describe content for the list of types' do
-      output = <<~'DATA'
+      output = <<~DATA
         These are the types known to puppet:
         apt_key         - This type provides Puppet with the capabiliti ...
         database        - An example database server resource type.
@@ -105,6 +105,7 @@ describe PuppetStrings::Describe do
       DATA
       expect { described_class.render(nil, true) }.to output(output).to_stdout
     end
+
     it 'outputs the expected describe content for a type' do
       output = <<~'DATA'
 

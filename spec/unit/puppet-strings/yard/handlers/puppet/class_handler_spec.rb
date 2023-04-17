@@ -13,7 +13,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     let(:source) { 'notice hi' }
 
     it 'no classes should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -21,8 +21,8 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     let(:source) { 'class foo{' }
 
     it 'logs an error' do
-      expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\): Syntax error at end of (file|input)}).to_stdout_from_any_process
-      expect(spec_subject.empty?).to eq(true)
+      expect { spec_subject }.to output(/\[error\]: Failed to parse \(stdin\): Syntax error at end of (file|input)/).to_stdout_from_any_process
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -30,12 +30,12 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     let(:source) { 'class foo{}' }
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet class 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing documentation for Puppet class 'foo' at \(stdin\):1\./).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a class with a docstring' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo class.
       # @param param1 First param.
       # @param param2 Second param.
@@ -53,8 +53,8 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Class)
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::Classes.instance)
       expect(object.name).to eq(:foo)
-      expect(object.statement).not_to eq(nil)
-      expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', 'hi']])
+      expect(object.statement).not_to be_nil
+      expect(object.parameters).to eq([['param1', nil], ['param2', nil], %w[param3 hi]])
       expect(object.docstring).to eq('A simple foo class.')
       expect(object.docstring.tags.size).to eq(4)
       tags = object.docstring.tags(:param)
@@ -75,7 +75,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
   end
 
   describe 'parsing a class with a missing parameter' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo class.
       # @param param1 First param.
       # @param param2 Second param.
@@ -89,12 +89,12 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):6\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):6\./).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a class with a missing @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo class.
       # @param param1 First param.
       # @param param2 Second param.
@@ -106,12 +106,12 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):4\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):4\./).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a class with a typed parameter that also has a @param tag type which matches' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo class.
       # @param [Integer] param1 First param.
       # @param param2 Second param.
@@ -133,7 +133,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
   end
 
   describe 'parsing a class with a typed parameter that also has a @param tag type which does not match' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo class.
       # @param [Boolean] param1 First param.
       # @param param2 Second param.
@@ -148,14 +148,14 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):5: ignoring in favor of parameter type information.},
+          /\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):5: ignoring in favor of parameter type information./
         )
         .to_stdout_from_any_process
     end
   end
 
   describe 'parsing a class with a untyped parameter that also has a @param tag type' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo class.
       # @param param1 First param.
       # @param [Boolean] param2 Second param.
@@ -178,7 +178,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
 
   describe 'parsing a class with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo class.
         # @summary A short summary.
         class foo() {
@@ -197,7 +197,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo class.
         # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
         class foo() {
@@ -208,7 +208,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_class 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_class 'foo' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

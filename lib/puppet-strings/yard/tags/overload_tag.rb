@@ -21,16 +21,16 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   # @return [String] Returns the signature of the overload.
   def signature
     tags = self.tags(:param)
-    args = @parameters.map { |parameter|
+    args = @parameters.map do |parameter|
       name, default = parameter
       tag = tags.find { |t| t.name == name } if tags
       type = tag&.types ? "#{tag.type} " : 'Any '
       prefix = (name[0]).to_s if name.start_with?('*', '&')
-      name = name[1..-1] if prefix
+      name = name[1..] if prefix
       default = " = #{default}" if default
       "#{type}#{prefix}$#{name}#{default}"
-    }.join(', ')
-    @name + '(' + args + ')'
+    end.join(', ')
+    "#{@name}(#{args})"
   end
 
   # Adds a tag to the overload's docstring.

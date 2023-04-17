@@ -13,19 +13,19 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     let(:source) { 'puts "hi"' }
 
     it 'no functions should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
   describe 'parsing 3.x API functions' do
     describe 'parsing a function with a missing docstring' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Parser::Functions.newfunction(:foo) do |*args|
         end
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\./).to_stdout_from_any_process
       end
     end
 
@@ -39,7 +39,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       #
       # Given that this occurs only in old-style functions, it’s probably not
       # worth pursuing.
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Parser::Functions.newfunction(:foo, doc: <<~'DOC'
             An example 3.x function.
             @param [String] first The first parameter.
@@ -90,7 +90,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       #
       # Given that this occurs only in old-style functions, it’s probably not
       # worth pursuing.
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         module Puppet::Parser::Functions
           newfunction(:foo, doc: <<~'DOC'
               An example 3.x function.
@@ -134,7 +134,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with a missing @return tag' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Parser::Functions.newfunction(:foo, doc: <<~'DOC') do |*args|
             An example 3.x function.
             @param [String] first The first parameter.
@@ -145,25 +145,25 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):1}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):1/).to_stdout_from_any_process
       end
     end
   end
 
   describe 'parsing 4.x API functions' do
     describe 'parsing a function with a missing docstring' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Functions.create_function(:foo) do
         end
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\./).to_stdout_from_any_process
       end
     end
 
     describe 'parsing a function with a simple docstring' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
         end
@@ -186,7 +186,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function without any dispatches' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param [Integer] param1 The first parameter.
@@ -205,7 +205,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::Functions.instance(PuppetStrings::Yard::CodeObjects::Function::RUBY_4X))
         expect(object.name).to eq(:foo)
         expect(object.signature).to eq('foo(Integer $param1, Any $param2, Optional[String] $param3 = undef)')
-        expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', 'undef']])
+        expect(object.parameters).to eq([['param1', nil], ['param2', nil], %w[param3 undef]])
         expect(object.docstring).to eq('An example 4.x function.')
         expect(object.docstring.tags.size).to eq(5)
         tags = object.docstring.tags(:param)
@@ -231,7 +231,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with a single dispatch' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param param1 The first parameter.
@@ -258,7 +258,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(Integer $param1, Any $param2, Optional[Array[String]] $param3)')
         expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(5)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(3)
@@ -283,7 +283,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function using only return_type' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param param1 The first parameter.
@@ -315,7 +315,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with various dispatch parameters.' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param param1 The first parameter.
@@ -341,7 +341,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(String $param1, Integer $param2, Optional[Array] $param3, String *$param4)')
         expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', nil], ['*param4', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(6)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(4)
@@ -369,7 +369,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with an optional repeated param.' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param param The first parameter.
@@ -389,7 +389,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(Optional[String] *$param)')
         expect(object.parameters).to eq([['*param', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(3)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(1)
@@ -408,7 +408,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with a block param with one parameter' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param a_block The block parameter.
@@ -428,7 +428,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(Callable &$a_block)')
         expect(object.parameters).to eq([['&a_block', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(3)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(1)
@@ -447,7 +447,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with a block param with two parameter' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param a_block The block parameter.
@@ -467,7 +467,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(Optional[Callable[String]] &$a_block)')
         expect(object.parameters).to eq([['&a_block', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(3)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(1)
@@ -487,7 +487,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a multiple dispatches' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # The first overload.
@@ -528,8 +528,8 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       expect(object.signature).to eq('')
       expect(object.parameters).to eq([])
       expect(object.docstring).to eq('An example 4.x function.')
-      expect(object.docstring.tags(:param).empty?).to be_truthy
-      expect(object.docstring.tags(:return).empty?).to be_truthy
+      expect(object.docstring.tags(:param)).to be_empty
+      expect(object.docstring.tags(:return)).to be_empty
       expect(object.docstring.tags.size).to eq(3)
       overloads = object.docstring.tags(:overload)
       expect(overloads.size).to eq(2)
@@ -577,7 +577,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a namespaced name' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:'foo::bar::baz') do
         # @return [Undef]
@@ -593,7 +593,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a missing parameter' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # @param missing A missing parameter.
@@ -604,12 +604,12 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: The @param tag for parameter 'missing' has no matching parameter at \(stdin\):5}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: The @param tag for parameter 'missing' has no matching parameter at \(stdin\):5/).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a missing @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # @return [Undef] Returns nothing.
@@ -620,12 +620,12 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param1' near \(stdin\):5}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @param tag for parameter 'param1' near \(stdin\):5/).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a typed @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # @param [Integer] param1 The first parameter.
@@ -639,14 +639,14 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The @param tag for parameter 'param1' should not contain a type specification near \(stdin\):6: ignoring in favor of dispatch type information\.},
+          /\[warn\]: The @param tag for parameter 'param1' should not contain a type specification near \(stdin\):6: ignoring in favor of dispatch type information\./
         )
         .to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a typed @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # @param param1 The first parameter.
@@ -657,12 +657,12 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):4}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):4/).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a root @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       # @param param Nope.
       Puppet::Functions.create_function(:foo) do
@@ -675,14 +675,14 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The docstring for Puppet 4.x function 'foo' contains @param tags near \(stdin\):3: parameter documentation should be made on the dispatch call\.},
+          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @param tags near \(stdin\):3: parameter documentation should be made on the dispatch call\./
         )
         .to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a root @overload tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       # @overload foo
       Puppet::Functions.create_function(:foo) do
@@ -695,14 +695,14 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The docstring for Puppet 4.x function 'foo' contains @overload tags near \(stdin\):3: overload tags are automatically generated from the dispatch calls\.},
+          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @overload tags near \(stdin\):3: overload tags are automatically generated from the dispatch calls\./
         )
         .to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a root @return tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       # @return [Undef] foo
       Puppet::Functions.create_function(:foo) do
@@ -715,7 +715,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The docstring for Puppet 4.x function 'foo' contains @return tags near \(stdin\):3: return value documentation should be made on the dispatch call\.},
+          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @return tags near \(stdin\):3: return value documentation should be made on the dispatch call\./
         )
         .to_stdout_from_any_process
     end
@@ -723,7 +723,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
 
   describe 'parsing a function with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         # @summary A short summary.
         Puppet::Functions.create_function(:foo) do
@@ -742,7 +742,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
         Puppet::Functions.create_function(:foo) do
@@ -753,7 +753,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

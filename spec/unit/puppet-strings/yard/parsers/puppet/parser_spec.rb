@@ -21,22 +21,22 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
 
     it 'has no relevant statements' do
       spec_subject.parse
-      expect(spec_subject.enumerator.empty?).to be_truthy
+      expect(spec_subject.enumerator).to be_empty
     end
   end
 
   describe 'parsing invalid Puppet source code' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       class foo {
     SOURCE
 
     it 'raises an exception' do
-      expect { spec_subject.parse }.to output(%r{\[error\]: Failed to parse test.pp: Syntax error at end of (file|input)}).to_stdout_from_any_process
+      expect { spec_subject.parse }.to output(/\[error\]: Failed to parse test.pp: Syntax error at end of (file|input)/).to_stdout_from_any_process
     end
   end
 
   describe 'parsing class definitions' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       notice hello
       # A simple foo class.
       # @param param1 First param.
@@ -74,7 +74,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing nested class definitions' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       class foo {
         class bar {
         }
@@ -96,7 +96,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing defined types' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       notice hello
       # A simple foo defined type.
       # @param param1 First param.
@@ -136,7 +136,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
     # The parsing code actually checks this and sets a global (Puppet[:tasks]).
     # Plan parsing will fail if it hasn't yet encountered a file under plans/.
     let(:file) { 'plans/test.pp' }
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple plan.
       # @param param1 First param.
       # @param param2 Second param.
@@ -151,7 +151,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
       statement = spec_subject.enumerator.first
       expect(statement).to be_a(PuppetStrings::Yard::Parsers::Puppet::PlanStatement)
       expect(statement.name).to eq('plann')
-      expect(statement.source).to eq(source.sub(%r{\A.*?\n([^#])}m, '\1').chomp)
+      expect(statement.source).to eq(source.sub(/\A.*?\n([^#])/m, '\1').chomp)
       expect(statement.file).to eq(file)
       expect(statement.line).to eq(5)
       expect(statement.docstring).to eq('A simple plan.')
@@ -169,7 +169,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing puppet functions', if: TEST_PUPPET_FUNCTIONS do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       notice hello
       # A simple foo function.
       # @param param1 First param.
@@ -204,7 +204,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing puppet functions with return type in defintion', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @return Returns a string
       function foo() >> String {
@@ -222,7 +222,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing puppet functions with complex return types in defintion', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @return Returns a struct with a hash including one key which must be an integer between 1 and 10.
       function foo() >> Struct[{'a' => Integer[1, 10]}] {
@@ -235,13 +235,13 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
       expect(spec_subject.enumerator.size).to eq(1)
       statement = spec_subject.enumerator.first
       expect(statement).to be_a(PuppetStrings::Yard::Parsers::Puppet::FunctionStatement)
-      expect(statement.type).to eq("Struct\[{'a' => Integer[1, 10]}\]")
+      expect(statement.type).to eq("Struct[{'a' => Integer[1, 10]}]")
     end
   end
 
   describe 'parsing type alias definitions', if: TEST_PUPPET_DATATYPES do
     context 'given a type alias on a single line' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo type.
         type Module::Typename = Variant[Stdlib::Windowspath, Stdlib::Unixpath]
       SOURCE
@@ -258,7 +258,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
     end
 
     context 'given a type alias over multiple lines' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A multiline foo type
         # with long docs
         type OptionsWithoutName = Struct[{
@@ -295,7 +295,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
     '1 + 1',
     'func()',
     '$param1.foo(1)',
-    '$param1.foo($param2 + $param3.bar())',
+    '$param1.foo($param2 + $param3.bar())'
   ].each do |value|
     describe "parsing parameter with #{value} default value" do
       let(:source) { <<~PUPPET }
@@ -319,7 +319,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
         'Linux'  => 'linux',
         'Darwin' => 'darwin',
         default  => $facts['kernel'],
-      }",
+      }"
   ].each do |value|
     describe "parsing parameter with #{value} default value" do
       let(:source) { <<~PUPPET }

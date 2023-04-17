@@ -13,35 +13,35 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
     let(:source) { 'puts "hi"' }
 
     it 'no providers should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
   describe 'parsing a provider with a missing description' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:custom).provide :linux do
       end
     SOURCE
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing a description for Puppet provider 'linux' \(resource type 'custom'\) at \(stdin\):1\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing a description for Puppet provider 'linux' \(resource type 'custom'\) at \(stdin\):1\./).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a provider with an invalid docstring assignment' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:custom).provide :linux do
         @doc = 123
       end
     SOURCE
 
     it 'logs an error' do
-      expect { spec_subject }.to output(%r{Failed to parse docstring}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/Failed to parse docstring/).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a provider with a valid docstring assignment' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:custom).provide :linux do
         @doc = 'An example provider on Linux.'
       end
@@ -71,7 +71,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
   end
 
   describe 'parsing a provider definition' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:custom).provide :linux do
         desc 'An example provider on Linux.'
         confine kernel: 'Linux'
@@ -97,14 +97,14 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
       expect(tags.size).to eq(1)
       expect(tags[0].text).to eq('public')
       expect(object.confines).to eq({ 'kernel' => 'Linux', 'osfamily' => 'RedHat' })
-      expect(object.defaults).to eq([[['kernel', 'Linux']], [['osfamily', 'RedHat'], ['operatingsystemmajrelease', '7']]])
-      expect(object.features).to eq(['implements_some_feature', 'some_other_feature'])
+      expect(object.defaults).to eq([[%w[kernel Linux]], [%w[osfamily RedHat], %w[operatingsystemmajrelease 7]]])
+      expect(object.features).to eq(%w[implements_some_feature some_other_feature])
       expect(object.commands).to eq({ 'foo' => '/usr/bin/foo' })
     end
   end
 
   describe 'parsing a provider definition with a string based name' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:'custom').provide :'linux' do
         desc 'An example provider on Linux.'
       end
@@ -123,7 +123,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
 
   describe 'parsing a provider with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Type.type(:custom).provide :linux do
           @doc = '@summary A short summary.'
         end
@@ -138,14 +138,14 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Type.type(:custom).provide :linux do
           @doc = '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!'
         end
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_provider 'linux' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_provider 'linux' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

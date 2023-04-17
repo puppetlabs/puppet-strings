@@ -14,7 +14,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     let(:source) { 'notice hi' }
 
     it 'no functions should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -22,8 +22,8 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     let(:source) { 'function foo{' }
 
     it 'logs an error' do
-      expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\): Syntax error at end of}).to_stdout_from_any_process
-      expect(spec_subject.empty?).to eq(true)
+      expect { spec_subject }.to output(/\[error\]: Failed to parse \(stdin\): Syntax error at end of/).to_stdout_from_any_process
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -31,12 +31,12 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     let(:source) { 'function foo{}' }
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\./).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a docstring' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param param2 Second param.
@@ -55,7 +55,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::Functions.instance(PuppetStrings::Yard::CodeObjects::Function::PUPPET))
       expect(object.name).to eq(:foo)
       expect(object.signature).to eq('foo(Integer $param1, Any $param2, String $param3 = hi)')
-      expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', 'hi']])
+      expect(object.parameters).to eq([['param1', nil], ['param2', nil], %w[param3 hi]])
       expect(object.docstring).to eq('A simple foo function.')
       expect(object.docstring.tags.size).to eq(5)
       tags = object.docstring.tags(:param)
@@ -81,7 +81,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a missing parameter' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param param2 Second param.
@@ -95,13 +95,13 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
 
     it 'outputs a warning' do
       expect { spec_subject }
-        .to output(%r{\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):7\.})
+        .to output(/\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):7\./)
         .to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a missing @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param param2 Second param.
@@ -112,12 +112,12 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):5\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):5\./).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a typed parameter that also has a @param tag type which matches' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param [Integer] param1 First param.
       # @param param2 Second param.
@@ -138,7 +138,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a typed parameter that also has a @param tag type which does not match' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param [Boolean] param1 First param.
       # @param param2 Second param.
@@ -152,14 +152,14 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):6: ignoring in favor of parameter type information.},
+          /\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):6: ignoring in favor of parameter type information./
         )
         .to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a untyped parameter that also has a @param tag type' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param [Boolean] param2 Second param.
@@ -180,7 +180,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a missing @return tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param param2 Second param.
@@ -191,12 +191,12 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):5\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):5\./).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a missing @return tag and return type specified in the function definition', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       function foo() >> String {
         notice 'hello world'
@@ -204,7 +204,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'registers a function object with the correct return type' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):2\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):2\./).to_stdout_from_any_process
       expect(spec_subject.size).to eq(1)
       object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
@@ -217,7 +217,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a non-conflicting return tag and type in function definition', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function
       # @return [String] Hi there
       function foo() >> String {
@@ -226,12 +226,12 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'does not output a warning if return types match' do
-      expect { spec_subject }.not_to output(%r{Documented return type does not match return type in function definition}).to_stdout_from_any_process
+      expect { spec_subject }.not_to output(/Documented return type does not match return type in function definition/).to_stdout_from_any_process
     end
   end
 
   describe 'parsing a function with a conflicting return tag and type in function definition', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @return [Integer] this is a lie.
       function foo() >> Struct[{'a' => Integer[1, 10]}] {
@@ -240,7 +240,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'prefers the return type from the function definition' do
-      expect { spec_subject }.to output(%r{\[warn\]: Documented return type does not match return type in function definition near \(stdin\):3\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Documented return type does not match return type in function definition near \(stdin\):3\./).to_stdout_from_any_process
       expect(spec_subject.size).to eq(1)
       object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
@@ -253,7 +253,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with return tag without type', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @return This is something.
       function foo() >> Struct[{'a' => Integer[1, 10]}] {
@@ -275,7 +275,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function without a return tag or return type in the function definition' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       function foo() {
         notice 'hello world'
@@ -283,7 +283,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'adds a return tag with a default type value of Any' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):2\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):2\./).to_stdout_from_any_process
       expect(spec_subject.size).to eq(1)
       object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
@@ -297,7 +297,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
 
   describe 'parsing a function with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo function.
         # @summary A short summary.
         # @return [String] foo
@@ -315,7 +315,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo function.
         # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
         function foo() {
@@ -325,7 +325,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

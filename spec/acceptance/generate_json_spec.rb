@@ -4,7 +4,7 @@ require 'spec_helper_acceptance'
 
 describe 'Generating JSON' do
   let(:test_module_path) do
-    sut_module_path(%r{Module test})
+    sut_module_path(/Module test/)
   end
 
   let(:remote_tmp_path) do
@@ -34,16 +34,16 @@ describe 'Generating JSON' do
                   'tag_name' => 'return',
                   'text' => '',
                   'types' => ['Any']
-                },
+                }
               ]
             }
-          },
+          }
         ],
         'docstring' => {
           'text' => 'This is the function documentation for `function3x`',
           'tags' => ['tag_name' => 'return', 'text' => '', 'types' => ['Any']]
         },
-          'source' => "Puppet::Parser::Functions.newfunction(:function3x, :doc => \"This is the function documentation for `function3x`\") do |args|\nend",
+        'source' => "Puppet::Parser::Functions.newfunction(:function3x, :doc => \"This is the function documentation for `function3x`\") do |args|\nend"
       ],
       'puppet_tasks' => [],
       'puppet_plans' => []

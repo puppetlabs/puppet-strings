@@ -10,7 +10,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
   end
 
   describe 'parsing task metadata with a syntax error' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       {
         "input_method": "stdin",
         "parameters":
@@ -23,13 +23,13 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
     SOURCE
 
     it 'logs an error' do
-      expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\):}).to_stdout_from_any_process
-      expect(spec_subject.empty?).to eq(true)
+      expect { spec_subject }.to output(/\[error\]: Failed to parse \(stdin\):/).to_stdout_from_any_process
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
   describe 'parsing task metadata with a missing description' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       {
         "input_method": "stdin",
         "parameters": {
@@ -54,12 +54,12 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
     SOURCE
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing a description for Puppet Task \(stdin\)}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing a description for Puppet Task \(stdin\)/).to_stdout_from_any_process
     end
   end
 
   describe 'parsing task metadata with a description' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       {
         "description": "Allows you to backup your database to local file.",
         "input_method": "stdin",
@@ -94,7 +94,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
   end
 
   describe 'parsing task metadata with a missing parameter description' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       {
         "description": "Allows you to backup your database to local file.",
         "input_method": "stdin",
@@ -107,7 +107,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing description for param 'database' in Puppet Task \(stdin\)}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing description for param 'database' in Puppet Task \(stdin\)/).to_stdout_from_any_process
     end
   end
 end

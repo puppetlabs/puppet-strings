@@ -6,7 +6,7 @@ require 'ripper'
 class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
   # A regular expression for detecting the start of a Ruby heredoc.
   # Note: the first character of the heredoc start may have been cut off by YARD.
-  HEREDOC_START = %r{^<?<[\-~]?['"]?(\w+)['"]?[^\n]*[\n]?}.freeze
+  HEREDOC_START = /^<?<[-~]?['"]?(\w+)['"]?[^\n]*\n?/.freeze
 
   protected
 
@@ -18,7 +18,7 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
 
     case node.type
     when :symbol, :symbol_literal
-      node.source[1..-1]
+      node.source[1..]
     when :label
       node.source[0..-2]
     when :dyna_symbol

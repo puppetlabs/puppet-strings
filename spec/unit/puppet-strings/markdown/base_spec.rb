@@ -4,8 +4,8 @@ require 'spec_helper'
 
 describe PuppetStrings::Markdown::Base do
   context 'basic class' do
-    before :each do
-      YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet)
+    before do
+      YARD::Parser::SourceParser.parse_string(<<~SOURCE, :puppet)
         # An overview
         # @api private
         # @summary A simple class.
@@ -27,11 +27,11 @@ describe PuppetStrings::Markdown::Base do
       end
     end
 
-    ['examples',
-     'see',
-     'since',
-     'return_val',
-     'return_type'].each do |method|
+    %w[examples
+       see
+       since
+       return_val
+       return_type].each do |method|
       describe "##{method}" do
         it 'returns nil' do
           expect(component.method(method.to_sym).call).to be_nil
@@ -69,14 +69,16 @@ describe PuppetStrings::Markdown::Base do
       it 'returns a hash' do
         expect(toc).to be_instance_of Hash
       end
+
       it 'prefers the summary for :desc' do
         expect(toc[:desc]).to eq 'A simple class.'
       end
     end
   end
+
   context 'less basic class' do
-    before :each do
-      YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet)
+    before do
+      YARD::Parser::SourceParser.parse_string(<<~SOURCE, :puppet)
         # An overview
         # It's a longer overview
         # Ya know?
@@ -106,11 +108,11 @@ describe PuppetStrings::Markdown::Base do
       end
     end
 
-    ['summary',
-     'see',
-     'since',
-     'return_val',
-     'return_type'].each do |method|
+    %w[summary
+       see
+       since
+       return_val
+       return_type].each do |method|
       describe "##{method}" do
         it 'returns nil' do
           expect(component.method(method.to_sym).call).to be_nil
@@ -142,6 +144,7 @@ describe PuppetStrings::Markdown::Base do
       it 'returns a hash' do
         expect(toc).to be_instance_of Hash
       end
+
       it 'uses overview for :desc in absence of summary' do
         expect(toc[:desc]).to eq 'An overview It\'s a longer overview Ya know?'
       end

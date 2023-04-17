@@ -20,8 +20,7 @@ end
 
 # Implements the Puppet plan code object.
 class PuppetStrings::Yard::CodeObjects::Plan < PuppetStrings::Yard::CodeObjects::Base
-  attr_reader :statement
-  attr_reader :parameters
+  attr_reader :statement, :parameters
 
   # Initializes a Puppet plan code object.
   # @param [PuppetStrings::Parsers::PlanStatement] statement The plan statement that was parsed.

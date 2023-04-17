@@ -28,7 +28,7 @@ Puppet::Face.define(:strings, '0.0.1') do
 
       PuppetStrings.generate(
         args.count > 1 ? args[0..-2] : PuppetStrings::DEFAULT_SEARCH_PATTERNS,
-        build_generate_options(args.last),
+        build_generate_options(args.last)
       )
       nil
     end
@@ -127,7 +127,7 @@ Puppet::Face.define(:strings, '0.0.1') do
       search_patterns = ['types/**/*.pp', 'lib/**/*.rb']
       PuppetStrings.generate(
         search_patterns,
-        build_generate_options(options),
+        build_generate_options(options)
       )
       nil
     end
@@ -138,7 +138,7 @@ Puppet::Face.define(:strings, '0.0.1') do
   def check_required_features
     raise "The 'yard' gem must be installed in order to use this face." unless Puppet.features.yard?
     raise "The 'rgen' gem must be installed in order to use this face." unless Puppet.features.rgen?
-    raise 'This face requires Ruby 1.9 or greater.' if RUBY_VERSION.match?(%r{^1\.8})
+    raise 'This face requires Ruby 1.9 or greater.' if RUBY_VERSION.match?(/^1\.8/)
   end
 
   # Builds the options to PuppetStrings.generate.

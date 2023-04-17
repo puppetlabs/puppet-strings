@@ -53,9 +53,9 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
   # check that the params of the register_type call are key/value pairs.
   def kv_arg_list?(params)
     params.type == :list &&
-      params.children.count > 0 &&
+      params.children.count.positive? &&
       params.children.first.type == :list &&
-      params.children.first.children.count > 0 &&
+      params.children.first.children.count.positive? &&
       statement.parameters.children.first.children.first.type == :assoc
   end
 
@@ -101,7 +101,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
     kv_pairs = node.children.map do |assoc|
       [value_from_node(assoc.children[0]), value_from_node(assoc.children[1])]
     end
-    Hash[kv_pairs]
+    kv_pairs.to_h
   end
 
   def var_ref_from_node(node)
@@ -129,7 +129,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
 
     schema['attributes'].each do |name, definition|
       # puts "Processing #{name}: #{definition.inspect}"
-      if ['parameter', 'namevar'].include? definition['behaviour']
+      if %w[parameter namevar].include? definition['behaviour']
         object.add_parameter(create_parameter(name, definition))
       else
         object.add_property(create_property(name, definition))

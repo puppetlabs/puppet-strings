@@ -52,7 +52,8 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
       method_name = node.method_name.source
       parameters = node.parameters(false)
 
-      if method_name == 'newproperty'
+      case method_name
+      when 'newproperty'
         # Add a property to the object
         next unless parameters.count >= 1
 
@@ -60,7 +61,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
         next unless name
 
         object.add_property(create_property(name, node))
-      elsif method_name == 'newparam'
+      when 'newparam'
         # Add a parameter to the object
         next unless parameters.count >= 1
 
@@ -68,7 +69,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
         next unless name
 
         object.add_parameter(create_parameter(name, node))
-      elsif method_name == 'newcheck'
+      when 'newcheck'
         # Add a check to the object
         next unless parameters.count >= 1
 
@@ -76,7 +77,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
         next unless name
 
         object.add_check(create_check(name, node))
-      elsif method_name == 'feature'
+      when 'feature'
         # Add a feature to the object
         next unless parameters.count >= 2
 
@@ -87,7 +88,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeHandler < PuppetStrings::Yard::Ha
         next unless docstring
 
         object.add_feature(PuppetStrings::Yard::CodeObjects::Type::Feature.new(name, docstring))
-      elsif method_name == 'ensurable'
+      when 'ensurable'
         if node.block
           property = create_property('ensure', node)
           property.docstring = DEFAULT_ENSURABLE_DOCSTRING if property.docstring.empty?

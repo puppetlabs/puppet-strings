@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Called to return parameter tags.
 # @return [Array<YARD::Tag>] Returns the parameter tags if the object should have parameters.
 def param
@@ -14,7 +16,7 @@ end
 # Renders the overload section.
 # @return [String] Returns the rendered section.
 def overload
-  erb(if object.type == :puppet_function then :puppet_overload else :overload end)
+  erb(object.type == :puppet_function ? :puppet_overload : :overload)
 end
 
 # Renders the enum section.
