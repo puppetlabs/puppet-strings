@@ -37,11 +37,11 @@ module PuppetStrings::Markdown
     end
 
     def error_type(type)
-      "`#{type.split(' ')[0]}`"
+      "`#{type.split[0]}`"
     end
 
     def error_text(text)
-      text.split(' ').drop(1).join(' ').to_s
+      text.split.drop(1).join(' ').to_s
     end
   end
 

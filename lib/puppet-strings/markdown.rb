@@ -56,7 +56,7 @@ module PuppetStrings::Markdown
       end
     end
 
-    output.join('')
+    output.join
   end
 
   # mimicks the behavior of the json render, although path will never be nil
