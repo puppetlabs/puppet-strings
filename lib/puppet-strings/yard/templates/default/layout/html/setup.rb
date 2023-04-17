@@ -83,12 +83,12 @@ def create_menu_lists
     {
       type: 'puppet_data_type',
       title: 'Data Types',
-      search_title: 'Data Types',
+      search_title: 'Data Types'
     },
     {
       type: 'puppet_defined_type',
       title: 'Defined Types',
-      search_title: 'Defined Types',
+      search_title: 'Defined Types'
     },
     {
       type: 'puppet_type',

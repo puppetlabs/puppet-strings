@@ -24,7 +24,7 @@ namespace :strings do
           backtrace: args[:backtrace] == 'true',
           json: false,
           markdown: true,
-          path: file,
+          path: file
         }
         PuppetStrings.generate(patterns, options)
 

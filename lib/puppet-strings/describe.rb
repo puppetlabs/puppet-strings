@@ -13,7 +13,7 @@ module PuppetStrings::Describe
   def self.render(describe_types = [], list = false, _providers = false)
     document = {
       defined_types: YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash),
-      resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash),
+      resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash)
     }
 
     if list
