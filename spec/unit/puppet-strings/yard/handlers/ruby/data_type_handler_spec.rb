@@ -26,7 +26,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
     let(:source) { 'puts "hi"' }
 
     it 'no data types should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 

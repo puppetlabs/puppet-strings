@@ -13,7 +13,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DataTypeAliasHandler, if: TEST_P
     let(:source) { 'notice hi' }
 
     it 'no aliases should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -22,7 +22,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DataTypeAliasHandler, if: TEST_P
 
     it 'logs an error' do
       expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\): Syntax error at end of (file|input)}).to_stdout_from_any_process
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 

@@ -24,7 +24,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
 
     it 'logs an error' do
       expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\):}).to_stdout_from_any_process
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 

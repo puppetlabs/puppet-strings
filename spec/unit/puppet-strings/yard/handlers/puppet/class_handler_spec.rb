@@ -13,7 +13,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     let(:source) { 'notice hi' }
 
     it 'no classes should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -22,7 +22,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
 
     it 'logs an error' do
       expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\): Syntax error at end of (file|input)}).to_stdout_from_any_process
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -53,7 +53,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Class)
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::Classes.instance)
       expect(object.name).to eq(:foo)
-      expect(object.statement).not_to eq(nil)
+      expect(object.statement).not_to be_nil
       expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', 'hi']])
       expect(object.docstring).to eq('A simple foo class.')
       expect(object.docstring.tags.size).to eq(4)

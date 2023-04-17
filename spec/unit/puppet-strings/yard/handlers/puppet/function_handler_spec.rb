@@ -14,7 +14,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     let(:source) { 'notice hi' }
 
     it 'no functions should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -23,7 +23,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
 
     it 'logs an error' do
       expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\): Syntax error at end of}).to_stdout_from_any_process
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 

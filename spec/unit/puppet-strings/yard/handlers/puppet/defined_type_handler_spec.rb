@@ -13,7 +13,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
     let(:source) { 'notice hi' }
 
     it 'no defined types should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -22,7 +22,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
 
     it 'logs an error' do
       expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\): Syntax error at end of (file|input)}).to_stdout_from_any_process
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -58,7 +58,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::DefinedType)
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::DefinedTypes.instance)
       expect(object.name).to eq(:foo)
-      expect(object.statement).not_to eq(nil)
+      expect(object.statement).not_to be_nil
       expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', 'hi']])
       expect(object.docstring).to eq('A simple foo defined type.')
       expect(object.docstring.tags.size).to eq(5)
@@ -66,7 +66,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
       expect(tags.size).to eq(4)
       expect(tags[0].name).to eq('name')
       expect(tags[0].text).to eq('The type name.')
-      expect(tags[0].types).to eq(nil)
+      expect(tags[0].types).to be_nil
       expect(tags[1].name).to eq('param1')
       expect(tags[1].text).to eq('First param.')
       expect(tags[1].types).to eq(['Integer'])

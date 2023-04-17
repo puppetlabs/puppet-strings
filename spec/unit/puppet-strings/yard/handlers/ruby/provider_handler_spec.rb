@@ -13,7 +13,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
     let(:source) { 'puts "hi"' }
 
     it 'no providers should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 

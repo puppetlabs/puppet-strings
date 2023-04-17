@@ -13,7 +13,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeHandler do
     let(:source) { 'puts "hi"' }
 
     it 'no types should be in the registry' do
-      expect(spec_subject.empty?).to eq(true)
+      expect(spec_subject.empty?).to be(true)
     end
   end
 
@@ -163,52 +163,52 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeHandler do
       expect(object.properties.size).to eq(4)
       expect(object.properties[0].name).to eq('dynamic_prop')
       expect(object.properties[0].docstring).to eq('Documentation for a dynamic property.')
-      expect(object.properties[0].isnamevar).to eq(false)
+      expect(object.properties[0].isnamevar).to be(false)
       expect(object.properties[0].values).to eq(['foo', 'bar'])
       expect(object.properties[1].name).to eq('ensure')
       expect(object.properties[1].docstring).to eq('What state the database should be in.')
-      expect(object.properties[1].isnamevar).to eq(false)
+      expect(object.properties[1].isnamevar).to be(false)
       expect(object.properties[1].default).to eq('up')
       expect(object.properties[1].values).to eq(['present', 'absent', 'up', 'down'])
       expect(object.properties[1].aliases).to eq({ 'down' => 'absent', 'up' => 'present' })
       expect(object.properties[2].name).to eq('file')
       expect(object.properties[2].docstring).to eq('The database file to use.')
-      expect(object.properties[2].isnamevar).to eq(false)
+      expect(object.properties[2].isnamevar).to be(false)
       expect(object.properties[2].default).to be_nil
       expect(object.properties[2].values).to eq([])
       expect(object.properties[2].aliases).to eq({})
       expect(object.properties[3].name).to eq('log_level')
       expect(object.properties[3].docstring).to eq('The log level to use.')
-      expect(object.properties[3].isnamevar).to eq(false)
+      expect(object.properties[3].isnamevar).to be(false)
       expect(object.properties[3].default).to eq('warn')
       expect(object.properties[3].values).to eq(['debug', 'warn', 'error'])
       expect(object.properties[3].aliases).to eq({})
       expect(object.parameters.size).to eq(5)
       expect(object.parameters[0].name).to eq('dynamic_param')
       expect(object.parameters[0].docstring).to eq('Documentation for a dynamic parameter.')
-      expect(object.parameters[0].isnamevar).to eq(false)
+      expect(object.parameters[0].isnamevar).to be(false)
       expect(object.parameters[0].values).to eq(['value1', 'value2'])
       expect(object.parameters[1].name).to eq('address')
       expect(object.parameters[1].docstring).to eq('The database server name.')
-      expect(object.parameters[1].isnamevar).to eq(true)
+      expect(object.parameters[1].isnamevar).to be(true)
       expect(object.parameters[1].default).to be_nil
       expect(object.parameters[1].values).to eq([])
       expect(object.parameters[1].aliases).to eq({})
       expect(object.parameters[2].name).to eq('encryption_key')
       expect(object.parameters[2].docstring).to eq('The encryption key to use.')
-      expect(object.parameters[2].isnamevar).to eq(false)
+      expect(object.parameters[2].isnamevar).to be(false)
       expect(object.parameters[2].default).to be_nil
       expect(object.parameters[2].values).to eq([])
       expect(object.parameters[2].aliases).to eq({})
       expect(object.parameters[3].name).to eq('encrypt')
       expect(object.parameters[3].docstring).to eq('Whether or not to encrypt the database.')
-      expect(object.parameters[3].isnamevar).to eq(false)
+      expect(object.parameters[3].isnamevar).to be(false)
       expect(object.parameters[3].default).to eq('false')
       expect(object.parameters[3].values).to eq(['true', 'false', 'yes', 'no'])
       expect(object.parameters[3].aliases).to eq({})
       expect(object.parameters[4].name).to eq('backup')
       expect(object.parameters[4].docstring).to eq('How often to backup the database.')
-      expect(object.parameters[4].isnamevar).to eq(false)
+      expect(object.parameters[4].isnamevar).to be(false)
       expect(object.parameters[4].default).to eq('never')
       expect(object.parameters[4].values).to eq(['daily', 'monthly', 'never'])
       expect(object.features.size).to eq(2)
@@ -267,7 +267,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::TypeHandler do
       object = spec_subject.first
       expect(object.parameters.size).to eq(1)
       expect(object.parameters[0].name).to eq('name')
-      expect(object.parameters[0].isnamevar).to eq(true)
+      expect(object.parameters[0].isnamevar).to be(true)
     end
   end
 
