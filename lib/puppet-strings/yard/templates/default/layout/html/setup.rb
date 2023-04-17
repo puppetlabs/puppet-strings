@@ -130,11 +130,13 @@ def create_menu_lists
   menu_lists.delete_if { |e| YARD::Registry.all(e[:type].intern).empty? }
 
   # We must always return at least one group, so always keep the files list
-  menu_lists << {
-    type: 'file',
-    title: 'Files',
-    search_title: 'File List'
-  } if menu_lists.empty? || !YARD::Registry.all(:file).empty?
+  if menu_lists.empty? || !YARD::Registry.all(:file).empty?
+    menu_lists << {
+      type: 'file',
+      title: 'Files',
+      search_title: 'File List'
+    }
+  end
 
   menu_lists
 end
