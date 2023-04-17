@@ -32,7 +32,7 @@ module PuppetStrings::Describe
   end
 
   def self.show_one_type(resource_type)
-    puts format("\n%{name}\n%{underscore}", name: resource_type[:name], underscore: '=' * resource_type[:name].length)
+    puts format("\n%<name>s\n%<underscore>s", name: resource_type[:name], underscore: '=' * resource_type[:name].length)
     puts resource_type[:docstring][:text]
 
     combined_list = (resource_type[:parameters].nil? ? [] : resource_type[:parameters]) +
@@ -47,10 +47,10 @@ module PuppetStrings::Describe
   end
 
   def self.show_one_parameter(parameter)
-    puts format("\n- **%{name}**\n", name: parameter[:name])
+    puts format("\n- **%<name>s**\n", name: parameter[:name])
     puts parameter[:description]
-    puts format('Valid values are `%{values}`.', values: parameter[:values].join('`, `')) unless parameter[:values].nil?
-    puts format('Requires features %{required_features}.', required_features: parameter[:required_features]) unless parameter[:required_features].nil?
+    puts format('Valid values are `%<values>s`.', values: parameter[:values].join('`, `')) unless parameter[:values].nil?
+    puts format('Requires features %<required_features>s.', required_features: parameter[:required_features]) unless parameter[:required_features].nil?
   end
 
   def self.list_one_type(type)
