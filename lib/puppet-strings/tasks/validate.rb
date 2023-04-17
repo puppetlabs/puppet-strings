@@ -10,7 +10,7 @@ namespace :strings do
       filename = 'REFERENCE.md'
 
       unless File.exist?(filename)
-        STDERR.puts "#{filename} does not exist"
+        $stderr.puts "#{filename} does not exist"
         exit 1
       end
 
@@ -34,7 +34,7 @@ namespace :strings do
       existing = File.read(filename)
 
       if generated != existing
-        STDERR.puts "#{filename} is outdated"
+        $stderr.puts "#{filename} is outdated"
         exit 1
       end
     end
