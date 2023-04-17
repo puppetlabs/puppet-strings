@@ -21,7 +21,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   # @return [String] Returns the signature of the overload.
   def signature
     tags = self.tags(:param)
-    args = @parameters.map { |parameter|
+    args = @parameters.map do |parameter|
       name, default = parameter
       tag = tags.find { |t| t.name == name } if tags
       type = tag&.types ? "#{tag.type} " : 'Any '
@@ -29,7 +29,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
       name = name[1..-1] if prefix
       default = " = #{default}" if default
       "#{type}#{prefix}$#{name}#{default}"
-    }.join(', ')
+    end.join(', ')
     @name + '(' + args + ')'
   end
 

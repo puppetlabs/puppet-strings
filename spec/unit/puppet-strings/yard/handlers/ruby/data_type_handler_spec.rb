@@ -424,15 +424,15 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
       end
 
       it 'outputs a warning about the wrong parameter type (func1)' do
-        expect {
+        expect do
           spec_subject
-        }.to output(%r{\[warn\]: The @param tag for 'foo1' for function 'func1' has a different type definition than the actual function near .+ Expected \["Integer"\]}m).to_stdout_from_any_process
+        end.to output(%r{\[warn\]: The @param tag for 'foo1' for function 'func1' has a different type definition than the actual function near .+ Expected \["Integer"\]}m).to_stdout_from_any_process
       end
 
       it 'outputs a warning about the wrong parameter type (func2)' do
-        expect {
+        expect do
           spec_subject
-        }.to output(%r{\[warn\]: The @param tag for 'param1' for function 'func2' has a different type definition than the actual function near .+ Expected \["Integer"\]}m).to_stdout_from_any_process
+        end.to output(%r{\[warn\]: The @param tag for 'param1' for function 'func2' has a different type definition than the actual function near .+ Expected \["Integer"\]}m).to_stdout_from_any_process
       end
 
       it 'automatically fixes function parameters, except for differring types' do
