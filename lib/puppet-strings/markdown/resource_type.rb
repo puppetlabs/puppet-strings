@@ -50,7 +50,7 @@ module PuppetStrings::Markdown
 
     def regex_in_data_type?(data_type)
       m = data_type.match(%r{\w+\[/.*/\]})
-      m unless m.nil? || m.empty?
+      m unless m.nil? || m.to_a.empty?
     end
   end
 end

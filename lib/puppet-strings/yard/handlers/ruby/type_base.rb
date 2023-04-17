@@ -116,10 +116,12 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
       next unless node_as_string(kvp[0]) == 'parent'
 
       if kvp[1].source == 'Puppet::Parameter::Boolean'
+        # rubocop:disable Performance/InefficientHashSearch
         object.add('true') unless object.values.include? 'true'
         object.add('false') unless object.values.include? 'false'
         object.add('yes') unless object.values.include? 'yes'
         object.add('no') unless object.values.include? 'no'
+        # rubocop:enable Performance/InefficientHashSearch
       end
       break
     end

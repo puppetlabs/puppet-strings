@@ -1,5 +1,3 @@
-# rubocop:disable Naming/FileName
-
 # frozen_string_literal: true
 
 # The root module for Puppet Strings.

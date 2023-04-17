@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Naming/MethodName
-
 require 'puppet'
 require 'puppet/pops'
 require 'puppet-strings/yard/parsers/puppet/statement'
