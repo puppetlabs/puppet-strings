@@ -20,8 +20,7 @@ end
 
 # Implements the Puppet class code object.
 class PuppetStrings::Yard::CodeObjects::Class < PuppetStrings::Yard::CodeObjects::Base
-  attr_reader :statement
-  attr_reader :parameters
+  attr_reader :statement, :parameters
 
   # Initializes a Puppet class code object.
   # @param [PuppetStrings::Parsers::ClassStatement] statement The class statement that was parsed.

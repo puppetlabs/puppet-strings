@@ -5,8 +5,7 @@ require 'puppet-strings/markdown/base'
 module PuppetStrings::Markdown
   # This class encapsualtes ruby data types and puppet type aliases
   class DataType < Base
-    attr_reader :alias_of
-    attr_reader :functions
+    attr_reader :alias_of, :functions
 
     group_name 'Data types'
     yard_types [:puppet_data_type, :puppet_data_type_alias]

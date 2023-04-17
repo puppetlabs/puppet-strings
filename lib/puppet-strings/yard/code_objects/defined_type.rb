@@ -20,8 +20,7 @@ end
 
 # Implements the Puppet defined type code object.
 class PuppetStrings::Yard::CodeObjects::DefinedType < PuppetStrings::Yard::CodeObjects::Base
-  attr_reader :statement
-  attr_reader :parameters
+  attr_reader :statement, :parameters
 
   # Initializes a Puppet defined type code object.
   # @param [PuppetStrings::Parsers::DefinedTypeStatement] statement The defined type statement that was parsed.

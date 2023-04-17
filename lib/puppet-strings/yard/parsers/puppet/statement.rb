@@ -9,11 +9,7 @@ module PuppetStrings::Yard::Parsers::Puppet
     # The pattern for parsing docstring comments.
     COMMENT_REGEX = %r{^\s*#+\s?}.freeze
 
-    attr_reader :source
-    attr_reader :file
-    attr_reader :line
-    attr_reader :docstring
-    attr_reader :comments_range
+    attr_reader :source, :file, :line, :docstring, :comments_range
 
     # Initializes the Puppet language statement.
     # @param object The Puppet parser model object for the statement.
@@ -75,9 +71,7 @@ module PuppetStrings::Yard::Parsers::Puppet
   class ParameterizedStatement < Statement
     # Implements a parameter for a parameterized statement.
     class Parameter
-      attr_reader :name
-      attr_reader :type
-      attr_reader :value
+      attr_reader :name, :type, :value
 
       # Initializes the parameter.
       # @param [Puppet::Pops::Model::Parameter] parameter The parameter model object.
@@ -107,8 +101,7 @@ module PuppetStrings::Yard::Parsers::Puppet
 
   # Implements the Puppet class statement.
   class ClassStatement < ParameterizedStatement
-    attr_reader :name
-    attr_reader :parent_class
+    attr_reader :name, :parent_class
 
     # Initializes the Puppet class statement.
     # @param [Puppet::Pops::Model::HostClassDefinition] object The model object for the class statement.
@@ -135,8 +128,7 @@ module PuppetStrings::Yard::Parsers::Puppet
 
   # Implements the Puppet function statement.
   class FunctionStatement < ParameterizedStatement
-    attr_reader :name
-    attr_reader :type
+    attr_reader :name, :type
 
     # Initializes the Puppet function statement.
     # @param [Puppet::Pops::Model::FunctionDefinition] object The model object for the function statement.
@@ -168,8 +160,7 @@ module PuppetStrings::Yard::Parsers::Puppet
 
   # Implements the Puppet data type alias statement.
   class DataTypeAliasStatement < Statement
-    attr_reader :name
-    attr_reader :alias_of
+    attr_reader :name, :alias_of
 
     # Initializes the Puppet data type alias statement.
     # @param [Puppet::Pops::Model::TypeAlias] object The model object for the type statement.
