@@ -30,7 +30,7 @@ namespace :strings do
     task :configure do
       unless File.exist?(File.join('doc', '_config.yml'))
         Dir.chdir('doc') do
-          File.open('_config.yml', 'w+') { |f| f.write('include: _index.html') }
+          File.write('_config.yml', 'include: _index.html')
         end
       end
     end

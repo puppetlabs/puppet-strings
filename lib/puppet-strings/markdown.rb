@@ -66,7 +66,7 @@ module PuppetStrings::Markdown
       puts generate
       exit
     else
-      File.open(path, 'w') { |file| file.write(generate) }
+      File.write(path, generate)
       YARD::Logger.instance.debug "Wrote markdown to #{path}"
     end
   end
