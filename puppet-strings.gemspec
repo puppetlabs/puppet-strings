@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
 
   s.extra_rdoc_files = [
     'CHANGELOG.md',
-    'COMMITTERS.md',
     'CONTRIBUTING.md',
     'LICENSE',
     'README.md'
