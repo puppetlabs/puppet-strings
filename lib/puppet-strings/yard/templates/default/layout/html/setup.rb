@@ -6,7 +6,7 @@ def init
   case object
   when '_index.html'
     @page_title = options.title
-    sections :layout, [:index, [:listing, [:classes, :data_types, :defined_types, :types, :providers, :functions, :tasks, :plans, :files, :objects]]]
+    sections :layout, [:index, [:listing, %i[classes data_types defined_types types providers functions tasks plans files objects]]]
   else
     super
   end

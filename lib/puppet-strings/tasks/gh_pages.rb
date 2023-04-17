@@ -48,11 +48,11 @@ namespace :strings do
     end
 
     desc 'Update docs on the gh-pages branch and push to GitHub.'
-    task update: [
-      :checkout,
-      :'strings:generate',
-      :configure,
-      :push,
+    task update: %i[
+      checkout
+      strings:generate
+      configure
+      push
     ]
   end
 end

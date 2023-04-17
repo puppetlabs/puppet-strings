@@ -37,7 +37,7 @@ namespace :strings do
     end
     # rubocop:enable Style/PreferredHashMethods
 
-    [:json, :markdown].each { |format| parse_format_option(args, options, format) }
+    %i[json markdown].each { |format| parse_format_option(args, options, format) }
 
     warn('yard_args behavior is a little dodgy, use at your own risk') if args[:yard_args]
     options[:yard_args] = args[:yard_args].split if args.key? :yard_args
