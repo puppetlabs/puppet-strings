@@ -80,7 +80,7 @@ module PuppetStrings::Markdown
       ERB.new(File.read(path), trim_mode: '-')
     else
       # This outputs warnings in Ruby 2.6+.
-      ERB.new(File.read(path), nil, '-')
+      ERB.new(File.read(path), trim_mode: '-')
     end
   end
 end
