@@ -255,7 +255,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
       begin
         callable_type = Puppet::Pops::Types::TypeParser.singleton.parse(func_type)
         if callable_type.is_a?(Puppet::Pops::Types::PCallableType)
-          func_hash[:param_types] = callable_type.param_types.map { |pt| pt.to_s }
+          func_hash[:param_types] = callable_type.param_types.map(&:to_s)
           func_hash[:return_type] = callable_type.return_type.to_s
         else
           log.warn "The function definition for '#{key}' near #{object.file}:#{object.line} is not a Callable type"
@@ -360,7 +360,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     # Puppet Data Type function invocation. So instead we derive a signature from the method definition.
     object.meths.each do |meth|
       params = ''
-      params += '(' + meth.docstring.tags(:param).map { |t| t.name }.join(', ') + ')' unless meth.docstring.tags(:param).empty?
+      params += "(#{meth.docstring.tags(:param).map(&:name).join(', ')})" unless meth.docstring.tags(:param).empty?
       meth.signature = "#{object.name}.#{meth.name}" + params
     end
 

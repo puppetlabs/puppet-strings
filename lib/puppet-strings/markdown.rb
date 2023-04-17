@@ -40,7 +40,7 @@ module PuppetStrings::Markdown
     template = erb(File.join(__dir__, 'markdown', 'templates', 'table_of_contents.erb'))
     groups.each do |group|
       group_name = group.group_name
-      items = group.items.map { |item| item.toc_info }
+      items = group.items.map(&:toc_info)
       has_private = items.any? { |item| item[:private] }
       has_public = items.any? { |item| !item[:private] }
 
@@ -49,10 +49,10 @@ module PuppetStrings::Markdown
 
     # Create actual contents
     groups.each do |group|
-      items = group.items.reject { |item| item.private? }
+      items = group.items.reject(&:private?)
       unless items.empty?
         output << "## #{group.group_name}\n\n"
-        output.append(items.map { |item| item.render })
+        output.append(items.map(&:render))
       end
     end
 

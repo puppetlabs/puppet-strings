@@ -54,7 +54,7 @@ end
 
 def lint_markdown(content)
   # Load default mdl ruleset
-  ruleset = MarkdownLint::RuleSet.new.tap { |r| r.load_default }
+  ruleset = MarkdownLint::RuleSet.new.tap(&:load_default)
 
   # Apply custom style to ruleset rules
   MarkdownLint::Style.load(File.join(__dir__, 'markdownlint_style.rb'), ruleset.rules)

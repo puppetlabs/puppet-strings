@@ -21,7 +21,7 @@ def properties
   #
   # "checks" such as "creates" and "onlyif" are another type of property
   @parameters = (object.properties || []) + (object.checks || [])
-  @parameters.sort_by! { |p| p.name }
+  @parameters.sort_by!(&:name)
   @tag_title = 'Properties'
   erb(:parameters)
 end
@@ -30,7 +30,7 @@ end
 # @return [String] Returns the rendered section.
 def parameters
   @parameters = object.parameters || []
-  @parameters.sort_by! { |p| p.name }
+  @parameters.sort_by!(&:name)
   @tag_title = 'Parameters'
   erb(:parameters)
 end
