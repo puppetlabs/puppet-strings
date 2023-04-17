@@ -316,9 +316,9 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     end
 
     if repeated
-      name = '*' + name
+      name = "*#{name}"
     elsif block
-      name = '&' + name
+      name = "&#{name}"
     end
 
     type ||= tag&.types ? tag.type : 'Any'

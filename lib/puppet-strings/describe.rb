@@ -59,7 +59,7 @@ module PuppetStrings::Describe
     contentstring = type[:docstring][:text]
     end_of_line = contentstring.index("\n")  # "." gives closer results to old describeb, but breaks for '.k5login'
     contentstring = contentstring[0..end_of_line] unless end_of_line.nil?
-    contentstring = contentstring[0..shortento] + ' ...' if contentstring.length > targetlength
+    contentstring = "#{contentstring[0..shortento]} ..." if contentstring.length > targetlength
 
     puts "#{type[:name].to_s.ljust(15)} - #{contentstring}"
   end

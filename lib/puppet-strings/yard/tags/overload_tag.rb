@@ -30,7 +30,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
       default = " = #{default}" if default
       "#{type}#{prefix}$#{name}#{default}"
     end.join(', ')
-    @name + '(' + args + ')'
+    "#{@name}(#{args})"
   end
 
   # Adds a tag to the overload's docstring.

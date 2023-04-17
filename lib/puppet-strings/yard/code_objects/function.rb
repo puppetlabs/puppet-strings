@@ -74,7 +74,7 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
       default = " = #{default}" if default
       "#{type}#{prefix}$#{name}#{default}"
     end.join(', ')
-    @name.to_s + '(' + args + ')'
+    "#{@name}(#{args})"
   end
 
   # Converts the code object to a hash representation.
