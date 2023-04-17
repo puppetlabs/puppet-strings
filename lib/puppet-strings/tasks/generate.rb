@@ -30,7 +30,7 @@ namespace :strings do
     def parse_format_option(args, options, format)
       return unless args.has_key? format
 
-      options[format] = args[format] == 'false' || args[format].empty? ? false : true
+      options[format] = !(args[format] == 'false' || args[format].empty?)
       return unless options[format]
 
       options[:path] = args[format] == 'true' ? nil : args[format]
