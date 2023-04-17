@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Generates the searchable Puppet class list.
 # @return [void]
 def generate_puppet_class_list
