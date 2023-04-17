@@ -29,8 +29,10 @@ namespace :strings do
     # @return nil
     def parse_format_option(args, options, format)
       return unless args.has_key? format
+
       options[format] = args[format] == 'false' || args[format].empty? ? false : true
       return unless options[format]
+
       options[:path] = args[format] == 'true' ? nil : args[format]
     end
     # rubocop:enable Style/PreferredHashMethods

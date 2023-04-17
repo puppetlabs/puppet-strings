@@ -123,6 +123,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
 
     # If there's only one overload, move the tags to the object itself
     return unless overloads.length == 1
+
     overload = overloads.first
     object.parameters = overload.parameters
     object.add_tag(*overload.tags)

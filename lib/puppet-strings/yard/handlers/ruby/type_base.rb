@@ -110,6 +110,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
     return unless object.is_a? PuppetStrings::Yard::CodeObjects::Type::Parameter
     # Process the options for parameter base types
     return unless parameters.count >= 2
+
     parameters[1].each do |kvp|
       next unless kvp.count == 2
       next unless node_as_string(kvp[0]) == 'parent'

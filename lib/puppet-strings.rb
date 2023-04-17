@@ -60,6 +60,7 @@ module PuppetStrings
     end
 
     return unless options[:describe]
+
     render_describe(options[:describe_types], options[:describe_list], options[:providers])
   end
 

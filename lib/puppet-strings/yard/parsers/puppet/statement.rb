@@ -89,6 +89,7 @@ module PuppetStrings::Yard::Parsers::Puppet
         end
         # Take the exact text for the default value expression
         return unless parameter.value
+
         @value = PuppetStrings::Yard::Util.ast_to_text(parameter.value)
       end
     end
@@ -144,8 +145,10 @@ module PuppetStrings::Yard::Parsers::Puppet
       super(object, file)
       @name = object.name
       return unless object.respond_to? :return_type
+
       type = object.return_type
       return unless type
+
       @type = PuppetStrings::Yard::Util.ast_to_text(type).gsub('>> ', '')
     end
   end
