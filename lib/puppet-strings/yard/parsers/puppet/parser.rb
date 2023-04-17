@@ -24,7 +24,7 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
   # @return [void]
   def parse
     begin
-      if @file.to_s.match?(%r{^plans|/plans/}) && Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0') < 0
+      if @file.to_s.match?(%r{^plans|/plans/}) && Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0').negative?
         log.warn "Skipping #{@file}: Puppet Plans require Puppet 5 or greater."
         return
       end

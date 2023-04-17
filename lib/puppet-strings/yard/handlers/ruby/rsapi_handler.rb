@@ -53,9 +53,9 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
   # check that the params of the register_type call are key/value pairs.
   def kv_arg_list?(params)
     params.type == :list &&
-      params.children.count > 0 &&
+      params.children.count.positive? &&
       params.children.first.type == :list &&
-      params.children.first.children.count > 0 &&
+      params.children.first.children.count.positive? &&
       statement.parameters.children.first.children.first.type == :assoc
   end
 
