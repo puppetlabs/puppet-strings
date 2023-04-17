@@ -129,7 +129,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
 
     schema['attributes'].each do |name, definition|
       # puts "Processing #{name}: #{definition.inspect}"
-      if ['parameter', 'namevar'].include? definition['behaviour']
+      if %w[parameter namevar].include? definition['behaviour']
         object.add_parameter(create_parameter(name, definition))
       else
         object.add_property(create_property(name, definition))

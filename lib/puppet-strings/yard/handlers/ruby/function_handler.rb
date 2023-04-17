@@ -8,17 +8,17 @@ require 'puppet-strings/yard/util'
 # Implements the handler for Puppet functions written in Ruby.
 class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard::Handlers::Ruby::Base
   # Represents the list of Puppet 4.x function API methods to support.
-  DISPATCH_METHOD_NAMES = [
-    'param',
-    'required_param',
-    'optional_param',
-    'repeated_param',
-    'optional_repeated_param',
-    'required_repeated_param',
-    'block_param',
-    'required_block_param',
-    'optional_block_param',
-    'return_type'
+  DISPATCH_METHOD_NAMES = %w[
+    param
+    required_param
+    optional_param
+    repeated_param
+    optional_repeated_param
+    required_repeated_param
+    block_param
+    required_block_param
+    optional_block_param
+    return_type
   ].freeze
 
   namespace_only

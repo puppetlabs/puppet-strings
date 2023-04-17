@@ -305,7 +305,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
       # Check for default values
       expect(object.parameters.size).to eq(2)
       expect(object.parameters[0]).to eq(['msg', nil])
-      expect(object.parameters[1]).to eq(['arg1', 'param'])
+      expect(object.parameters[1]).to eq(%w[arg1 param])
 
       # Check for functions
       expect(object.functions.size).to eq(1)

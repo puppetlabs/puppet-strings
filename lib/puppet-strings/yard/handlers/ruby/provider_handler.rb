@@ -94,7 +94,7 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
 
           object.add_confine(node_as_string(kvp[0]) || kvp[0].source, node_as_string(kvp[1]) || kvp[1].source)
         end
-      elsif ['has_feature', 'has_features'].include?(method_name)
+      elsif %w[has_feature has_features].include?(method_name)
         # Add the features to the object
         parameters.each do |parameter|
           object.add_feature(node_as_string(parameter) || parameter.source)

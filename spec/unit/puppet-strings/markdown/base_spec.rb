@@ -27,11 +27,11 @@ describe PuppetStrings::Markdown::Base do
       end
     end
 
-    ['examples',
-     'see',
-     'since',
-     'return_val',
-     'return_type'].each do |method|
+    %w[examples
+       see
+       since
+       return_val
+       return_type].each do |method|
       describe "##{method}" do
         it 'returns nil' do
           expect(component.method(method.to_sym).call).to be_nil
@@ -108,11 +108,11 @@ describe PuppetStrings::Markdown::Base do
       end
     end
 
-    ['summary',
-     'see',
-     'since',
-     'return_val',
-     'return_type'].each do |method|
+    %w[summary
+       see
+       since
+       return_val
+       return_type].each do |method|
       describe "##{method}" do
         it 'returns nil' do
           expect(component.method(method.to_sym).call).to be_nil

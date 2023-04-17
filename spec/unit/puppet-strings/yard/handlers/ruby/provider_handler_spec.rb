@@ -97,8 +97,8 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
       expect(tags.size).to eq(1)
       expect(tags[0].text).to eq('public')
       expect(object.confines).to eq({ 'kernel' => 'Linux', 'osfamily' => 'RedHat' })
-      expect(object.defaults).to eq([[['kernel', 'Linux']], [['osfamily', 'RedHat'], ['operatingsystemmajrelease', '7']]])
-      expect(object.features).to eq(['implements_some_feature', 'some_other_feature'])
+      expect(object.defaults).to eq([[%w[kernel Linux]], [%w[osfamily RedHat], %w[operatingsystemmajrelease 7]]])
+      expect(object.features).to eq(%w[implements_some_feature some_other_feature])
       expect(object.commands).to eq({ 'foo' => '/usr/bin/foo' })
     end
   end

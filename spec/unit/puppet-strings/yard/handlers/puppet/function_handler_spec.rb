@@ -55,7 +55,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::Functions.instance(PuppetStrings::Yard::CodeObjects::Function::PUPPET))
       expect(object.name).to eq(:foo)
       expect(object.signature).to eq('foo(Integer $param1, Any $param2, String $param3 = hi)')
-      expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', 'hi']])
+      expect(object.parameters).to eq([['param1', nil], ['param2', nil], %w[param3 hi]])
       expect(object.docstring).to eq('A simple foo function.')
       expect(object.docstring.tags.size).to eq(5)
       tags = object.docstring.tags(:param)

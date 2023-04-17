@@ -205,7 +205,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::Functions.instance(PuppetStrings::Yard::CodeObjects::Function::RUBY_4X))
         expect(object.name).to eq(:foo)
         expect(object.signature).to eq('foo(Integer $param1, Any $param2, Optional[String] $param3 = undef)')
-        expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', 'undef']])
+        expect(object.parameters).to eq([['param1', nil], ['param2', nil], %w[param3 undef]])
         expect(object.docstring).to eq('An example 4.x function.')
         expect(object.docstring.tags.size).to eq(5)
         tags = object.docstring.tags(:param)

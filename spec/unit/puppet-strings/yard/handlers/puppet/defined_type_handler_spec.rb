@@ -59,7 +59,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
       expect(object.namespace).to eq(PuppetStrings::Yard::CodeObjects::DefinedTypes.instance)
       expect(object.name).to eq(:foo)
       expect(object.statement).not_to be_nil
-      expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', 'hi']])
+      expect(object.parameters).to eq([['param1', nil], ['param2', nil], %w[param3 hi]])
       expect(object.docstring).to eq('A simple foo defined type.')
       expect(object.docstring.tags.size).to eq(5)
       tags = object.docstring.tags(:param)
