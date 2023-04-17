@@ -31,7 +31,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
   end
 
   describe 'parsing an empty data type definition' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::DataTypes.create_type('RubyDataType') do
       end
     SOURCE
@@ -54,7 +54,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
   end
 
   describe 'parsing a data type definition with missing param tags' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example Puppet Data Type in Ruby.
       Puppet::DataTypes.create_type('RubyDataType') do
         interface <<~'PUPPET'
@@ -98,7 +98,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
 
   describe 'parsing a data type definition with missing function' do
     context 'which has parameters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example Puppet Data Type in Ruby.
         Puppet::DataTypes.create_type('RubyDataType') do
           interface <<~'PUPPET'
@@ -145,7 +145,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
       end
 
       context 'which has multiple functions' do
-        let(:source) { <<~'SOURCE' }
+        let(:source) { <<~SOURCE }
           # An example Puppet Data Type in Ruby.
           Puppet::DataTypes.create_type('RubyDataType') do
             interface <<~'PUPPET'
@@ -193,7 +193,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
   end
 
   describe 'parsing a data type definition with extra tags' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example Puppet Data Type in Ruby.
       # @param msg A message parameter.
       # @param arg1 Optional String parameter. Defaults to 'param'.
@@ -255,7 +255,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
   describe 'parsing a valid data type definition' do
     # TODO: What about testing for `type_parameters => {}`
     # e.g. https://github.com/puppetlabs/puppet/blob/main/lib/puppet/datatypes/error.rb
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example Puppet Data Type in Ruby.
       #
       # @param msg A message parameter5.
@@ -325,7 +325,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
     end
 
     context 'with multiple interfaces' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example Puppet Data Type in Ruby.
         #
         # @param msg A message parameter5.
@@ -389,7 +389,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
     end
 
     context 'with missing, partial and addition function parameters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example Puppet Data Type in Ruby.
         #
         # @!method func1(foo1, foo2)
@@ -506,7 +506,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
   end
 
   describe 'parsing an invalid data type definition' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # The msg attribute is missing a comma.
       #
       # @param msg A message parameter5.
@@ -557,7 +557,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
 
   describe 'parsing a data type with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example Puppet Data Type in Ruby.
         #
         # @summary A short summary.
@@ -577,7 +577,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example Puppet Data Type in Ruby.
         #
         # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!

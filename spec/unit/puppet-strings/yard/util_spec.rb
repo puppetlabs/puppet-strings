@@ -18,7 +18,7 @@ describe PuppetStrings::Yard::Util do
     end
 
     it 'does not affect newlines when %Q notation is used' do
-      str = <<~'STR'
+      str = <<~STR
         %Q{this is
         a test string}
       STR

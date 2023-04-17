@@ -36,7 +36,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a docstring' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param param2 Second param.
@@ -81,7 +81,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a missing parameter' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param param2 Second param.
@@ -101,7 +101,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a missing @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param param2 Second param.
@@ -117,7 +117,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a typed parameter that also has a @param tag type which matches' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param [Integer] param1 First param.
       # @param param2 Second param.
@@ -138,7 +138,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a typed parameter that also has a @param tag type which does not match' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param [Boolean] param1 First param.
       # @param param2 Second param.
@@ -159,7 +159,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a untyped parameter that also has a @param tag type' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param [Boolean] param2 Second param.
@@ -180,7 +180,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a missing @return tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @param param1 First param.
       # @param param2 Second param.
@@ -196,7 +196,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a missing @return tag and return type specified in the function definition', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       function foo() >> String {
         notice 'hello world'
@@ -217,7 +217,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a non-conflicting return tag and type in function definition', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function
       # @return [String] Hi there
       function foo() >> String {
@@ -231,7 +231,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with a conflicting return tag and type in function definition', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @return [Integer] this is a lie.
       function foo() >> Struct[{'a' => Integer[1, 10]}] {
@@ -253,7 +253,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function with return tag without type', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @return This is something.
       function foo() >> Struct[{'a' => Integer[1, 10]}] {
@@ -275,7 +275,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
   end
 
   describe 'parsing a function without a return tag or return type in the function definition' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       function foo() {
         notice 'hello world'
@@ -297,7 +297,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
 
   describe 'parsing a function with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo function.
         # @summary A short summary.
         # @return [String] foo
@@ -315,7 +315,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo function.
         # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
         function foo() {

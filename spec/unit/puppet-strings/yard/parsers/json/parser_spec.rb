@@ -27,7 +27,7 @@ describe PuppetStrings::Yard::Parsers::JSON::Parser do
   end
 
   describe 'parsing invalid JSON' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       class foo {
     SOURCE
 
@@ -37,7 +37,7 @@ describe PuppetStrings::Yard::Parsers::JSON::Parser do
   end
 
   describe 'parsing valid task metadata JSON' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       {
         "description": "Allows you to backup your database to local file.",
         "input_method": "stdin",

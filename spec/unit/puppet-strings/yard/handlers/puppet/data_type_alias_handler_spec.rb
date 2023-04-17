@@ -36,7 +36,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DataTypeAliasHandler, if: TEST_P
 
   describe 'parsing a data type alias with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo type.
         # @summary A short summary.
         type Testype = String[1]
@@ -51,7 +51,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DataTypeAliasHandler, if: TEST_P
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo type.
         # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
         type Testype = String[1]

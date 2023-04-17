@@ -35,7 +35,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
   end
 
   describe 'parsing a defined type with a docstring' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo defined type.
       # @param name The type name.
       # @param param1 First param.
@@ -83,7 +83,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
   end
 
   describe 'parsing a defined type with a missing parameter' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo defined type.
       # @param param1 First param.
       # @param param2 Second param.
@@ -102,7 +102,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
   end
 
   describe 'parsing a defined type with a missing @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo defined type.
       # @param param1 First param.
       # @param param2 Second param.
@@ -119,7 +119,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
   end
 
   describe 'parsing a defined type with a typed parameter that also has a @param tag type which matches' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo defined type.
       # @param [Integer] param1 First param.
       # @param param2 Second param.
@@ -141,7 +141,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
   end
 
   describe 'parsing a defined type with a typed parameter that also has a @param tag type which does not match' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo defined type.
       # @param [Boolean] param1 First param.
       # @param param2 Second param.
@@ -161,7 +161,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
   end
 
   describe 'parsing a defined type with a untyped parameter that also has a @param tag type' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo defined type.
       # @param param1 First param.
       # @param [Boolean] param2 Second param.
@@ -184,7 +184,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
 
   describe 'parsing a defined type with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo defined type.
         # @summary A short summary.
         # @param param1 First param.
@@ -206,7 +206,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo defined type.
         # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
         # @param param1 First param.

@@ -5,7 +5,7 @@ require 'spec_helper'
 describe PuppetStrings::Yard::Parsers::JSON::TaskStatement do
   subject(:spec_subject) { described_class.new(json, source, 'test.json') }
 
-  let(:source) { <<~'SOURCE' }
+  let(:source) { <<~SOURCE }
     {
       "description": "Allows you to backup your database to local file.",
       "input_method": "stdin",
@@ -45,7 +45,7 @@ describe PuppetStrings::Yard::Parsers::JSON::TaskStatement do
     end
 
     context 'no params' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         {
           "description": "Allows you to backup your database to local file.",
           "input_method": "stdin"

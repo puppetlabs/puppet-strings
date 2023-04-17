@@ -7,7 +7,7 @@ require 'puppet-strings/yard/parsers/json/task_statement'
 describe PuppetStrings::Yard::CodeObjects::Task do
   subject(:spec_subject) { described_class.new(statement) }
 
-  let(:source) { <<~'SOURCE' }
+  let(:source) { <<~SOURCE }
     {
       "description": "Allows you to backup your database to local file.",
       "input_method": "stdin",

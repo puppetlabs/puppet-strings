@@ -10,7 +10,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
   end
 
   describe 'parsing task metadata with a syntax error' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       {
         "input_method": "stdin",
         "parameters":
@@ -29,7 +29,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
   end
 
   describe 'parsing task metadata with a missing description' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       {
         "input_method": "stdin",
         "parameters": {
@@ -59,7 +59,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
   end
 
   describe 'parsing task metadata with a description' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       {
         "description": "Allows you to backup your database to local file.",
         "input_method": "stdin",
@@ -94,7 +94,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
   end
 
   describe 'parsing task metadata with a missing parameter description' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       {
         "description": "Allows you to backup your database to local file.",
         "input_method": "stdin",

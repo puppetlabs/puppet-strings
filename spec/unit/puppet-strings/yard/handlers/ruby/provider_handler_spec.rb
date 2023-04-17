@@ -18,7 +18,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
   end
 
   describe 'parsing a provider with a missing description' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:custom).provide :linux do
       end
     SOURCE
@@ -29,7 +29,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
   end
 
   describe 'parsing a provider with an invalid docstring assignment' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:custom).provide :linux do
         @doc = 123
       end
@@ -41,7 +41,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
   end
 
   describe 'parsing a provider with a valid docstring assignment' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:custom).provide :linux do
         @doc = 'An example provider on Linux.'
       end
@@ -71,7 +71,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
   end
 
   describe 'parsing a provider definition' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:custom).provide :linux do
         desc 'An example provider on Linux.'
         confine kernel: 'Linux'
@@ -104,7 +104,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
   end
 
   describe 'parsing a provider definition with a string based name' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::Type.type(:'custom').provide :'linux' do
         desc 'An example provider on Linux.'
       end
@@ -123,7 +123,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
 
   describe 'parsing a provider with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Type.type(:custom).provide :linux do
           @doc = '@summary A short summary.'
         end
@@ -138,7 +138,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Type.type(:custom).provide :linux do
           @doc = '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!'
         end

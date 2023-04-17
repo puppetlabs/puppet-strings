@@ -18,7 +18,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
   end
 
   describe 'parsing a type with a missing description' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::ResourceApi.register_type(
         name: 'database'
       )
@@ -30,7 +30,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
   end
 
   describe 'parsing a type with a valid docstring assignment' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::ResourceApi.register_type(
         name: 'database',
         docs: 'An example database server resource type.',
@@ -63,7 +63,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
   end
 
   describe 'parsing a type definition' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # @!puppet.type.param [value1, value2] dynamic_param Documentation for a dynamic parameter.
       # @!puppet.type.property [foo, bar] dynamic_prop Documentation for a dynamic property.
       Puppet::ResourceApi.register_type(
@@ -179,7 +179,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
 
   describe 'parsing a type with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::ResourceApi.register_type(
           name: 'database',
           docs: '@summary A short summary.',
@@ -195,7 +195,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::ResourceApi.register_type(
           name: 'database',
           docs: '@summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!',
@@ -209,7 +209,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
   end
 
   describe 'parsing a type with title_patterns' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       Puppet::ResourceApi.register_type(
         name: 'database',
         docs: 'An example database server resource type.',

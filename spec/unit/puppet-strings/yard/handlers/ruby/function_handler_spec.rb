@@ -19,7 +19,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
 
   describe 'parsing 3.x API functions' do
     describe 'parsing a function with a missing docstring' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Parser::Functions.newfunction(:foo) do |*args|
         end
       SOURCE
@@ -39,7 +39,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       #
       # Given that this occurs only in old-style functions, it’s probably not
       # worth pursuing.
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Parser::Functions.newfunction(:foo, doc: <<~'DOC'
             An example 3.x function.
             @param [String] first The first parameter.
@@ -90,7 +90,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       #
       # Given that this occurs only in old-style functions, it’s probably not
       # worth pursuing.
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         module Puppet::Parser::Functions
           newfunction(:foo, doc: <<~'DOC'
               An example 3.x function.
@@ -134,7 +134,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with a missing @return tag' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Parser::Functions.newfunction(:foo, doc: <<~'DOC') do |*args|
             An example 3.x function.
             @param [String] first The first parameter.
@@ -152,7 +152,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
 
   describe 'parsing 4.x API functions' do
     describe 'parsing a function with a missing docstring' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         Puppet::Functions.create_function(:foo) do
         end
       SOURCE
@@ -163,7 +163,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with a simple docstring' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
         end
@@ -186,7 +186,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function without any dispatches' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param [Integer] param1 The first parameter.
@@ -231,7 +231,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with a single dispatch' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param param1 The first parameter.
@@ -283,7 +283,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function using only return_type' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param param1 The first parameter.
@@ -315,7 +315,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with various dispatch parameters.' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param param1 The first parameter.
@@ -369,7 +369,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with an optional repeated param.' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param param The first parameter.
@@ -408,7 +408,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with a block param with one parameter' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param a_block The block parameter.
@@ -447,7 +447,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     describe 'parsing a function with a block param with two parameter' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         Puppet::Functions.create_function(:foo) do
           # @param a_block The block parameter.
@@ -487,7 +487,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a multiple dispatches' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # The first overload.
@@ -577,7 +577,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a namespaced name' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:'foo::bar::baz') do
         # @return [Undef]
@@ -593,7 +593,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a missing parameter' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # @param missing A missing parameter.
@@ -609,7 +609,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a missing @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # @return [Undef] Returns nothing.
@@ -625,7 +625,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a typed @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # @param [Integer] param1 The first parameter.
@@ -646,7 +646,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a typed @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       Puppet::Functions.create_function(:foo) do
         # @param param1 The first parameter.
@@ -662,7 +662,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a root @param tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       # @param param Nope.
       Puppet::Functions.create_function(:foo) do
@@ -682,7 +682,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a root @overload tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       # @overload foo
       Puppet::Functions.create_function(:foo) do
@@ -702,7 +702,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
   end
 
   describe 'parsing a function with a root @return tag' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # An example 4.x function.
       # @return [Undef] foo
       Puppet::Functions.create_function(:foo) do
@@ -723,7 +723,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
 
   describe 'parsing a function with a summary' do
     context 'when the summary has fewer than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         # @summary A short summary.
         Puppet::Functions.create_function(:foo) do
@@ -742,7 +742,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     end
 
     context 'when the summary has more than 140 characters' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # An example 4.x function.
         # @summary A short summary that is WAY TOO LONG. AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH this is not what a summary is for! It should be fewer than 140 characters!!
         Puppet::Functions.create_function(:foo) do

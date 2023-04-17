@@ -11,7 +11,7 @@ describe 'Generating Markdown' do
     sut_tmp_path
   end
 
-  expected = <<~'EOF'
+  expected = <<~EOF
     # Reference
 
     ## Classes

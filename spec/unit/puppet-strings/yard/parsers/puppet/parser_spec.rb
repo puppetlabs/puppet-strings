@@ -26,7 +26,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing invalid Puppet source code' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       class foo {
     SOURCE
 
@@ -36,7 +36,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing class definitions' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       notice hello
       # A simple foo class.
       # @param param1 First param.
@@ -74,7 +74,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing nested class definitions' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       class foo {
         class bar {
         }
@@ -96,7 +96,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing defined types' do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       notice hello
       # A simple foo defined type.
       # @param param1 First param.
@@ -136,7 +136,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
     # The parsing code actually checks this and sets a global (Puppet[:tasks]).
     # Plan parsing will fail if it hasn't yet encountered a file under plans/.
     let(:file) { 'plans/test.pp' }
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple plan.
       # @param param1 First param.
       # @param param2 Second param.
@@ -169,7 +169,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing puppet functions', if: TEST_PUPPET_FUNCTIONS do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       notice hello
       # A simple foo function.
       # @param param1 First param.
@@ -204,7 +204,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing puppet functions with return type in defintion', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @return Returns a string
       function foo() >> String {
@@ -222,7 +222,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
   end
 
   describe 'parsing puppet functions with complex return types in defintion', if: TEST_FUNCTION_RETURN_TYPE do
-    let(:source) { <<~'SOURCE' }
+    let(:source) { <<~SOURCE }
       # A simple foo function.
       # @return Returns a struct with a hash including one key which must be an integer between 1 and 10.
       function foo() >> Struct[{'a' => Integer[1, 10]}] {
@@ -241,7 +241,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
 
   describe 'parsing type alias definitions', if: TEST_PUPPET_DATATYPES do
     context 'given a type alias on a single line' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A simple foo type.
         type Module::Typename = Variant[Stdlib::Windowspath, Stdlib::Unixpath]
       SOURCE
@@ -258,7 +258,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
     end
 
     context 'given a type alias over multiple lines' do
-      let(:source) { <<~'SOURCE' }
+      let(:source) { <<~SOURCE }
         # A multiline foo type
         # with long docs
         type OptionsWithoutName = Struct[{
