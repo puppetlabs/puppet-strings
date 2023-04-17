@@ -69,11 +69,13 @@ describe PuppetStrings::Markdown::Base do
       it 'returns a hash' do
         expect(toc).to be_instance_of Hash
       end
+
       it 'prefers the summary for :desc' do
         expect(toc[:desc]).to eq 'A simple class.'
       end
     end
   end
+
   context 'less basic class' do
     before :each do
       YARD::Parser::SourceParser.parse_string(<<~'SOURCE', :puppet)
@@ -142,6 +144,7 @@ describe PuppetStrings::Markdown::Base do
       it 'returns a hash' do
         expect(toc).to be_instance_of Hash
       end
+
       it 'uses overview for :desc in absence of summary' do
         expect(toc[:desc]).to eq 'An overview It\'s a longer overview Ya know?'
       end

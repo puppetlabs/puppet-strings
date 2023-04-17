@@ -36,12 +36,14 @@ describe PuppetStrings::Yard::Parsers::JSON::TaskStatement do
       expect(spec_subject.comments).to eq 'Allows you to backup your database to local file.'
     end
   end
+
   describe '#parameters' do
     context 'with params' do
       it 'returns params' do
         expect(!spec_subject.parameters.empty?).to be true
       end
     end
+
     context 'no params' do
       let(:source) { <<~'SOURCE' }
         {

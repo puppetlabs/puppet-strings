@@ -105,6 +105,7 @@ describe PuppetStrings::Describe do
       DATA
       expect { described_class.render(nil, true) }.to output(output).to_stdout
     end
+
     it 'outputs the expected describe content for a type' do
       output = <<~'DATA'
 
