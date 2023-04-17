@@ -9,7 +9,7 @@ class PuppetStrings::Yard::CodeObjects::Base < YARD::CodeObjects::NamespaceObjec
     # Skip the super class' implementation because it detects :: in names and this will cause namespaces in the output we don't want
     object = Object.class.instance_method(:new).bind_call(self, *args)
     existing = YARD::Registry.at(object.path)
-    object = existing if existing && existing.class == self
+    object = existing if existing.instance_of?(self)
     yield(object) if block_given?
     object
   end
