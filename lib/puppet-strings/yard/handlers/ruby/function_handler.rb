@@ -77,20 +77,20 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
 
     unless object.tags(:param).empty?
       log.warn "The docstring for Puppet 4.x function '#{object.name}' " \
-        "contains @param tags near #{object.file}:#{object.line}: parameter " \
-        'documentation should be made on the dispatch call.'
+               "contains @param tags near #{object.file}:#{object.line}: parameter " \
+               'documentation should be made on the dispatch call.'
     end
 
     unless object.tags(:return).empty?
       log.warn "The docstring for Puppet 4.x function '#{object.name}' " \
-      "contains @return tags near #{object.file}:#{object.line}: return " \
-      'value documentation should be made on the dispatch call.'
+               "contains @return tags near #{object.file}:#{object.line}: return " \
+               'value documentation should be made on the dispatch call.'
     end
 
     unless object.tags(:overload).empty?
       log.warn "The docstring for Puppet 4.x function '#{object.name}' " \
-      "contains @overload tags near #{object.file}:#{object.line}: overload " \
-      'tags are automatically generated from the dispatch calls.'
+               "contains @overload tags near #{object.file}:#{object.line}: overload " \
+               'tags are automatically generated from the dispatch calls.'
     end
 
     # Delete any existing param/return/overload tags
@@ -311,8 +311,8 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
 
     if type && tag && tag.types && !tag.types.empty?
       log.warn "The @param tag for parameter '#{name}' should not contain a " \
-        "type specification near #{file}:#{line}: ignoring in favor of " \
-        'dispatch type information.'
+               "type specification near #{file}:#{line}: ignoring in favor of " \
+               'dispatch type information.'
     end
 
     if repeated
