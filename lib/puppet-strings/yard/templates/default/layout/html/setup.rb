@@ -150,9 +150,9 @@ end
 # @return [Hash] Returns a hash of first letter of the object name to list of objects.
 def objects_by_letter(*types)
   hash = {}
-  objects = Registry.all(*types).sort_by {|o| o.name.to_s }
+  objects = Registry.all(*types).sort_by { |o| o.name.to_s }
   objects = run_verifier(objects)
-  objects.each {|o| (hash[o.name.to_s[0, 1].upcase] ||= []) << o }
+  objects.each { |o| (hash[o.name.to_s[0, 1].upcase] ||= []) << o }
   hash
 end
 
