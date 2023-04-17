@@ -258,7 +258,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(Integer $param1, Any $param2, Optional[Array[String]] $param3)')
         expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(5)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(3)
@@ -341,7 +341,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(String $param1, Integer $param2, Optional[Array] $param3, String *$param4)')
         expect(object.parameters).to eq([['param1', nil], ['param2', nil], ['param3', nil], ['*param4', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(6)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(4)
@@ -389,7 +389,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(Optional[String] *$param)')
         expect(object.parameters).to eq([['*param', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(3)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(1)
@@ -428,7 +428,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(Callable &$a_block)')
         expect(object.parameters).to eq([['&a_block', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(3)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(1)
@@ -467,7 +467,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
         expect(object.signature).to eq('foo(Optional[Callable[String]] &$a_block)')
         expect(object.parameters).to eq([['&a_block', nil]])
         expect(object.docstring).to eq('An example 4.x function.')
-        expect(object.docstring.tags(:overload).empty?).to be_truthy
+        expect(object.docstring.tags(:overload)).to be_empty
         expect(object.docstring.tags.size).to eq(3)
         tags = object.docstring.tags(:param)
         expect(tags.size).to eq(1)
@@ -528,8 +528,8 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       expect(object.signature).to eq('')
       expect(object.parameters).to eq([])
       expect(object.docstring).to eq('An example 4.x function.')
-      expect(object.docstring.tags(:param).empty?).to be_truthy
-      expect(object.docstring.tags(:return).empty?).to be_truthy
+      expect(object.docstring.tags(:param)).to be_empty
+      expect(object.docstring.tags(:return)).to be_empty
       expect(object.docstring.tags.size).to eq(3)
       overloads = object.docstring.tags(:overload)
       expect(overloads.size).to eq(2)

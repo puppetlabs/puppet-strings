@@ -22,7 +22,7 @@ describe PuppetStrings::Yard::Parsers::JSON::Parser do
     it 'has no relevant statements' do
       spec_subject.parse
 
-      expect(spec_subject.enumerator.empty?).to be_truthy
+      expect(spec_subject.enumerator).to be_empty
     end
   end
 
