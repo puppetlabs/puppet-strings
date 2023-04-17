@@ -14,7 +14,7 @@ module PuppetStrings::Markdown
       @template = 'data_type.erb'
       super(registry, 'data type')
       @alias_of = registry[:alias_of] unless registry[:alias_of].nil?
-      @functions = @registry[:functions].nil? ? nil : @registry[:functions].map { |func| DataType::Function.new(func) }
+      @functions = @registry[:functions]&.map { |func| DataType::Function.new(func) }
     end
 
     def render
