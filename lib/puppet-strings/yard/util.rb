@@ -9,7 +9,7 @@ module PuppetStrings::Yard::Util
   # @param [String] str The string to scrub.
   # @return [String] A scrubbed string.
   def self.scrub_string(str)
-    match = str.match(%r{^%[Qq]{(.*)}$}m)
+    match = str.match(/^%[Qq]{(.*)}$/m)
     return Puppet::Util::Docs.scrub(match[1]) if match
 
     Puppet::Util::Docs.scrub(str)
@@ -23,7 +23,7 @@ module PuppetStrings::Yard::Util
   # @param [String] data HTML document to convert
   # @return [String] HTML document with links converted
   def self.github_to_yard_links(data)
-    data.scan(%r{href="\#(.+)"}).each do |bad_link|
+    data.scan(/href="\#(.+)"/).each do |bad_link|
       data = data.gsub("=\"##{bad_link.first}\"", "=\"#label-#{bad_link.first.capitalize.tr('-', '+')}\"")
     end
 

@@ -21,7 +21,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     let(:source) { 'class foo{' }
 
     it 'logs an error' do
-      expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\): Syntax error at end of (file|input)}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[error\]: Failed to parse \(stdin\): Syntax error at end of (file|input)/).to_stdout_from_any_process
       expect(spec_subject.empty?).to be(true)
     end
   end
@@ -30,7 +30,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     let(:source) { 'class foo{}' }
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet class 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing documentation for Puppet class 'foo' at \(stdin\):1\./).to_stdout_from_any_process
     end
   end
 
@@ -89,7 +89,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):6\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):6\./).to_stdout_from_any_process
     end
   end
 
@@ -106,7 +106,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):4\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):4\./).to_stdout_from_any_process
     end
   end
 
@@ -148,7 +148,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):5: ignoring in favor of parameter type information.},
+          /\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):5: ignoring in favor of parameter type information./,
         )
         .to_stdout_from_any_process
     end
@@ -208,7 +208,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::ClassHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_class 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_class 'foo' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

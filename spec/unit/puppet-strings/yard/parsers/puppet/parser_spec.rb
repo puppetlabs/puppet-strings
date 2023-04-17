@@ -31,7 +31,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
     SOURCE
 
     it 'raises an exception' do
-      expect { spec_subject.parse }.to output(%r{\[error\]: Failed to parse test.pp: Syntax error at end of (file|input)}).to_stdout_from_any_process
+      expect { spec_subject.parse }.to output(/\[error\]: Failed to parse test.pp: Syntax error at end of (file|input)/).to_stdout_from_any_process
     end
   end
 
@@ -151,7 +151,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
       statement = spec_subject.enumerator.first
       expect(statement).to be_a(PuppetStrings::Yard::Parsers::Puppet::PlanStatement)
       expect(statement.name).to eq('plann')
-      expect(statement.source).to eq(source.sub(%r{\A.*?\n([^#])}m, '\1').chomp)
+      expect(statement.source).to eq(source.sub(/\A.*?\n([^#])/m, '\1').chomp)
       expect(statement.file).to eq(file)
       expect(statement.line).to eq(5)
       expect(statement.docstring).to eq('A simple plan.')

@@ -24,7 +24,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
     SOURCE
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing a description for Puppet provider 'linux' \(resource type 'custom'\) at \(stdin\):1\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing a description for Puppet provider 'linux' \(resource type 'custom'\) at \(stdin\):1\./).to_stdout_from_any_process
     end
   end
 
@@ -36,7 +36,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
     SOURCE
 
     it 'logs an error' do
-      expect { spec_subject }.to output(%r{Failed to parse docstring}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/Failed to parse docstring/).to_stdout_from_any_process
     end
   end
 
@@ -145,7 +145,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::ProviderHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_provider 'linux' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_provider 'linux' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

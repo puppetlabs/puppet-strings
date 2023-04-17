@@ -23,7 +23,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
     SOURCE
 
     it 'logs an error' do
-      expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\):}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[error\]: Failed to parse \(stdin\):/).to_stdout_from_any_process
       expect(spec_subject.empty?).to be(true)
     end
   end
@@ -54,7 +54,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
     SOURCE
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing a description for Puppet Task \(stdin\)}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing a description for Puppet Task \(stdin\)/).to_stdout_from_any_process
     end
   end
 
@@ -107,7 +107,7 @@ describe PuppetStrings::Yard::Handlers::JSON::TaskHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing description for param 'database' in Puppet Task \(stdin\)}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing description for param 'database' in Puppet Task \(stdin\)/).to_stdout_from_any_process
     end
   end
 end

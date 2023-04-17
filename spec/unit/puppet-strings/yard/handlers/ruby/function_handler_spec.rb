@@ -25,7 +25,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\./).to_stdout_from_any_process
       end
     end
 
@@ -145,7 +145,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):1}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):1/).to_stdout_from_any_process
       end
     end
   end
@@ -158,7 +158,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\./).to_stdout_from_any_process
       end
     end
 
@@ -604,7 +604,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: The @param tag for parameter 'missing' has no matching parameter at \(stdin\):5}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: The @param tag for parameter 'missing' has no matching parameter at \(stdin\):5/).to_stdout_from_any_process
     end
   end
 
@@ -620,7 +620,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param1' near \(stdin\):5}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @param tag for parameter 'param1' near \(stdin\):5/).to_stdout_from_any_process
     end
   end
 
@@ -639,7 +639,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The @param tag for parameter 'param1' should not contain a type specification near \(stdin\):6: ignoring in favor of dispatch type information\.},
+          /\[warn\]: The @param tag for parameter 'param1' should not contain a type specification near \(stdin\):6: ignoring in favor of dispatch type information\./,
         )
         .to_stdout_from_any_process
     end
@@ -657,7 +657,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):4}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):4/).to_stdout_from_any_process
     end
   end
 
@@ -675,7 +675,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The docstring for Puppet 4.x function 'foo' contains @param tags near \(stdin\):3: parameter documentation should be made on the dispatch call\.},
+          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @param tags near \(stdin\):3: parameter documentation should be made on the dispatch call\./,
         )
         .to_stdout_from_any_process
     end
@@ -695,7 +695,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The docstring for Puppet 4.x function 'foo' contains @overload tags near \(stdin\):3: overload tags are automatically generated from the dispatch calls\.},
+          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @overload tags near \(stdin\):3: overload tags are automatically generated from the dispatch calls\./,
         )
         .to_stdout_from_any_process
     end
@@ -715,7 +715,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The docstring for Puppet 4.x function 'foo' contains @return tags near \(stdin\):3: return value documentation should be made on the dispatch call\.},
+          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @return tags near \(stdin\):3: return value documentation should be made on the dispatch call\./,
         )
         .to_stdout_from_any_process
     end
@@ -753,7 +753,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::FunctionHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

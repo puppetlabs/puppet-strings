@@ -25,7 +25,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
     SOURCE
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing a description for Puppet resource type 'database' at \(stdin\):1\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing a description for Puppet resource type 'database' at \(stdin\):1\./).to_stdout_from_any_process
     end
   end
 
@@ -203,7 +203,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_type 'database' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_type 'database' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end
@@ -223,7 +223,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::RsapiHandler do
     SOURCE
 
     it 'does not emit a warning' do
-      expect { spec_subject }.not_to output(%r{\[warn\].*unexpected construct regexp_literal}).to_stdout_from_any_process
+      expect { spec_subject }.not_to output(/\[warn\].*unexpected construct regexp_literal/).to_stdout_from_any_process
     end
   end
 end

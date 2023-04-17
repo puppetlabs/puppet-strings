@@ -66,7 +66,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for attribute 'msg' near \(stdin\):2}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @param tag for attribute 'msg' near \(stdin\):2/).to_stdout_from_any_process
     end
 
     it 'registers a data type object with all param tags' do
@@ -110,7 +110,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
       SOURCE
 
       it 'outputs a warning about the missing functions' do
-        expect { spec_subject }.to output(%r{\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2}m).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2/m).to_stdout_from_any_process
       end
 
       it 'registers a data type object with all functions' do
@@ -158,11 +158,11 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
         SOURCE
 
         it 'outputs a warning about the first missing function' do
-          expect { spec_subject }.to output(%r{\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2}m).to_stdout_from_any_process
+          expect { spec_subject }.to output(/\[warn\]: Missing @!method tag for function 'func1' near \(stdin\):2/m).to_stdout_from_any_process
         end
 
         it 'outputs a warning about the second missing function' do
-          expect { spec_subject }.to output(%r{\[warn\]: Missing @!method tag for function 'func2' near \(stdin\):2}m).to_stdout_from_any_process
+          expect { spec_subject }.to output(/\[warn\]: Missing @!method tag for function 'func2' near \(stdin\):2/m).to_stdout_from_any_process
         end
 
         it 'registers a data type object with all functions' do
@@ -213,11 +213,11 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
     SOURCE
 
     it 'outputs a warning about the extra attribute' do
-      expect { spec_subject }.to output(%r{\[warn\]: The @param tag for 'arg1' has no matching attribute near \(stdin\):7}m).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: The @param tag for 'arg1' has no matching attribute near \(stdin\):7/m).to_stdout_from_any_process
     end
 
     it 'outputs a warning about the extra function' do
-      expect { spec_subject }.to output(%r{\[warn\]: The @!method tag for 'does_not_exist' has no matching function definition near \(stdin\):7}m).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: The @!method tag for 'does_not_exist' has no matching function definition near \(stdin\):7/m).to_stdout_from_any_process
     end
 
     it 'registers a data type object with extra information removed' do
@@ -416,23 +416,23 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
       SOURCE
 
       it 'outputs a warning about the incorrect return type' do
-        expect { spec_subject }.to output(%r{\[warn\]: The @return tag for 'func1' has a different type definition .+ Expected \["Optional\[String\]"\]}m).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The @return tag for 'func1' has a different type definition .+ Expected \["Optional\[String\]"\]/m).to_stdout_from_any_process
       end
 
       it 'outputs a warning about the additional parameter' do
-        expect { spec_subject }.to output(%r{\[warn\]: The @param tag for 'extra' should not exist for function 'func1' that is defined near}m).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The @param tag for 'extra' should not exist for function 'func1' that is defined near/m).to_stdout_from_any_process
       end
 
       it 'outputs a warning about the wrong parameter type (func1)' do
         expect do
           spec_subject
-        end.to output(%r{\[warn\]: The @param tag for 'foo1' for function 'func1' has a different type definition than the actual function near .+ Expected \["Integer"\]}m).to_stdout_from_any_process
+        end.to output(/\[warn\]: The @param tag for 'foo1' for function 'func1' has a different type definition than the actual function near .+ Expected \["Integer"\]/m).to_stdout_from_any_process
       end
 
       it 'outputs a warning about the wrong parameter type (func2)' do
         expect do
           spec_subject
-        end.to output(%r{\[warn\]: The @param tag for 'param1' for function 'func2' has a different type definition than the actual function near .+ Expected \["Integer"\]}m).to_stdout_from_any_process
+        end.to output(/\[warn\]: The @param tag for 'param1' for function 'func2' has a different type definition than the actual function near .+ Expected \["Integer"\]/m).to_stdout_from_any_process
       end
 
       it 'automatically fixes function parameters, except for differring types' do
@@ -551,7 +551,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
     end
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Invalid datatype definition at (.+):[0-9]+: Syntax error at 'arg1'}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Invalid datatype definition at (.+):[0-9]+: Syntax error at 'arg1'/).to_stdout_from_any_process
     end
   end
 
@@ -589,7 +589,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_data_type 'RubyDataType' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_data_type 'RubyDataType' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

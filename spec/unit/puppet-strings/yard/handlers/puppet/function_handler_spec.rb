@@ -22,7 +22,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     let(:source) { 'function foo{' }
 
     it 'logs an error' do
-      expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\): Syntax error at end of}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[error\]: Failed to parse \(stdin\): Syntax error at end of/).to_stdout_from_any_process
       expect(spec_subject.empty?).to be(true)
     end
   end
@@ -31,7 +31,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     let(:source) { 'function foo{}' }
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing documentation for Puppet function 'foo' at \(stdin\):1\./).to_stdout_from_any_process
     end
   end
 
@@ -95,7 +95,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
 
     it 'outputs a warning' do
       expect { spec_subject }
-        .to output(%r{\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):7\.})
+        .to output(/\[warn\]: The @param tag for parameter 'param4' has no matching parameter at \(stdin\):7\./)
         .to_stdout_from_any_process
     end
   end
@@ -112,7 +112,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):5\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @param tag for parameter 'param3' near \(stdin\):5\./).to_stdout_from_any_process
     end
   end
 
@@ -152,7 +152,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          %r{\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):6: ignoring in favor of parameter type information.},
+          /\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):6: ignoring in favor of parameter type information./,
         )
         .to_stdout_from_any_process
     end
@@ -191,7 +191,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'outputs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):5\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):5\./).to_stdout_from_any_process
     end
   end
 
@@ -204,7 +204,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'registers a function object with the correct return type' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):2\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):2\./).to_stdout_from_any_process
       expect(spec_subject.size).to eq(1)
       object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
@@ -226,7 +226,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'does not output a warning if return types match' do
-      expect { spec_subject }.not_to output(%r{Documented return type does not match return type in function definition}).to_stdout_from_any_process
+      expect { spec_subject }.not_to output(/Documented return type does not match return type in function definition/).to_stdout_from_any_process
     end
   end
 
@@ -240,7 +240,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'prefers the return type from the function definition' do
-      expect { spec_subject }.to output(%r{\[warn\]: Documented return type does not match return type in function definition near \(stdin\):3\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Documented return type does not match return type in function definition near \(stdin\):3\./).to_stdout_from_any_process
       expect(spec_subject.size).to eq(1)
       object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
@@ -283,7 +283,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
     SOURCE
 
     it 'adds a return tag with a default type value of Any' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing @return tag near \(stdin\):2\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing @return tag near \(stdin\):2\./).to_stdout_from_any_process
       expect(spec_subject.size).to eq(1)
       object = spec_subject.first
       expect(object).to be_a(PuppetStrings::Yard::CodeObjects::Function)
@@ -325,7 +325,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPET
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_function 'foo' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

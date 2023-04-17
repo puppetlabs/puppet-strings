@@ -32,7 +32,7 @@ describe PuppetStrings::Yard::Parsers::JSON::Parser do
     SOURCE
 
     it 'raises an exception' do
-      expect { spec_subject.parse }.to output(%r{\[error\]: Failed to parse test.json}).to_stdout_from_any_process
+      expect { spec_subject.parse }.to output(/\[error\]: Failed to parse test.json/).to_stdout_from_any_process
     end
   end
 

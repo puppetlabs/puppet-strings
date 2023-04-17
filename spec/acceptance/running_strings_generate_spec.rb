@@ -10,7 +10,7 @@ describe 'Generating module documentation using generate action' do
 
   before :all do
     # TODO: Linux only
-    test_module_path = sut_module_path(%r{Module test})
+    test_module_path = sut_module_path(/Module test/)
     PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate \"#{test_module_path}/**/*.{rb,pp}\"")
   end
 

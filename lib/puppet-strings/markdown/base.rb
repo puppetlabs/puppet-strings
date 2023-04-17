@@ -200,7 +200,7 @@ module PuppetStrings::Markdown
       return unless text
 
       text.split("\n").map! { |line|
-        line.length > line_width ? line.gsub(%r{(.{1,#{line_width}})(\s+|$)}, "\\1#{break_sequence}").strip : line
+        line.length > line_width ? line.gsub(/(.{1,#{line_width}})(\s+|$)/, "\\1#{break_sequence}").strip : line
       } * break_sequence
     end
 

@@ -21,7 +21,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DataTypeAliasHandler, if: TEST_P
     let(:source) { 'type Testype =' }
 
     it 'logs an error' do
-      expect { spec_subject }.to output(%r{\[error\]: Failed to parse \(stdin\): Syntax error at end of (file|input)}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[error\]: Failed to parse \(stdin\): Syntax error at end of (file|input)/).to_stdout_from_any_process
       expect(spec_subject.empty?).to be(true)
     end
   end
@@ -30,7 +30,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DataTypeAliasHandler, if: TEST_P
     let(:source) { 'type Testype = String[1]' }
 
     it 'logs a warning' do
-      expect { spec_subject }.to output(%r{\[warn\]: Missing documentation for Puppet type alias 'Testype' at \(stdin\):1\.}).to_stdout_from_any_process
+      expect { spec_subject }.to output(/\[warn\]: Missing documentation for Puppet type alias 'Testype' at \(stdin\):1\./).to_stdout_from_any_process
     end
   end
 
@@ -58,7 +58,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DataTypeAliasHandler, if: TEST_P
       SOURCE
 
       it 'logs a warning' do
-        expect { spec_subject }.to output(%r{\[warn\]: The length of the summary for puppet_data_type_alias 'Testype' exceeds the recommended limit of 140 characters.}).to_stdout_from_any_process
+        expect { spec_subject }.to output(/\[warn\]: The length of the summary for puppet_data_type_alias 'Testype' exceeds the recommended limit of 140 characters./).to_stdout_from_any_process
       end
     end
   end

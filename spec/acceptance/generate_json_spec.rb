@@ -4,7 +4,7 @@ require 'spec_helper_acceptance'
 
 describe 'Generating JSON' do
   let(:test_module_path) do
-    sut_module_path(%r{Module test})
+    sut_module_path(/Module test/)
   end
 
   let(:remote_tmp_path) do
