@@ -101,7 +101,7 @@ class PuppetStrings::Yard::Handlers::Ruby::RsapiHandler < PuppetStrings::Yard::H
     kv_pairs = node.children.map do |assoc|
       [value_from_node(assoc.children[0]), value_from_node(assoc.children[1])]
     end
-    Hash[kv_pairs]
+    kv_pairs.to_h
   end
 
   def var_ref_from_node(node)
