@@ -235,7 +235,7 @@ describe PuppetStrings::Yard::Parsers::Puppet::Parser do
       expect(spec_subject.enumerator.size).to eq(1)
       statement = spec_subject.enumerator.first
       expect(statement).to be_a(PuppetStrings::Yard::Parsers::Puppet::FunctionStatement)
-      expect(statement.type).to eq("Struct\[{'a' => Integer[1, 10]}\]")
+      expect(statement.type).to eq("Struct[{'a' => Integer[1, 10]}]")
     end
   end
 
