@@ -360,9 +360,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
     # Puppet Data Type function invocation. So instead we derive a signature from the method definition.
     object.meths.each do |meth|
       params = ''
-      unless meth.docstring.tags(:param).empty?
-        params += '(' + meth.docstring.tags(:param).map { |t| t.name }.join(', ') + ')'
-      end
+      params += '(' + meth.docstring.tags(:param).map { |t| t.name }.join(', ') + ')' unless meth.docstring.tags(:param).empty?
       meth.signature = "#{object.name}.#{meth.name}" + params
     end
 

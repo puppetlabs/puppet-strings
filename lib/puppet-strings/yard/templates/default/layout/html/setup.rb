@@ -66,9 +66,7 @@ def layout
 
   final_layout = erb(:layout)
 
-  if @file && @file.name == 'README'
-    PuppetStrings::Yard::Util.github_to_yard_links(final_layout)
-  end
+  PuppetStrings::Yard::Util.github_to_yard_links(final_layout) if @file && @file.name == 'README'
 
   final_layout
 end

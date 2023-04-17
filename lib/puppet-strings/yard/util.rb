@@ -10,9 +10,7 @@ module PuppetStrings::Yard::Util
   # @return [String] A scrubbed string.
   def self.scrub_string(str)
     match = str.match(%r{^%[Qq]{(.*)}$}m)
-    if match
-      return Puppet::Util::Docs.scrub(match[1])
-    end
+    return Puppet::Util::Docs.scrub(match[1]) if match
 
     Puppet::Util::Docs.scrub(str)
   end

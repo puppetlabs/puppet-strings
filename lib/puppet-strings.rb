@@ -50,14 +50,10 @@ module PuppetStrings
     YARD::CLI::Yardoc.run(*args)
 
     # If outputting JSON, render the output
-    if options[:json] && !options[:describe]
-      render_json(file)
-    end
+    render_json(file) if options[:json] && !options[:describe]
 
     # If outputting Markdown, render the output
-    if options[:markdown]
-      render_markdown(file)
-    end
+    render_markdown(file) if options[:markdown]
 
     return unless options[:describe]
 

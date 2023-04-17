@@ -78,9 +78,7 @@ module PuppetStrings::Yard::Parsers::Puppet
       def initialize(parameter)
         @name = parameter.name
         # Take the exact text for the type expression
-        if parameter.type_expr
-          @type = PuppetStrings::Yard::Util.ast_to_text(parameter.type_expr)
-        end
+        @type = PuppetStrings::Yard::Util.ast_to_text(parameter.type_expr) if parameter.type_expr
         # Take the exact text for the default value expression
         return unless parameter.value
 
