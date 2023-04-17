@@ -76,11 +76,9 @@ module PuppetStrings::Markdown
   # @param [String] path The full path to the template file.
   # @return [ERB] Template
   def self.erb(path)
-    if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.6.0')
-      ERB.new(File.read(path), trim_mode: '-')
-    else
+    unless Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.6.0')
       # This outputs warnings in Ruby 2.6+.
-      ERB.new(File.read(path), trim_mode: '-')
     end
+    ERB.new(File.read(path), trim_mode: '-')
   end
 end
