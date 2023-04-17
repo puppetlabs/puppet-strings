@@ -43,7 +43,7 @@ describe 'Generating JSON' do
           'text' => 'This is the function documentation for `function3x`',
           'tags' => ['tag_name' => 'return', 'text' => '', 'types' => ['Any']]
         },
-          'source' => "Puppet::Parser::Functions.newfunction(:function3x, :doc => \"This is the function documentation for `function3x`\") do |args|\nend",
+        'source' => "Puppet::Parser::Functions.newfunction(:function3x, :doc => \"This is the function documentation for `function3x`\") do |args|\nend",
       ],
       'puppet_tasks' => [],
       'puppet_plans' => []
