@@ -18,7 +18,7 @@ class PuppetStrings::Yard::Handlers::Ruby::Base < YARD::Handlers::Ruby::Base
 
     case node.type
     when :symbol, :symbol_literal
-      node.source[1..-1]
+      node.source[1..]
     when :label
       node.source[0..-2]
     when :dyna_symbol
