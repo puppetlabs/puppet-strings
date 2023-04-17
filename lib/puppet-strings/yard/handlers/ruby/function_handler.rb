@@ -39,7 +39,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     is_3x = ['Puppet::Parser::Functions', 'newfunction'].include?(module_name)
     object = PuppetStrings::Yard::CodeObjects::Function.new(
       get_name(statement, 'Puppet::Functions.create_function'),
-      is_3x ? PuppetStrings::Yard::CodeObjects::Function::RUBY_3X : PuppetStrings::Yard::CodeObjects::Function::RUBY_4X,
+      is_3x ? PuppetStrings::Yard::CodeObjects::Function::RUBY_3X : PuppetStrings::Yard::CodeObjects::Function::RUBY_4X
     )
     object.source = statement
     register object
@@ -185,7 +185,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         node_as_string(parameters[0]),
         nil, # TODO: determine default from corresponding Ruby method signature?
         method_name.include?('optional'),
-        method_name.include?('repeated'),
+        method_name.include?('repeated')
       )
     end
 
@@ -216,7 +216,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
           nil, # TODO: determine default from corresponding Ruby method signature?
           block.method_name.source.include?('optional'),
           false, # Not repeated
-          true, # Is block
+          true # Is block
         )
       end
     end
@@ -244,7 +244,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         param_tags,
         parameter.source,
         parameter.file,
-        parameter.line,
+        parameter.line
       )
     end
 
@@ -259,7 +259,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         parameter.line,
         nil,
         parameter[1].source,
-        true,
+        true
       )
     end
 
@@ -275,7 +275,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         nil,
         nil,
         false,
-        true,
+        true
       )
     end
 
@@ -292,7 +292,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
         nil,
         false,
         false,
-        true,
+        true
       )
     end
 

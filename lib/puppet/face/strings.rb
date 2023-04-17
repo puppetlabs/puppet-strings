@@ -28,7 +28,7 @@ Puppet::Face.define(:strings, '0.0.1') do
 
       PuppetStrings.generate(
         args.count > 1 ? args[0..-2] : PuppetStrings::DEFAULT_SEARCH_PATTERNS,
-        build_generate_options(args.last),
+        build_generate_options(args.last)
       )
       nil
     end
@@ -127,7 +127,7 @@ Puppet::Face.define(:strings, '0.0.1') do
       search_patterns = ['types/**/*.pp', 'lib/**/*.rb']
       PuppetStrings.generate(
         search_patterns,
-        build_generate_options(options),
+        build_generate_options(options)
       )
       nil
     end
