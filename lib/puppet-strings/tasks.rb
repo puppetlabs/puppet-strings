@@ -8,7 +8,7 @@ module PuppetStrings end
 
 # The module for Puppet Strings rake tasks.
 module PuppetStrings::Tasks
-  require 'puppet-strings/tasks/generate.rb'
-  require 'puppet-strings/tasks/gh_pages.rb'
-  require 'puppet-strings/tasks/validate.rb'
+  require 'puppet-strings/tasks/generate'
+  require 'puppet-strings/tasks/gh_pages'
+  require 'puppet-strings/tasks/validate'
 end
