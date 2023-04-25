@@ -5,9 +5,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v4.0.0-rc.1](https://github.com/puppetlabs/puppet-strings/tree/v4.0.0-rc.1) - 2023-04-17
+## [v4.0.0](https://github.com/puppetlabs/puppet-strings/tree/v4.0.0) - 2023-04-25
 
-[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v3.0.1...v4.0.0-rc.1)
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.0.0.rc.1...v4.0.0)
+
+## [v4.0.0.rc.1](https://github.com/puppetlabs/puppet-strings/tree/v4.0.0.rc.1) - 2023-04-17
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v3.0.1...v4.0.0.rc.1)
 
 ### Added
 
