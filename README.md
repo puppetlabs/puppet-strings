@@ -107,7 +107,7 @@ An example of running the acceptance tests locally with Docker:
 4. Install test items; Puppet Agent, our test module, and the puppet-strings gem built from this source code
 
     ``` bash
-    bundle exec rake 'litmus:install_agent[puppet6]'
+    bundle exec rake 'litmus:install_agent[puppet8]'
     bundle exec rake 'litmus:install_modules_from_directory[./spec/fixtures/acceptance/modules]'
     bundle exec rake litmus:install_gems
     ```
