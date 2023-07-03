@@ -13,17 +13,18 @@ module PuppetStrings::Describe
   def self.render(describe_types = [], list = false, _providers = false)
     document = {
       defined_types: YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash),
-      resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash)
+      resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash),
+      providers: YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash)
     }
 
     if list
       puts 'These are the types known to puppet:'
       document[:resource_types].each { |t| list_one_type(t) }
     else
-      document[:providers] = YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash)
+      document[:providers].each { |p| list_one_type(p) }
 
       type_names = {}
-      describe_types.each { |name| type_names[name] = true }
+      describe_types&.each { |name| type_names[name] = true }
 
       document[:resource_types].each do |t|
         show_one_type(t) if type_names[t[:name].to_s]
