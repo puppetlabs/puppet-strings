@@ -322,7 +322,7 @@ class PuppetStrings::Yard::Handlers::Ruby::FunctionHandler < PuppetStrings::Yard
     end
 
     type ||= tag&.types ? tag.type : 'Any'
-    type = optional ? "Optional[#{type}]" : type
+    type = "Optional[#{type}]" if optional
 
     object.parameters << [name, to_puppet_literal(default)]
 
