@@ -55,7 +55,7 @@ module PuppetStrings
 
     return unless options[:describe]
 
-    render_describe(options[:describe_types], options[:describe_list], options[:providers])
+    render_describe(options[:describe_types], options[:describe_list], options[:providers], options[:list_providers])
   end
 
   def self.puppet_5?
@@ -72,9 +72,9 @@ module PuppetStrings
     PuppetStrings::Markdown.render(path)
   end
 
-  def self.render_describe(describe_types, list = false, providers = false)
+  def self.render_describe(describe_types, list = false, show_providers = true, list_providers = false)
     require 'puppet-strings/describe'
-    PuppetStrings::Describe.render(describe_types, list, providers)
+    PuppetStrings::Describe.render(describe_types, list, show_providers, list_providers)
   end
 
   # Runs the YARD documentation server.

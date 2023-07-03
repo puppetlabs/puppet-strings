@@ -3,7 +3,7 @@
 require 'puppet/face'
 
 # Implements the 'puppet strings' interface.
-Puppet::Face.define(:strings, '0.0.1') do
+Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
   summary 'Generate Puppet documentation with YARD.'
 
   action(:generate) do
@@ -83,7 +83,10 @@ Puppet::Face.define(:strings, '0.0.1') do
       summary 'list types'
     end
     option '--providers' do
-      summary 'provide details on providers'
+      summary 'provide details on providers for each type'
+    end
+    option '--list-providers' do
+      summary 'list all providers'
     end
 
     # TODO: Implement the rest of describe behavior
@@ -95,6 +98,9 @@ Puppet::Face.define(:strings, '0.0.1') do
 
     # * --list:
     #   List all types
+
+    # * --list-providers:
+    #   list all providers
 
     # * --meta:
     #   List all metaparameters
@@ -160,6 +166,8 @@ Puppet::Face.define(:strings, '0.0.1') do
         generate_options[:describe] = true
         generate_options[:describe_types] = options[:describe_types]
         generate_options[:describe_list] = options[:list]
+        generate_options[:providers] = options[:providers]
+        generate_options[:list_providers] = options[:list_providers]
       end
 
       format = options[:format]
