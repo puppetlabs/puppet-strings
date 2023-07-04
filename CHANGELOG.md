@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.1.0](https://github.com/puppetlabs/puppet-strings/tree/v4.1.0) - 2023-07-04
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.0.0...v4.1.0)
+
+### Added
+
+- (CONT-1193) - Add `--providers` and `--list-providers` flags [#357](https://github.com/puppetlabs/puppet-strings/pull/357) ([jordanbreen28](https://github.com/jordanbreen28))
+
 ## [v4.0.0](https://github.com/puppetlabs/puppet-strings/tree/v4.0.0) - 2023-04-25
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.0.0.rc.1...v4.0.0)
