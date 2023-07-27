@@ -75,8 +75,8 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   # @param [Array] args The args passed to the method.
   # @param block The block passed to the method.
   # @return Returns what the method call on the object would return.
-  def method_missing(method_name, *args, &block)
-    return object.send(method_name, *args, &block) if object.respond_to? method_name
+  def method_missing(method_name, ...)
+    return object.send(method_name, ...) if object.respond_to? method_name
 
     super
   end
