@@ -70,7 +70,11 @@ Data type:<%= code_maybe_block(param[:types].join(', ')) %>
 Options:
 
 <% options_for_param(param[:name]).each do |o| -%>
+<% if o[:opt_types] -%>
 * **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+<% else -%>
+* **<%= o[:opt_name] %>**: <%= o[:opt_text] %>
+<% end -%>
 <% end -%>
 
 <% end -%>
