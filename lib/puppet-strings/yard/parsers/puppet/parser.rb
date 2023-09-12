@@ -40,6 +40,8 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
 
   private
 
+  # TODO: Fix the rubocop violations in this file between the following rubocop:disable/enable lines
+  # rubocop:disable Naming/MethodName
   def transform_Program(o)
     # Cache the lines of the source text; we'll use this to locate comments
     @lines = o.source_text.lines.to_a
@@ -83,4 +85,5 @@ class PuppetStrings::Yard::Parsers::Puppet::Parser < YARD::Parser::Base
   def transform_Object(o)
     # Ignore anything else (will be compacted out of the resulting array)
   end
+  # rubocop:enable Naming/MethodName
 end

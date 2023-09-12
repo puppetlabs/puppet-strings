@@ -143,6 +143,8 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
       @literal_visitor.visit_this_0(self, ast)
     end
 
+    # TODO: Fix the rubocop violations in this file between the following rubocop:disable/enable lines
+    # rubocop:disable Naming/MethodName
     # ----- The following methods are different/additions from the original Literal_evaluator
     def literal_Object(o)
       # Ignore any other object types
@@ -214,6 +216,7 @@ class PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler < PuppetStrings::Yard
         result[literal(entry.key)] = literal(entry.value)
       end
     end
+    # rubocop:enable Naming/MethodName
   end
 
   # Extracts the datatype attributes from a Puppet Data Type interface hash.
