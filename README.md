@@ -2,7 +2,7 @@
 
 [![ci](https://github.com/puppetlabs/puppet-strings/actions/workflows/ci.yml/badge.svg)](https://github.com/puppetlabs/puppet-strings/actions/workflows/ci.yml)
 [![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
-[![Code Owners](https://img.shields.io/badge/owners-DevX--team-blue)](https://github.com/puppetlabs/pdk/blob/main/CODEOWNERS)
+[![Code Owners](https://img.shields.io/badge/owners-DevX--team-blue)](https://github.com/puppetlabs/puppet-strings/blob/main/CODEOWNERS)
 
 Puppet Strings generates documentation for Puppet code and extensions written in Puppet and Ruby.
 Strings processes code and YARD-style code comments to create documentation in HTML, Markdown, or JSON formats.
