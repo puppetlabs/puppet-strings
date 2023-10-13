@@ -133,12 +133,6 @@ RSpec/ExpectInHook:
   Exclude:
     - 'spec/unit/puppet-strings/json_spec.rb'
 
-# Offense count: 20
-# Configuration parameters: Include, CustomTransform, IgnoreMethods, SpecSuffixOnly.
-# Include: **/*_spec*rb*, **/spec/**/*
-RSpec/FilePath:
-  Enabled: false
-
 # Offense count: 91
 RSpec/MultipleExpectations:
   Max: 64
