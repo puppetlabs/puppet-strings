@@ -126,6 +126,10 @@ An example of running the acceptance tests locally with Docker:
     bundle exec rake litmus:tear_down
     ```
 
+## License
+
+This codebase is licensed under Apache 2.0. However, the open source dependencies included in this codebase might be subject to other software licenses such as AGPL, GPL2.0, and MIT.
+
 ## Support
 
 Please log issues in [GitHub issues](https://github.com/puppetlabs/puppet-strings/issues).
