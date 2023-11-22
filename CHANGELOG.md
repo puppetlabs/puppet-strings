@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.1.1](https://github.com/puppetlabs/puppet-strings/tree/v4.1.1) - 2023-11-22
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.0...v4.1.1)
+
+### Fixed
+
+- Fix option tag handling with no data types [#361](https://github.com/puppetlabs/puppet-strings/pull/361) ([seanmil](https://github.com/seanmil))
+
 ## [v4.1.0](https://github.com/puppetlabs/puppet-strings/tree/v4.1.0) - 2023-07-04
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.0.0...v4.1.0)
@@ -21,12 +29,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v3.0.1...v4.0.0.rc.1)
 
+### Changed
+- (CONT-812) Puppet 8 / Ruby 3 support [#348](https://github.com/puppetlabs/puppet-strings/pull/348) ([chelnak](https://github.com/chelnak))
+
 ### Added
 
 - Add deprecated tag [#342](https://github.com/puppetlabs/puppet-strings/pull/342) ([b4ldr](https://github.com/b4ldr))
-
-### Changed
-- (CONT-812) Puppet 8 / Ruby 3 support [#348](https://github.com/puppetlabs/puppet-strings/pull/348) ([chelnak](https://github.com/chelnak))
 
 ## [v3.0.1](https://github.com/puppetlabs/puppet-strings/tree/v3.0.1) - 2022-10-25
 
@@ -40,15 +48,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.9.0...v3.0.0)
 
-### Added
-
-- (#223) Use code blocks as appropriate in Markdown [#319](https://github.com/puppetlabs/puppet-strings/pull/319) ([danielparks](https://github.com/danielparks))
-- Use tilde heredocs for readability [#317](https://github.com/puppetlabs/puppet-strings/pull/317) ([danielparks](https://github.com/danielparks))
-
 ### Changed
 - (CONT-228) Remove deprecated emit flags [#329](https://github.com/puppetlabs/puppet-strings/pull/329) ([chelnak](https://github.com/chelnak))
 - (CONT-228) Bump ruby version [#326](https://github.com/puppetlabs/puppet-strings/pull/326) ([chelnak](https://github.com/chelnak))
 - (#301) Update minimum Ruby version to 2.5.0 [#313](https://github.com/puppetlabs/puppet-strings/pull/313) ([danielparks](https://github.com/danielparks))
+
+### Added
+
+- (#223) Use code blocks as appropriate in Markdown [#319](https://github.com/puppetlabs/puppet-strings/pull/319) ([danielparks](https://github.com/danielparks))
+- Use tilde heredocs for readability [#317](https://github.com/puppetlabs/puppet-strings/pull/317) ([danielparks](https://github.com/danielparks))
 
 ### Fixed
 
@@ -96,12 +104,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.5.0...v2.6.0)
 
+### Changed
+- (MAINT) Drop Ruby 2.1.x and Puppet 4.x compatibility [#253](https://github.com/puppetlabs/puppet-strings/pull/253) ([scotje](https://github.com/scotje))
+
 ### Added
 
 - Improved markdown templates [#252](https://github.com/puppetlabs/puppet-strings/pull/252) ([kozl](https://github.com/kozl))
-
-### Changed
-- (MAINT) Drop Ruby 2.1.x and Puppet 4.x compatibility [#253](https://github.com/puppetlabs/puppet-strings/pull/253) ([scotje](https://github.com/scotje))
 
 ### Fixed
 
@@ -189,14 +197,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.2.1...2.0.0)
 
+### Changed
+- bump required ruby and puppet versions [#178](https://github.com/puppetlabs/puppet-strings/pull/178) ([eputnam](https://github.com/eputnam))
+
 ### Added
 
 - (PDOC-238) add generated message to markdown [#175](https://github.com/puppetlabs/puppet-strings/pull/175) ([eputnam](https://github.com/eputnam))
 - (PDOC-228) puppet plan support [#168](https://github.com/puppetlabs/puppet-strings/pull/168) ([eputnam](https://github.com/eputnam))
 - (PDOC-206) support for tasks [#161](https://github.com/puppetlabs/puppet-strings/pull/161) ([eputnam](https://github.com/eputnam))
-
-### Changed
-- bump required ruby and puppet versions [#178](https://github.com/puppetlabs/puppet-strings/pull/178) ([eputnam](https://github.com/eputnam))
 
 ### Fixed
 
