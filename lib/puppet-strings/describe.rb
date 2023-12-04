@@ -66,7 +66,7 @@ module PuppetStrings::Describe
     targetlength = 48
     shortento = targetlength - 4
     contentstring = object[:docstring][:text]
-    end_of_line = contentstring.index("\n")  # "." gives closer results to old describeb, but breaks for '.k5login'
+    end_of_line = contentstring.index("\n") # "." gives closer results to old describeb, but breaks for '.k5login'
     contentstring = contentstring[0..end_of_line] unless end_of_line.nil?
     contentstring = "#{contentstring[0..shortento]} ..." if contentstring.length > targetlength
 

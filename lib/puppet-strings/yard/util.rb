@@ -35,7 +35,7 @@ module PuppetStrings::Yard::Util
   # @return [Array] Returns an array of tag hashes.
   def self.tags_to_hashes(tags)
     # Skip over the API tags that are public
-    tags.select { |t| (t.tag_name != 'api' || t.text != 'public') }.map do |t|
+    tags.select { |t| t.tag_name != 'api' || t.text != 'public' }.map do |t|
       next t.to_hash if t.respond_to?(:to_hash)
 
       tag = { tag_name: t.tag_name }

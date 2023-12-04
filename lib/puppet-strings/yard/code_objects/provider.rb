@@ -8,7 +8,7 @@ class PuppetStrings::Yard::CodeObjects::Providers < PuppetStrings::Yard::CodeObj
   # @param [String] type The resource type name for the provider.
   # @return Returns the singleton instance of the group.
   def self.instance(type)
-    super("puppet_providers_#{type}".to_sym)
+    super(:"puppet_providers_#{type}")
   end
 
   # Gets the display name of the group.
