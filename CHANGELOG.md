@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.1.2](https://github.com/puppetlabs/puppet-strings/tree/v4.1.2) - 2023-12-05
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.1...v4.1.2)
+
+### Fixed
+
+- Revert "(maint) - fix rubocop" Leading argument with delegation syntax not supported with ruby 2.7.0 [#376](https://github.com/puppetlabs/puppet-strings/pull/376) ([jordanbreen28](https://github.com/jordanbreen28))
+
 ## [v4.1.1](https://github.com/puppetlabs/puppet-strings/tree/v4.1.1) - 2023-11-22
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.0...v4.1.1)
