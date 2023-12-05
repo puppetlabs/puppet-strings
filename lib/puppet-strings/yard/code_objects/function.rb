@@ -8,7 +8,7 @@ class PuppetStrings::Yard::CodeObjects::Functions < PuppetStrings::Yard::CodeObj
   # @param [Symbol] type The function type to get the group for.
   # @return Returns the singleton instance of the group.
   def self.instance(type)
-    super("puppet_functions_#{type}".to_sym)
+    super(:"puppet_functions_#{type}")
   end
 
   # Gets the display name of the group.

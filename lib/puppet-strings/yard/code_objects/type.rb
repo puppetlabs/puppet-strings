@@ -169,7 +169,7 @@ class PuppetStrings::Yard::CodeObjects::Type < PuppetStrings::Yard::CodeObjects:
   # render-time. For now, this should re-resolve on every call.
   # may be able to memoize this
   def providers
-    providers = YARD::Registry.all("puppet_providers_#{name}".to_sym)
+    providers = YARD::Registry.all(:"puppet_providers_#{name}")
     return providers if providers.empty?
 
     providers.first.children
