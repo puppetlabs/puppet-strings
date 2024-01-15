@@ -1,19 +1,22 @@
 # frozen_string_literal: true
 
 if ENV['COVERAGE'] == 'yes'
-  require 'codecov'
   require 'simplecov'
   require 'simplecov-console'
 
   SimpleCov.formatters = [
     SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::Console,
-    SimpleCov::Formatter::Codecov
+    SimpleCov::Formatter::Console
   ]
+
+  if ENV['CI'] == 'true'
+    require 'codecov'
+    SimpleCov.formatters << SimpleCov::Formatter::Codecov
+  end
 
   SimpleCov.start do
     track_files 'lib/**/*.rb'
-
+    add_filter 'lib/puppet-strings/version.rb'
     add_filter '/spec'
   end
 end

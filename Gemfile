@@ -43,6 +43,7 @@ group :development do
   gem 'serverspec'
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
+  gem 'codecov', require: false
 
   gem 'redcarpet'
 end
