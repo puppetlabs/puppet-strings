@@ -12,7 +12,7 @@ module PuppetStrings::Markdown::Helpers
   # @param [String] inline_prefix String to insert before if it’s inline.
   # @returns [String] Markdown
   def code_maybe_block(code, type: :puppet, block_prefix: "\n\n", inline_prefix: ' ')
-    if code.include?("\n")
+    if code.to_s.include?("\n")
       "#{block_prefix}```#{type}\n#{code}\n```"
     else
       "#{inline_prefix}`#{code}`"
