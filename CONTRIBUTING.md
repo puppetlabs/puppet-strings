@@ -124,7 +124,6 @@ To cut a new release, from a current `main` checkout:
 * Run `rake release[upstream]` to release from your checkout
   * make sure to use the name of your git remote pointing to the puppetlabs GitHub repo
 * Remove the release-prep branch
-* Send the release announcements using the template in [misc/ANNOUNCEMENT_TEMPLATE.md](misc/ANNOUNCEMENT_TEMPLATE.md)
 
 # Additional Resources
 
