@@ -18,6 +18,9 @@ AllCops:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Layout/LineLength:
+  Max: 200
+
 ####################################################
 # Cops below here due for deprecation
 ####################################################
