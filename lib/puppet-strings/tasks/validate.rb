@@ -34,7 +34,7 @@ namespace :strings do
       existing = File.read(filename)
 
       if generated != existing
-        warn "#{filename} is outdated"
+        warn "#{filename} is outdated; to regenerate: bundle exec rake strings:generate:reference"
         exit 1
       end
     end
