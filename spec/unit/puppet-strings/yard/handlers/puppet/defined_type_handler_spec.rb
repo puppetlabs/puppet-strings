@@ -132,7 +132,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
     SOURCE
 
     it 'respects the type that was documented' do
-      expect { spec_subject }.to output('').to_stdout_from_any_process
+      expect { spec_subject }.not_to output.to_stdout_from_any_process
       expect(spec_subject.size).to eq(1)
       tags = spec_subject.first.tags(:param)
       expect(tags.size).to eq(3)
@@ -174,7 +174,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
     SOURCE
 
     it 'respects the type that was documented' do
-      expect { spec_subject }.to output('').to_stdout_from_any_process
+      expect { spec_subject }.not_to output.to_stdout_from_any_process
       expect(spec_subject.size).to eq(1)
       tags = spec_subject.first.tags(:param)
       expect(tags.size).to eq(3)
@@ -198,7 +198,7 @@ describe PuppetStrings::Yard::Handlers::Puppet::DefinedTypeHandler do
       SOURCE
 
       it 'parses the summary' do
-        expect { spec_subject }.to output('').to_stdout_from_any_process
+        expect { spec_subject }.not_to output.to_stdout_from_any_process
         expect(spec_subject.size).to eq(1)
         summary = spec_subject.first.tags(:summary)
         expect(summary.first.text).to eq('A short summary.')
