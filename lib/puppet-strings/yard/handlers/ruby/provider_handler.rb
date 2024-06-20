@@ -107,9 +107,8 @@ class PuppetStrings::Yard::Handlers::Ruby::ProviderHandler < PuppetStrings::Yard
         parameters.each do |kvps|
           next unless kvps.count >= 1
 
-          defaultfor = []
-          kvps.each do |kvp|
-            defaultfor << [node_as_string(kvp[0]) || kvp[0].source, node_as_string(kvp[1]) || kvp[1].source]
+          defaultfor = kvps.map do |kvp|
+            [node_as_string(kvp[0]) || kvp[0].source, node_as_string(kvp[1]) || kvp[1].source]
           end
           object.add_default(defaultfor)
         end

@@ -92,7 +92,7 @@ module PuppetStrings::Yard::Parsers::Puppet
     # @param object The Puppet parser model object that has parameters.
     # @param [String] file The file containing the statement.
     def initialize(object, file)
-      super(object, file)
+      super
       @parameters = object.parameters.map { |parameter| Parameter.new(parameter) }
     end
   end
@@ -105,7 +105,7 @@ module PuppetStrings::Yard::Parsers::Puppet
     # @param [Puppet::Pops::Model::HostClassDefinition] object The model object for the class statement.
     # @param [String] file The file containing the statement.
     def initialize(object, file)
-      super(object, file)
+      super
       @name = object.name
       @parent_class = object.parent_class
     end
@@ -119,7 +119,7 @@ module PuppetStrings::Yard::Parsers::Puppet
     # @param [Puppet::Pops::Model::ResourceTypeDefinition] object The model object for the defined type statement.
     # @param [String] file The file containing the statement.
     def initialize(object, file)
-      super(object, file)
+      super
       @name = object.name
     end
   end
@@ -132,7 +132,7 @@ module PuppetStrings::Yard::Parsers::Puppet
     # @param [Puppet::Pops::Model::FunctionDefinition] object The model object for the function statement.
     # @param [String] file The file containing the statement.
     def initialize(object, file)
-      super(object, file)
+      super
       @name = object.name
       return unless object.respond_to? :return_type
 
@@ -151,7 +151,7 @@ module PuppetStrings::Yard::Parsers::Puppet
     # @param [Puppet::Pops::Model::PlanDefinition] object The model object for the plan statement.
     # @param [String] file The file containing the statement.
     def initialize(object, file)
-      super(object, file)
+      super
       @name = object.name
     end
   end
@@ -164,7 +164,7 @@ module PuppetStrings::Yard::Parsers::Puppet
     # @param [Puppet::Pops::Model::TypeAlias] object The model object for the type statement.
     # @param [String] file The file containing the statement.
     def initialize(object, file)
-      super(object, file)
+      super
 
       type_expr = object.type_expr
       case type_expr

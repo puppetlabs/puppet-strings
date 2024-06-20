@@ -44,14 +44,12 @@ class PuppetStrings::Yard::CodeObjects::Task < PuppetStrings::Yard::CodeObjects:
   end
 
   def parameters
-    parameters = []
-    statement.parameters.each do |name, props|
-      parameters.push({ name: name.to_s,
-                        tag_name: 'param',
-                        text: props['description'] || '',
-                        types: [props['type']] || '' })
+    statement.parameters.map do |name, props|
+      { name: name.to_s,
+        tag_name: 'param',
+        text: props['description'] || '',
+        types: [props['type']] || '' }
     end
-    parameters
   end
 
   # Converts the code object to a hash representation.

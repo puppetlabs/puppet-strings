@@ -65,7 +65,7 @@ class PuppetStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
   # @param [Object] value The object to associate with this tag.
   # @return [void]
   def object=(value)
-    super(value)
+    super
     @docstring.object = value
     @docstring.tags.each { |tag| tag.object = value }
   end
