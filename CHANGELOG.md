@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.1.3](https://github.com/puppetlabs/puppet-strings/tree/v4.1.3) - 2024-09-05
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.2...v4.1.3)
+
+### Fixed
+
+- (bug) - Pin yard to < 0.9.37 [#401](https://github.com/puppetlabs/puppet-strings/pull/401) ([jordanbreen28](https://github.com/jordanbreen28))
+- validate: give hint on how to regenerate outdated REFERENCE.md [#388](https://github.com/puppetlabs/puppet-strings/pull/388) ([kenyon](https://github.com/kenyon))
+- (CAT-1688) Upgrade rubocop to `~> 1.50.0` [#383](https://github.com/puppetlabs/puppet-strings/pull/383) ([LukasAud](https://github.com/LukasAud))
+- Allow numerics for templates using code_maybe_block [#382](https://github.com/puppetlabs/puppet-strings/pull/382) ([seanmil](https://github.com/seanmil))
+
 ## [v4.1.2](https://github.com/puppetlabs/puppet-strings/tree/v4.1.2) - 2023-12-05
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.1...v4.1.2)
@@ -38,6 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v3.0.1...v4.0.0.rc.1)
 
 ### Changed
+
 - (CONT-812) Puppet 8 / Ruby 3 support [#348](https://github.com/puppetlabs/puppet-strings/pull/348) ([chelnak](https://github.com/chelnak))
 
 ### Added
@@ -57,6 +69,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.9.0...v3.0.0)
 
 ### Changed
+
 - (CONT-228) Remove deprecated emit flags [#329](https://github.com/puppetlabs/puppet-strings/pull/329) ([chelnak](https://github.com/chelnak))
 - (CONT-228) Bump ruby version [#326](https://github.com/puppetlabs/puppet-strings/pull/326) ([chelnak](https://github.com/chelnak))
 - (#301) Update minimum Ruby version to 2.5.0 [#313](https://github.com/puppetlabs/puppet-strings/pull/313) ([danielparks](https://github.com/danielparks))
@@ -113,6 +126,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.5.0...v2.6.0)
 
 ### Changed
+
 - (MAINT) Drop Ruby 2.1.x and Puppet 4.x compatibility [#253](https://github.com/puppetlabs/puppet-strings/pull/253) ([scotje](https://github.com/scotje))
 
 ### Added
@@ -206,6 +220,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/1.2.1...2.0.0)
 
 ### Changed
+
 - bump required ruby and puppet versions [#178](https://github.com/puppetlabs/puppet-strings/pull/178) ([eputnam](https://github.com/eputnam))
 
 ### Added
