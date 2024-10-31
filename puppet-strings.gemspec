@@ -23,6 +23,6 @@ Gem::Specification.new do |s|
   s.files = Dir['CHANGELOG.md', 'README.md', 'LICENSE', 'lib/**/*', 'exe/**/*']
 
   s.add_runtime_dependency 'rgen', '~> 0.9'
-  s.add_runtime_dependency 'yard', '~> 0.9', '< 0.9.37'
+  s.add_runtime_dependency 'yard', '~> 0.9'
   s.requirements << 'puppet, >= 7.0.0'
 end
