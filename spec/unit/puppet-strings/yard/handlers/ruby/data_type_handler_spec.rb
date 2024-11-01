@@ -3,6 +3,10 @@
 require 'spec_helper'
 require 'puppet-strings/yard'
 
+class NullLogger
+  def write(_message); end
+end
+
 describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_DATATYPES do
   subject(:spec_subject) do
     YARD::Parser::SourceParser.parse_string(source, :ruby)
@@ -19,7 +23,7 @@ describe PuppetStrings::Yard::Handlers::Ruby::DataTypeHandler, if: TEST_PUPPET_D
   end
 
   def suppress_yard_logging
-    YARD::Logger.instance.io = nil
+    YARD::Logger.instance.io = NullLogger.new
   end
 
   describe 'parsing source without a data type definition' do
