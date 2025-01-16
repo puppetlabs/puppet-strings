@@ -4,7 +4,7 @@ require 'puppet/face'
 
 # Implements the 'puppet strings' interface.
 Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
-  summary 'Generate Puppet documentation with YARD.'
+  summary 'Generate Puppet module documentation with YARD.'
 
   action(:generate) do
     default
