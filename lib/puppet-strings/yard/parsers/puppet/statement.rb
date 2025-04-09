@@ -7,7 +7,7 @@ module PuppetStrings::Yard::Parsers::Puppet
   # Represents the base Puppet language statement.
   class Statement
     # The pattern for parsing docstring comments.
-    COMMENT_REGEX = /^\s*#+\s?/.freeze
+    COMMENT_REGEX = /^\s*#+\s?/
 
     attr_reader :source, :file, :line, :docstring, :comments_range
 
