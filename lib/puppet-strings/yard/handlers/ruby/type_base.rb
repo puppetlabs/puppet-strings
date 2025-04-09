@@ -34,7 +34,7 @@ class PuppetStrings::Yard::Handlers::Ruby::TypeBase < PuppetStrings::Yard::Handl
       elsif child.is_a?(YARD::Parser::Ruby::MethodCallNode)
         # Look for a call to a dispatch method with a block
         next unless child.method_name &&
-                    (child.method_name.source == 'desc' || child.method_name.source == 'doc=') &&
+                    ['desc', 'doc='].include?(child.method_name.source) &&
                     child.parameters(false).count == 1
 
         docstring = node_as_string(child.parameters[0])

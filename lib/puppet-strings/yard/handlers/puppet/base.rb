@@ -21,7 +21,7 @@ class PuppetStrings::Yard::Handlers::Puppet::Base < YARD::Handlers::Base
     tags.each do |tag|
       next if statement.parameters.find { |p| tag.name == p.name }
 
-      log.warn "The @param tag for parameter '#{tag.name}' has no matching parameter at #{statement.file}:#{statement.line}." unless tag.name == 'name' || tag.name == 'title'
+      log.warn "The @param tag for parameter '#{tag.name}' has no matching parameter at #{statement.file}:#{statement.line}." unless %w[name title].include?(tag.name)
     end
 
     # Assign the types for the parameter
