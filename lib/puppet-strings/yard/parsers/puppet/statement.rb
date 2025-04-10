@@ -7,7 +7,7 @@ module PuppetStrings::Yard::Parsers::Puppet
   # Represents the base Puppet language statement.
   class Statement
     # The pattern for parsing docstring comments.
-    COMMENT_REGEX = /^\s*#+\s?/.freeze
+    COMMENT_REGEX = /^\s*#+\s?/
 
     attr_reader :source, :file, :line, :docstring, :comments_range
 
@@ -170,7 +170,7 @@ module PuppetStrings::Yard::Parsers::Puppet
       case type_expr
       when Puppet::Pops::Model::AccessExpression
         # TODO: I don't like rebuilding the source from the AST, but AccessExpressions don't expose the original source
-        @alias_of = +"#{PuppetStrings::Yard::Util.ast_to_text(type_expr.left_expr)}[" # alias_of should be mutable so we add a + to the string.
+        @alias_of = "#{PuppetStrings::Yard::Util.ast_to_text(type_expr.left_expr)}[" # alias_of should be mutable so we add a + to the string.
         @alias_of << type_expr.keys.map { |key| PuppetStrings::Yard::Util.ast_to_text(key) }.join(', ')
         @alias_of << ']'
       else

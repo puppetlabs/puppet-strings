@@ -181,7 +181,7 @@ module PuppetStrings::Markdown
     def toc_info
       {
         name: name.to_s,
-        link: link,
+        link:,
         desc: summary || @registry[:docstring][:text][0..140].tr("\n", ' '),
         private: private?
       }

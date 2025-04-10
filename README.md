@@ -11,8 +11,8 @@ Strings processes code and YARD-style code comments to create documentation in H
 
 ### Requirements
 
-* Ruby 2.7.0 or newer
-* Puppet 7.0.0 or newer
+* Ruby 3.1.0 or newer
+* Puppet 8.0.0 or newer
 
 ### Install Puppet Strings
 

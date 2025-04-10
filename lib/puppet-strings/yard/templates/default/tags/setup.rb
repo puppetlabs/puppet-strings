@@ -4,13 +4,7 @@
 # @return [Array<YARD::Tag>] Returns the parameter tags if the object should have parameters.
 def param
   tag(:param) if
-    object.type == :method ||
-    object.type == :puppet_class ||
-    object.type == :puppet_data_type ||
-    object.type == :puppet_defined_type ||
-    object.type == :puppet_function ||
-    object.type == :puppet_task ||
-    object.type == :puppet_plan
+    %i[method puppet_class puppet_data_type puppet_defined_type puppet_function puppet_task puppet_plan].include?(object.type)
 end
 
 # Renders the overload section.

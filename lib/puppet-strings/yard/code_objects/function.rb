@@ -94,7 +94,7 @@ class PuppetStrings::Yard::CodeObjects::Function < PuppetStrings::Yard::CodeObje
         hash[:signatures] << { signature: o.signature, docstring: PuppetStrings::Yard::Util.docstring_to_hash(o.docstring, %i[param option enum return example]) }
       end
     else
-      hash[:signatures] << { signature: signature, docstring: PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example]) }
+      hash[:signatures] << { signature:, docstring: PuppetStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example]) }
     end
 
     hash[:docstring] = PuppetStrings::Yard::Util.docstring_to_hash(docstring)

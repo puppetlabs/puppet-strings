@@ -40,7 +40,7 @@ module PuppetStrings::Yard::Util
 
       tag = { tag_name: t.tag_name }
       # grab nested information for @option and @enum tags
-      if tag[:tag_name] == 'option' || tag[:tag_name] == 'enum'
+      if %w[option enum].include?(tag[:tag_name])
         tag[:opt_name] = t.pair.name
         tag[:opt_text] = t.pair.text
         tag[:opt_types] = t.pair.types if t.pair.types
