@@ -11,7 +11,9 @@ namespace :strings do
 
         Dir.chdir('doc') do
           system 'git checkout gh-pages'
+          exit 1 unless $?.success?
           system 'git pull --rebase origin gh-pages'
+          exit 1 unless $?.success?
         end
       else
         git_uri = `git config --get remote.origin.url`.strip
@@ -20,9 +22,13 @@ namespace :strings do
         Dir.mkdir('doc')
         Dir.chdir('doc') do
           system 'git init'
+          exit 1 unless $?.success?
           system "git remote add origin #{git_uri}"
+          exit 1 unless $?.success?
           system 'git pull origin gh-pages'
+          exit 1 unless $?.success?
           system 'git checkout -b gh-pages'
+          exit 1 unless $?.success?
         end
       end
     end
@@ -35,15 +41,23 @@ namespace :strings do
       end
     end
 
-    task :push do
+    # Task to push the gh-pages branch. Argument :msg_prefix is the beginning
+    # of the message and the actual commit will have "at Revision <git_sha>"
+    # appended.
+    task :push, [:msg_prefix] do |_t, args|
+      msg_prefix = args[:msg_prefix] || '[strings] Generated Documentation Update'
+
       output = `git describe --long 2>/dev/null`
       # If a project has never been tagged, fall back to latest SHA
       git_sha = output.empty? ? `git log --pretty=format:'%H' -n 1` : output
 
       Dir.chdir('doc') do
         system 'git add .'
-        system "git commit -m '[strings] Generated Documentation Update at Revision #{git_sha}'"
+        exit 1 unless $?.success?
+        system "git commit -m '#{msg_prefix} at Revision #{git_sha}'"
+        # Do not check status of commit, as it will error if there are no changes.
         system 'git push origin gh-pages -f'
+        exit 1 unless $?.success?
       end
     end
 
