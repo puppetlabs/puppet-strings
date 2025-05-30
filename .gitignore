@@ -52,3 +52,4 @@ Gemfile.lock
 
 ## local ruby environment
 /vendor/
+/.vendor/
