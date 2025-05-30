@@ -1,8 +1,7 @@
 # Puppet strings
 
-[![ci](https://github.com/puppetlabs/puppet-strings/actions/workflows/ci.yml/badge.svg)](https://github.com/puppetlabs/puppet-strings/actions/workflows/ci.yml)
-[![Gem Version](https://badge.fury.io/rb/puppet-strings.svg)](https://badge.fury.io/rb/puppet-strings)
-[![Code Owners](https://img.shields.io/badge/owners-DevX--team-blue)](https://github.com/puppetlabs/puppet-strings/blob/main/CODEOWNERS)
+[![ci](https://github.com/voxpupuli/openvox-strings/actions/workflows/ci.yml/badge.svg)](https://github.com/voxpupuli/openvox-strings/actions/workflows/ci.yml)
+[![Gem Version](https://badge.fury.io/rb/openvox-strings.svg)](https://badge.fury.io/rb/openvox-strings)
 
 Puppet Strings generates documentation for Puppet code and extensions written in Puppet and Ruby.
 Strings processes code and YARD-style code comments to create documentation in HTML, Markdown, or JSON formats.
@@ -20,18 +19,18 @@ Installation instructions vary slightly depending on how you have installed Pupp
 
 #### Installing Puppet Strings with [`puppet-agent`](https://puppet.com/docs/puppet/6.4/about_agent.html#what-puppet-agent-and-puppetserver-are) package
 
-Install the `puppet-strings` gem into the `puppet-agent` environment:
+Install the `openvox-strings` gem into the `puppet-agent` environment:
 
 ``` bash
-sudo /opt/puppetlabs/puppet/bin/gem install puppet-strings
+sudo /opt/puppetlabs/puppet/bin/gem install openvox-strings
 ```
 
-#### Installing Puppet Strings with standalone `puppet` gem
+#### Installing Puppet Strings with standalone `openvox` gem
 
-Install the `puppet-strings` gem into the same Ruby installation where you have installed the `puppet` gem:
+Install the `openvox-strings` gem into the same Ruby installation where you have installed the `openvox` gem:
 
 ``` bash
-gem install puppet-strings
+gem install openvox-strings
 ```
 
 ### Configure Puppet Strings (Optional)
@@ -73,7 +72,7 @@ Here are a few other good resources for getting started with documentation:
 
 We love contributions from the community!
 
-If you'd like to contribute to `puppet-strings`, check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppet-strings/blob/main/CONTRIBUTING.md) to get information on the contribution process.
+If you'd like to contribute to `openvox-strings`, check out [CONTRIBUTING.md](https://github.com/voxpupuli/openvox-strings/blob/main/CONTRIBUTING.md) to get information on the contribution process.
 
 ### Running Specs
 
@@ -101,10 +100,8 @@ This codebase is licensed under Apache 2.0. However, the open source dependencie
 
 ## Support
 
-Please log issues in [GitHub issues](https://github.com/puppetlabs/puppet-strings/issues).
-Check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppet-strings/blob/main/CONTRIBUTING.md) for tips on writing _the best_ issues.
-
-There is also an active community on the [Puppet community Slack](https://slack.puppet.com) in the #forge-modules channel.
+Please log issues in [GitHub issues](https://github.com/voxpupuli/openvox-strings/issues).
+Check out [CONTRIBUTING.md](https://github.com/voxpupuli/openvox-strings/blob/main/CONTRIBUTING.md) for tips on writing _the best_ issues.
 
 We use semantic version numbers for our releases and recommend that users upgrade to patch releases and minor releases as they become available.
 

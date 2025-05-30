@@ -18,15 +18,9 @@ def location_for(place_or_version, fake_version = nil)
 end
 
 group :development do
-  gem 'puppet', *location_for(ENV['PUPPET_GEM_VERSION'])
-
   gem 'json_spec', '~> 1.1', '>= 1.1.5'
 
   gem 'mdl', '~> 0.11.0'
-
-  gem 'pry', require: false
-  gem 'pry-byebug', require: false
-  gem 'pry-stack_explorer', require: false
 
   gem 'mocha', '~> 1.0'
 
@@ -34,12 +28,12 @@ group :development do
   gem 'rspec', '~> 3.1'
   gem 'rspec-its', '~> 1.0'
 
-  gem 'simplecov', require: false
-  gem 'simplecov-console', require: false
-
   gem 'redcarpet'
 end
 
 group :rubocop do
   gem 'voxpupuli-rubocop', '~> 4.1.0'
 end
+
+# https://github.com/OpenVoxProject/puppet/issues/90
+gem 'syslog', '~> 0.3' if RUBY_VERSION >= '3.4'
