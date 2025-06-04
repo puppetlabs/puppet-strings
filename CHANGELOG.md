@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.0.0](https://github.com/puppetlabs/puppet-strings/tree/v5.0.0) - 2025-06-04
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.3...v5.0.0)
+
+### Changed
+
+- (CAT-2281) Remove puppet 7 infrastructure [#407](https://github.com/puppetlabs/puppet-strings/pull/407) ([LukasAud](https://github.com/LukasAud))
+
+### Fixed
+
+- List puppet as runtime dependency [#404](https://github.com/puppetlabs/puppet-strings/pull/404) ([bastelfreak](https://github.com/bastelfreak))
+
+### Other
+
+- Rake task allows for a different commit message [#408](https://github.com/puppetlabs/puppet-strings/pull/408) ([ghoneycutt](https://github.com/ghoneycutt))
+- clarifies the puppet-strings usage [#405](https://github.com/puppetlabs/puppet-strings/pull/405) ([binford2k](https://github.com/binford2k))
+
 ## [v4.1.3](https://github.com/puppetlabs/puppet-strings/tree/v4.1.3) - 2024-09-05
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.2...v4.1.3)
@@ -36,7 +53,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.0.0...v4.1.0)
 
-### Added
+### Other
 
 - (CONT-1193) - Add `--providers` and `--list-providers` flags [#357](https://github.com/puppetlabs/puppet-strings/pull/357) ([jordanbreen28](https://github.com/jordanbreen28))
 
@@ -74,11 +91,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - (CONT-228) Bump ruby version [#326](https://github.com/puppetlabs/puppet-strings/pull/326) ([chelnak](https://github.com/chelnak))
 - (#301) Update minimum Ruby version to 2.5.0 [#313](https://github.com/puppetlabs/puppet-strings/pull/313) ([danielparks](https://github.com/danielparks))
 
-### Added
-
-- (#223) Use code blocks as appropriate in Markdown [#319](https://github.com/puppetlabs/puppet-strings/pull/319) ([danielparks](https://github.com/danielparks))
-- Use tilde heredocs for readability [#317](https://github.com/puppetlabs/puppet-strings/pull/317) ([danielparks](https://github.com/danielparks))
-
 ### Fixed
 
 - (#240) Fix output of default values that are expressions [#315](https://github.com/puppetlabs/puppet-strings/pull/315) ([danielparks](https://github.com/danielparks))
@@ -88,17 +100,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - (#304) Fix double backticks in Markdown [#305](https://github.com/puppetlabs/puppet-strings/pull/305) ([danielparks](https://github.com/danielparks))
 - (#300) Fix anchor links in Markdown docs [#303](https://github.com/puppetlabs/puppet-strings/pull/303) ([danielparks](https://github.com/danielparks))
 
+### Other
+
+- (#223) Use code blocks as appropriate in Markdown [#319](https://github.com/puppetlabs/puppet-strings/pull/319) ([danielparks](https://github.com/danielparks))
+- Use tilde heredocs for readability [#317](https://github.com/puppetlabs/puppet-strings/pull/317) ([danielparks](https://github.com/danielparks))
+
 ## [v2.9.0](https://github.com/puppetlabs/puppet-strings/tree/v2.9.0) - 2021-11-29
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v2.8.0...v2.9.0)
 
-### Added
-
-- Implement a strings:validate:reference task [#291](https://github.com/puppetlabs/puppet-strings/pull/291) ([ekohl](https://github.com/ekohl))
-
 ### Fixed
 
 - Fix rare undefined method `any?' for nil:NilClass error [#289](https://github.com/puppetlabs/puppet-strings/pull/289) ([sanfrancrisko](https://github.com/sanfrancrisko))
+
+### Other
+
+- Implement a strings:validate:reference task [#291](https://github.com/puppetlabs/puppet-strings/pull/291) ([ekohl](https://github.com/ekohl))
 
 ## [v2.8.0](https://github.com/puppetlabs/puppet-strings/tree/v2.8.0) - 2021-07-19
 
