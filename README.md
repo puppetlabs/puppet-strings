@@ -88,43 +88,12 @@ bundle exec rake spec
 
 ### Running Acceptance Tests
 
-Acceptance tests can be executed with [puppet_litmus](https://github.com/puppetlabs/puppet_litmus).
+To run specs, run the `acceptance` rake task:
 
-An example of running the acceptance tests locally with Docker:
-
-1. Ensure [Docker](https://www.docker.com/products/docker-desktop) is installed and running.
-
-2. Install Ruby gems. This step can be skipped if you have already followed the [Running Specs](#running-specs) instructions.
-
-    ``` bash
-    bundle install --path .bundle/gems
-    ```
-
-3. Provision a docker container, in this case CentOS 7
-
-    ``` bash
-    bundle exec rake 'litmus:provision[docker, centos:7]'
-    ```
-
-4. Install test items; Puppet Agent, our test module, and the puppet-strings gem built from this source code
-
-    ``` bash
-    bundle exec rake 'litmus:install_agent[puppet8]'
-    bundle exec rake 'litmus:install_modules_from_directory[./spec/fixtures/acceptance/modules]'
-    bundle exec rake litmus:install_gems
-    ```
-
-5. Run the acceptance tests. These tests can be run more than once without the need to run the provisioning steps again
-
-    ``` bash
-    bundle exec rake litmus:acceptance:parallel
-    ```
-
-6. Remove any test containers
-
-    ``` bash
-    bundle exec rake litmus:tear_down
-    ```
+``` bash
+bundle install --path .bundle/gems
+bundle exec rake acceptance
+```
 
 ## License
 

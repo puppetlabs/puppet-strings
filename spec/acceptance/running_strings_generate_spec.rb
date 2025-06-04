@@ -1,24 +1,18 @@
 # frozen_string_literal: true
 
 require 'spec_helper_acceptance'
-include PuppetLitmus
 
 describe 'Generating module documentation using generate action' do
-  let(:sut_work_dir) do
-    PuppetLitmus::PuppetHelpers.run_shell('pwd').stdout.chomp
-  end
-
-  before :all do
-    # TODO: Linux only
-    test_module_path = sut_module_path(/Module test/)
-    PuppetLitmus::PuppetHelpers.run_shell("puppet strings generate \"#{test_module_path}/**/*.{rb,pp}\"")
-  end
-
   def expect_file_contain(path, expected_contents)
-    file_path = File.join(sut_work_dir, path)
-    file_content = file(file_path).content
-    expected_contents.each do |expected|
-      expect(file_content).to include(expected)
+    test_module_path = File.absolute_path(File.join('spec', 'fixtures', 'acceptance', 'modules', 'test'))
+    Dir.mktmpdir do |tmpdir|
+      Dir.chdir(tmpdir) do
+        _stdout, _stderr, status = Open3.capture3("puppet strings generate \"#{test_module_path}/**/*.{rb,pp}\"")
+        expect(status.success?).to be true
+        expected_contents.each do |expected|
+          expect(File.read(path)).to include(expected)
+        end
+      end
     end
   end
 

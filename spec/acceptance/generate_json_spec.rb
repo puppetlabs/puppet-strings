@@ -4,11 +4,7 @@ require 'spec_helper_acceptance'
 
 describe 'Generating JSON' do
   let(:test_module_path) do
-    sut_module_path(/Module test/)
-  end
-
-  let(:remote_tmp_path) do
-    sut_tmp_path
+    File.join('spec', 'fixtures', 'acceptance', 'modules', 'test')
   end
 
   let(:expected) do
@@ -51,13 +47,14 @@ describe 'Generating JSON' do
   end
 
   it 'renders JSON to stdout when using --format json' do
-    output = run_shell("puppet strings generate --format json \"#{test_module_path}/lib/puppet/parser/functions/function3x.rb\"").stdout.chomp
-    expect(JSON.parse(output)).to eq(expected)
+    stdout, _stderr, _status = Open3.capture3("puppet strings generate --format json \"#{test_module_path}/lib/puppet/parser/functions/function3x.rb\"")
+    expect(JSON.parse(stdout)).to eq(expected)
   end
 
   it 'writes JSON to a file when using --format json --out' do
-    tmpfile = File.join(remote_tmp_path, 'json_output.json')
-    run_shell("puppet strings generate --format json --out #{tmpfile} \"#{test_module_path}/lib/puppet/parser/functions/function3x.rb\"")
-    expect(JSON.parse(file(tmpfile).content)).to eq(expected)
+    Tempfile.create do |tmpfile|
+      _stdout, _stderr, _status = Open3.capture3("puppet strings generate --format json --out #{tmpfile.path} \"#{test_module_path}/lib/puppet/parser/functions/function3x.rb\"")
+      expect(JSON.parse(tmpfile.read)).to eq(expected)
+    end
   end
 end
