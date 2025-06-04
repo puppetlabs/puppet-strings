@@ -7,23 +7,9 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: TreatCommentsAsGroupSeparators, ConsiderPunctuation, Include.
-# Include: **/*.gemfile, **/Gemfile, **/gems.rb
-Bundler/OrderedGems:
-  Exclude:
-    - 'Gemfile'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAfterComma:
-  Exclude:
-    - 'Rakefile'
-
-# Offense count: 1
 Lint/CopDirectiveSyntax:
   Exclude:
-    - 'lib/puppet-strings/yard/handlers/ruby/data_type_handler.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/data_type_handler.rb'
 
 # Offense count: 1
 Lint/MixedRegexpCaptureTypes:
@@ -39,8 +25,8 @@ Lint/RedundantCopDisableDirective:
 # Offense count: 2
 Naming/AccessorMethodName:
   Exclude:
-    - 'lib/puppet-strings/yard/handlers/puppet/base.rb'
-    - 'lib/puppet-strings/yard/handlers/ruby/type_base.rb'
+    - 'lib/openvox-strings/yard/handlers/puppet/base.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/type_base.rb'
 
 # Offense count: 1
 # Configuration parameters: ExpectMatchingDefinition, CheckDefinitionPathHierarchy, CheckDefinitionPathHierarchyRoots, Regex, IgnoreExecutableScripts, AllowedAcronyms.
@@ -49,7 +35,7 @@ Naming/AccessorMethodName:
 Naming/FileName:
   Exclude:
     - 'Rakefile.rb'
-    - 'lib/puppet-strings.rb'
+    - 'lib/openvox-strings.rb'
 
 # Offense count: 1
 # Configuration parameters: ForbiddenDelimiters.
@@ -63,47 +49,27 @@ Naming/HeredocDelimiterNaming:
 # AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
 Naming/MethodParameterName:
   Exclude:
-    - 'lib/puppet-strings/yard/handlers/ruby/data_type_handler.rb'
-    - 'lib/puppet-strings/yard/parsers/puppet/parser.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/data_type_handler.rb'
+    - 'lib/openvox-strings/yard/parsers/puppet/parser.rb'
 
 # Offense count: 4
 # Configuration parameters: MinSize.
 Performance/CollectionLiteralInLoop:
   Exclude:
-    - 'lib/puppet-strings/yard/handlers/puppet/base.rb'
-    - 'lib/puppet-strings/yard/handlers/ruby/provider_handler.rb'
-    - 'lib/puppet-strings/yard/handlers/ruby/rsapi_handler.rb'
-    - 'lib/puppet-strings/yard/util.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Performance/StringIdentifierArgument:
-  Exclude:
-    - 'Rakefile'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Performance/StringInclude:
-  Exclude:
-    - 'Rakefile'
-
-# Offense count: 1
-RSpec/BeforeAfterAll:
-  Exclude:
-    - '**/spec/spec_helper.rb'
-    - '**/spec/rails_helper.rb'
-    - '**/spec/support/**/*.rb'
-    - 'spec/acceptance/running_strings_generate_spec.rb'
+    - 'lib/openvox-strings/yard/handlers/puppet/base.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/provider_handler.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/rsapi_handler.rb'
+    - 'lib/openvox-strings/yard/util.rb'
 
 # Offense count: 7
 # Configuration parameters: Prefixes, AllowedPatterns.
 # Prefixes: when, with, without
 RSpec/ContextWording:
   Exclude:
-    - 'spec/unit/puppet-strings/markdown/base_spec.rb'
-    - 'spec/unit/puppet-strings/yard/handlers/ruby/data_type_handler_spec.rb'
-    - 'spec/unit/puppet-strings/yard/parsers/json/task_statement_spec.rb'
-    - 'spec/unit/puppet-strings/yard/parsers/puppet/parser_spec.rb'
+    - 'spec/unit/openvox-strings/markdown/base_spec.rb'
+    - 'spec/unit/openvox-strings/yard/handlers/ruby/data_type_handler_spec.rb'
+    - 'spec/unit/openvox-strings/yard/parsers/json/task_statement_spec.rb'
+    - 'spec/unit/openvox-strings/yard/parsers/puppet/parser_spec.rb'
 
 # Offense count: 3
 # Configuration parameters: IgnoredMetadata.
@@ -126,14 +92,14 @@ RSpec/ExampleLength:
 # Offense count: 6
 RSpec/ExpectInHook:
   Exclude:
-    - 'spec/unit/puppet-strings/json_spec.rb'
+    - 'spec/unit/openvox-strings/json_spec.rb'
 
 # Offense count: 5
 # This cop supports safe autocorrection (--autocorrect).
 RSpec/IncludeExamples:
   Exclude:
-    - 'spec/unit/puppet-strings/json_spec.rb'
-    - 'spec/unit/puppet-strings/markdown_spec.rb'
+    - 'spec/unit/openvox-strings/json_spec.rb'
+    - 'spec/unit/openvox-strings/markdown_spec.rb'
 
 # Offense count: 91
 RSpec/MultipleExpectations:
@@ -147,7 +113,7 @@ RSpec/NestedGroups:
 # Offense count: 2
 RSpec/RepeatedExampleGroupDescription:
   Exclude:
-    - 'spec/unit/puppet-strings/yard/handlers/ruby/function_handler_spec.rb'
+    - 'spec/unit/openvox-strings/yard/handlers/ruby/function_handler_spec.rb'
 
 # Offense count: 20
 # Configuration parameters: Include, CustomTransform, IgnoreMethods, IgnoreMetadata.
@@ -170,19 +136,19 @@ Rake/Desc:
 # AllowedMethods: lambda, proc, it
 Style/BlockDelimiters:
   Exclude:
-    - 'lib/puppet-strings/markdown/base.rb'
+    - 'lib/openvox-strings/markdown/base.rb'
 
 # Offense count: 1
 Style/ClassVars:
   Exclude:
-    - 'lib/puppet-strings/yard/templates/default/layout/html/setup.rb'
+    - 'lib/openvox-strings/yard/templates/default/layout/html/setup.rb'
 
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/CombinableLoops:
   Exclude:
-    - 'lib/puppet-strings/markdown.rb'
-    - 'lib/puppet-strings/yard/handlers/ruby/data_type_handler.rb'
+    - 'lib/openvox-strings/markdown.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/data_type_handler.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
@@ -191,53 +157,32 @@ Style/FetchEnvVar:
   Exclude:
     - 'Gemfile'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
-# SupportedShorthandSyntax: always, never, either, consistent, either_consistent
-Style/HashSyntax:
-  Exclude:
-    - 'Rakefile'
-
-# Offense count: 1
-Style/MixinUsage:
-  Exclude:
-    - 'spec/acceptance/running_strings_generate_spec.rb'
-
 # Offense count: 20
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: respond_to_missing?
 Style/OptionalBooleanParameter:
   Exclude:
-    - 'lib/puppet-strings.rb'
-    - 'lib/puppet-strings/describe.rb'
-    - 'lib/puppet-strings/yard/code_objects/class.rb'
-    - 'lib/puppet-strings/yard/code_objects/data_type.rb'
-    - 'lib/puppet-strings/yard/code_objects/data_type_alias.rb'
-    - 'lib/puppet-strings/yard/code_objects/defined_type.rb'
-    - 'lib/puppet-strings/yard/code_objects/function.rb'
-    - 'lib/puppet-strings/yard/code_objects/plan.rb'
-    - 'lib/puppet-strings/yard/code_objects/provider.rb'
-    - 'lib/puppet-strings/yard/code_objects/task.rb'
-    - 'lib/puppet-strings/yard/code_objects/type.rb'
-    - 'lib/puppet-strings/yard/handlers/ruby/data_type_handler.rb'
-    - 'lib/puppet-strings/yard/handlers/ruby/function_handler.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'Rakefile'
+    - 'lib/openvox-strings.rb'
+    - 'lib/openvox-strings/describe.rb'
+    - 'lib/openvox-strings/yard/code_objects/class.rb'
+    - 'lib/openvox-strings/yard/code_objects/data_type.rb'
+    - 'lib/openvox-strings/yard/code_objects/data_type_alias.rb'
+    - 'lib/openvox-strings/yard/code_objects/defined_type.rb'
+    - 'lib/openvox-strings/yard/code_objects/function.rb'
+    - 'lib/openvox-strings/yard/code_objects/plan.rb'
+    - 'lib/openvox-strings/yard/code_objects/provider.rb'
+    - 'lib/openvox-strings/yard/code_objects/task.rb'
+    - 'lib/openvox-strings/yard/code_objects/type.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/data_type_handler.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/function_handler.rb'
 
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantParentheses:
   Exclude:
-    - 'lib/puppet-strings/yard/code_objects/function.rb'
-    - 'lib/puppet-strings/yard/handlers/puppet/function_handler.rb'
-    - 'lib/puppet-strings/yard/tags/overload_tag.rb'
+    - 'lib/openvox-strings/yard/code_objects/function.rb'
+    - 'lib/openvox-strings/yard/handlers/puppet/function_handler.rb'
+    - 'lib/openvox-strings/yard/tags/overload_tag.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
@@ -245,14 +190,13 @@ Style/RedundantRegexpEscape:
   Exclude:
     - 'Gemfile'
 
-# Offense count: 2
+# Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, AllowInnerSlashes.
 # SupportedStyles: slashes, percent_r, mixed
 Style/RegexpLiteral:
   Exclude:
     - 'Gemfile'
-    - 'Rakefile'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -260,8 +204,8 @@ Style/RegexpLiteral:
 # AllowedMethods: present?, blank?, presence, try, try!
 Style/SafeNavigation:
   Exclude:
-    - 'lib/puppet-strings/yard/handlers/puppet/function_handler.rb'
-    - 'lib/puppet-strings/yard/handlers/ruby/function_handler.rb'
+    - 'lib/openvox-strings/yard/handlers/puppet/function_handler.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/function_handler.rb'
 
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
@@ -278,10 +222,10 @@ Style/StringLiterals:
 # SupportedStyles: require_parentheses, require_no_parentheses, require_parentheses_when_complex
 Style/TernaryParentheses:
   Exclude:
-    - 'lib/puppet-strings/markdown/base.rb'
-    - 'lib/puppet-strings/tasks/generate.rb'
-    - 'lib/puppet-strings/yard/templates/default/layout/html/setup.rb'
-    - 'lib/puppet-strings/yard/templates/default/tags/setup.rb'
+    - 'lib/openvox-strings/markdown/base.rb'
+    - 'lib/openvox-strings/tasks/generate.rb'
+    - 'lib/openvox-strings/yard/templates/default/layout/html/setup.rb'
+    - 'lib/openvox-strings/yard/templates/default/tags/setup.rb'
     - 'lib/puppet/face/strings.rb'
     - 'spec/spec_helper.rb'
 
@@ -291,28 +235,27 @@ Style/TernaryParentheses:
 # SupportedStylesForMultiline: comma, consistent_comma, no_comma
 Style/TrailingCommaInArguments:
   Exclude:
-    - 'lib/puppet-strings/yard.rb'
-    - 'lib/puppet-strings/yard/code_objects/type.rb'
-    - 'lib/puppet-strings/yard/handlers/ruby/function_handler.rb'
+    - 'lib/openvox-strings/yard.rb'
+    - 'lib/openvox-strings/yard/code_objects/type.rb'
+    - 'lib/openvox-strings/yard/handlers/ruby/function_handler.rb'
     - 'lib/puppet/face/strings.rb'
-    - 'spec/unit/puppet-strings/yard/handlers/puppet/class_handler_spec.rb'
-    - 'spec/unit/puppet-strings/yard/handlers/puppet/function_handler_spec.rb'
-    - 'spec/unit/puppet-strings/yard/handlers/ruby/function_handler_spec.rb'
+    - 'spec/unit/openvox-strings/yard/handlers/puppet/class_handler_spec.rb'
+    - 'spec/unit/openvox-strings/yard/handlers/puppet/function_handler_spec.rb'
+    - 'spec/unit/openvox-strings/yard/handlers/ruby/function_handler_spec.rb'
 
-# Offense count: 17
+# Offense count: 16
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleForMultiline.
 # SupportedStylesForMultiline: comma, consistent_comma, diff_comma, no_comma
 Style/TrailingCommaInArrayLiteral:
   Exclude:
-    - 'lib/puppet-strings/markdown.rb'
-    - 'lib/puppet-strings/yard/templates/default/layout/html/setup.rb'
-    - 'puppet-strings.gemspec'
+    - 'lib/openvox-strings/markdown.rb'
+    - 'lib/openvox-strings/yard/templates/default/layout/html/setup.rb'
     - 'spec/acceptance/generate_json_spec.rb'
     - 'spec/acceptance/running_strings_generate_spec.rb'
-    - 'spec/unit/puppet-strings/yard/code_objects/task_spec.rb'
-    - 'spec/unit/puppet-strings/yard/handlers/ruby/data_type_handler_spec.rb'
-    - 'spec/unit/puppet-strings/yard/parsers/puppet/parser_spec.rb'
+    - 'spec/unit/openvox-strings/yard/code_objects/task_spec.rb'
+    - 'spec/unit/openvox-strings/yard/handlers/ruby/data_type_handler_spec.rb'
+    - 'spec/unit/openvox-strings/yard/parsers/puppet/parser_spec.rb'
 
 # Offense count: 32
 # This cop supports safe autocorrection (--autocorrect).
@@ -320,13 +263,13 @@ Style/TrailingCommaInArrayLiteral:
 # SupportedStylesForMultiline: comma, consistent_comma, diff_comma, no_comma
 Style/TrailingCommaInHashLiteral:
   Exclude:
-    - 'lib/puppet-strings/describe.rb'
-    - 'lib/puppet-strings/json.rb'
-    - 'lib/puppet-strings/markdown/base.rb'
-    - 'lib/puppet-strings/tasks/generate.rb'
-    - 'lib/puppet-strings/tasks/validate.rb'
-    - 'lib/puppet-strings/yard/code_objects/data_type.rb'
-    - 'lib/puppet-strings/yard/code_objects/task.rb'
-    - 'lib/puppet-strings/yard/templates/default/layout/html/setup.rb'
+    - 'lib/openvox-strings/describe.rb'
+    - 'lib/openvox-strings/json.rb'
+    - 'lib/openvox-strings/markdown/base.rb'
+    - 'lib/openvox-strings/tasks/generate.rb'
+    - 'lib/openvox-strings/tasks/validate.rb'
+    - 'lib/openvox-strings/yard/code_objects/data_type.rb'
+    - 'lib/openvox-strings/yard/code_objects/task.rb'
+    - 'lib/openvox-strings/yard/templates/default/layout/html/setup.rb'
     - 'spec/acceptance/generate_json_spec.rb'
-    - 'spec/unit/puppet-strings/yard/code_objects/task_spec.rb'
+    - 'spec/unit/openvox-strings/yard/code_objects/task_spec.rb'
