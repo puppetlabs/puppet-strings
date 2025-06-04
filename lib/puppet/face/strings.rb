@@ -24,10 +24,10 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
 
     when_invoked do |*args|
       check_required_features
-      require 'puppet-strings'
+      require 'openvox-strings'
 
-      PuppetStrings.generate(
-        args.count > 1 ? args[0..-2] : PuppetStrings::DEFAULT_SEARCH_PATTERNS,
+      OpenvoxStrings.generate(
+        args.count > 1 ? args[0..-2] : OpenvoxStrings::DEFAULT_SEARCH_PATTERNS,
         build_generate_options(args.last)
       )
       nil
@@ -44,7 +44,7 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
 
     when_invoked do |*args|
       check_required_features
-      require 'puppet-strings'
+      require 'openvox-strings'
 
       modules = args.count > 1 ? args[0..-2] : []
 
@@ -55,11 +55,11 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
         next unless modules.empty? || modules.include?(mod.name)
 
         db = File.join(mod.path, '.yardoc')
-        patterns = PuppetStrings::DEFAULT_SEARCH_PATTERNS.map do |p|
+        patterns = OpenvoxStrings::DEFAULT_SEARCH_PATTERNS.map do |p|
           File.join(mod.path, p)
         end
         puts "Generating documentation for Puppet module '#{mod.name}'."
-        PuppetStrings.generate(patterns, build_generate_options(args.last, '--db', db))
+        OpenvoxStrings.generate(patterns, build_generate_options(args.last, '--db', db))
 
         # Clear the registry so that the next call to generate has a clean database
         YARD::Registry.clear
@@ -73,7 +73,7 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
         return
       end
       puts 'Starting YARD documentation server.'
-      PuppetStrings.run_server('-m', *module_docs)
+      OpenvoxStrings.run_server('-m', *module_docs)
       nil
     end
   end
@@ -110,7 +110,7 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
 
     when_invoked do |*args|
       check_required_features
-      require 'puppet-strings'
+      require 'openvox-strings'
 
       options = args.last
       options[:describe] = true
@@ -131,7 +131,7 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
       #          tasks/*.json
       #          plans/*.pp
       search_patterns = ['types/**/*.pp', 'lib/**/*.rb']
-      PuppetStrings.generate(
+      OpenvoxStrings.generate(
         search_patterns,
         build_generate_options(options)
       )
@@ -146,10 +146,10 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
     raise "The 'rgen' gem must be installed in order to use this face." unless Puppet.features.rgen?
   end
 
-  # Builds the options to PuppetStrings.generate.
+  # Builds the options to OpenvoxStrings.generate.
   # @param [Hash] options The Puppet face options hash.
   # @param [Array] yard_args The additional arguments to pass to YARD.
-  # @return [Hash] Returns the PuppetStrings.generate options hash.
+  # @return [Hash] Returns the OpenvoxStrings.generate options hash.
   def build_generate_options(options = nil, *yard_args)
     generate_options = {}
     generate_options[:debug] = Puppet[:debug]

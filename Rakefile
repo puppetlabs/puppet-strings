@@ -14,7 +14,7 @@ task :spec
 task :acceptance
 
 # Add our own tasks
-require 'puppet-strings/tasks'
+require 'openvox-strings/tasks'
 
 begin
   require 'voxpupuli/rubocop/rake'

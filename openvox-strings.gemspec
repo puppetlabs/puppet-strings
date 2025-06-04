@@ -2,12 +2,12 @@
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'puppet-strings/version'
+require 'openvox-strings/version'
 
 Gem::Specification.new do |s|
   s.name = 'openvox-strings'
   s.author = ['Puppet Inc.', 'Vox Pupuli']
-  s.version = PuppetStrings::VERSION
+  s.version = OpenvoxStrings::VERSION
   s.license = 'Apache-2.0'
   s.summary = 'Puppet documentation via YARD'
   s.email = 'voxpupuli@groups.io'

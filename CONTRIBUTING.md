@@ -15,7 +15,7 @@ that we can have a chance of keeping on top of things.
 
 ## Submit an issue
 
-We use GitHub Issues for issue tracking on puppet-strings.
+We use GitHub Issues for issue tracking on openvox-strings.
 
 Before you submit your issue, take a minute to...
 
@@ -112,7 +112,7 @@ a ticket number.
 To cut a new release, from a current `main` checkout:
 
 * Start the release branch with `git checkout -b release-prep`
-* Update `lib/puppet-strings/version.rb` to the new version
+* Update `lib/openvox-strings/version.rb` to the new version
 * Update the CHANGELOG
   * Have a [CHANGELOG_GITHUB_TOKEN](https://github.com/skywinder/github-changelog-generator#github-token) set in your environment
   * run `rake changelog`
