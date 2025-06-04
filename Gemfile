@@ -34,12 +34,12 @@ group :development do
   gem 'rspec', '~> 3.1'
   gem 'rspec-its', '~> 1.0'
 
-  gem 'rubocop', '~> 1.70.0', require: false
-  gem 'rubocop-performance', '~> 1.16', require: false
-  gem 'rubocop-rspec', '~> 3.0', require: false
-
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
 
   gem 'redcarpet'
+end
+
+group :rubocop do
+  gem 'voxpupuli-rubocop', '~> 4.1.0'
 end

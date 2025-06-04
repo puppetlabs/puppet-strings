@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
     'CHANGELOG.md',
     'CONTRIBUTING.md',
     'LICENSE',
-    'README.md'
+    'README.md',
   ]
   s.files = Dir['CHANGELOG.md', 'README.md', 'LICENSE', 'lib/**/*', 'exe/**/*']
 
