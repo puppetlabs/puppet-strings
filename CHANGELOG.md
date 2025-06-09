@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.0.0](https://github.com/puppetlabs/puppet-strings/tree/v5.0.0) - 2025-06-09
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.3...v5.0.0)
+
+### Changed
+
+- (CAT-2281) Remove puppet 7 infrastructure [#407](https://github.com/puppetlabs/puppet-strings/pull/407) ([LukasAud](https://github.com/LukasAud))
+
+### Fixed
+
+- Rake task allows for a different commit message [#408](https://github.com/puppetlabs/puppet-strings/pull/408) ([ghoneycutt](https://github.com/ghoneycutt))
+- clarifies the puppet-strings usage [#405](https://github.com/puppetlabs/puppet-strings/pull/405) ([binford2k](https://github.com/binford2k))
+- List puppet as runtime dependency [#404](https://github.com/puppetlabs/puppet-strings/pull/404) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v4.1.3](https://github.com/puppetlabs/puppet-strings/tree/v4.1.3) - 2024-09-05
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.2...v4.1.3)
