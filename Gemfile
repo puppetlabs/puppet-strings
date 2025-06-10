@@ -32,7 +32,7 @@ group :development do
 end
 
 group :rubocop do
-  gem 'voxpupuli-rubocop', '~> 4.1.0'
+  gem 'voxpupuli-rubocop', '~> 3.1.0'
 end
 
 # https://github.com/OpenVoxProject/puppet/issues/90

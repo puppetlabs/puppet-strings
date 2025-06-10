@@ -69,7 +69,7 @@ class OpenvoxStrings::Yard::CodeObjects::Function < OpenvoxStrings::Yard::CodeOb
       name, default = parameter
       tag = tags.find { |t| t.name == name } if tags
       type = tag&.types ? "#{tag.type} " : 'Any '
-      prefix = (name[0]).to_s if name.start_with?('*', '&')
+      prefix = name[0].to_s if name.start_with?('*', '&')
       name = name[1..] if prefix
       default = " = #{default}" if default
       "#{type}#{prefix}$#{name}#{default}"
@@ -94,7 +94,7 @@ class OpenvoxStrings::Yard::CodeObjects::Function < OpenvoxStrings::Yard::CodeOb
         hash[:signatures] << { signature: o.signature, docstring: OpenvoxStrings::Yard::Util.docstring_to_hash(o.docstring, %i[param option enum return example]) }
       end
     else
-      hash[:signatures] << { signature:, docstring: OpenvoxStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example]) }
+      hash[:signatures] << { signature: signature, docstring: OpenvoxStrings::Yard::Util.docstring_to_hash(docstring, %i[param option enum return example]) }
     end
 
     hash[:docstring] = OpenvoxStrings::Yard::Util.docstring_to_hash(docstring)

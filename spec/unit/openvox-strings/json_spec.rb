@@ -310,7 +310,7 @@ end
 #
 # @param [Proc] block The block to capture output from
 # @return [Hash] A hash containing the captured output
-def capture_output(&)
+def capture_output(&_block)
   begin
     $stdout = StringIO.new
     $stderr = StringIO.new

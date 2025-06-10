@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary = 'Puppet documentation via YARD'
   s.email = 'voxpupuli@groups.io'
   s.homepage = 'https://github.com/voxpupuli/openvox-strings'
-  s.required_ruby_version = '>= 3.1.0'
+  s.required_ruby_version = '>= 2.7.0'
 
   s.extra_rdoc_files = [
     'CHANGELOG.md',
@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   ]
   s.files = Dir['CHANGELOG.md', 'README.md', 'LICENSE', 'lib/**/*', 'exe/**/*']
 
-  s.add_dependency 'openvox', '~> 8.19'
+  s.add_dependency 'openvox', '>= 7', '< 9'
   s.add_dependency 'rgen', '~> 0.9'
   s.add_dependency 'yard', '~> 0.9'
 end

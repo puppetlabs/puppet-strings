@@ -94,13 +94,6 @@ RSpec/ExpectInHook:
   Exclude:
     - 'spec/unit/openvox-strings/json_spec.rb'
 
-# Offense count: 5
-# This cop supports safe autocorrection (--autocorrect).
-RSpec/IncludeExamples:
-  Exclude:
-    - 'spec/unit/openvox-strings/json_spec.rb'
-    - 'spec/unit/openvox-strings/markdown_spec.rb'
-
 # Offense count: 91
 RSpec/MultipleExpectations:
   Max: 64
@@ -128,17 +121,6 @@ Rake/Desc:
     - 'Rakefile'
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, ProceduralMethods, FunctionalMethods, AllowedMethods, AllowedPatterns, AllowBracesOnProceduralOneLiners, BracesRequiredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining, always_braces
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# AllowedMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Exclude:
-    - 'lib/openvox-strings/markdown/base.rb'
-
-# Offense count: 1
 Style/ClassVars:
   Exclude:
     - 'lib/openvox-strings/yard/templates/default/layout/html/setup.rb'
@@ -149,6 +131,15 @@ Style/CombinableLoops:
   Exclude:
     - 'lib/openvox-strings/markdown.rb'
     - 'lib/openvox-strings/yard/handlers/ruby/data_type_handler.rb'
+
+# Offense count: 2
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: literals, strict
+Style/MutableConstant:
+  Exclude:
+    - 'lib/openvox-strings/yard/handlers/ruby/base.rb'
+    - 'lib/openvox-strings/yard/parsers/puppet/statement.rb'
 
 # Offense count: 20
 # Configuration parameters: AllowedMethods.
@@ -169,11 +160,10 @@ Style/OptionalBooleanParameter:
     - 'lib/openvox-strings/yard/handlers/ruby/data_type_handler.rb'
     - 'lib/openvox-strings/yard/handlers/ruby/function_handler.rb'
 
-# Offense count: 3
+# Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantParentheses:
   Exclude:
-    - 'lib/openvox-strings/yard/code_objects/function.rb'
     - 'lib/openvox-strings/yard/handlers/puppet/function_handler.rb'
     - 'lib/openvox-strings/yard/tags/overload_tag.rb'
 
@@ -209,13 +199,12 @@ Style/StringLiterals:
     - 'Gemfile'
     - 'Rakefile'
 
-# Offense count: 7
+# Offense count: 6
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, AllowSafeAssignment.
 # SupportedStyles: require_parentheses, require_no_parentheses, require_parentheses_when_complex
 Style/TernaryParentheses:
   Exclude:
-    - 'lib/openvox-strings/markdown/base.rb'
     - 'lib/openvox-strings/tasks/generate.rb'
     - 'lib/openvox-strings/yard/templates/default/layout/html/setup.rb'
     - 'lib/openvox-strings/yard/templates/default/tags/setup.rb'
@@ -250,7 +239,7 @@ Style/TrailingCommaInArrayLiteral:
     - 'spec/unit/openvox-strings/yard/handlers/ruby/data_type_handler_spec.rb'
     - 'spec/unit/openvox-strings/yard/parsers/puppet/parser_spec.rb'
 
-# Offense count: 32
+# Offense count: 30
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleForMultiline.
 # SupportedStylesForMultiline: comma, consistent_comma, diff_comma, no_comma
@@ -258,7 +247,6 @@ Style/TrailingCommaInHashLiteral:
   Exclude:
     - 'lib/openvox-strings/describe.rb'
     - 'lib/openvox-strings/json.rb'
-    - 'lib/openvox-strings/markdown/base.rb'
     - 'lib/openvox-strings/tasks/generate.rb'
     - 'lib/openvox-strings/tasks/validate.rb'
     - 'lib/openvox-strings/yard/code_objects/data_type.rb'

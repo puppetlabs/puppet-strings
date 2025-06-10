@@ -237,7 +237,7 @@ class OpenvoxStrings::Yard::Handlers::Ruby::DataTypeHandler < OpenvoxStrings::Ya
         default   = value['value'] unless value['value'].nil?
       end
       data_type = [data_type] unless data_type.nil? || data_type.is_a?(Array)
-      params_hash[key] = { types: data_type, default: }
+      params_hash[key] = { types: data_type, default: default }
     end
 
     params_hash
