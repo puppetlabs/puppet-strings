@@ -5,8 +5,17 @@ inherit_gem:
   voxpupuli-rubocop: rubocop.yml
 
 # Disabled
+Layout/LineLength:
+  Max: 200
+
+Lint/RedundantCopDisableDirective:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
-Layout/LineLength:
-  Max: 200
+Style/SpecialGlobalVars:
+  Enabled: false
