@@ -33,3 +33,19 @@ task :validate do
 end
 
 task default: %i[validate spec]
+
+begin
+  require 'github_changelog_generator/task'
+  require 'openvox-strings/version'
+  GitHubChangelogGenerator::RakeTask.new :changelog do |config|
+    version = OpenvoxStrings::VERSION
+    config.future_release = "v#{version}" if /^\d+\.\d+.\d+$/.match?(version)
+    config.header = "# Changelog\n\nAll notable changes to this project will be documented in this file."
+    config.exclude_labels = %w[duplicate question invalid wontfix wont-fix modulesync skip-changelog github_actions]
+    config.user = 'voxpupuli'
+    config.project = 'openvox-strings'
+    config.since_tag = 'v4.1.3'
+  end
+rescue LoadError
+  # GCG is an optional gem
+end
