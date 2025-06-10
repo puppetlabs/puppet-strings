@@ -22,7 +22,7 @@ group :development do
 
   gem 'mdl', '~> 0.11.0'
 
-  gem 'mocha', '~> 1.0'
+  gem 'mocha', '~> 2.7'
 
   gem 'rake'
   gem 'rspec', '~> 3.1'
