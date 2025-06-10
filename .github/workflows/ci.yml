@@ -47,8 +47,8 @@ jobs:
         run: bundle env
       - name: Build gem
         run: gem build --strict --verbose *.gemspec
-      - name: Run unit tests
-        run: bundle exec rake spec
+      - name: Run static validation & unit tests
+        run: bundle exec rake
       - name: Run acceptance tests
         run: bundle exec rake acceptance
 
