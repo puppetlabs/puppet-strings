@@ -10,8 +10,10 @@ Strings processes code and YARD-style code comments to create documentation in H
 
 ### Requirements
 
-* Ruby 3.1.0 or newer
-* Puppet 8.0.0 or newer
+* Ruby 2.7 or newer
+* OpenVox 7 or newer
+
+For detailed dependencies, please checkout the gemspec file.
 
 ### Install Puppet Strings
 

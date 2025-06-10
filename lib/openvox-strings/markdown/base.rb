@@ -95,7 +95,7 @@ module OpenvoxStrings::Markdown
       summary: 'summary',
       note: 'note',
       todo: 'todo',
-      deprecated: 'deprecated' }.each do |method_name, tag_name|
+      deprecated: 'deprecated', }.each do |method_name, tag_name|
       # @return [String] unless the tag is nil or the string.empty?
       define_method method_name do
         @tags.find { |tag| tag[:tag_name] == tag_name && !tag[:text].empty? }[:text] if @tags.any? { |tag| tag[:tag_name] == tag_name && !tag[:text].empty? }
@@ -181,9 +181,9 @@ module OpenvoxStrings::Markdown
     def toc_info
       {
         name: name.to_s,
-        link:,
+        link: link,
         desc: summary || @registry[:docstring][:text][0..140].tr("\n", ' '),
-        private: private?
+        private: private?,
       }
     end
 
@@ -199,9 +199,9 @@ module OpenvoxStrings::Markdown
     def word_wrap(text, line_width: 120, break_sequence: "\n")
       return unless text
 
-      text.split("\n").map! { |line|
-        line.length > line_width ? line.gsub(/(.{1,#{line_width}})(\s+|$)/, "\\1#{break_sequence}").strip : line
-      } * break_sequence
+      text.split("\n").map! do |line|
+        (line.length > line_width) ? line.gsub(/(.{1,#{line_width}})(\s+|$)/, "\\1#{break_sequence}").strip : line
+      end * break_sequence
     end
 
     # @return [String] full markdown rendering of a component
