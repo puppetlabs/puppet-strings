@@ -1,10 +1,16 @@
-# Puppet strings
+# openvox-strings
 
-[![ci](https://github.com/voxpupuli/openvox-strings/actions/workflows/ci.yml/badge.svg)](https://github.com/voxpupuli/openvox-strings/actions/workflows/ci.yml)
-[![Gem Version](https://badge.fury.io/rb/openvox-strings.svg)](https://badge.fury.io/rb/openvox-strings)
+[![License](https://img.shields.io/github/license/voxpupuli/openvox-strings.svg)](https://github.com/voxpupuli/openvox-strings/blob/master/LICENSE)
+[![Release](https://github.com/voxpupuli/openvox-strings/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/openvox-strings/actions/workflows/release.yml)
+[![Test](https://github.com/voxpupuli/openvox-strings/actions/workflows/ci.yml/badge.svg)](https://github.com/voxpupuli/openvox-strings/actions/workflows/ci.yml)
+[![RubyGem Version](https://img.shields.io/gem/v/openvox-strings.svg)](https://rubygems.org/gems/openvox-strings)
+[![RubyGem Downloads](https://img.shields.io/gem/dt/openvox-strings.svg)](https://rubygems.org/gems/openvox-strings)
 
-Puppet Strings generates documentation for Puppet code and extensions written in Puppet and Ruby.
+openvox-strings generates documentation for Puppet code and extensions written in Puppet and Ruby.
 Strings processes code and YARD-style code comments to create documentation in HTML, Markdown, or JSON formats.
+
+It's a fork of https://github.com/puppetlabs/puppet-strings.
+Some parts of the documentation still refer to to "Puppet Strings"
 
 ## Installing Puppet Strings
 
