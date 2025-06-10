@@ -1,33 +1,17 @@
 # frozen_string_literal: true
 
-if ENV['COVERAGE'] == 'yes'
-  require 'simplecov'
-  require 'simplecov-console'
-
-  SimpleCov.formatters = [
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::Console
-  ]
-
-  SimpleCov.start do
-    track_files 'lib/**/*.rb'
-    add_filter 'lib/puppet-strings/version.rb'
-    add_filter '/spec'
-  end
-end
-
 require 'mocha'
 require 'mdl'
 require 'rspec'
 require 'json_spec'
 require 'puppet/version'
-require 'puppet-strings'
-require 'puppet-strings/markdown'
-require 'puppet-strings/markdown/base'
-require 'puppet-strings/yard'
+require 'openvox-strings'
+require 'openvox-strings/markdown'
+require 'openvox-strings/markdown/base'
+require 'openvox-strings/yard'
 
 # Explicitly set up YARD once
-PuppetStrings::Yard.setup!
+OpenvoxStrings::Yard.setup!
 
 # Enable testing of Puppet functions if running against 4.1+
 TEST_PUPPET_FUNCTIONS = Puppet::Util::Package.versioncmp(Puppet.version, '4.1.0') >= 0

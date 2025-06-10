@@ -2,7 +2,7 @@
 #
 #   This class exists to serve as fixture data for testing the puppet strings face
 #
-# @example
+# @example Basic usage
 #   class { "test": }
 #
 # @param package_name The name of the package
