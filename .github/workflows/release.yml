@@ -49,7 +49,7 @@ jobs:
       packages: write # publish to rubygems.pkg.github.com
     steps:
       - name: Download gem from GitHub cache
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: gem-artifact
       - name: Setup GitHub packages access
@@ -69,7 +69,7 @@ jobs:
       id-token: write # rubygems.org authentication
     steps:
       - name: Download gem from GitHub cache
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: gem-artifact
       - uses: rubygems/configure-rubygems-credentials@v1.0.0
@@ -87,7 +87,7 @@ jobs:
       - release-to-rubygems
     steps:
       - name: Download gem from GitHub cache
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: gem-artifact
       - name: Install Ruby
