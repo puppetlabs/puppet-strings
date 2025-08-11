@@ -18,7 +18,7 @@ jobs:
     outputs:
       ruby: ${{ steps.ruby.outputs.versions }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
@@ -40,7 +40,7 @@ jobs:
     env:
       BUNDLE_WITHOUT: release:rubocop
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
