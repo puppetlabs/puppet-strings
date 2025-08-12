@@ -6,14 +6,14 @@ on:
     tags:
       - '*'
 
+permissions: {}
+
 jobs:
   build-release:
     # Prevent releases from forked repositories
     if: github.repository_owner == 'voxpupuli'
     name: Build the gem
     runs-on: ubuntu-24.04
-    permissions:
-      contents: write # clone repo and create release
     steps:
       - uses: actions/checkout@v5
       - name: Install Ruby
@@ -30,16 +30,23 @@ jobs:
           path: '*.gem'
           retention-days: 1
           compression-level: 0
-      - name: Create Release Page
+
+  create-github-release:
+    needs: build-release
+    name: Create GitHub release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # clone repo and create release
+    steps:
+      - name: Download gem from GitHub cache
+        uses: actions/download-artifact@v5
+        with:
+          name: gem-artifact
+      - name: Create Release
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} --generate-notes
-      - name: Attach gem to GitHub Release
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh release upload ${{ github.ref_name }} *.gem
+        run: gh release create --repo ${{ github.repository }} ${{ github.ref_name }} --generate-notes *.gem
 
   release-to-github:
     needs: build-release
@@ -52,13 +59,10 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: gem-artifact
-      - name: Setup GitHub packages access
-        run: |
-          mkdir -p ~/.gem
-          echo ":github: Bearer ${{ secrets.GITHUB_TOKEN }}" >> ~/.gem/credentials
-          chmod 0600 ~/.gem/credentials
       - name: Publish gem to GitHub packages
-        run: gem push --key github --host https://rubygems.pkg.github.com/${{ github.repository_owner }} *.gem
+        run: gem push --host https://rubygems.pkg.github.com/${{ github.repository_owner }} *.gem
+        env:
+          GEM_HOST_API_KEY: ${{ secrets.GITHUB_TOKEN }}
 
   release-to-rubygems:
     needs: build-release
@@ -83,6 +87,7 @@ jobs:
     permissions:
       contents: read # minimal permissions that we have to grant
     needs:
+      - create-github-release
       - release-to-github
       - release-to-rubygems
     steps:
@@ -99,4 +104,3 @@ jobs:
         run: |
           gem install rubygems-await
           gem await *.gem
-
