@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary = 'Puppet documentation via YARD'
   s.email = 'voxpupuli@groups.io'
   s.homepage = 'https://github.com/voxpupuli/openvox-strings'
-  s.required_ruby_version = '>= 2.7.0'
+  s.required_ruby_version = '>= 3.2.0'
 
   s.extra_rdoc_files = [
     'CHANGELOG.md',
