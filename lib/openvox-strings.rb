@@ -79,10 +79,10 @@ module OpenvoxStrings
 
   # Runs the YARD documentation server.
   # @param [Array<String>] args The arguments to YARD.
-  def self.run_server(*args)
+  def self.run_server(*)
     require 'openvox-strings/yard'
     OpenvoxStrings::Yard.setup!
 
-    YARD::CLI::Server.run(*args)
+    YARD::CLI::Server.run(*)
   end
 end

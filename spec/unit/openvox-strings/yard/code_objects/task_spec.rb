@@ -58,32 +58,32 @@ describe OpenvoxStrings::Yard::CodeObjects::Task do
               name: 'database',
               tag_name: 'param',
               text: 'Database to connect to',
-              types: ['Optional[String[1]]']
+              types: ['Optional[String[1]]'],
             },
             {
               name: 'user',
               tag_name: 'param',
               text: 'The user',
-              types: ['Optional[String[1]]']
+              types: ['Optional[String[1]]'],
             },
             {
               name: 'password',
               tag_name: 'param',
               text: 'The password',
-              types: ['Optional[String[1]]']
+              types: ['Optional[String[1]]'],
             },
             {
               name: 'sql',
               tag_name: 'param',
               text: 'Path to file you want backup to',
-              types: ['String[1]']
-            }
-          ]
+              types: ['String[1]'],
+            },
+          ],
         },
         file: 'test.json',
         input_method: 'stdin',
         line: 0,
-        source: "{\n  \"description\": \"Allows you to backup your database to local file.\",\n  \"input_method\": \"stdin\",\n  \"parameters\": {\n    \"database\": {\n      \"description\": \"Database to connect to\",\n      \"type\": \"Optional[String[1]]\"\n    },\n    \"user\": {\n      \"description\": \"The user\",\n      \"type\": \"Optional[String[1]]\"\n    },\n    \"password\": {\n      \"description\": \"The password\",\n      \"type\": \"Optional[String[1]]\"\n    },\n     \"sql\": {\n      \"description\": \"Path to file you want backup to\",\n      \"type\": \"String[1]\"\n    }\n  }\n}\n" # rubocop:disable Layout/LineLength
+        source: "{\n  \"description\": \"Allows you to backup your database to local file.\",\n  \"input_method\": \"stdin\",\n  \"parameters\": {\n    \"database\": {\n      \"description\": \"Database to connect to\",\n      \"type\": \"Optional[String[1]]\"\n    },\n    \"user\": {\n      \"description\": \"The user\",\n      \"type\": \"Optional[String[1]]\"\n    },\n    \"password\": {\n      \"description\": \"The password\",\n      \"type\": \"Optional[String[1]]\"\n    },\n     \"sql\": {\n      \"description\": \"Path to file you want backup to\",\n      \"type\": \"String[1]\"\n    }\n  }\n}\n", # rubocop:disable Layout/LineLength
       }
     end
 

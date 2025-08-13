@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-source ENV['GEM_SOURCE'] || "https://rubygems.org"
+source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 gemspec
 
 def location_for(place_or_version, fake_version = nil)
-  git_url_regex = %r{\A(?<url>(https?|git)[:@][^#]*)(#(?<branch>.*))?}
-  file_url_regex = %r{\Afile:\/\/(?<path>.*)}
+  git_url_regex = /\A(?<url>(https?|git)[:@][^#]*)(#(?<branch>.*))?/
+  file_url_regex = %r{\Afile://(?<path>.*)}
 
   if place_or_version && (git_url = place_or_version.match(git_url_regex))
     [fake_version, { git: git_url[:url], branch: git_url[:branch], require: false }].compact
@@ -29,10 +29,6 @@ group :development do
   gem 'rspec-its', '~> 1.0'
 
   gem 'redcarpet'
-end
-
-group :rubocop do
-  gem 'voxpupuli-rubocop', '~> 3.1.0'
 end
 
 # https://github.com/OpenVoxProject/puppet/issues/90

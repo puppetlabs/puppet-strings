@@ -170,7 +170,7 @@ module OpenvoxStrings::Yard::Parsers::Puppet
       case type_expr
       when Puppet::Pops::Model::AccessExpression
         # TODO: I don't like rebuilding the source from the AST, but AccessExpressions don't expose the original source
-        @alias_of = +"#{OpenvoxStrings::Yard::Util.ast_to_text(type_expr.left_expr)}[" # alias_of should be mutable so we add a + to the string.
+        @alias_of = "#{OpenvoxStrings::Yard::Util.ast_to_text(type_expr.left_expr)}[" # alias_of should be mutable so we add a + to the string.
         @alias_of << type_expr.keys.map { |key| OpenvoxStrings::Yard::Util.ast_to_text(key) }.join(', ')
         @alias_of << ']'
       else

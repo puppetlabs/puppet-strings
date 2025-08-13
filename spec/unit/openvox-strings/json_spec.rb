@@ -297,11 +297,11 @@ describe OpenvoxStrings::Json do
       json_output
     end
 
-    include_examples 'correct JSON'
+    it_behaves_like 'correct JSON'
   end
 
   describe 'rendering JSON to stdout' do
-    include_examples 'correct JSON'
+    it_behaves_like 'correct JSON'
   end
 end
 
@@ -310,7 +310,7 @@ end
 #
 # @param [Proc] block The block to capture output from
 # @return [Hash] A hash containing the captured output
-def capture_output(&_block)
+def capture_output(&)
   begin
     $stdout = StringIO.new
     $stderr = StringIO.new

@@ -66,6 +66,6 @@ RSpec::Matchers.define :have_no_markdown_lint_errors do
   end
 
   failure_message do |actual|
-    "expected that #{actual.length > 80 ? "#{actual.slice(0, 80).inspect}..." : actual.inspect} would have no markdown lint errors but got #{@violations.join("\n")}"
+    "expected that #{(actual.length > 80) ? "#{actual.slice(0, 80).inspect}..." : actual.inspect} would have no markdown lint errors but got #{@violations.join("\n")}"
   end
 end

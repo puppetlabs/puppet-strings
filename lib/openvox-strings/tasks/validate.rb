@@ -24,7 +24,7 @@ namespace :strings do
           backtrace: args[:backtrace] == 'true',
           json: false,
           markdown: true,
-          path: file
+          path: file,
         }
         OpenvoxStrings.generate(patterns, options)
 

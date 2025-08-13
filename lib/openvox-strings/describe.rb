@@ -15,7 +15,7 @@ module OpenvoxStrings::Describe
     document = {
       defined_types: YARD::Registry.all(:puppet_defined_type).sort_by!(&:name).map!(&:to_hash),
       resource_types: YARD::Registry.all(:puppet_type).sort_by!(&:name).map!(&:to_hash),
-      providers: YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash)
+      providers: YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash),
     }
     # if --list flag passed, produce a summarized list of types
     if list_types

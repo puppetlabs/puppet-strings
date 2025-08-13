@@ -94,7 +94,7 @@ class OpenvoxStrings::Yard::CodeObjects::DataType < OpenvoxStrings::Yard::CodeOb
       {
         name: func.name,
         signature: func.signature,
-        docstring: OpenvoxStrings::Yard::Util.docstring_to_hash(func.docstring, %i[param option enum return example])
+        docstring: OpenvoxStrings::Yard::Util.docstring_to_hash(func.docstring, %i[param option enum return example]),
       }
     end
     hash

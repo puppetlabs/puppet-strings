@@ -152,7 +152,7 @@ describe OpenvoxStrings::Yard::Handlers::Puppet::FunctionHandler, if: TEST_PUPPE
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          /\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):6: ignoring in favor of parameter type information./
+          /\[warn\]: The type of the @param tag for parameter 'param1' does not match the parameter type specification near \(stdin\):6: ignoring in favor of parameter type information./,
         )
         .to_stdout_from_any_process
     end

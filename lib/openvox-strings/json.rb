@@ -17,7 +17,7 @@ module OpenvoxStrings::Json
       providers: YARD::Registry.all(:puppet_provider).sort_by!(&:name).map!(&:to_hash),
       puppet_functions: YARD::Registry.all(:puppet_function).sort_by!(&:name).map!(&:to_hash),
       puppet_tasks: YARD::Registry.all(:puppet_task).sort_by!(&:name).map!(&:to_hash),
-      puppet_plans: YARD::Registry.all(:puppet_plan).sort_by!(&:name).map!(&:to_hash)
+      puppet_plans: YARD::Registry.all(:puppet_plan).sort_by!(&:name).map!(&:to_hash),
       # TODO: Need Ruby documentation?
     }
 

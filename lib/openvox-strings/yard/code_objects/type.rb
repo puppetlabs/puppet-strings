@@ -158,7 +158,7 @@ class OpenvoxStrings::Yard::CodeObjects::Type < OpenvoxStrings::Yard::CodeObject
     provider_param = Parameter.new(
       'provider',
       "The specific backend to use for this `#{name}` resource. You will seldom need " \
-      'to specify this --- Puppet will usually discover the appropriate provider for your platform.'
+      'to specify this --- Puppet will usually discover the appropriate provider for your platform.',
     )
 
     @parameters ||= []

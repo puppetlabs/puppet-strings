@@ -48,7 +48,7 @@ class OpenvoxStrings::Yard::CodeObjects::Task < OpenvoxStrings::Yard::CodeObject
       { name: name.to_s,
         tag_name: 'param',
         text: props['description'] || '',
-        types: [props['type']] || '' }
+        types: [props['type']] || '', }
     end
   end
 
@@ -60,10 +60,10 @@ class OpenvoxStrings::Yard::CodeObjects::Task < OpenvoxStrings::Yard::CodeObject
       line: statement.line,
       docstring: {
         text: statement.docstring,
-        tags: parameters
+        tags: parameters,
       },
       source: statement.source,
       supports_noop: statement.json['supports_noop'] || false,
-      input_method: statement.json['input_method'] }
+      input_method: statement.json['input_method'], }
   end
 end

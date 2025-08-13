@@ -61,7 +61,7 @@ class YARD::CLI::Yardoc
       :puppet_provider,
       :puppet_function,
       :puppet_task,
-      :puppet_plan
+      :puppet_plan,
     )
   end
 end

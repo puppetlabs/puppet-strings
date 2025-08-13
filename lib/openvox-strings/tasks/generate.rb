@@ -13,7 +13,7 @@ namespace :strings do
     options = {
       debug: args[:debug] == 'true',
       backtrace: args[:backtrace] == 'true',
-      markup: args[:markup] || 'markdown'
+      markup: args[:markup] || 'markdown',
     }
 
     raise('Error: Both JSON and Markdown output have been selected. Please select one.') if args[:json] == 'true' && args[:markdown] == 'true'
@@ -33,7 +33,7 @@ namespace :strings do
       options[format] = !(args[format] == 'false' || args[format].empty?)
       return unless options[format]
 
-      options[:path] = args[format] == 'true' ? nil : args[format]
+      options[:path] = (args[format] == 'true') ? nil : args[format]
     end
     # rubocop:enable Style/PreferredHashMethods
 

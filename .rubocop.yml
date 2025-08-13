@@ -19,3 +19,6 @@ Style/ClassAndModuleChildren:
 
 Style/SpecialGlobalVars:
   Enabled: false
+
+AllCops:
+  TargetRubyVersion: 3.2

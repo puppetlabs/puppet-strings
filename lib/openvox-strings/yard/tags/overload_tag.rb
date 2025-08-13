@@ -25,7 +25,7 @@ class OpenvoxStrings::Yard::Tags::OverloadTag < YARD::Tags::Tag
       name, default = parameter
       tag = tags.find { |t| t.name == name } if tags
       type = tag&.types ? "#{tag.type} " : 'Any '
-      prefix = (name[0]).to_s if name.start_with?('*', '&')
+      prefix = name[0].to_s if name.start_with?('*', '&')
       name = name[1..] if prefix
       default = " = #{default}" if default
       "#{type}#{prefix}$#{name}#{default}"

@@ -53,7 +53,7 @@ describe OpenvoxStrings::Markdown do
       parse_shared_content
     end
 
-    include_examples 'markdown lint checker'
+    it_behaves_like 'markdown lint checker'
 
     describe 'table of contents' do
       it 'includes links to public classes' do
@@ -102,7 +102,7 @@ describe OpenvoxStrings::Markdown do
         parse_plan_content
       end
 
-      include_examples 'markdown lint checker'
+      it_behaves_like 'markdown lint checker'
 
       describe 'table of contents' do
         it 'includes links to plans' do
@@ -116,7 +116,7 @@ describe OpenvoxStrings::Markdown do
         parse_data_type_content
       end
 
-      include_examples 'markdown lint checker'
+      it_behaves_like 'markdown lint checker'
 
       describe 'table of contents' do
         it 'includes links to data types' do

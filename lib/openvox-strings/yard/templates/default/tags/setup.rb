@@ -10,7 +10,7 @@ end
 # Renders the overload section.
 # @return [String] Returns the rendered section.
 def overload
-  erb(object.type == :puppet_function ? :puppet_overload : :overload)
+  erb((object.type == :puppet_function) ? :puppet_overload : :overload)
 end
 
 # Renders the enum section.

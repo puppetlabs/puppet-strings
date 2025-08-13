@@ -15,7 +15,7 @@ end
 # Renders the layout section.
 # @return [String] Returns the rendered section.
 def layout
-  @nav_url = url_for_list(!@file || options.index ? menu_lists.first[:type] : 'file')
+  @nav_url = url_for_list((!@file || options.index) ? menu_lists.first[:type] : 'file')
 
   case object
   when nil, String
@@ -78,53 +78,53 @@ def create_menu_lists
     {
       type: 'puppet_class',
       title: 'Puppet Classes',
-      search_title: 'Puppet Classes'
+      search_title: 'Puppet Classes',
     },
     {
       type: 'puppet_data_type',
       title: 'Data Types',
-      search_title: 'Data Types'
+      search_title: 'Data Types',
     },
     {
       type: 'puppet_defined_type',
       title: 'Defined Types',
-      search_title: 'Defined Types'
+      search_title: 'Defined Types',
     },
     {
       type: 'puppet_type',
       title: 'Resource Types',
-      search_title: 'Resource Types'
+      search_title: 'Resource Types',
     },
     {
       type: 'puppet_provider',
       title: 'Providers',
-      search_title: 'Providers'
+      search_title: 'Providers',
     },
     {
       type: 'puppet_function',
       title: 'Puppet Functions',
-      search_title: 'Puppet Functions'
+      search_title: 'Puppet Functions',
     },
     {
       type: 'puppet_task',
       title: 'Puppet Tasks',
-      search_totle: 'Puppet Tasks'
+      search_totle: 'Puppet Tasks',
     },
     {
       type: 'puppet_plan',
       title: 'Puppet Plans',
-      search_totle: 'Puppet Plans'
+      search_totle: 'Puppet Plans',
     },
     {
       type: 'class',
       title: 'Ruby Classes',
-      search_title: 'Class List'
+      search_title: 'Class List',
     },
     {
       type: 'method',
       title: 'Ruby Methods',
-      search_title: 'Method List'
-    }
+      search_title: 'Method List',
+    },
   ]
 
   menu_lists.delete_if { |e| YARD::Registry.all(e[:type].intern).empty? }
@@ -134,7 +134,7 @@ def create_menu_lists
     menu_lists << {
       type: 'file',
       title: 'Files',
-      search_title: 'File List'
+      search_title: 'File List',
     }
   end
 

@@ -295,7 +295,7 @@ describe OpenvoxStrings::Yard::Parsers::Puppet::Parser do
     '1 + 1',
     'func()',
     '$param1.foo(1)',
-    '$param1.foo($param2 + $param3.bar())'
+    '$param1.foo($param2 + $param3.bar())',
   ].each do |value|
     describe "parsing parameter with #{value} default value" do
       let(:source) { <<~PUPPET }
@@ -319,7 +319,7 @@ describe OpenvoxStrings::Yard::Parsers::Puppet::Parser do
         'Linux'  => 'linux',
         'Darwin' => 'darwin',
         default  => $facts['kernel'],
-      }"
+      }",
   ].each do |value|
     describe "parsing parameter with #{value} default value" do
       let(:source) { <<~PUPPET }

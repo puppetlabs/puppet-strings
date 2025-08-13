@@ -29,20 +29,20 @@ describe 'Generating JSON' do
                 {
                   'tag_name' => 'return',
                   'text' => '',
-                  'types' => ['Any']
-                }
-              ]
-            }
-          }
+                  'types' => ['Any'],
+                },
+              ],
+            },
+          },
         ],
         'docstring' => {
           'text' => 'This is the function documentation for `function3x`',
-          'tags' => ['tag_name' => 'return', 'text' => '', 'types' => ['Any']]
+          'tags' => ['tag_name' => 'return', 'text' => '', 'types' => ['Any']],
         },
-        'source' => "Puppet::Parser::Functions.newfunction(:function3x, :doc => \"This is the function documentation for `function3x`\") do |args|\nend"
+        'source' => "Puppet::Parser::Functions.newfunction(:function3x, :doc => \"This is the function documentation for `function3x`\") do |args|\nend",
       ],
       'puppet_tasks' => [],
-      'puppet_plans' => []
+      'puppet_plans' => [],
     }
   end
 

@@ -40,9 +40,7 @@ class OpenvoxStrings::Yard::Handlers::Puppet::FunctionHandler < OpenvoxStrings::
   def add_return_tag(object, type = nil)
     tag = object.tag(:return)
     if tag
-      if (type && tag.types && tag.types.first) && (type != tag.types.first)
-        log.warn "Documented return type does not match return type in function definition near #{statement.file}:#{statement.line}."
-      end
+      log.warn "Documented return type does not match return type in function definition near #{statement.file}:#{statement.line}." if type && tag.types && tag.types.first && (type != tag.types.first)
 
       tag.types = type ? [type] : tag.types || ['Any']
       return

@@ -639,7 +639,7 @@ describe OpenvoxStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          /\[warn\]: The @param tag for parameter 'param1' should not contain a type specification near \(stdin\):6: ignoring in favor of dispatch type information\./
+          /\[warn\]: The @param tag for parameter 'param1' should not contain a type specification near \(stdin\):6: ignoring in favor of dispatch type information\./,
         )
         .to_stdout_from_any_process
     end
@@ -675,7 +675,7 @@ describe OpenvoxStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @param tags near \(stdin\):3: parameter documentation should be made on the dispatch call\./
+          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @param tags near \(stdin\):3: parameter documentation should be made on the dispatch call\./,
         )
         .to_stdout_from_any_process
     end
@@ -695,7 +695,7 @@ describe OpenvoxStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @overload tags near \(stdin\):3: overload tags are automatically generated from the dispatch calls\./
+          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @overload tags near \(stdin\):3: overload tags are automatically generated from the dispatch calls\./,
         )
         .to_stdout_from_any_process
     end
@@ -715,7 +715,7 @@ describe OpenvoxStrings::Yard::Handlers::Ruby::FunctionHandler do
     it 'outputs a warning' do
       expect { spec_subject }
         .to output(
-          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @return tags near \(stdin\):3: return value documentation should be made on the dispatch call\./
+          /\[warn\]: The docstring for Puppet 4.x function 'foo' contains @return tags near \(stdin\):3: return value documentation should be made on the dispatch call\./,
         )
         .to_stdout_from_any_process
     end

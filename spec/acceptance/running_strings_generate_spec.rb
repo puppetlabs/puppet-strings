@@ -27,7 +27,7 @@ describe 'Generating module documentation using generate action' do
                           # These tests are failing. Appear to be legitimate failures.
                           '<p>The first integer to add.</p>',
                           '<p>The second integer to add.</p>',
-                          '<p>Returns the sum of x and y.</p>'
+                          '<p>Returns the sum of x and y.</p>',
                         ])
   end
 
@@ -46,7 +46,7 @@ describe 'Generating module documentation using generate action' do
                           '<p>Documentation for a dynamic property.</p>',
                           '<p>The database server name.</p>',
                           '<p>Documentation for a dynamic parameter.</p>',
-                          '<p>The provider supports encryption.</p>'
+                          '<p>The provider supports encryption.</p>',
                         ])
   end
 
@@ -54,7 +54,7 @@ describe 'Generating module documentation using generate action' do
     expect_file_contain('doc/puppet_providers_database/linux.html', [
                           'The database provider on Linux',
                           '<tt>osfamily &mdash; linux</tt>',
-                          '<tt>database &mdash; /usr/bin/database</tt>'
+                          '<tt>database &mdash; /usr/bin/database</tt>',
                         ])
   end
 
@@ -65,7 +65,7 @@ describe 'Generating module documentation using generate action' do
                           '<h3>func1</h3>',
                           '<p>func1 documentation</p>',
                           '<p>param1 func1 documentation</p>',
-                          '<p>param2 func1 documentation</p>'
+                          '<p>param2 func1 documentation</p>',
                         ])
   end
 
@@ -73,7 +73,7 @@ describe 'Generating module documentation using generate action' do
     expect_file_contain('doc/puppet_data_type_aliases/Test_3A_3AElephant.html', [
                           'Data Type: Test::Elephant',
                           'types/elephant.pp',
-                          'A simple elephant type.'
+                          'A simple elephant type.',
                         ])
   end
 
@@ -83,7 +83,7 @@ describe 'Generating module documentation using generate action' do
                           '<span class="name">a</span>',
                           "&mdash; <div class='inline'><p>Option A</p>\n</div>",
                           '<span class="name">b</span>',
-                          "&mdash; <div class='inline'><p>Option B</p>\n</div>"
+                          "&mdash; <div class='inline'><p>Option B</p>\n</div>",
                         ])
   end
 end

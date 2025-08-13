@@ -27,8 +27,8 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
       require 'openvox-strings'
 
       OpenvoxStrings.generate(
-        args.count > 1 ? args[0..-2] : OpenvoxStrings::DEFAULT_SEARCH_PATTERNS,
-        build_generate_options(args.last)
+        (args.count > 1) ? args[0..-2] : OpenvoxStrings::DEFAULT_SEARCH_PATTERNS,
+        build_generate_options(args.last),
       )
       nil
     end
@@ -46,7 +46,7 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
       check_required_features
       require 'openvox-strings'
 
-      modules = args.count > 1 ? args[0..-2] : []
+      modules = (args.count > 1) ? args[0..-2] : []
 
       # Generate documentation for all (or the given) modules
       module_docs = []
@@ -133,7 +133,7 @@ Puppet::Face.define(:strings, '0.0.1') do # rubocop:disable Metrics/BlockLength
       search_patterns = ['types/**/*.pp', 'lib/**/*.rb']
       OpenvoxStrings.generate(
         search_patterns,
-        build_generate_options(options)
+        build_generate_options(options),
       )
       nil
     end
