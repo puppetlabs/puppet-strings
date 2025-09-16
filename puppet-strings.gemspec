@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
   ]
   s.files = Dir['CHANGELOG.md', 'README.md', 'LICENSE', 'lib/**/*', 'exe/**/*']
 
-  s.add_dependency 'puppet', '>= 8.0.0'
   s.add_dependency 'rgen', '~> 0.9'
   s.add_dependency 'yard', '~> 0.9'
 end
