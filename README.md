@@ -57,15 +57,15 @@ JSON and Markdown output include the reference documentation only.
 Strings sends JSON output to either STDOUT or to a file.
 Markdown output is written to a REFERENCE.md file in the module's main directory.
 
-See the [Puppet Strings documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) for complete instructions for generating documentation with Strings.
+See the [Puppet Strings documentation](https://help.puppet.com/core/current/Content/PuppetCore/puppet_strings.htm) for complete instructions for generating documentation with Strings.
 
-For code comment style guidelines and examples, see the [Puppet Strings style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html).
+For code comment style guidelines and examples, see the [Puppet Strings style guide](https://help.puppet.com/core/current/Content/PuppetCore/puppet_strings_style.htm).
 
 ### Additional Resources
 
 Here are a few other good resources for getting started with documentation:
 
-* [Module README Template](https://puppet.com/docs/puppet/latest/puppet_strings.html)
+* [Module README Template](https://help.puppet.com/core/current/Content/PuppetCore/modules_readme.htm)
 * [YARD Getting Started Guide](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
 * [YARD Tags Overview](http://www.rubydoc.info/gems/yard/file/docs/Tags.md)
 
