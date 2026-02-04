@@ -135,7 +135,7 @@ This codebase is licensed under Apache 2.0. However, the open source dependencie
 Please log issues in [GitHub issues](https://github.com/puppetlabs/puppet-strings/issues).
 Check out [CONTRIBUTING.md](https://github.com/puppetlabs/puppet-strings/blob/main/CONTRIBUTING.md) for tips on writing _the best_ issues.
 
-There is also an active community on the [Puppet community Slack](https://puppetcommunity.slack.com) in the #forge-modules channel.
+There is also an active community on the [Puppet community Slack](https://slack.puppet.com) in the #forge-modules channel.
 
 We use semantic version numbers for our releases and recommend that users upgrade to patch releases and minor releases as they become available.
 
