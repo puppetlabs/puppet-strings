@@ -10,10 +10,11 @@ module PuppetStrings::Markdown::Helpers
   # @param [Symbol] type The type of the code, e.g. :text, :puppet, or :ruby.
   # @param [String] block_prefix String to insert before if it's a block.
   # @param [String] inline_prefix String to insert before if it's inline.
+  # @param [Symbol] whether to force a format (:inline, :block) or determine by content (:none).
   # @returns [String] Markdown
-  def code_maybe_block(code, type: :puppet, block_prefix: "\n\n", inline_prefix: ' ')
+  def code_maybe_block(code, type: :puppet, block_prefix: "\n\n", inline_prefix: ' ', force: :none)
     code_s = code.to_s
-    if code_s.include?("\n") || code_s.length > 70
+    if (code_s.include?("\n") || code_s.length > 70 || force == :block) && force != :inline
       # Delimiter must be one backtick longer than the longest series of backticks
       #   beginning a line, minimum 3 (with some spaces allowed).
       delim = (code_s.scan(/^ {0,3}``(`+)\s*$/) << '').flatten.max_by(&:length) + '```'
