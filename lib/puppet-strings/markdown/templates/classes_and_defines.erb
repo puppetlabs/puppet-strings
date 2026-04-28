@@ -59,7 +59,7 @@ The following parameters are available in the `<%= name %>` <%= @type %>:
 ##### <a name="<%= param[:link] %>"></a>`<%= param[:name] %>`
 
 <% if param[:types] -%>
-Data type:<%= param[:types].map{|val| code_maybe_block(val, force: :inline)}.join(',') %>
+Data type:<%= code_maybe_block(param[:types].join(', ')) %>
 
 <% end -%>
 <%= param[:text] %>

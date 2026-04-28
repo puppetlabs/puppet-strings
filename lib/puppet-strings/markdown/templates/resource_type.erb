@@ -55,7 +55,7 @@ The following properties are available in the `<%= name %>` <%= @type %>.
 ##### `<%= prop[:name] %>`
 
 <% if prop[:values] -%>
-Valid values:<%= prop[:values].map{|val| code_maybe_block(val, force: :inline)}.join(',') %>
+Valid values: `<%= prop[:values].join('`, `') %>`
 
 <% end -%>
 <% if prop[:isnamevar] -%>
@@ -107,7 +107,7 @@ The following parameters are available in the `<%= name %>` <%= @type %>.
 ##### <a name="<%= param[:link] %>"></a>`<%= param[:name] %>`
 
 <% if param[:values] -%>
-Valid values:<%= param[:values].map{|val| code_maybe_block(val, force: :inline)}.join(',') %>
+Valid values: `<%= param[:values].join('`, `') %>`
 
 <% end -%>
 <% if param[:isnamevar] -%>
