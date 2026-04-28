@@ -42,9 +42,7 @@
 <% examples.each do |eg| -%>
 ##### <%= eg[:name] %>
 
-```puppet
-<%= eg[:text] %>
-```
+<%= code_maybe_block(eg[:text], block_prefix: '', force: :block) %>
 
 <% end -%>
 <% end -%>
@@ -57,7 +55,7 @@ The following properties are available in the `<%= name %>` <%= @type %>.
 ##### `<%= prop[:name] %>`
 
 <% if prop[:values] -%>
-Valid values: `<%= prop[:values].join('`, `') %>`
+Valid values:<%= prop[:values].map{|val| code_maybe_block(val, force: :inline)}.join(',') %>
 
 <% end -%>
 <% if prop[:isnamevar] -%>
@@ -69,7 +67,7 @@ Aliases: `<%= prop[:aliases].to_s.delete('{').delete('}') %>`
 
 <% end -%>
 <% if prop[:data_type] -%>
-Data type: `<%= prop[:data_type] %>`<%= "\n_\*this data type contains a regex that may not be accurately reflected in generated documentation_" if regex_in_data_type?(prop[:data_type]) %>
+Data type:<%= code_maybe_block(prop[:data_type]) %>
 
 <% end -%>
 <%= prop[:description] %>
@@ -78,7 +76,7 @@ Data type: `<%= prop[:data_type] %>`<%= "\n_\*this data type contains a regex th
 Options:
 
 <% options_for_param(prop[:name]).each do |o| -%>
-* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+* **<%= o[:opt_name] %>**<%= code_maybe_block(o[:opt_types][0], force: :inline) %>: <%= o[:opt_text] %>
 <% end -%>
 
 <% end -%>
@@ -109,7 +107,7 @@ The following parameters are available in the `<%= name %>` <%= @type %>.
 ##### <a name="<%= param[:link] %>"></a>`<%= param[:name] %>`
 
 <% if param[:values] -%>
-Valid values: `<%= param[:values].join('`, `') %>`
+Valid values:<%= param[:values].map{|val| code_maybe_block(val, force: :inline)}.join(',') %>
 
 <% end -%>
 <% if param[:isnamevar] -%>
@@ -121,7 +119,7 @@ Aliases: `<%= param[:aliases].to_s.delete('{').delete('}') %>`
 
 <% end -%>
 <% if param[:data_type] -%>
-Data type: `<%= param[:data_type] %>`<%= "\n_\*this data type contains a regex that may not be accurately reflected in generated documentation_" if regex_in_data_type?(param[:data_type]) %>
+Data type:<%= code_maybe_block(param[:data_type]) %>
 
 <% end -%>
 <% if param[:description] -%>
@@ -132,7 +130,7 @@ Data type: `<%= param[:data_type] %>`<%= "\n_\*this data type contains a regex t
 Options:
 
 <% options_for_param(param[:name]).each do |o| -%>
-* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+* **<%= o[:opt_name] %>**<%= code_maybe_block(o[:opt_types][0], force: :inline) %>: <%= o[:opt_text] %>
 <% end -%>
 
 <% end -%>
@@ -145,7 +143,7 @@ Options:
 
 <% end -%>
 <% if param[:default] -%>
-Default value: `<%= param[:default] %>`
+Default value:<%= code_maybe_block(param[:default]) %>
 
 <% end -%>
 <% if param[:required_features] -%>

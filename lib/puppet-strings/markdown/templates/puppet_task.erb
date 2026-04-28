@@ -19,7 +19,7 @@
 ##### `<%= param[:name] %>`
 
 <% if param[:types] -%>
-Data type:<%= code_maybe_block(param[:types].join(', ')) %>
+Valid values:<%= param[:types].map{|type| code_maybe_block(type, force: :inline)}.join(',') %>
 
 <% end -%>
 <%= param[:text] %>

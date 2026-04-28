@@ -1,6 +1,6 @@
 ### <a name="<%= link %>"></a>`<%= name %>`
 
-#### `<%= signature %>`
+####<%= code_maybe_block(signature, force: :inline) %>
 
 <% if text -%>
 <%= text %>
@@ -17,7 +17,7 @@
 
 <% end -%>
 <% if return_type -%>
-Returns: `<%= return_type %>`<% if return_val %> <%= return_val %><% end %>
+Returns:<%= code_maybe_block(return_type, force: :inline) %><% if return_val %> <%= return_val %><% end %>
 
 <% end -%>
 <% if raises -%>
@@ -33,9 +33,7 @@ Raises:
 <% examples.each do |eg| -%>
 ###### <%= eg[:name] %>
 
-```puppet
-<%= eg[:text] %>
-```
+<%= code_maybe_block(eg[:text], block_prefix: '', force: :block) %>
 
 <% end -%>
 <% end -%>
@@ -51,7 +49,7 @@ Data type:<%= code_maybe_block(param[:types][0]) %>
 Options:
 
 <% options_for_param(param[:name]).each do |o| -%>
-* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+* **<%= o[:opt_name] %>**<%= code_maybe_block(o[:opt_types][0], force: :inline) %>: <%= o[:opt_text] %>
 <% end -%>
 
 <% end -%>

@@ -42,9 +42,7 @@
 <% examples.each do |eg| -%>
 ##### <%= eg[:name] %>
 
-```puppet
-<%= eg[:text] %>
-```
+<%= code_maybe_block(eg[:text], block_prefix: '', force: :block) %>
 
 <% end -%>
 <% end -%>
@@ -74,7 +72,7 @@ Data type:<%= code_maybe_block(param[:types].join(', ')) %>
 Options:
 
 <% options_for_param(param[:name]).each do |o| -%>
-* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+* **<%= o[:opt_name] %>**<%= code_maybe_block(o[:opt_types][0], force: :inline) %>: <%= o[:opt_text] %>
 <% end -%>
 
 <% end -%>

@@ -30,14 +30,12 @@ Type: <%= type %>
 <% examples.each do |eg| -%>
 ##### <%= eg[:name] %>
 
-```puppet
-<%= eg[:text] %>
-```
+<%= code_maybe_block(eg[:text], block_prefix: '', force: :block) %>
 
 <% end -%>
 <% end -%>
 <% signatures.each do |sig| -%>
-#### `<%= sig.signature %>`
+####<%= code_maybe_block(sig.signature, force: :inline) %>
 
 <% if sig.text -%>
 <%= sig.text %>
@@ -54,7 +52,7 @@ Type: <%= type %>
 
 <% end -%>
 <% if sig.return_type -%>
-Returns: `<%= sig.return_type %>`<% if sig.return_val %> <%= sig.return_val %><% end %>
+Returns:<%= code_maybe_block(sig.return_type, force: :inline) %><% if sig.return_val %> <%= sig.return_val %><% end %>
 
 <% end -%>
 <% if raises -%>
@@ -71,9 +69,7 @@ Raises:
 <% sig.examples.each do |eg| -%>
 ###### <%= eg[:name] %>
 
-```puppet
-<%= eg[:text] %>
-```
+<%= code_maybe_block(eg[:text], block_prefix: '', force: :block) %>
 
 <% end -%>
 <% end -%>
@@ -89,7 +85,7 @@ Data type:<%= code_maybe_block(param[:types][0]) %>
 Options:
 
 <% sig.options_for_param(param[:name]).each do |o| -%>
-* **<%= o[:opt_name] %>** `<%= o[:opt_types][0] %>`: <%= o[:opt_text] %>
+* **<%= o[:opt_name] %>**<%= code_maybe_block(o[:opt_types][0], force: :inline) %>: <%= o[:opt_text] %>
 <% end -%>
 
 <% end -%>
