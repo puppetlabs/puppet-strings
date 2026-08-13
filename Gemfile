@@ -55,6 +55,8 @@ group :development do
 end
 
 group :acceptance do
+  # Source bolt from puppetcore too, since it's a transitive puppet_litmus dependency.
+  gem 'bolt', *location_for(ENV.fetch('BOLT_GEM_VERSION', nil), nil, { source: gemsource_puppetcore })
   gem 'puppet_litmus'
   gem 'net-ssh'
 end
