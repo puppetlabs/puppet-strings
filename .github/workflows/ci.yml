@@ -19,9 +19,12 @@ jobs:
       matrix:
         ruby_version:
           - "3.2"
+          - "4.0"
         include:
           - ruby_version: '3.2'
             puppet_gem_version: '~> 8.0'
+          - ruby_version: '4.0'
+            puppet_gem_version: '~> 9.0'
         runs_on:
           - "ubuntu-latest"
           - "windows-latest"
@@ -40,9 +43,12 @@ jobs:
       matrix:
         ruby_version:
           - "3.2"
+          - "4.0"
         include:
           - ruby_version: '3.2'
             puppet_gem_version: 'https://github.com/puppetlabs/puppet' # puppet8'
+          - ruby_version: '4.0'
+            puppet_gem_version: '~> 9.0'
         runs_on:
           - "ubuntu-latest"
           - "windows-latest"
