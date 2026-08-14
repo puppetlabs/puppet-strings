@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.0.0](https://github.com/puppetlabs/puppet-strings/tree/v6.0.0) - 2026-08-14
+
+[Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v5.0.0...v6.0.0)
+
+### Added
+
+- Remove strict puppet dependency [#414](https://github.com/puppetlabs/puppet-strings/pull/414) ([binford2k](https://github.com/binford2k))
+
 ## [v5.0.0](https://github.com/puppetlabs/puppet-strings/tree/v5.0.0) - 2025-06-09
 
 [Full Changelog](https://github.com/puppetlabs/puppet-strings/compare/v4.1.3...v5.0.0)
@@ -211,10 +219,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - (maint) Implement a strings:generate:reference task [#192](https://github.com/puppetlabs/puppet-strings/pull/192) ([ekohl](https://github.com/ekohl))
 - (PDOC-265) Add examples to function reference docs [#188](https://github.com/puppetlabs/puppet-strings/pull/188) ([ekohl](https://github.com/ekohl))
 - (PDOC-252) Add describe features to puppet-strings face [#183](https://github.com/puppetlabs/puppet-strings/pull/183) ([kris-bosland](https://github.com/kris-bosland))
-
-### Fixed
-
-- (PDOC-266) Silence 'unexpected construct regexp_literal' warning [#189](https://github.com/puppetlabs/puppet-strings/pull/189) ([seanmil](https://github.com/seanmil))
 
 ## [v2.1.0](https://github.com/puppetlabs/puppet-strings/tree/v2.1.0) - 2018-06-26
 
