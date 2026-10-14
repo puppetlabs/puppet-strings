@@ -17,14 +17,14 @@ module PuppetStrings::Markdown::Helpers
     if (code_s.include?("\n") || code_s.length > 70 || force == :block) && force != :inline
       # Delimiter must be one backtick longer than the longest series of backticks
       #   beginning a line, minimum 3 (with some spaces allowed).
-      delim = (code_s.scan(/^ {0,3}``(`+)\s*$/) << '').flatten.max_by(&:length) + '```'
+      delim = "#{(code_s.scan(/^ {0,3}``(`+)\s*$/) << '').flatten.max_by(&:length)}```"
       "#{block_prefix}#{delim}#{type}\n#{code_s}\n#{delim}"
     else
       # Delimeter must be one backtick longer than the longest series of backticks
       #   in the string.
-      delim = code_s.scan(/`*/).max_by(&:length) + '`'
+      delim = "#{code_s.scan(/`*/).max_by(&:length)}`"
       # Padding required if string starts or ends with a backtick
-      pad = (code_s[0] == '`' || code_s[-1] == '`') ? ' ' : ''
+      pad = code_s[0] == '`' || code_s[-1] == '`' ? ' ' : ''
       "#{inline_prefix}#{delim}#{pad}#{code_s}#{pad}#{delim}"
     end
   end
