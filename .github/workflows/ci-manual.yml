@@ -1,16 +1,5 @@
 name: "ci (manual)"
 
-# Manually triggered CI for testing a specific branch, SHA, or pull request —
-# including PRs from forks, which get no secrets via the normal `pull_request`
-# trigger. `workflow_dispatch` can only be invoked by collaborators with write
-# access, which is the trust gate: review the diff before running this against
-# a fork PR, since the checked-out code executes with full access to secrets.
-#
-# Pilot/control workflow: runs its own steps rather than delegating to the
-# shared gem_ci.yml/gem_acceptance.yml reusable workflows in cat-github-actions,
-# since those don't yet accept a `ref` override. Once this approach is
-# validated, add that input upstream instead of duplicating steps here.
-
 on:
   workflow_dispatch:
     inputs:
@@ -58,37 +47,50 @@ jobs:
           echo "### Testing ref: \`$ref\`" >> "$GITHUB_STEP_SUMMARY"
 
   spec:
-    name: "spec (manual)"
+    name: "spec (${{ matrix.runs_on }} ruby ${{ matrix.ruby_version }} | puppet ${{matrix.puppet_gem_version}})"
     needs: resolve-ref
-    runs-on: ubuntu-latest
-    env:
-      PUPPET_GEM_VERSION: "~> 9.0"
-      PUPPET_FORGE_TOKEN: ${{ secrets.PUPPET_FORGE_TOKEN || secrets.PUPPET_FORGE_TOKEN_PUBLIC }}
-      BUNDLE_RUBYGEMS___PUPPETCORE__PUPPET__COM: "forge-key:${{ secrets.PUPPET_FORGE_TOKEN || secrets.PUPPET_FORGE_TOKEN_PUBLIC }}"
-    steps:
-      - name: "checkout target ref"
-        uses: "actions/checkout@v4"
-        with:
-          ref: "${{ needs.resolve-ref.outputs.ref }}"
-          persist-credentials: false
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby_version:
+          - "3.2"
+          - "4.0"
+        include:
+          - ruby_version: '3.2'
+            puppet_gem_version: '~> 8.0'
+          - ruby_version: '4.0'
+            puppet_gem_version: '~> 9.0'
+        runs_on:
+          - "ubuntu-latest"
+          - "windows-latest"
+    uses: "puppetlabs/cat-github-actions/.github/workflows/gem_ci.yml@add-ref-input-to-gem-workflows"
+    secrets: "inherit"
+    with:
+      rake_task: "spec:coverage"
+      ruby_version: ${{ matrix.ruby_version }}
+      puppet_gem_version: ${{ matrix.puppet_gem_version }}
+      runs_on: ${{ matrix.runs_on }}
+      ref: ${{ needs.resolve-ref.outputs.ref }}
 
-      - name: "setup ruby"
-        uses: "ruby/setup-ruby@v1"
-        with:
-          ruby-version: "4.0"
-          bundler-cache: true
-
-      - name: "rubocop"
-        run: bundle exec rubocop --format github
-
-      - name: "spec"
-        run: bundle exec rake spec:coverage
-
-      - name: "upload coverage to codecov"
-        if: env.CODECOV_TOKEN != ''
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/.resultset.json
-          fail_ci_if_error: true
-          verbose: true
+  acceptance:
+    needs: ["resolve-ref", "spec"]
+    strategy:
+      matrix:
+        ruby_version:
+          - "3.2"
+          - "4.0"
+        include:
+          - ruby_version: '3.2'
+            puppet_gem_version: 'https://github.com/puppetlabs/puppet' # puppet8'
+          - ruby_version: '4.0'
+            puppet_gem_version: '~> 9.0'
+        runs_on:
+          - "ubuntu-latest"
+          - "windows-latest"
+    uses: "puppetlabs/cat-github-actions/.github/workflows/gem_acceptance.yml@add-ref-input-to-gem-workflows"
+    secrets: "inherit"
+    with:
+      ruby_version: ${{ matrix.ruby_version }}
+      puppet_version: ${{ matrix.puppet_gem_version }}
+      runs_on: ${{ matrix.runs_on }}
+      ref: ${{ needs.resolve-ref.outputs.ref }}
