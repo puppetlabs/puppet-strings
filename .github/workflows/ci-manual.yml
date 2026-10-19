@@ -1,0 +1,94 @@
+name: "ci (manual)"
+
+# Manually triggered CI for testing a specific branch, SHA, or pull request —
+# including PRs from forks, which get no secrets via the normal `pull_request`
+# trigger. `workflow_dispatch` can only be invoked by collaborators with write
+# access, which is the trust gate: review the diff before running this against
+# a fork PR, since the checked-out code executes with full access to secrets.
+#
+# Pilot/control workflow: runs its own steps rather than delegating to the
+# shared gem_ci.yml/gem_acceptance.yml reusable workflows in cat-github-actions,
+# since those don't yet accept a `ref` override. Once this approach is
+# validated, add that input upstream instead of duplicating steps here.
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "PR number to test (takes precedence over 'ref' if set)"
+        required: false
+        type: string
+      ref:
+        description: "Branch or SHA to test (ignored if 'pr_number' is set)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "${{ github.workflow }}-${{ inputs.pr_number || inputs.ref }}"
+  cancel-in-progress: true
+
+env:
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+jobs:
+  resolve-ref:
+    name: "resolve target ref"
+    runs-on: ubuntu-latest
+    outputs:
+      ref: ${{ steps.resolve.outputs.ref }}
+    steps:
+      - name: "resolve target ref"
+        id: resolve
+        env:
+          PR_NUMBER: ${{ inputs.pr_number }}
+          INPUT_REF: ${{ inputs.ref }}
+        run: |
+          if [ -n "$PR_NUMBER" ]; then
+            ref="refs/pull/${PR_NUMBER}/merge"
+          elif [ -n "$INPUT_REF" ]; then
+            ref="$INPUT_REF"
+          else
+            echo "::error::Provide either 'pr_number' or 'ref'." >&2
+            exit 1
+          fi
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+          echo "### Testing ref: \`$ref\`" >> "$GITHUB_STEP_SUMMARY"
+
+  spec:
+    name: "spec (manual)"
+    needs: resolve-ref
+    runs-on: ubuntu-latest
+    env:
+      PUPPET_GEM_VERSION: "~> 9.0"
+      PUPPET_FORGE_TOKEN: ${{ secrets.PUPPET_FORGE_TOKEN || secrets.PUPPET_FORGE_TOKEN_PUBLIC }}
+      BUNDLE_RUBYGEMS___PUPPETCORE__PUPPET__COM: "forge-key:${{ secrets.PUPPET_FORGE_TOKEN || secrets.PUPPET_FORGE_TOKEN_PUBLIC }}"
+    steps:
+      - name: "checkout target ref"
+        uses: "actions/checkout@v4"
+        with:
+          ref: "${{ needs.resolve-ref.outputs.ref }}"
+          persist-credentials: false
+
+      - name: "setup ruby"
+        uses: "ruby/setup-ruby@v1"
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+
+      - name: "rubocop"
+        run: bundle exec rubocop --format github
+
+      - name: "spec"
+        run: bundle exec rake spec:coverage
+
+      - name: "upload coverage to codecov"
+        if: env.CODECOV_TOKEN != ''
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/.resultset.json
+          fail_ci_if_error: true
+          verbose: true
